@@ -22,18 +22,6 @@ LOGGING_LEVEL = logging.DEBUG
 LOGGING['loggers']['mpol']['level'] = LOGGING_LEVEL
 
 # -----------------------------------------------------------------------------
-# Django Extensions
-# http://django-extensions.readthedocs.org/en/latest/
-# -----------------------------------------------------------------------------
-
-try:
-    import django_extensions  # noqa
-
-    INSTALLED_APPS = INSTALLED_APPS + ['django_extensions', ]
-except ImportError:
-    pass
-
-# -----------------------------------------------------------------------------
 # Django Debug Toolbar
 # http://django-debug-toolbar.readthedocs.org/en/latest/
 # -----------------------------------------------------------------------------
