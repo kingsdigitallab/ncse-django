@@ -40,6 +40,7 @@
       - system
 
   - name: solr | download
+    become: yes
     get_url:
       url: '{{ solr.url }}'
       dest: /tmp
@@ -50,19 +51,17 @@
   - name: solr | unarchive
     become: yes
     unarchive:
-      src: /tmp/solr-{{ solr.version}}.zip
+      src: /tmp/solr-{{ solr.version}}.tgz
       dest: /tmp
       remote_src: yes
     tags:
       - system
       - solr
 
-  - name: solr | /opt/solr
-    become: yes
-    file: path=/opt/solr state=directory
 
   - name: solr | install
-    command: /tmp/solr-{{ solr.version }}/bin/install_solr_service.sh /tmp/solr-{{ solr.version}}.zip -f
+    become: yes
+    command: /tmp/solr-{{ solr.version }}/bin/install_solr_service.sh /tmp/solr-{{ solr.version}}.tgz -f
     tags:
       - system
       - solr

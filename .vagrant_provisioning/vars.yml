@@ -5,7 +5,7 @@ postgresql: {admin_user: postgres, cluster_name: main, cluster_reset: false, def
   encoding: UTF-8, initial_data_file: data.sql, locale: en_GB.UTF-8, user: mpol}
 project_root: /vagrant
 python: {requirements: requirements-dev.txt, virtualenv_location: /home/vagrant/venv}
-solr: {dist: /opt, url: 'https://archive.apache.org/dist/lucene/solr/6.6.1/solr-6.6.1.zip',
+solr: {dist: /opt, url: 'https://archive.apache.org/dist/lucene/solr/6.6.1/solr-6.6.1.tgz',
   version: 6.6.1}
 system_packages: [ack-grep, adminer, aptitude, binutils, gdal-bin, git, git-core,
   libgdal-dev, libjpeg-dev, libldap2-dev, libproj-dev, libsasl2-dev, libssl-dev, libxml2-dev,
