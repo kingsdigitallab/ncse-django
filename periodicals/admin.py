@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Article, Issue, Publication
+from .models import Article, Issue, Page, Publication
 
 
 @admin.register(Publication)
@@ -15,6 +15,11 @@ class IssueAdmin(admin.ModelAdmin):
     list_filter = ['publication__abbreviation', 'issue_date']
 
 
+@admin.register(Page)
+class PageAdmin(admin.ModelAdmin):
+    list_display = ['issue', 'number']
+
+
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ['issue', 'aid', 'title', 'page_number']
+    list_display = ['page', 'aid', 'title']
