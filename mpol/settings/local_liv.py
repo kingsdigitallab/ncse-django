@@ -12,3 +12,5 @@ DATABASES = {
         'HOST': ''
     },
 }
+
+HAYSTACK_CONNECTIONS['default']['URL'] = 'http://localhost:8993/solr/liv'
