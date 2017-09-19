@@ -21,7 +21,7 @@ LOGGING_LEVEL = logging.DEBUG
 
 LOGGING['loggers']['mpol']['level'] = LOGGING_LEVEL
 
-HAYSTACK_CONNECTIONS['default']['URL'] = 'http://localhost:8993/solr/dev'
+HAYSTACK_CONNECTIONS['default']['URL'] = 'http://localhost:8983/solr/dev'
 
 # -----------------------------------------------------------------------------
 # Django Debug Toolbar

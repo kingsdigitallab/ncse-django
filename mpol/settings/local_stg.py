@@ -16,4 +16,4 @@ DATABASES = {
     },
 }
 
-HAYSTACK_CONNECTIONS['default']['URL'] = 'http://localhost:8993/solr/stg'
+HAYSTACK_CONNECTIONS['default']['URL'] = 'http://localhost:8983/solr/stg'
