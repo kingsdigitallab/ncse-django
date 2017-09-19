@@ -39,4 +39,4 @@ class Article(models.Model):
 
     def __str__(self):
         return '{}: {}'.format(
-            self.issue, self.title if self.title else self.aid)
+            self.page, self.title if self.title else self.aid)
