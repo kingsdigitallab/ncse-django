@@ -6,6 +6,9 @@ class Publication(models.Model):
     title = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 
+    class Meta:
+        ordering = ['abbreviation']
+
     def __str__(self):
         return '{}: {}'.format(self.abbreviation, self.title)
 
@@ -17,6 +20,9 @@ class Issue(models.Model):
     number_of_pages = models.PositiveIntegerField(blank=True, null=True)
     pdf = models.FileField(upload_to='periodicals/')
 
+    class Meta:
+        ordering = ['publication', 'issue_date']
+
     def __str__(self):
         return '{}: {}'.format(self.publication, self.issue_date)
 
@@ -25,6 +31,9 @@ class Page(models.Model):
     issue = models.ForeignKey(Issue)
     number = models.PositiveIntegerField()
     image = models.ImageField(upload_to='periodicals/')
+
+    class Meta:
+        ordering = ['issue', 'number']
 
     def __str__(self):
         return '{}: {}'.format(self.issue, self.number)
@@ -36,6 +45,9 @@ class Article(models.Model):
     title = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     content = models.TextField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['page', 'aid']
 
     def __str__(self):
         return '{}: {}'.format(
