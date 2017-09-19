@@ -13,7 +13,6 @@ class Publication(models.Model):
 class Issue(models.Model):
     publication = models.ForeignKey(Publication)
     uid = models.CharField(max_length=32, unique=True)
-    description = models.TextField(blank=True, null=True)
     issue_date = models.DateField()
     number_of_pages = models.PositiveIntegerField(blank=True, null=True)
     pdf = models.FileField(upload_to='periodicals/')
