@@ -100,8 +100,8 @@ INSTALLED_APPS += [    # your project apps here
     'wagtail.contrib.table_block',
     'taggit',
     'modelcluster',
-    'wagtail.wagtailsearch',
     'haystack',
+    'wagtail.wagtailsearch',
     'periodicals'
 ]
 
@@ -178,11 +178,8 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
-
-
 ]
 
 ROOT_URLCONF = PROJECT_NAME + '.urls'
@@ -203,11 +200,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.template.context_processors.static',
                 'django.contrib.messages.context_processors.messages',
-
-
-
-
-
             ],
         },
     },
@@ -309,8 +301,10 @@ if 'django.contrib.gis' in INSTALLED_APPS:
 
 
 AUTH_LDAP_REQUIRE_GROUP = 'cn=mpol,' + LDAP_BASE_OU
-WAGTAIL_SITE_NAME = PROJECT_TITLE
+
 ITEMS_PER_PAGE = 10
+
+WAGTAIL_SITE_NAME = PROJECT_TITLE
 WAGTAILSEARCH_BACKENDS = {
     'default': {
         'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch5',
@@ -320,12 +314,14 @@ WAGTAILSEARCH_BACKENDS = {
         'TIMEOUT': 5,
     }
 }
+
 # Change as required
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE':
-        'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-        'URL': 'http://127.0.0.1:9200/',
-        'INDEX_NAME': 'mpol_haystack',
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://localhost:8983/solr/default',
+        'TIMEOUT': 60 * 5,
+        'INCLUDE_SPELLING': True,
+        'BATCH_SIZE': 100,
     },
 }

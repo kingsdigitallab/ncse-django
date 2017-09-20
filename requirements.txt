@@ -2,13 +2,13 @@ django
 django-compressor
 django-extensions
 django-grappelli
-django-haystack
+django-haystack==2.7.dev0
 django-kdl-ldap
 django-libsass
 django-model-utils
 django-redis
-elasticsearch>=5.0.0,<6.0.0
 lxml
 psycopg2
+pysolr
 redis
 wagtail
