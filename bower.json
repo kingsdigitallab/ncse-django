@@ -2,8 +2,8 @@
     "name": "mpol",
     "version": "0.1",
     "dependencies": {
-            "foundation-sites": null,
-        "jquery": null
+        "jquery": null,
+        "foundation-sites": null
     },
     "main": "assets/js/main.js",
     "ignore": [
