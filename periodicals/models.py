@@ -41,15 +41,29 @@ class Page(models.Model):
 
 
 class Article(models.Model):
-    page = models.ForeignKey(Page)
+    issue = models.ForeignKey(Issue)
+    page = models.ForeignKey(Page, blank=True, null=True)
     aid = models.CharField(max_length=32)
     title = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     content = models.TextField(blank=True, null=True)
+    continuation_from = models.ForeignKey(
+        'self', blank=True, null=True, related_name='continued_from')
+    continuation_to = models.ForeignKey(
+        'self', blank=True, null=True, related_name='continues_in')
 
     class Meta:
         ordering = ['page', 'aid']
 
     def __str__(self):
-        return '{}: {}'.format(
-            self.page, self.title if self.title else self.aid)
+        return '{} ({})'.format(
+            self.title if self.title else self.page, self.aid)
+
+    @property
+    def text(self):
+        if self.continuation_to:
+            return '{} {}'.format(
+                self.content if self.content else '',
+                self.continuation_to.full_content)
+
+        return self.content

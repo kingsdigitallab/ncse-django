@@ -42,11 +42,10 @@ class ArticleInline(admin.TabularInline):
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
-    inlines = [ArticleInline]
-
     list_display = ['issue', 'number', 'image', 'pdf']
 
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ['page', 'aid', 'title']
+    list_display = ['page', 'title',
+                    'continuation_from', 'aid', 'continuation_to']

@@ -142,23 +142,37 @@ class Command(BaseCommand):
             page_number = xmlroot.get('PAGE_NO')
             page = Page.objects.get(issue=issue, number=page_number)
         except Page.DoesNotExist:
-            self.stderr.write(self.style.WARNING(
-                'Page not found for issue {} article {}'.format(issue, aid)))
+            self.stderr.write(self.style.NOTICE(
+                '-- page not found for issue {} article {}'.format(
+                    issue, aid)))
             return
 
         try:
-            article = Article.objects.get(page=page, aid=aid)
+            article = Article.objects.get(issue=issue, aid=aid)
         except Article.DoesNotExist:
-            article = Article(page=page)
+            article = Article(issue=issue, page=page, aid=aid)
 
         meta = xmlroot.xpath('Meta')[0]
         content = xmlroot.xpath('Content')[0]
         content_xpath = ('//text()[normalize-space() and '
                          'parent::node()[name() != "Q" and name () != "q"]]')
 
-        article.aid = aid
         article.title = meta.get('NAME')
         article.description = meta.get('DESCRIPTION')
         article.content = ' '.join(content.xpath(content_xpath))
 
         article.save()
+
+        if xmlroot.get('CONTINUATION_FROM'):
+            continuation_from = xmlroot.get('CONTINUATION_FROM')
+            self.stdout.write(self.style.WARNING(
+                '-- article {} continuation from {}'.format(
+                    aid, continuation_from)))
+
+            continuation_from_article, _ = Article.objects.get_or_create(
+                issue=issue, aid=continuation_from)
+            continuation_from_article.continuation_to = article
+            continuation_from_article.save()
+
+            article.continuation_from = continuation_from_article
+            article.save()
