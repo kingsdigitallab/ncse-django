@@ -1,5 +1,6 @@
 import os
 import shutil
+import subprocess
 from zipfile import ZipFile
 
 from django.core.files import File
@@ -52,7 +53,18 @@ class Command(BaseCommand):
         number_of_pages = meta.get('PAGES_NUMBER')
 
         filename = link.get('SOURCE')
-        pdf = File(open(os.path.join(dir, filename), 'rb'), name=filename)
+        pdf_path = os.path.join(dir, filename)
+        pdf = File(open(pdf_path, 'rb'), name=filename)
+
+        try:
+            self._split_pdf(pdf_path, dir)
+        except subprocess.CalledProcessError as e:
+            self.stderr.write(self.style.ERROR(
+                'Failed to split PDF: {}'.format(pdf_path)))
+            self.stderr.write(self.style.ERROR(e.output))
+            self.stderr.write(self.style.ERROR(
+                'Failed to import issue: {}'.format(uid)))
+            return
 
         try:
             issue = Issue.objects.get(uid=uid)
@@ -68,6 +80,13 @@ class Command(BaseCommand):
 
         self._import_pages(issue, dir)
 
+    def _split_pdf(self, pdf_path, output_path):
+        process = subprocess.run(
+            ['pdftk', pdf_path, 'burst', 'output', os.path.join(
+                output_path, 'Pg%03d.pdf')],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        process.check_returncode()
+
     def _import_pages(self, issue, dir):
         extract_to = '_document'
 
@@ -77,32 +96,39 @@ class Command(BaseCommand):
         for root, dirs, files in os.walk(extract_to):
             for filename in files:
                 if filename.endswith('.xml') and filename.startswith('Pg'):
-                    self._import_page(issue, root, filename)
+                    self._import_page(issue, dir, root, filename)
             for filename in files:
                 if filename.endswith('.xml') and filename.startswith('Ar'):
                     self._import_article(issue, root, filename)
 
         shutil.rmtree(extract_to)
 
-    def _import_page(self, issue, dir, filename):
+    def _import_page(self, issue, pdfdir, dir, filename):
         tree = etree.parse(os.path.join(dir, filename))
         xmlroot = tree.getroot()
         meta = xmlroot.xpath('Meta')[0]
 
         number = meta.get('PAGE_NO')
-
-        image_filename = os.path.splitext(filename)[0] + '.png'
-        image = File(
-            open(os.path.join(dir, 'Img', image_filename), 'rb'),
-            name='{}/{}'.format(meta.get('RELEASE_NO'), image_filename))
-
         try:
             page = Page.objects.get(issue=issue, number=number)
         except Page.DoesNotExist:
             page = Page(issue=issue)
 
         page.number = number
+
+        basename = os.path.splitext(filename)[0]
+
+        image_filename = basename + '.png'
+        image = File(
+            open(os.path.join(dir, 'Img', image_filename), 'rb'),
+            name='{}/{}'.format(meta.get('RELEASE_NO'), image_filename))
         page.image = image
+
+        pdf_filename = basename + '.pdf'
+        pdf = File(
+            open(os.path.join(pdfdir, pdf_filename), 'rb'),
+            name='{}/{}'.format(meta.get('RELEASE_NO'), pdf_filename))
+        page.pdf = pdf
 
         page.save()
 

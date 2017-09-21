@@ -44,7 +44,7 @@ class ArticleInline(admin.TabularInline):
 class PageAdmin(admin.ModelAdmin):
     inlines = [ArticleInline]
 
-    list_display = ['issue', 'number']
+    list_display = ['issue', 'number', 'image', 'pdf']
 
 
 @admin.register(Article)

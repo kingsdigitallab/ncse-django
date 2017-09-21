@@ -31,6 +31,7 @@ class Page(models.Model):
     issue = models.ForeignKey(Issue)
     number = models.PositiveIntegerField()
     image = models.ImageField(upload_to='periodicals/')
+    pdf = models.FileField(upload_to='periodicals/')
 
     class Meta:
         ordering = ['issue', 'number']

@@ -12,6 +12,7 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
     page = indexes.IntegerField(model_attr='page__id', indexed=False)
     page_number = indexes.CharField(model_attr='page__number', indexed=False)
     page_image = indexes.CharField(model_attr='page__image', indexed=False)
+    page_pdf = indexes.CharField(model_attr='page__pdf', indexed=False)
 
     issue = indexes.IntegerField(model_attr='page__issue__id', indexed=False)
     issue_uid = indexes.CharField(model_attr='page__issue__uid', indexed=False)
