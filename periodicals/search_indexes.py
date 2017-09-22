@@ -7,10 +7,11 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
     aid = indexes.CharField(model_attr='aid', indexed=False)
     title = indexes.CharField(model_attr='title')
     description = indexes.CharField(model_attr='description')
-    text = indexes.CharField(document=True, model_attr='text')
+    text = indexes.CharField(document=True, model_attr='get_text')
 
     page = indexes.IntegerField(model_attr='page__id', indexed=False)
-    page_number = indexes.CharField(model_attr='page__number', indexed=False)
+    page_number = indexes.IntegerField(
+        model_attr='page__number', indexed=False)
     page_image = indexes.CharField(model_attr='page__image', indexed=False)
     page_pdf = indexes.CharField(model_attr='page__pdf', indexed=False)
 
