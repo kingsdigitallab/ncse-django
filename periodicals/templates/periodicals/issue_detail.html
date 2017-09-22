@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>{{ issue }}</h2>
+{% endblock %}
+
+{% block main %}
+<p>{{ issue.articles.count }} articles, {{ issue.pages.count }} pages</p>
+{% for article in issue.articles %}
+<p>
+    <a href="{% url 'article-detail' article.id %}">
+        <img src="{{ article.page.image.url }}" width="200">
+        {{ article }}
+    </a>
+</p>
+{% endfor %}
+{% endblock %}

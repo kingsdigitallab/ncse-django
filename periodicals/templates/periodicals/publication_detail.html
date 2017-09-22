@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>{{ publication }}</h2>
+{% endblock %}
+
+{% block main %}
+<ul>
+    {% for issue in publication.issues.all %}
+    <li>
+        <a href="{% url 'issue-detail' issue.id %}">
+            {{ issue }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -20,7 +20,8 @@
 
     {% for result in page.object_list %}
     <p>
-        <a href="{{ result.object.get_absolute_url }}">{{ result.object }}</a>
+        <a href="{{ result.url }}">{{ result.title }}</a>
+        <br />
         {% highlight result.text with query html_tag "strong" %}
     </p>
     {% empty %}
