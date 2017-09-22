@@ -26,6 +26,10 @@ class Issue(models.Model):
     def __str__(self):
         return '{}: {}'.format(self.publication, self.issue_date)
 
+    @property
+    def articles(self):
+        return self.articles_in_issue.filter(continuation_from=None)
+
 
 class Page(models.Model):
     issue = models.ForeignKey(Issue, related_name='pages')
