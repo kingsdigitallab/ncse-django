@@ -13,7 +13,18 @@ kdl_ldap_register_signal_hadlers()
 
 admin.autodiscover()
 
-urlpatterns = [
+urlpatterns = []
+
+try:
+    if settings.DEBUG:
+        import debug_toolbar
+        urlpatterns += [
+            url(r'^__debug__/', include(debug_toolbar.urls)),
+        ]
+except ImportError:
+    pass
+
+urlpatterns += [
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
@@ -24,19 +35,6 @@ urlpatterns = [
     url(r'^search/', include(wagtailsearch_frontend_urls)),
     url(r'', include(wagtail_urls)),
 ]
-
-# -----------------------------------------------------------------------------
-# Django Debug Toolbar URLS
-# -----------------------------------------------------------------------------
-try:
-    if settings.DEBUG:
-        import debug_toolbar
-        urlpatterns += [
-            url(r'^__debug__/',
-                include(debug_toolbar.urls)),
-        ]
-except ImportError:
-    pass
 
 # -----------------------------------------------------------------------------
 # Static file DEBUGGING
