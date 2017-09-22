@@ -14,7 +14,7 @@ class Publication(models.Model):
 
 
 class Issue(models.Model):
-    publication = models.ForeignKey(Publication)
+    publication = models.ForeignKey(Publication, related_name='issues')
     uid = models.CharField(max_length=32, unique=True)
     issue_date = models.DateField()
     number_of_pages = models.PositiveIntegerField(blank=True, null=True)
@@ -28,7 +28,7 @@ class Issue(models.Model):
 
 
 class Page(models.Model):
-    issue = models.ForeignKey(Issue)
+    issue = models.ForeignKey(Issue, related_name='pages')
     number = models.PositiveIntegerField()
     image = models.ImageField(upload_to='periodicals/')
     pdf = models.FileField(upload_to='periodicals/')
@@ -41,8 +41,9 @@ class Page(models.Model):
 
 
 class Article(models.Model):
-    issue = models.ForeignKey(Issue)
-    page = models.ForeignKey(Page, blank=True, null=True)
+    issue = models.ForeignKey(Issue, related_name='articles_in_issue')
+    page = models.ForeignKey(Page, blank=True, null=True,
+                             related_name='articles_in_page')
     aid = models.CharField(max_length=32)
     title = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
