@@ -10,7 +10,7 @@ class Publication(models.Model):
         ordering = ['abbreviation']
 
     def __str__(self):
-        return '{}: {}'.format(self.abbreviation, self.title)
+        return '{}'.format(self.title if self.title else self.abbreviation)
 
 
 class Issue(models.Model):
@@ -59,11 +59,10 @@ class Article(models.Model):
         return '{} ({})'.format(
             self.title if self.title else self.page, self.aid)
 
-    @property
-    def text(self):
+    def get_text(self):
         if self.continuation_to:
             return '{} {}'.format(
                 self.content if self.content else '',
-                self.continuation_to.full_content)
+                self.continuation_to.get_text())
 
         return self.content
