@@ -1,9 +1,11 @@
+from django.urls import reverse
 from haystack import indexes
 
 from .models import Article
 
 
 class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
+    url = indexes.CharField(indexed=False)
     aid = indexes.CharField(model_attr='aid', indexed=False)
     title = indexes.CharField(model_attr='title')
     description = indexes.CharField(model_attr='description')
@@ -36,3 +38,6 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
 
     def index_queryset(self, using=None):
         return self.get_model().objects.filter(continuation_from=None)
+
+    def prepare_url(self, obj):
+        return reverse('article-detail', args=[obj.id])
