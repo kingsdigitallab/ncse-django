@@ -157,6 +157,7 @@ class Command(BaseCommand):
         content_xpath = ('//text()[normalize-space() and '
                          'parent::node()[name() != "Q" and name () != "q"]]')
 
+        article.page = page
         article.title = meta.get('NAME')
         article.description = meta.get('DESCRIPTION')
         article.content = ' '.join(content.xpath(content_xpath))
