@@ -5,13 +5,23 @@
 {% endblock %}
 
 {% block main %}
+{% with issues=publication.issues.all %}
+{% regroup issues by issue_date.year as year_list %}
+
 <ul>
-    {% for issue in publication.issues.all %}
-    <li>
-        <a href="{% url 'issue-detail' issue.id %}">
-            {{ issue }}
-        </a>
+    {% for year, issues_in_year in year_list %}
+    <li>{{ year }}
+        <ul>
+            {% for issue in issues_in_year %}
+            <li>
+                <a href="{% url 'issue-detail' issue.id %}">
+                    {{ issue }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
     </li>
     {% endfor %}
 </ul>
+{% endwith %}
 {% endblock %}
