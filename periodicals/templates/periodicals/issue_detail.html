@@ -10,7 +10,7 @@
 <p>
     <a href="{% url 'article-detail' article.id %}">
         <img src="{{ article.page.image.url }}" width="200">
-        {{ article }}
+        {{ article }}, p{{ article.page.number }}
     </a>
 </p>
 {% endfor %}
