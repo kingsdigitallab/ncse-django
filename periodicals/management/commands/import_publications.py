@@ -1,6 +1,6 @@
 import os
+import json
 import shutil
-import subprocess
 from zipfile import ZipFile
 
 from django.core.files import File
@@ -20,6 +20,19 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for publication_path in options['publication_path']:
             self._import_publication(publication_path)
+
+    # Helper object:
+    def _str_to_box(self, input):
+        coords = input.split(' ')
+        if len(coords) == 4:
+            # Success
+            return {"x0": coords[0],
+                    "x1": coords[2],
+                    "y0": coords[1],
+                    "y2": coords[3]
+                    }
+        else:
+            return {}
 
     def _import_publication(self, publication_path):
         for root, dirs, files in os.walk(publication_path):
@@ -57,16 +70,6 @@ class Command(BaseCommand):
         pdf = File(open(pdf_path, 'rb'), name=filename)
 
         try:
-            self._split_pdf(pdf_path, dir)
-        except subprocess.CalledProcessError as e:
-            self.stderr.write(self.style.ERROR(
-                'Failed to split PDF: {}'.format(pdf_path)))
-            self.stderr.write(self.style.ERROR(e.output))
-            self.stderr.write(self.style.ERROR(
-                'Failed to import issue: {}'.format(uid)))
-            return
-
-        try:
             issue = Issue.objects.get(uid=uid)
         except Issue.DoesNotExist:
             issue = Issue(uid=uid)
@@ -80,16 +83,9 @@ class Command(BaseCommand):
 
         self._import_pages(issue, dir)
 
-    def _split_pdf(self, pdf_path, output_path):
-        process = subprocess.run(
-            ['pdftk', pdf_path, 'burst', 'output', os.path.join(
-                output_path, 'Pg%03d.pdf')],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        process.check_returncode()
-
     def _import_pages(self, issue, dir):
         extract_to = '_document'
-
+        self.stdout.write('- unzipping Document.zip')
         document = ZipFile(os.path.join(dir, 'Document.zip'), mode='r')
         document.extractall(path=extract_to)
 
@@ -109,6 +105,7 @@ class Command(BaseCommand):
         meta = xmlroot.xpath('Meta')[0]
 
         number = meta.get('PAGE_NO')
+
         try:
             page = Page.objects.get(issue=issue, number=number)
         except Page.DoesNotExist:
@@ -123,13 +120,6 @@ class Command(BaseCommand):
             open(os.path.join(dir, 'Img', image_filename), 'rb'),
             name='{}/{}'.format(meta.get('RELEASE_NO'), image_filename))
         page.image = image
-
-        pdf_filename = basename + '.pdf'
-        pdf = File(
-            open(os.path.join(pdfdir, pdf_filename), 'rb'),
-            name='{}/{}'.format(meta.get('RELEASE_NO'), pdf_filename))
-        page.pdf = pdf
-
         page.save()
 
     def _import_article(self, issue, dir, filename):
@@ -137,6 +127,7 @@ class Command(BaseCommand):
         xmlroot = tree.getroot()
 
         aid = xmlroot.get('ID')
+        self.stdout.write('- - importing article: {}'.format(aid))
 
         try:
             page_number = xmlroot.get('PAGE_NO')
@@ -161,6 +152,7 @@ class Command(BaseCommand):
         article.title = meta.get('NAME')
         article.description = meta.get('DESCRIPTION')
         article.content = ' '.join(content.xpath(content_xpath))
+        article.bounding_box = self._str_to_box(xmlroot.get('BOX'))
 
         article.save()
 
@@ -177,3 +169,57 @@ class Command(BaseCommand):
 
             article.continuation_from = continuation_from_article
             article.save()
+
+        # Here we are going to grab the words from the page
+        # and merge them with the ones from this article.
+
+        # This is a json object, we store the words and their coordinates
+        # in the following format:
+        # { '<word>': [{'x0': x0, 'x1': x1, 'y0': y0, 'y1': y1}]}
+
+        # Get page words
+        words = page.words
+
+        # Check if we have a dict, if not, create it
+        if not isinstance(words, dict):
+            words = json.loads(words)
+
+        # Get our xpaths
+        words_xpath = xmlroot.xpath('Content/Primitive/W')
+        joined_words_xpath = xmlroot.xpath('Content/Primitive/QW')
+
+        self.stdout.write('- - - importing words')
+
+        # Iterate over words, adding them to the list
+        for word in words_xpath:
+            # word.text, word.get('box')
+            text = word.text.lower()
+            if text not in words:
+                words[text] = []
+            words[text].append(self._str_to_box(word.get('BOX')))
+
+        # Iterate over our joined words (fixes)
+        for word in joined_words_xpath:
+            text = word.text.lower()
+            if text not in words:
+                words[text] = []
+
+            # Get the QID
+            qid = word.get('QID')
+
+            # Get nodes that form parts of our joint words
+            # There are <q> and <Q>
+            qid_xpath = xmlroot.xpath(
+                'Content/Primitive/q[@QID=\'{}\']'.format(qid))
+            qid_xpath_cap = xmlroot.xpath(
+                'Content/Primitive/Q[@QID=\'{}\']'.format(qid))
+
+            for part in qid_xpath:
+                words[text].append(self._str_to_box(part.get('BOX')))
+
+            for part in qid_xpath_cap:
+                words[text].append(self._str_to_box(part.get('BOX')))
+
+        # Save them back to the page
+        page.words = words
+        page.save()

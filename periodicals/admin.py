@@ -42,7 +42,8 @@ class ArticleInline(admin.TabularInline):
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
-    list_display = ['issue', 'number', 'image', 'pdf']
+    list_display = ['issue', 'number', 'image']
+
     list_filter = ['issue__publication']
 
 
