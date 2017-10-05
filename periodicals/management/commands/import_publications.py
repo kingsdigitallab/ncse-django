@@ -29,7 +29,7 @@ class Command(BaseCommand):
             return {"x0": coords[0],
                     "x1": coords[2],
                     "y0": coords[1],
-                    "y2": coords[3]
+                    "y1": coords[3]
                     }
         else:
             return {}
