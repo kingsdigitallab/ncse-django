@@ -104,14 +104,18 @@ class Command(BaseCommand):
         xmlroot = tree.getroot()
         meta = xmlroot.xpath('Meta')[0]
 
+        height = meta.get('PAGE_HEIGHT')
         number = meta.get('PAGE_NO')
+        width = meta.get('PAGE_WIDTH')
 
         try:
             page = Page.objects.get(issue=issue, number=number)
         except Page.DoesNotExist:
             page = Page(issue=issue)
 
+        page.height = height
         page.number = number
+        page.width = width
 
         basename = os.path.splitext(filename)[0]
 

@@ -32,9 +32,11 @@ class Issue(models.Model):
 
 
 class Page(models.Model):
+    height = models.PositiveIntegerField(null=True)
     issue = models.ForeignKey(Issue, related_name='pages')
     number = models.PositiveIntegerField()
     image = models.ImageField(upload_to='periodicals/')
+    width = models.PositiveIntegerField(null=True)
     words = JSONField(default='{}', null="true")
 
     class Meta:
@@ -42,6 +44,18 @@ class Page(models.Model):
 
     def __str__(self):
         return '{}: {}'.format(self.issue, self.number)
+
+    def previous_page(self):
+        if self.number > 1:
+            return self.issue.pages.all()[self.number - 2]
+        else:
+            return None
+
+    def next_page(self):
+        if self.issue.number_of_pages > self.number:
+            return self.issue.pages.all()[self.number]
+        else:
+            return None
 
 
 class Article(models.Model):

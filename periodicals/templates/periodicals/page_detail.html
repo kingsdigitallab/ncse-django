@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>{{ page.publication }} {{ page.issue }}: Page {{ page.number }}</h2>
+{% endblock %}
+
+{% block main %}
+<div>
+
+<a href="{% url 'issue-detail' page.issue.id %}">Back to issue</a> 
+
+
+{% if page.previous_page %}
+<a href="{% url 'page-detail' page.previous_page.id %}">Previous Page</a>
+{% endif %}
+
+{% if page.next_page %}
+<a href="{% url 'page-detail' page.next_page.id %}">Next Page</a>
+{% endif %}
+</a>
+
+<div>
+<canvas class="pageCanvas" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
+    <!-- Fallback for non-canvas supporting devices -->
+    <img id="page{{ page.number}}" src="{{ page.image.url }}">
+</canvas>
+</div>
+{% endblock %}
