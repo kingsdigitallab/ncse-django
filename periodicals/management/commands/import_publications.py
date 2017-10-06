@@ -189,8 +189,8 @@ class Command(BaseCommand):
             words = json.loads(words)
 
         # Get our xpaths
-        words_xpath = xmlroot.xpath('Content/Primitive/W')
-        joined_words_xpath = xmlroot.xpath('Content/Primitive/QW')
+        words_xpath = xmlroot.xpath('node()/Primitive/W')
+        joined_words_xpath = xmlroot.xpath('node()/Primitive/QW')
 
         self.stdout.write('- - - importing words')
 
@@ -214,9 +214,9 @@ class Command(BaseCommand):
             # Get nodes that form parts of our joint words
             # There are <q> and <Q>
             qid_xpath = xmlroot.xpath(
-                'Content/Primitive/q[@QID=\'{}\']'.format(qid))
+                'node()/Primitive/q[@QID=\'{}\']'.format(qid))
             qid_xpath_cap = xmlroot.xpath(
-                'Content/Primitive/Q[@QID=\'{}\']'.format(qid))
+                'node()/Primitive/Q[@QID=\'{}\']'.format(qid))
 
             for part in qid_xpath:
                 words[text].append(self._str_to_box(part.get('BOX')))
