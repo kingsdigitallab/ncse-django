@@ -6,6 +6,7 @@
 
 {% block main %}
 <div>
+    <!-- This div is for testing! -->
 
     <a href="{% url 'issue-detail' page.issue.id %}">Back to issue</a> 
 
@@ -17,6 +18,9 @@
     <a href="{% url 'page-detail' page.next_page.id %}">Next Page</a>
     {% endif %}
 
+    <form action='.' method='get'>
+        <input name='highlight' placeholder='text to highlight'><input type='submit'>
+    </form>
 </div>
 
 
