@@ -11,7 +11,7 @@ class ArticleDetailView(DetailView):
 class PageDetailView(TemplateView):
     template_name = 'periodicals/page_detail.html'
     page = None
-    highlight_words = None
+    highlight_words = {}
 
     def get_context_data(self, **kwargs):
         context = super(PageDetailView, self).get_context_data(**kwargs)
@@ -26,11 +26,11 @@ class PageDetailView(TemplateView):
             words_to_highlight = self.request.GET['highlight'].split()
             page_words = self.page.words
 
-            # object we will send to the client
-            self.highlight_words = {}
-
             for word in words_to_highlight:
-                self.highlight_words.update({word: page_words[word]})
+                try:
+                    self.highlight_words.update({word: page_words[word]})
+                except KeyError:
+                    pass  # Not found
 
         # Set all of the things
         if self.highlight_words:
