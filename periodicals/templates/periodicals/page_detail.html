@@ -33,10 +33,10 @@
 {% endblock %}
 
 
-{% if highlight_words %}
-    {% block footer_scripts %}
-        <script>
-            var highlight_words = {{ highlight_words|safe }};
-        </script>
-    {% endblock %}}
-{% endif %}
+{% block footer_scripts %}
+    {% if highlight_words %}
+    <script>
+        var highlight_words = {{ highlight_words|safe }};
+    </script>
+    {% endif %}
+{% endblock %}

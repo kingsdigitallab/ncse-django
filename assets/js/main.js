@@ -11,7 +11,7 @@ function enableCanvas()
             var img = new Image;
             img.onload = function() {
                 ctx.drawImage(this, 0, 0);
-                if (highlight_words != '')
+                if (typeof highlight_words !== 'undefined')
                 {
                     ctx.lineWidth="1";
                     ctx.fillStyle = 'rgba(225,225,0,0.5)';
