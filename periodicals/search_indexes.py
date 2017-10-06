@@ -9,7 +9,8 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
     aid = indexes.CharField(model_attr='aid', indexed=False)
     title = indexes.CharField(model_attr='title')
     description = indexes.CharField(model_attr='description')
-    text = indexes.CharField(document=True, model_attr='get_text')
+    # text = indexes.CharField(document=True, model_attr='get_text')
+    text = indexes.CharField(document=True, model_attr='content')
 
     page = indexes.IntegerField(model_attr='page__id', indexed=False)
     page_number = indexes.IntegerField(
@@ -37,7 +38,7 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
         return Article
 
     def index_queryset(self, using=None):
-        return self.get_model().objects.filter(continuation_from=None)
+        return self.get_model().objects.all()
 
     def prepare_url(self, obj):
         return reverse('article-detail', args=[obj.id])
