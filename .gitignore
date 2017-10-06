@@ -105,3 +105,5 @@ static/
 .vagrant
 playbook.retry
 local.py
+
+.DS_Store
