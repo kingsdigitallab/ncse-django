@@ -1,5 +1,7 @@
 from django.views.generic import DetailView, ListView, TemplateView
+from haystack.generic_views import FacetedSearchView
 
+from .forms import PeriodicalsSearchForm
 from .models import Article, Issue, Page, Publication
 
 
@@ -53,3 +55,9 @@ class PublicationDetailView(DetailView):
 class PublicationListView(ListView):
     context_object_name = 'publications'
     model = Publication
+
+
+class PeriodicalsSearchView(FacetedSearchView):
+    facet_fields = ['publication_abbreviation', 'issue_year']
+    form_class = PeriodicalsSearchForm
+    template_name = 'periodicals/search.html'

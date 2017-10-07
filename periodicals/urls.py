@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 
-from .views import (ArticleDetailView, IssueDetailView,
-                    PageDetailView, PublicationDetailView,
+from .views import (ArticleDetailView, IssueDetailView, PageDetailView,
+                    PeriodicalsSearchView, PublicationDetailView,
                     PublicationListView)
 
 urlpatterns = [
@@ -14,6 +14,6 @@ urlpatterns = [
         IssueDetailView.as_view(), name='issue-detail'),
     url(r'^publications/(?P<pk>[0-9]+)/$',
         PublicationDetailView.as_view(), name='publication-detail'),
-    url(r'^search/', include('haystack.urls'), name='search'),
+    url(r'^search/', PeriodicalsSearchView.as_view(), name='search'),
     url(r'', PublicationListView.as_view(), name='publication-list')
 ]
