@@ -63,6 +63,7 @@ class Article(models.Model):
     page = models.ForeignKey(Page, blank=True, null=True,
                              related_name='articles_in_page')
     aid = models.CharField(max_length=32)
+    position_in_page = models.PositiveIntegerField()
     title = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     content = models.TextField(blank=True, null=True)
@@ -73,7 +74,7 @@ class Article(models.Model):
     bounding_box = JSONField(default='{}')
 
     class Meta:
-        ordering = ['page', 'aid']
+        ordering = ['page', 'position_in_page', 'aid']
 
     def __str__(self):
         return '{} ({})'.format(
