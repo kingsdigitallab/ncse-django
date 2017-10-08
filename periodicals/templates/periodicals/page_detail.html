@@ -7,8 +7,7 @@
 {% block main %}
 <div>
     <!-- This div is for testing! -->
-
-    <a href="{% url 'issue-detail' page.issue.id %}">Back to issue</a> 
+    <a href="{% url 'issue-detail' page.issue.id %}">Back to issue</a>
 
     {% if page.previous_page %}
     <a href="{% url 'page-detail' page.previous_page.id %}">Previous Page</a>
@@ -23,7 +22,6 @@
     </form>
 </div>
 
-
 <div>
     <canvas class="pageCanvas" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
         <!-- Fallback for non-canvas supporting devices -->
@@ -32,11 +30,10 @@
 </div>
 {% endblock %}
 
-
 {% block footer_scripts %}
-    {% if highlight_words %}
-    <script>
-        var highlight_words = {{ highlight_words|safe }};
-    </script>
-    {% endif %}
+{% if highlight_words %}
+<script>
+var highlight_words = {{ highlight_words|safe }};
+</script>
+{% endif %}
 {% endblock %}
