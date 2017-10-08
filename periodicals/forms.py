@@ -15,6 +15,9 @@ class PeriodicalsSearchForm(FacetedSearchForm):
     start_year = forms.IntegerField(required=False)
     end_year = forms.IntegerField(required=False)
 
+    def no_query_found(self):
+        return self.searchqueryset.all()
+
     def search(self):
         sqs = super(PeriodicalsSearchForm, self).search()
 
