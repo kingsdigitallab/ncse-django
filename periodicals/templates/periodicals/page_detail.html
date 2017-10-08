@@ -28,6 +28,14 @@
         <img id="page{{ page.number}}" src="{{ page.image.url }}">
     </canvas>
 </div>
+
+<div>
+    {% for article in page.articles_in_page.all %}
+    <p id="{{ article.aid }}">
+        {{ article.content }}
+    </p>
+    {% endfor %}
+</div>
 {% endblock %}
 
 {% block footer_scripts %}
