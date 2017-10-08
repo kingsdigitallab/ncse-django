@@ -47,7 +47,7 @@
     <h3>Results</h3>
     {% for result in object_list %}
     <p>
-        <a href="{% url 'page-detail' result.object.page.id %}">{{ result.title }}</a>
+        <a href="{% url 'page-detail' result.object.page.id %}?highlight={{ query }}">{{ result.title }}</a>
         <br />
         {% highlight result.text with query html_tag "strong" %}
     </p>
