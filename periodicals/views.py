@@ -61,3 +61,12 @@ class PeriodicalsSearchView(FacetedSearchView):
     facet_fields = ['publication_abbreviation', 'issue_year']
     form_class = PeriodicalsSearchForm
     template_name = 'periodicals/search.html'
+
+    def get_queryset(self):
+        queryset = super(FacetedSearchView, self).get_queryset()
+
+        for field in self.facet_fields:
+            queryset = queryset.facet(
+                field, sort='index', limit=-1, mincount=1)
+
+        return queryset
