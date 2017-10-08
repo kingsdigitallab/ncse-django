@@ -15,7 +15,6 @@
         </tr>
     </table>
 
-    {% if query %}
     <h3>Filters</h3>
     <h4>By Publication</h4>
     <div>
@@ -48,15 +47,13 @@
     {% for result in object_list %}
     <p>
         <a href="{% url 'page-detail' result.object.page.id %}?highlight={{ query }}">{{ result.title }}</a>
+        {% if query %}
         <br />
         {% highlight result.text with query html_tag "strong" %}
+        {% endif %}
     </p>
     {% empty %}
     <p>No results found.</p>
     {% endfor %}
-
-    {% else %}
-    {# Show some example queries to run, maybe query syntax, something else? #}
-    {% endif %}
 </form>
 {% endblock %}
