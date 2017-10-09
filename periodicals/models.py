@@ -19,6 +19,7 @@ class Issue(models.Model):
     uid = models.CharField(max_length=32, unique=True)
     issue_date = models.DateField()
     number_of_pages = models.PositiveIntegerField(blank=True, null=True)
+    pdf = models.FileField(upload_to='periodicals/')
 
     class Meta:
         ordering = ['publication', 'issue_date']
