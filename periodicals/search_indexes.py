@@ -18,17 +18,20 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
 
     issue = indexes.IntegerField(model_attr='issue__id', indexed=False)
     issue_uid = indexes.CharField(model_attr='issue__uid', indexed=False)
+    issue_slug = indexes.CharField(model_attr='issue__slug', indexed=False)
     issue_date = indexes.FacetDateField(model_attr='issue__issue_date')
     issue_year = indexes.FacetIntegerField(
         model_attr='issue__issue_date__year')
     issue_number_of_pages = indexes.IntegerField(
         model_attr='issue__number_of_pages', indexed=False)
-    # issue_pdf = indexes.CharField(model_attr='issue__pdf', indexed=False)
+    issue_pdf = indexes.CharField(model_attr='issue__pdf', indexed=False)
 
     publication = indexes.IntegerField(
         model_attr='page__issue__publication__id', indexed=False)
     publication_abbreviation = indexes.FacetCharField(
         model_attr='page__issue__publication__abbreviation')
+    publication_slug = indexes.CharField(
+        model_attr='page__issue__publication__slug', indexed=False)
     publication_title = indexes.FacetCharField(
         model_attr='page__issue__publication__title')
     publication_description = indexes.CharField(
