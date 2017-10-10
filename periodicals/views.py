@@ -1,4 +1,5 @@
-from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic import DetailView, ListView
+from django.shortcuts import get_object_or_404
 from haystack.generic_views import FacetedSearchView
 
 from .forms import PeriodicalsSearchForm
@@ -10,15 +11,16 @@ class ArticleDetailView(DetailView):
     queryset = Article.objects.all()
 
 
-class PageDetailView(TemplateView):
-    template_name = 'periodicals/page_detail.html'
+class PageDetailView(DetailView):
+
+    def get_object(self):
+        return get_object_or_404(
+            Page, issue__slug=self.kwargs['issue_slug'],
+            number=self.kwargs['number'])
 
     def get_context_data(self, **kwargs):
         context = super(PageDetailView, self).get_context_data(**kwargs)
-
-        # Get our page
-        page_number = kwargs.get('pk', None)
-        page = Page.objects.get(pk=page_number)
+        page = context['page']
 
         # Words to highlight
         highlight_words = {}
@@ -38,7 +40,7 @@ class PageDetailView(TemplateView):
         # Set all of the things
         if highlight_words:
             context['highlight_words'] = highlight_words
-        context['page'] = page
+
         return context
 
 
@@ -68,5 +70,9 @@ class PeriodicalsSearchView(FacetedSearchView):
         for field in self.facet_fields:
             queryset = queryset.facet(
                 field, sort='index', limit=-1, mincount=1)
+
+        if 'order_by' in self.request.GET:
+            order_by = self.request.GET['order_by']
+            queryset = queryset.order_by(order_by)
 
         return queryset

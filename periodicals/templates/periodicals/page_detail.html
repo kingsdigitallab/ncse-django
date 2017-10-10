@@ -7,14 +7,14 @@
 {% block main %}
 <div>
     <!-- This div is for testing! -->
-    <a href="{% url 'issue-detail' page.issue.id %}">Back to issue</a>
+    <a href="{% url 'issue-detail' page.issue.publication.slug page.issue.slug %}">Back to issue</a>
 
     {% if page.previous_page %}
-    <a href="{% url 'page-detail' page.previous_page.id %}">Previous Page</a>
+    <a href="{% url 'page-detail' page.issue.publication.slug page.issue.slug page.previous_page.number %}">Previous Page</a>
     {% endif %}
 
     {% if page.next_page %}
-    <a href="{% url 'page-detail' page.next_page.id %}">Next Page</a>
+    <a href="{% url 'page-detail' page.issue.publication.slug page.issue.slug page.next_page.number %}">Next Page</a>
     {% endif %}
 
     <form action='.' method='get'>

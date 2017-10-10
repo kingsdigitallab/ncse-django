@@ -4,16 +4,25 @@ from haystack.forms import FacetedSearchForm
 
 
 class PeriodicalsSearchForm(FacetedSearchForm):
-    MODE_DEFAULT = 'or'
-    MODE_AND = 'and'
-    MODE_PHRASE = 'phrase'
-    MODE_CHOICES = ((MODE_DEFAULT, 'Any word'),
-                    (MODE_AND, 'All the words'),
-                    (MODE_PHRASE, 'Phrase'))
-    mode = forms.ChoiceField(choices=MODE_CHOICES,
-                             initial=MODE_DEFAULT, widget=RadioSelect)
+    MODE_DEFAULT = ('or', 'Any word')
+    MODE_AND = ('and', 'All the words')
+    MODE_PHRASE = ('phrase', 'Phrase')
+    MODE_CHOICES = (MODE_DEFAULT, MODE_AND, MODE_PHRASE)
+    mode = forms.ChoiceField(
+        choices=MODE_CHOICES, initial=MODE_DEFAULT[0], widget=RadioSelect)
+
     start_year = forms.IntegerField(required=False)
     end_year = forms.IntegerField(required=False)
+
+    ORDER_BY_DEFAULT = ('issue_date', 'Order by date')
+    ORDER_BY_TITLE = ('title', 'Order by title')
+    ORDER_BY_RELEVANCE = ('score', 'Order by relevance')
+    ORDER_BY_CHOICES = (ORDER_BY_DEFAULT, ORDER_BY_TITLE, ORDER_BY_RELEVANCE)
+    order_by = forms.ChoiceField(
+        choices=ORDER_BY_CHOICES, initial=ORDER_BY_DEFAULT[0],
+        widget=RadioSelect)
+
+    facet_fields = ['publication_abbreviation', 'issue_year']
 
     def no_query_found(self):
         return self.searchqueryset.all()
@@ -27,9 +36,9 @@ class PeriodicalsSearchForm(FacetedSearchForm):
         if self.cleaned_data['mode'] and self.cleaned_data['q']:
             mode = self.cleaned_data['mode']
 
-            if mode == self.MODE_AND:
+            if mode == self.MODE_AND[0]:
                 sqs = sqs.filter_and(content=self.cleaned_data['q'])
-            elif mode == self.MODE_PHRASE:
+            elif mode == self.MODE_PHRASE[0]:
                 sqs = sqs.filter(content__exact=self.cleaned_data['q'])
 
         if self.cleaned_data['start_year']:
