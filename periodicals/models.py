@@ -64,7 +64,7 @@ class Article(models.Model):
                              related_name='articles_in_page')
     aid = models.CharField(max_length=32)
     position_in_page = models.PositiveIntegerField(blank=True, null=True)
-    title = models.CharField(max_length=256, blank=True, null=True)
+    title = models.CharField(max_length=512, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     content = models.TextField(blank=True, null=True)
     continuation_from = models.ForeignKey(
