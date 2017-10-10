@@ -69,4 +69,8 @@ class PeriodicalsSearchView(FacetedSearchView):
             queryset = queryset.facet(
                 field, sort='index', limit=-1, mincount=1)
 
+        if 'order_by' in self.request.GET:
+            order_by = self.request.GET['order_by']
+            queryset = queryset.order_by(order_by)
+
         return queryset
