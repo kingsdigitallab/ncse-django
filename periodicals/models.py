@@ -68,6 +68,7 @@ class Article(models.Model):
     title = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     content = models.TextField(blank=True, null=True)
+    content_html = models.TextField(blank=True, null=True)
     continuation_from = models.ForeignKey(
         'self', blank=True, null=True, related_name='continued_from')
     continuation_to = models.ForeignKey(
