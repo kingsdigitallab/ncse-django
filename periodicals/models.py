@@ -1,9 +1,11 @@
-from django.db import models
 from django.contrib.postgres.fields import JSONField
+from django.db import models
+from django.utils.text import slugify
 
 
 class Publication(models.Model):
     abbreviation = models.CharField(max_length=3, unique=True)
+    slug = models.SlugField(max_length=3, unique=True)
     title = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 
@@ -13,10 +15,15 @@ class Publication(models.Model):
     def __str__(self):
         return '{}'.format(self.title if self.title else self.abbreviation)
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.abbreviation)
+        super(Publication, self).save(*args, **kwargs)
+
 
 class Issue(models.Model):
     publication = models.ForeignKey(Publication, related_name='issues')
     uid = models.CharField(max_length=32, unique=True)
+    slug = models.CharField(max_length=32, unique=True)
     issue_date = models.DateField()
     number_of_pages = models.PositiveIntegerField(blank=True, null=True)
     pdf = models.FileField(upload_to='periodicals/', null=True)
@@ -30,6 +37,10 @@ class Issue(models.Model):
     @property
     def articles(self):
         return self.articles_in_issue.filter(continuation_from=None)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.uid)
+        super(Issue, self).save(*args, **kwargs)
 
 
 class Page(models.Model):
