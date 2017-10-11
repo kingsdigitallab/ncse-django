@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Article, Issue, Page, Publication
+from .models import (Article, ArticleType, Issue, Page, Publication)
 
 
 class IssueInline(admin.TabularInline):
@@ -51,3 +51,8 @@ class PageAdmin(admin.ModelAdmin):
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ['page', 'title',
                     'continuation_from', 'aid', 'continuation_to']
+
+
+@admin.register(ArticleType)
+class ArticleTypeAdmin(admin.ModelAdmin):
+    list_display = ['title']

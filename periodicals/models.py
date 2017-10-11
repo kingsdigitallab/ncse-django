@@ -70,6 +70,16 @@ class Page(models.Model):
             return None
 
 
+class ArticleType(models.Model):
+    title = models.CharField(max_length=512, blank=False, null=False)
+
+    class Meta:
+        ordering = ['title']
+
+    def __str__(self):
+        return self.title
+
+
 class Article(models.Model):
     issue = models.ForeignKey(Issue, related_name='articles_in_issue')
     page = models.ForeignKey(Page, blank=True, null=True,
@@ -85,6 +95,9 @@ class Article(models.Model):
     continuation_to = models.ForeignKey(
         'self', blank=True, null=True, related_name='continues_in')
     bounding_box = JSONField(default='{}')
+    title_image = models.ImageField(upload_to='periodicals/',
+                                    blank=True, null=True)
+    article_type = models.ForeignKey(ArticleType, blank=True, null=True)
 
     class Meta:
         ordering = ['page', 'position_in_page', 'aid']
