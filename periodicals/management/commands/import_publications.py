@@ -1,5 +1,6 @@
 import os
 import json
+import logging
 import shutil
 from zipfile import ZipFile
 
@@ -13,6 +14,7 @@ from periodicals.models import Article, ArticleType, Issue, Page, Publication
 class Command(BaseCommand):
     args = '<publication_path publication_path ...>'
     help = 'Imports/updates publications'
+    logger = logging.getLogger(__name__)
 
     def add_arguments(self, parser):
         parser.add_argument('publication_path', nargs='+', type=str)
@@ -42,7 +44,7 @@ class Command(BaseCommand):
                     xmlroot = tree.getroot()
 
                     abbreviation = xmlroot.get('PUBLICATION')
-                    self.stdout.write('Importing {}'.format(abbreviation))
+                    self.logger.warning('Importing {}'.format(abbreviation))
 
                     publication, _ = Publication.objects.get_or_create(
                         abbreviation=abbreviation)
@@ -58,7 +60,7 @@ class Command(BaseCommand):
 
         uid = meta.get('DOC_UID')
 
-        self.stdout.write('- importing issue: {}'.format(uid))
+        self.logger.warning('- importing issue: {}'.format(uid))
 
         issue_date_parts = xmlroot.get('ISSUE_DATE').split('/')
         issue_date = parse_date('{}-{}-{}'.format(
@@ -85,7 +87,7 @@ class Command(BaseCommand):
 
     def _import_pages(self, issue, dir):
         extract_to = '_document'
-        self.stdout.write('- unzipping Document.zip')
+        self.logger.info('- unzipping Document.zip')
         document = ZipFile(os.path.join(dir, 'Document.zip'), mode='r')
         document.extractall(path=extract_to)
 
@@ -131,15 +133,15 @@ class Command(BaseCommand):
         xmlroot = tree.getroot()
 
         aid = xmlroot.get('ID')
-        self.stdout.write('- - importing article: {}'.format(aid))
+        self.logger.info('- - importing article: {}'.format(aid))
 
         try:
             page_number = xmlroot.get('PAGE_NO')
             page = Page.objects.get(issue=issue, number=page_number)
         except Page.DoesNotExist:
-            self.stderr.write(self.style.NOTICE(
+            self.logger.error(
                 '-- page not found for issue {} article {}'.format(
-                    issue, aid)))
+                    issue, aid))
             return
 
         try:
@@ -158,20 +160,47 @@ class Command(BaseCommand):
         article.description = meta.get('DESCRIPTION')
         article.content = ' '.join(content.xpath(content_xpath))
         article.bounding_box = self._str_to_box(xmlroot.get('BOX'))
+        article.save()
 
-        # Get the snippet image
-        image_filename = xmlroot.get('SNP')
-        # Sanity check
-        if image_filename:
-            image = File(
-                open(os.path.join(dir, 'Img', image_filename), 'rb'),
-                name='{}/{}'.format(meta.get('RELEASE_NO'), image_filename))
+        self._add_article_continuation(issue, dir, filename, article)
+        self._add_article_entity_type(issue, dir, filename, article)
+        self._add_article_html(issue, dir, filename, article)
+        self._add_article_snippet_image(issue, dir, filename, article)
+        self._add_article_words_to_page(issue, dir, filename, page, article)
 
-            article.title_image = image
+    def _add_article_continuation(self, issue, dir, filename, article):
+        tree = etree.parse(os.path.join(dir, filename))
+        xmlroot = tree.getroot()
+        aid = xmlroot.get('ID')
+
+        if xmlroot.get('CONTINUATION_FROM'):
+            continuation_from = xmlroot.get('CONTINUATION_FROM')
+            self.logger.info(
+                '-- article {} continuation from {}'.format(
+                    aid, continuation_from))
+
+            continuation_from_article, _ = Article.objects.get_or_create(
+                issue=issue, aid=continuation_from)
+            continuation_from_article.continuation_to = article
+            continuation_from_article.save()
+
+            article.continuation_from = continuation_from_article
+            article.save()
+
+    def _add_article_entity_type(self, issue, dir, filename, article):
+        tree = etree.parse(os.path.join(dir, filename))
+        xmlroot = tree.getroot()
 
         if xmlroot.get('ENTITY_TYPE'):
             article.article_type, _ = ArticleType.objects.get_or_create(
                 title=xmlroot.get('ENTITY_TYPE'))
+
+            article.save()
+
+    def _add_article_html(self, issue, dir, filename, article):
+        tree = etree.parse(os.path.join(dir, filename))
+        xmlroot = tree.getroot()
+        content = xmlroot.xpath('Content')[0]
 
         # Pretty HTML
         header_html = None  # Prefer to be explicit
@@ -196,26 +225,25 @@ class Command(BaseCommand):
 
         article.save()
 
-        if xmlroot.get('CONTINUATION_FROM'):
-            continuation_from = xmlroot.get('CONTINUATION_FROM')
-            self.stdout.write(self.style.WARNING(
-                '-- article {} continuation from {}'.format(
-                    aid, continuation_from)))
+    def _add_article_snippet_image(self, issue, dir, filename, article):
+        tree = etree.parse(os.path.join(dir, filename))
+        xmlroot = tree.getroot()
+        meta = xmlroot.xpath('Meta')[0]
 
-            continuation_from_article, _ = Article.objects.get_or_create(
-                issue=issue, aid=continuation_from)
-            continuation_from_article.continuation_to = article
-            continuation_from_article.save()
+        # Get the snippet image
+        image_filename = xmlroot.get('SNP')
+        # Sanity check
+        if image_filename:
+            image = File(
+                open(os.path.join(dir, 'Img', image_filename), 'rb'),
+                name='{}/{}'.format(meta.get('RELEASE_NO'), image_filename))
 
-            article.continuation_from = continuation_from_article
+            article.title_image = image
             article.save()
 
-        # Here we are going to grab the words from the page
-        # and merge them with the ones from this article.
-
-        # This is a json object, we store the words and their coordinates
-        # in the following format:
-        # { '<word>': [{'x0': x0, 'x1': x1, 'y0': y0, 'y1': y1}]}
+    def _add_article_words_to_page(self, issue, dir, filename, page, article):
+        tree = etree.parse(os.path.join(dir, filename))
+        xmlroot = tree.getroot()
 
         # Get page words
         words = page.words
@@ -227,8 +255,6 @@ class Command(BaseCommand):
         # Get our xpaths
         words_xpath = xmlroot.xpath('node()/Primitive/W')
         joined_words_xpath = xmlroot.xpath('node()/Primitive/QW')
-
-        self.stdout.write('- - - importing words')
 
         # Iterate over words, adding them to the list
         for word in words_xpath:
