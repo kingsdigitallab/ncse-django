@@ -9,6 +9,8 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
     aid = indexes.CharField(model_attr='aid', indexed=False)
     title = indexes.CharField(model_attr='title')
     description = indexes.CharField(model_attr='description')
+    category = indexes.FacetCharField(model_attr='article_type')
+    image = indexes.CharField(model_attr='title_image', indexed=False)
     text = indexes.CharField(document=True, model_attr='content')
 
     page = indexes.IntegerField(model_attr='page__id', indexed=False)
