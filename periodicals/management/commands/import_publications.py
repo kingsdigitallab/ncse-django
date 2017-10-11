@@ -159,6 +159,16 @@ class Command(BaseCommand):
         article.content = ' '.join(content.xpath(content_xpath))
         article.bounding_box = self._str_to_box(xmlroot.get('BOX'))
 
+        # Get the snippet image
+        image_filename = xmlroot.get('SNP')
+        # Sanity check
+        if image_filename:
+            image = File(
+                open(os.path.join(dir, 'Img', image_filename), 'rb'),
+                name='{}/{}'.format(meta.get('RELEASE_NO'), image_filename))
+
+            article.title_image = image
+
         if xmlroot.get('ENTITY_TYPE'):
             article.article_type, _ = ArticleType.objects.get_or_create(
                 title=xmlroot.get('ENTITY_TYPE'))
