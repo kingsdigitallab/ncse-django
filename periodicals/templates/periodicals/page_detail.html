@@ -31,9 +31,9 @@
 
 <div>
     {% for article in page.articles_in_page.all %}
-    <p id="{{ article.aid }}">
-        {{ article.content }}
-    </p>
+    <div class="article" id="{{ article.aid }}">
+        {{ article.content_html|safe }}
+    </div>
     {% endfor %}
 </div>
 {% endblock %}
