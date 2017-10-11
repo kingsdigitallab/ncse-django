@@ -7,7 +7,7 @@ from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.utils.dateparse import parse_date
 from lxml import etree
-from periodicals.models import Article, Issue, Page, Publication
+from periodicals.models import Article, ArticleType, Issue, Page, Publication
 
 
 class Command(BaseCommand):
@@ -158,6 +158,10 @@ class Command(BaseCommand):
         article.description = meta.get('DESCRIPTION')
         article.content = ' '.join(content.xpath(content_xpath))
         article.bounding_box = self._str_to_box(xmlroot.get('BOX'))
+
+        if xmlroot.get('ENTITY_TYPE'):
+            article.article_type, _ = ArticleType.objects.get_or_create(
+                title=xmlroot.get('ENTITY_TYPE'))
 
         # Pretty HTML
         header_html = None  # Prefer to be explicit
