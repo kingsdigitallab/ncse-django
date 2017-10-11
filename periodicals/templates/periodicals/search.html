@@ -16,45 +16,57 @@
     </table>
 
     <h3>Filters</h3>
-    <h4>By Publication</h4>
+    {% for key, values in facets.fields.items %}
+    <h4>By {{ key|capfirst }}</h4>
     <div>
-        <dl>
-            {% if facets.fields.publication_abbreviation %}
-            <dt>Publication</dt>
-            {% for publication in facets.fields.publication_abbreviation|slice:":5" %}
-            <dd><a href="{{ request.get_full_path }}&amp;selected_facets=publication_abbreviation:{{ publication.0|urlencode }}">{{ publication.0 }}</a> ({{ publication.1 }})</dd>
+        <ul>
+            {% for item in values %}
+            <li>
+                <a href="{{ request.get_full_path }}&amp;selected_facets={{ key }}:{{ item.0|urlencode }}">{{ item.0 }}</a>
+                ({{ item.1 }})
+            </li>
             {% endfor %}
-            {% else %}
-            <p>No publication facets.</p>
-            {% endif %}
-        </dl>
+        </ul>
     </div>
-    <h4>By Year</h4>
-    <div>
-        <dl>
-            {% if facets.fields.issue_year %}
-            <dt>Year</dt>
-            {% for year in facets.fields.issue_year|slice:":5" %}
-            <dd><a href="{{ request.get_full_path }}&amp;selected_facets=issue_year:{{ year.0|urlencode }}">{{ year.0 }}</a> ({{ year.1 }})</dd>
-            {% endfor %}
-            {% else %}
-            <p>No year facets.</p>
-            {% endif %}
-        </dl>
-    </div>
+    {% endfor %}
 
     <h3>Results</h3>
-    {% for result in page_obj.object_list %}
-    <p>
-        <a href="{% url 'page-detail' result.publication_slug result.issue_slug result.page_number %}?highlight={{ query }}">{{ result.title }}, {{ result.issue_date }}</a>
-        {% if query %}
-        <br />
-        {% highlight result.text with query html_tag "strong" %}
-        {% endif %}
-    </p>
-    {% empty %}
-    <p>No results found.</p>
-    {% endfor %}
+    <table>
+        {% for result in page_obj.object_list %}
+        <tr>
+            <td>
+                <a href="{% url 'publication-detail' result.publication_slug %}">{{ result.publication_abbreviation }}</a>
+            </td>
+            <td>
+                <a href="{% url 'issue-detail' result.publication_slug result.issue_slug %}">{{ result.issue_date }}</a>
+            </td>
+            <td>{{ result.category }}</td>
+            <td>
+                <a href="{% url 'page-detail' result.publication_slug result.issue_slug result.page_number %}?highlight={{ query }}">
+                    p. {{ result.page_number }}
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'page-detail' result.publication_slug result.issue_slug result.page_number %}?highlight={{ query }}">
+                    {% if result.title %}
+                    {{ result.title }}
+                    {% else %}
+                    {{ result.aid }}
+                    {% endif %}
+                </a>
+                {% if query %}
+                <p>
+                    {% highlight result.text with query html_tag "strong" %}
+                </p>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td>No results found.</td>
+        </tr>
+        {% endfor %}
+    </table>
 
     {% if page_obj.has_previous or page_obj.has_next %}
     <div>
