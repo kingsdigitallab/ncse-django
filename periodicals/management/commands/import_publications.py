@@ -44,7 +44,7 @@ class Command(BaseCommand):
                     xmlroot = tree.getroot()
 
                     abbreviation = xmlroot.get('PUBLICATION')
-                    self.logger.warning('Importing {}'.format(abbreviation))
+                    self.logger.info('Importing {}'.format(abbreviation))
 
                     publication, _ = Publication.objects.get_or_create(
                         abbreviation=abbreviation)
@@ -60,7 +60,7 @@ class Command(BaseCommand):
 
         uid = meta.get('DOC_UID')
 
-        self.logger.warning('- importing issue: {}'.format(uid))
+        self.logger.info('- importing issue: {}'.format(uid))
 
         issue_date_parts = xmlroot.get('ISSUE_DATE').split('/')
         issue_date = parse_date('{}-{}-{}'.format(
@@ -87,7 +87,7 @@ class Command(BaseCommand):
 
     def _import_pages(self, issue, dir):
         extract_to = '_document'
-        self.logger.info('- unzipping Document.zip')
+        self.logger.debug('- unzipping Document.zip')
         document = ZipFile(os.path.join(dir, 'Document.zip'), mode='r')
         document.extractall(path=extract_to)
 
@@ -96,7 +96,7 @@ class Command(BaseCommand):
                 if filename.endswith('.xml') and filename.startswith('Pg'):
                     self._import_page(issue, dir, root, filename)
             for filename in files:
-                if filename.endswith('.xml') and filename.startswith('Ar'):
+                if filename.endswith('.xml') and not filename.startswith('P'):
                     self._import_article(issue, root, filename)
 
         shutil.rmtree(extract_to)
@@ -133,7 +133,7 @@ class Command(BaseCommand):
         xmlroot = tree.getroot()
 
         aid = xmlroot.get('ID')
-        self.logger.info('- - importing article: {}'.format(aid))
+        self.logger.debug('- - importing article: {}'.format(aid))
 
         try:
             page_number = xmlroot.get('PAGE_NO')
@@ -175,7 +175,7 @@ class Command(BaseCommand):
 
         if xmlroot.get('CONTINUATION_FROM'):
             continuation_from = xmlroot.get('CONTINUATION_FROM')
-            self.logger.info(
+            self.logger.debug(
                 '-- article {} continuation from {}'.format(
                     aid, continuation_from))
 
