@@ -22,7 +22,7 @@
         <ul>
             {% for item in values %}
             <li>
-                <a href="{{ request.get_full_path }}&amp;selected_facets={{ key }}:{{ item.0|urlencode }}">{{ item.0 }}</a>
+                <a href="?{{ form.data.urlencode }}&amp;selected_facets={{ key }}:{{ item.0|urlencode }}">{{ item.0 }}</a>
                 ({{ item.1 }})
             </li>
             {% endfor %}
@@ -70,9 +70,9 @@
 
     {% if page_obj.has_previous or page_obj.has_next %}
     <div>
-        {% if page_obj.has_previous %}<a href="?q={{ query }}&amp;page={{ page_obj.previous_page_number }}">{% endif %}&laquo; Previous{% if page_obj.has_previous %}</a>{% endif %}
+        {% if page_obj.has_previous %}<a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.previous_page_number }}">{% endif %}&laquo; Previous{% if page_obj.has_previous %}</a>{% endif %}
         |
-        {% if page_obj.has_next %}<a href="?q={{ query }}&amp;page={{ page_obj.next_page_number }}">{% endif %}Next &raquo;{% if page_obj.has_next %}</a>{% endif %}
+        {% if page_obj.has_next %}<a href="{{ form.data.urlencode }}&amp;page={{ page_obj.next_page_number }}">{% endif %}Next &raquo;{% if page_obj.has_next %}</a>{% endif %}
     </div>
     {% endif %}
 </form>
