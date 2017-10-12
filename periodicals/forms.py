@@ -22,8 +22,6 @@ class PeriodicalsSearchForm(FacetedSearchForm):
         choices=ORDER_BY_CHOICES, initial=ORDER_BY_DEFAULT[0],
         widget=RadioSelect)
 
-    facet_fields = ['publication_abbreviation', 'issue_year']
-
     def no_query_found(self):
         return self.searchqueryset.all()
 
