@@ -35,19 +35,19 @@
         {% for result in page_obj.object_list %}
         <tr>
             <td>
-                <a href="{% url 'publication-detail' result.publication_slug %}">{{ result.publication_abbreviation }}</a>
+                <a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a>
             </td>
             <td>
-                <a href="{% url 'issue-detail' result.publication_slug result.issue_slug %}">{{ result.issue_date }}</a>
+                <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
             </td>
             <td>{{ result.category }}</td>
             <td>
-                <a href="{% url 'page-detail' result.publication_slug result.issue_slug result.page_number %}?highlight={{ query }}">
+                <a href="{{ result.page_url }}?highlight={{ query }}">
                     p. {{ result.page_number }}
                 </a>
             </td>
             <td>
-                <a href="{% url 'article-detail' result.publication_slug result.issue_slug result.page_number result.aid %}?highlight={{ query }}">
+                <a href="{{ result.url }}?highlight={{ query }}">
                     {% if result.title %}
                     {{ result.title }}
                     {% else %}

@@ -14,7 +14,7 @@
         <ul>
             {% for issue in issues_in_year %}
             <li>
-                <a href="{% url 'issue-detail' issue.publication.slug issue.slug %}">
+                <a href="{{ issue.url }}">
                     {{ issue }}
                 </a>
             </li>

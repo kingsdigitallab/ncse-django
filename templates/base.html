@@ -9,6 +9,7 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css" />
   {% compress css %}
   <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/main.scss' %}">
   {% endcompress %}
@@ -47,8 +48,8 @@
   {% compress js %}
   <script src="{% static 'js/google_analytics.js' %}"></script>
   <script>
-    ga('create', '{{ GA_ID }}', 'auto');
-    ga('send', 'pageview');
+  ga('create', '{{ GA_ID }}', 'auto');
+  ga('send', 'pageview');
   </script>
   {% endcompress %}
 </body>

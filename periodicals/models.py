@@ -1,5 +1,6 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 
 
@@ -14,6 +15,13 @@ class Publication(models.Model):
 
     def __str__(self):
         return '{}'.format(self.title if self.title else self.abbreviation)
+
+    @property
+    def url(self):
+        return reverse(
+            'publication-detail', kwargs={
+                'slug': self.slug
+            })
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.abbreviation)
@@ -38,6 +46,14 @@ class Issue(models.Model):
     def articles(self):
         return self.articles_in_issue.filter(continuation_from=None)
 
+    @property
+    def url(self):
+        return reverse(
+            'issue-detail', kwargs={
+                'publication_slug': self.publication.slug,
+                'slug': self.slug
+            })
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.uid)
         super(Issue, self).save(*args, **kwargs)
@@ -56,6 +72,14 @@ class Page(models.Model):
 
     def __str__(self):
         return '{}: {}'.format(self.issue, self.number)
+
+    @property
+    def url(self):
+        return reverse(
+            'page-detail', kwargs={
+                'publication_slug': self.issue.publication.slug,
+                'issue_slug': self.issue.slug, 'number': self.number
+            })
 
     def previous_page(self):
         if self.number > 1:
@@ -105,6 +129,15 @@ class Article(models.Model):
     def __str__(self):
         return '{} ({})'.format(
             self.title if self.title else self.page, self.aid)
+
+    @property
+    def url(self):
+        return reverse(
+            'article-detail', kwargs={
+                'publication_slug': self.issue.publication.slug,
+                'issue_slug': self.issue.slug, 'number': self.page.number,
+                'aid': self.aid
+            })
 
     def get_text(self):
         if self.continuation_to:
