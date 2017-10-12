@@ -10,6 +10,11 @@ class ArticleDetailView(DetailView):
     context_object_name = 'article'
     queryset = Article.objects.all()
 
+    def get_object(self):
+        return get_object_or_404(
+            Article, issue__slug=self.kwargs['issue_slug'],
+            page__number=self.kwargs['number'], aid=self.kwargs['aid'])
+
 
 class PageDetailView(DetailView):
 

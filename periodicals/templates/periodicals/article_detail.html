@@ -1,13 +1,47 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<h2>{% if article.title %}{{ article.title }}{% else %}{{ article.aid }}{% endif %}</h2>
+<h2>{% if article.title %}{{ article.title }}{% else %}{{ article.aid }}{% endif %}
+<small>{{ article.issue }}</small>
+</h2>
 {% endblock %}
 
 {% block main %}
-<p>Publication: {{ article.issue.publication }}</p>
-<p>Issue: {{ article.issue }}</p>
-<p>
-    <embed src="{{ article.page.pdf.url }}" width="90%" height="600" type="application/pdf">
-</p>
+<div>
+    <!-- This div is for testing! -->
+    <a href="{% url 'issue-detail' article.issue.publication.slug article.issue.slug %}">Back to issue</a>
+
+    {% if article.page.previous_page %}
+    <a href="{% url 'page-detail' article.issue.publication.slug article.issue.slug article.page.previous_page.number %}">Previous Page</a>
+    {% endif %}
+
+    {% if article.page.next_page %}
+    <a href="{% url 'page-detail' article.issue.publication.slug article.issue.slug article.page.next_page.number %}">Next Page</a>
+    {% endif %}
+
+    <form action='.' method='get'>
+        <input name='highlight' placeholder='text to highlight'><input type='submit'>
+    </form>
+</div>
+
+<div>
+    <canvas class="pageCanvas" data-image-id="page{{ article.page.number}}" width="{{ article.page.width }}" height="{{ article.page.height }}">
+        <!-- Fallback for non-canvas supporting devices -->
+        <img id="page{{ article.page.number}}" src="{{ article.page.image.url }}">
+    </canvas>
+</div>
+
+<div>
+    <div class="article" id="{{ article.aid }}">
+        {{ article.content_html|safe }}
+    </div>
+</div>
+{% endblock %}
+
+{% block footer_scripts %}
+{% if highlight_words %}
+<script>
+var highlight_words = {{ highlight_words|safe }};
+</script>
+{% endif %}
 {% endblock %}

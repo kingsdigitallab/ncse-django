@@ -47,7 +47,7 @@
                 </a>
             </td>
             <td>
-                <a href="{% url 'page-detail' result.publication_slug result.issue_slug result.page_number %}?highlight={{ query }}">
+                <a href="{% url 'article-detail' result.publication_slug result.issue_slug result.page_number result.aid %}?highlight={{ query }}">
                     {% if result.title %}
                     {{ result.title }}
                     {% else %}
