@@ -319,6 +319,22 @@
     tags:
       - django
 
+
+  - name: django | media download
+    get_url:
+      url: '{{ media.url }}'
+      dest: /tmp
+    tags:
+      - django
+
+  - name: django | media unarchive
+    unarchive:
+      src: /tmp/{{ media.filename }}
+      dest: '{{ media.dest }}'
+      remote_src: yes
+    tags:
+      - django
+
 - hosts: all
   vars_files:
       - vars.yml
