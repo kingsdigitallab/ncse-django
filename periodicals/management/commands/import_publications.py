@@ -206,14 +206,14 @@ class Command(BaseCommand):
         header_html = None  # Prefer to be explicit
         header = xmlroot.xpath('HedLine_hl1')
         if len(header):
-            header_html = '<p class=\'article-header\'>{}</p>\n'.format(
+            header_html = '<p class="article-header">{}</p>\n'.format(
                 ' '.join(header[0].xpath(
                     'Primitive/node()/text()[normalize-space() and '
                     'parent::node()[name() != "Q" and name () != "q"]]')))
 
         content_html = ''
         for primitive in content.xpath('Primitive'):
-            content_html = '{}<p>{}</p>\n'.format(
+            content_html = '{}<p class="article-content">{}</p>\n'.format(
                 content_html, ' '.join(primitive.xpath(
                     'node()/text()[normalize-space() and '
                     'parent::node()[name() != "Q" and name () != "q"]]')))
