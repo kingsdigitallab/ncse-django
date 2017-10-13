@@ -6,9 +6,40 @@ from .forms import PeriodicalsSearchForm
 from .models import Article, Issue, Page, Publication
 
 
+def _get_highlighted_words(request, page):
+    # Words to highlight
+    highlight_words = {}
+
+    # Check if we need to do any highlighting
+    if 'highlight' in request.GET:
+        # Get the words to highlight
+        words_to_highlight = request.GET['highlight'].split()
+        page_words = page.words
+
+        for word in words_to_highlight:
+            try:
+                highlight_words.update({word: page_words[word]})
+            except KeyError:
+                pass  # Not found
+
+        return highlight_words
+    else:
+        return None
+
+
 class ArticleDetailView(DetailView):
     context_object_name = 'article'
     queryset = Article.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleDetailView, self).get_context_data(**kwargs)
+        page = context['article'].page
+
+        highlight_words = _get_highlighted_words(self.request, page)
+        if highlight_words:
+            context['highlight_words'] = highlight_words
+
+        return context
 
     def get_object(self):
         return get_object_or_404(
@@ -27,22 +58,7 @@ class PageDetailView(DetailView):
         context = super(PageDetailView, self).get_context_data(**kwargs)
         page = context['page']
 
-        # Words to highlight
-        highlight_words = {}
-
-        # Check if we need to do any highlighting
-        if 'highlight' in self.request.GET:
-            # Get the words to highlight
-            words_to_highlight = self.request.GET['highlight'].split()
-            page_words = page.words
-
-            for word in words_to_highlight:
-                try:
-                    highlight_words.update({word: page_words[word]})
-                except KeyError:
-                    pass  # Not found
-
-        # Set all of the things
+        highlight_words = _get_highlighted_words(self.request, page)
         if highlight_words:
             context['highlight_words'] = highlight_words
 
