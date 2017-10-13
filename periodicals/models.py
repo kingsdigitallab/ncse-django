@@ -127,8 +127,7 @@ class Article(models.Model):
         ordering = ['page', 'position_in_page', 'aid']
 
     def __str__(self):
-        return '{} ({})'.format(
-            self.title if self.title else self.page, self.aid)
+        return self.title if self.title else self.aid
 
     @property
     def url(self):
