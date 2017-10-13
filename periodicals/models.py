@@ -74,6 +74,14 @@ class Page(models.Model):
         return '{}: {}'.format(self.issue, self.number)
 
     @property
+    def articles(self):
+        return self.articles_in_page.all()
+
+    @property
+    def number_of_articles(self):
+        return self.articles.count()
+
+    @property
     def url(self):
         return reverse(
             'page-detail', kwargs={
