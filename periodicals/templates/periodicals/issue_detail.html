@@ -1,17 +1,43 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<h2>{{ issue }}</h2>
+<h2 class="title">{{ issue }}</h2>
 {% endblock %}
 
 {% block main %}
-<p>{{ issue.articles.count }} articles, {{ issue.pages.count }} pages</p>
-{% for page in issue.pages.all %}
-<p>
-    <a href="{{ page.url }}">
-        <img src="{{ page.image.url }}" width="200">
-        {{ page }}
-    </a>
-</p>
-{% endfor %}
+<h3 class="title">{{ issue.articles.count }} articles</h3>
+<div class="columns is-multiline">
+    {% for article in issue.articles %}
+    <div class="column is-one-quarter">
+        <a href="{{ article.url }}">
+            {% if article.title_image %}
+            <figure class="image">
+                <img src="{{ article.title_image.url }}">
+                <caption>{{ article|title }}</caption>
+            </figure>
+            {% else %}
+            {{ article|title }}
+            {% endif %}
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<h3 class="title">{{ issue.pages.count }} pages</h3>
+<div class="columns is-multiline">
+    {% for page in issue.pages.all %}
+    <div class="column is-one-quarter">
+        <a href="{{ page.url }}">
+            <figure class="image">
+                <img src="{{ page.image.url }}">
+                <caption>p. {{ page.number }}</caption>
+            </figure>
+        </a>
+        {% for article in page.articles_in_page.all %}
+        <a href="{{ article.url }}">{{ article|title }}</a>
+        {% if not forloop.last %}|{% endif %}
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
