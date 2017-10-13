@@ -44,7 +44,8 @@ class ArticleDetailView(DetailView):
     def get_object(self):
         return get_object_or_404(
             Article, issue__slug=self.kwargs['issue_slug'],
-            page__number=self.kwargs['number'], aid=self.kwargs['aid'])
+            page__number=self.kwargs['number'],
+            slug=self.kwargs['article_slug'])
 
 
 class PageDetailView(DetailView):

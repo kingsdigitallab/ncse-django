@@ -109,6 +109,7 @@ class Article(models.Model):
     page = models.ForeignKey(Page, blank=True, null=True,
                              related_name='articles_in_page')
     aid = models.CharField(max_length=32)
+    slug = models.SlugField(max_length=32, null=True)
     position_in_page = models.PositiveIntegerField(blank=True, null=True)
     title = models.CharField(max_length=512, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
@@ -135,8 +136,12 @@ class Article(models.Model):
             'article-detail', kwargs={
                 'publication_slug': self.issue.publication.slug,
                 'issue_slug': self.issue.slug, 'number': self.page.number,
-                'aid': self.aid
+                'article_slug': self.slug
             })
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.aid)
+        super(Article, self).save(*args, **kwargs)
 
     def get_text(self):
         if self.continuation_to:

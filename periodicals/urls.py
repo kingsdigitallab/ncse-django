@@ -9,7 +9,7 @@ urlpatterns = [
     url((r'^(?P<publication_slug>[-\w]+)/'
          'issues/(?P<issue_slug>[-\w]+)/'
          'page/(?P<number>[0-9]+)/'
-         'articles/(?P<aid>[-\w]+)/$'),
+         'articles/(?P<article_slug>[-\w]+)/$'),
         ArticleDetailView.as_view(), name='article-detail'),
     url((r'^(?P<publication_slug>[-\w]+)/'
          'issues/(?P<issue_slug>[-\w]+)/'
