@@ -39,9 +39,15 @@
 {% endblock %}
 
 {% block footer_scripts %}
-{% if highlight_words %}
+{% if highlight_words  %}
 <script>
 var highlight_words = {{ highlight_words|safe }};
 </script>
 {% endif %}
+{% if article_bounding_box  %}
+<script>
+var article_bounding_box = {{ article_bounding_box|safe }};
+</script>
+{% endif %}
 {% endblock %}
+

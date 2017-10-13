@@ -39,6 +39,7 @@ class ArticleDetailView(DetailView):
         if highlight_words:
             context['highlight_words'] = highlight_words
 
+        context['article_bounding_box'] = context['article'].bounding_box
         return context
 
     def get_object(self):
