@@ -11,7 +11,7 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
     category = indexes.FacetCharField(model_attr='article_type')
     image = indexes.CharField(model_attr='title_image', indexed=False)
     text = indexes.CharField(document=True, model_attr='content')
-
+    slug = indexes.CharField(model_attr='slug', indexed=False)
     page = indexes.IntegerField(model_attr='page__id', indexed=False)
     page_url = indexes.CharField(indexed=False)
     page_number = indexes.IntegerField(
