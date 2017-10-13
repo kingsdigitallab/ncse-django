@@ -31,42 +31,40 @@
     {% endfor %}
 
     <h3>Results</h3>
-    <table>
-        {% for result in page_obj.object_list %}
-        <tr>
-            <td>
-                <a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a>
-            </td>
-            <td>
-                <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
-            </td>
-            <td>{{ result.category }}</td>
-            <td>
-                <a href="{{ result.page_url }}?highlight={{ query }}">
-                    p. {{ result.page_number }}
-                </a>
-            </td>
-            <td>
-                <a href="{{ result.url }}?highlight={{ query }}">
-                    {% if result.title %}
-                    {{ result.title }}
-                    {% else %}
-                    {{ result.aid }}
-                    {% endif %}
-                </a>
-                {% if query %}
-                <p>
-                    {% highlight result.text with query html_tag "strong" %}
-                </p>
+    {% for result in page_obj.object_list %}
+    <div class="columns">
+        <div class="column">
+            <a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a>
+        </div>
+        <div class="column">
+            <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
+        </div>
+        <div class="column">
+            {{ result.category }}
+        </div>
+        <div class="column">
+            <a href="{{ result.page_url }}?highlight={{ query }}">
+                p. {{ result.page_number }}
+            </a>
+        </div>
+        <div class="column">
+            <a href="{{ result.url }}?highlight={{ query }}">
+                {% if result.title %}
+                {{ result.title }}
+                {% else %}
+                {{ result.aid }}
                 {% endif %}
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td>No results found.</td>
-        </tr>
-        {% endfor %}
-    </table>
+            </a>
+            {% if query %}
+            <p>
+                {% highlight result.text with query html_tag "strong" %}
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <p>No results found.</p>
+    {% endfor %}
 
     {% if page_obj.has_previous or page_obj.has_next %}
     <div>
