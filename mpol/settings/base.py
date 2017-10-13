@@ -84,6 +84,7 @@ INSTALLED_APPS = [
 
 INSTALLED_APPS += [    # your project apps here
     'kdl_ldap',
+    'activecollab_digger',
     'rest_framework',
     'wagtail.wagtailcore',
     'wagtail.wagtailadmin',
@@ -330,3 +331,14 @@ HAYSTACK_CONNECTIONS = {
         'BATCH_SIZE': 100,
     },
 }
+
+# AC Digger
+# ActiveCollab API URL
+AC_BASE_URL = 'https://app.activecollab.com/148987'
+AC_API_URL = AC_BASE_URL + '/api/v1/'
+# ActiveCollab API token
+AC_TOKEN = ''
+# ActiveCollab project ID
+AC_PROJECT_ID = 674
+# ActiveCollab user ID to create the issues
+AC_USER = 36

@@ -27,7 +27,7 @@ except ImportError:
 urlpatterns += [
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', include(admin.site.urls)),
-
+    url(r'^digger/', include('activecollab_digger.urls')),
     url(r'^periodicals/', include(periodicals_urls)),
 
     url(r'^wagtail/', include(wagtailadmin_urls)),

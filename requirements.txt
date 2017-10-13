@@ -1,4 +1,5 @@
 django
+django-activecollab-digger
 django-compressor
 django-extensions
 django-grappelli
