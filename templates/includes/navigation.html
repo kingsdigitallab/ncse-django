@@ -1,2 +1,124 @@
 {% block main_menu %}
-{% endblock %}
+
+
+    <nav class="navbar is-transparent">
+        <div class="navbar-brand">
+            <a class="navbar-item is-hidden-desktop" href="https://github.com/jgthms/bulma" target="_blank">
+      <span class="icon" style="color: #333;">
+        <i class="fa fa-lg fa-github"></i>
+      </span>
+    </a>
+            <a class="navbar-item is-hidden-desktop" href="https://twitter.com/jgthms" target="_blank">
+      <span class="icon" style="color: #55acee;">
+        <i class="fa fa-lg fa-twitter"></i>
+      </span>
+    </a>
+            <div class="navbar-burger burger" data-target="navMenuTransparentExample">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div id="navMenuTransparentExample" class="navbar-menu">
+            <div class="navbar-start">
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link  is-active" href="{% url 'publication-list' %}">
+          Publications
+        </a>
+                    <div class="navbar-dropdown is-boxed">
+	                   <ul>
+						    <li>
+						        <a class="navbar-item href="/periodicals/mob/">
+						            MOB
+						        </a>
+						    </li>
+						    
+						    <li>
+						        <a class="navbar-item href="/periodicals/msm/">
+						            MSM
+						        </a>
+						    </li>
+						    
+						    <li>
+						        <a class="navbar-item href="/periodicals/msp/">
+						            MSP
+						        </a>
+						    </li>
+						    
+						    <li>
+						        <a class="navbar-item href="/periodicals/msr/">
+						            MSR
+						        </a>
+						    </li>
+						    
+						</ul>
+                    </div>
+                </div>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link" href="">
+          Explore
+        </a>
+                    <div class="navbar-dropdown is-boxed">
+	                   <ul>
+						    <li>
+						        <a class="navbar-item href="/periodicals/mob/">
+						            By Date
+						        </a>
+						    </li>
+						    
+						    <li>
+						        <a class="navbar-item href="/periodicals/msm/">
+						            By Publication
+						        </a>
+						    </li>
+						    
+						    <li>
+						        <a class="navbar-item href="/periodicals/msp/">
+						            Advanced Search
+						        </a>
+						    </li>		
+						</ul>
+                    </div>
+                </div>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link" href="">
+                        About
+                     </a>
+                    </div>
+                    <div id="moreDropdown" class="navbar-dropdown is-boxed">
+                        <a class="navbar-item " href="http://bulma.io/extensions/">
+                            <div class="level is-mobile">
+                                <div class="level-left">
+                                    <div class="level-item">
+                                        <p>
+                                            <strong>Extensions</strong>
+                                            <br>
+                                            <small>Side projects to enhance Bulma</small>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="level-right">
+                                    <div class="level-item">
+                                        <span class="icon has-text-info">
+                    <i class="fa fa-plug"></i>
+                  </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!--<a class="navbar-item " href="http://bulma.io/expo/">
+        About
+      </a>
+                <a class="navbar-item " href="http://bulma.io/love/">
+        Contact
+      </a>-->
+            </div>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% endblock %}
