@@ -1,34 +1,37 @@
 {% extends 'base.html' %}
 
-{% block title %}
-<h2>{% if article.title %}{{ article.title }}{% else %}{{ article.aid }}{% endif %}
-<small>{{ article.issue }}</small>
-</h2>
-{% endblock %}
+{% block title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %} {{ article.issue }}{% endblock %}
+{% block meta_title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %}{{ article.issue }}{% endblock %}
 
 {% block main %}
-<div>
-    <!-- This div is for testing! -->
-    <a href="{{ article.issue.url }}">Back to issue</a>
 
-    {% if article.page.previous_page %}
-    <a href="{{ article.page.previous_page.url }}">Previous Page</a>
-    {% endif %}
+<section class="section">
+    <div class="container">
+        <div class="page-controls">
+            {% if article.page.previous_page %}
+            <a class="button is-link" href="{{ article.page.previous_page.url }}">Previous Page</a>
+            {% endif %}
 
-    {% if article.page.next_page %}
-    <a href="{{ article.page.next_page.url }}">Next Page</a>
-    {% endif %}
+            {% if article.page.next_page %}
+            <a class="button is-link is-pulled-right" href="{{ article.page.next_page.url }}">Next Page</a>
+            {% endif %}
+        </div>
 
-    <form action='.' method='get'>
-        <input name='highlight' placeholder='text to highlight'><input type='submit'>
-    </form>
-</div>
+        <canvas class="pageCanvas" data-image-id="page{{ article.page.number}}" width="{{ article.page.width }}" height="{{ article.page.height }}">
+            <!-- Fallback for non-canvas supporting devices -->
+            <img id="page{{ article.page.number}}" src="{{ article.page.image.url }}">
+        </canvas>
 
-<div>
-    <canvas class="pageCanvas" data-image-id="page{{ article.page.number}}" width="{{ article.page.width }}" height="{{ article.page.height }}">
-        <!-- Fallback for non-canvas supporting devices -->
-        <img id="page{{ article.page.number}}" src="{{ article.page.image.url }}">
-    </canvas>
+        <div class="page-controls">
+            {% if article.continuation_from %}
+            <a class="button" href="{{ article.continuation_from.url }}">Article continued from Page {{article.continuation_from.page.number}}</a>
+            {% endif %}
+
+            {% if article.continuation_to %}
+            <a class="button is-pulled-right" href="{{ article.continuation_to.url }}">Article continued on Page {{article.continuation_to.page.number}}</a>
+            {% endif %}
+        </div>
+    </div>
 </div>
 
 <div class="columns is-multiline is-centered">
