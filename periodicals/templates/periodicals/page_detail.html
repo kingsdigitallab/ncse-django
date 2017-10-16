@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 
-{% block title %}
-<h2>{{ page.publication }} {{ page.issue }}: Page {{ page.number }}</h2>
-{% endblock %}
+{% block title %}{{ page.publication }} {{ page.issue }}, Page {{ page.number }}{% endblock %}
+{% block meta_title %}{{ page.publication }} {{ page.issue }}, Page {{ page.number }}{% endblock %}
 
 {% block main %}
 <div>

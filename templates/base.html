@@ -15,27 +15,37 @@
   {% endcompress %}
 </head>
 <body>
-  <header>
-    {% include 'includes/header.html' %}
-  </header>
 
-  <nav>
-    <a href="{% url 'publication-list' %}">Publications</a>
-    <a href="{% url 'search' %}?{% initial_search_parameters %}">Explore</a>
-    {% include 'includes/navigation.html' %}
-  </nav>
+  {% block navigation %}
+  {% include 'includes/navigation.html' %}
+  {% endblock %}
+
+  {% block header %}
+  {% comment %} This is here because of overriding the title {% endcomment %}
+  <section class="hero is-small is-primary is-bold">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          {% block title %}{% endblock %}
+        </h1>
+        <h2 class="subtitle">
+          Masonic Periodicals (Functional Demo)
+        </h2>
+      </div>
+    </div>
+  </section>
+  {% endblock %}
+
 
   <main>
-    {% block title %}{% endblock %}
     {% block main %}
     {% endblock %}
   </main>
 
-  <footer>
-    {% block footer %}
-    {% include 'includes/footer.html' %}
-    {% endblock %}
-  </footer>
+  {% block footer %}
+  {% include 'includes/footer.html' %}
+  {% endblock %}
+
 
   {% compress js %}
   <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
