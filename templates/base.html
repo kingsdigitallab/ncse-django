@@ -1,0 +1,68 @@
+{% load staticfiles compress periodicals_tags  %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{% block meta_title %}{% endblock %} | Masonic Periodicals</title>
+  <meta name="author" content="King's Digital Lab">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css" />
+  {% compress css %}
+  <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/main.scss' %}">
+  {% endcompress %}
+</head>
+<body>
+
+  {% block navigation %}
+  {% include 'includes/navigation.html' %}
+  {% endblock %}
+
+  {% block header %}
+  {% comment %} This is here because of overriding the title {% endcomment %}
+  <section class="hero is-small is-primary is-bold">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          {% block title %}{% endblock %}
+        </h1>
+        <h2 class="subtitle">
+          Masonic Periodicals (Functional Demo)
+        </h2>
+      </div>
+    </div>
+  </section>
+  {% endblock %}
+
+
+  <main>
+    {% block main %}
+    {% endblock %}
+  </main>
+
+  <footer class="footer">
+  {% block footer %}
+  {% include 'includes/footer.html' %}
+  {% endblock %}
+  </footer>
+
+
+  {% compress js %}
+  <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
+
+  <script src="{% static 'js/main.js' %}"></script>
+  {% endcompress %}
+
+  {% block footer_scripts %}{% endblock %}
+
+  {% compress js %}
+  <script src="{% static 'js/google_analytics.js' %}"></script>
+  <script>
+  ga('create', '{{ GA_ID }}', 'auto');
+  ga('send', 'pageview');
+  </script>
+  {% endcompress %}
+</body>
+</html>
