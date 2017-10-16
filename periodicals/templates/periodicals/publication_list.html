@@ -1,17 +1,38 @@
 {% extends "base.html" %}
 
-{% block title %}
-<h2>Publications</h2>
-{% endblock %}
+
+{% block title %}Publications List{% endblock %}
+{% block meta_title %}Publications List{% endblock %}
+
 
 {% block main %}
-<ul>
-    {% for publication in publications %}
-    <li>
-        <a href="{{ publication.url }}">
-            {{ publication }}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+<section class="section">
+    <div class="container">
+        <div class="columns multiline">
+            {% for publication in publications %}
+            <div class="column is-one-quarter">
+                <div class="card">
+                  <header class="card-header">
+                    <p class="card-header-title">
+                      <a href="{{ publication.url }}">{{ publication.abbreviation }}</a>
+
+                      {% if publication.description %} - <a href="{{ publication.url }}">{{ publication.description }}{% endif %}</a>
+                    </p>
+                  </header>
+                  <div class="card-content">
+                    <div class="content">
+                      Contains {{ publication.issues.count }} issues.
+                    </div>
+                  </div>
+                  {% if request.user.is_staff %}
+                  <footer class="card-footer">
+                    <a href="/admin/periodicals/publication/{{ publication.id }}/change/" class="card-footer-item">Edit</a>
+                  </footer>
+                  {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 {% endblock %}
