@@ -34,11 +34,17 @@
     </div>
 </div>
 
-<div class="columns is-multiline is-centered">
-    <div class="column is-half  article" id="{{ article.aid }}">
-        {{ article.content_html|safe }}
+<section class="section">
+    <div class="container">
+        <h3 class="title">Transcription</h3>
+
+        <div class="columns is-multiline is-centered">
+            <div class="column is-half  article" id="{{ article.aid }}">
+                {{ article.content_html|safe }}
+            </div>
+        </div>
     </div>
-</div>
+</section>
 {% endblock %}
 
 {% block footer_scripts %}
