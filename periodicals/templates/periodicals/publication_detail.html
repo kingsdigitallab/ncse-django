@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block meta_title %}{{ publication }} {% if publication.description %} - {{ publication.description }} {% endif %}{% endblock %}
+
 {% block title %}{{ publication }} {% if publication.description %} - {{ publication.description }} {% endif %}{% endblock %}
 
 {% block main %}
@@ -9,37 +10,37 @@
 
 {% for year, issues_in_year in year_list %}
 <section class="section">
-    <div class="container">
-        <h3 class="subtitle">{{ year }}</h3>
-        <div class="columns is-multiline">
-            {% for issue in issues_in_year %}
-            <div class="column  is-one-quarter">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-4by3">
-                          <img src="{{ issue.pages.all.0.image.url }}">
-                        </figure>
-                  </div>
-                  <header class="card-header">
-                    <p class="card-header-title">
-                      <a href="{{ issue.url }}">{{ issue }}</a>
-                    </p>
-                  </header>
-                  <div class="card-content">
-                    <div class="content">
-                      {{ issue.articles.count }} articles in {{ issue.pages.count }} pages.
-                    </div>
-                  </div>
-                  {% if request.user.is_staff %}
-                  <footer class="card-footer">
-                    <a href="/admin/periodicals/issue/{{ issue.id }}/change/" class="card-footer-item">Edit</a>
-                  </footer>
-                  {% endif %}
-                </div>
+  <div class="container">
+    <h3 class="subtitle">{{ year }}</h3>
+    <div class="columns is-multiline">
+      {% for issue in issues_in_year %}
+      <div class="column  is-one-quarter">
+        <div class="card">
+          <div class="card-image">
+            <figure class="image">
+              <img src="{{ issue.pages.all.0.image.url }}">
+            </figure>
+          </div>
+          <header class="card-header">
+            <p class="card-header-title">
+              <a href="{{ issue.url }}">{{ issue }}</a>
+            </p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              {{ issue.articles.count }} articles in {{ issue.pages.count }} pages.
             </div>
-            {% endfor %}
+          </div>
+          {% if request.user.is_staff %}
+          <footer class="card-footer">
+            <a href="/admin/periodicals/issue/{{ issue.id }}/change/" class="card-footer-item">Edit</a>
+          </footer>
+          {% endif %}
         </div>
+      </div>
+      {% endfor %}
     </div>
+  </div>
 </section>
 {% endfor %}
 
