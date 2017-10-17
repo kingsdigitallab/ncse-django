@@ -53,10 +53,10 @@ class PageAdmin(admin.ModelAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ['page', 'title',
-                    'continuation_from', 'aid', 'continuation_to']
+    list_display = ['title',
+                    'aid']
 
-    raw_id_fields = ['issue', 'page']
+    raw_id_fields = ['issue', 'page', 'continuation_from', 'continuation_to']
 
 
 @admin.register(ArticleType)
