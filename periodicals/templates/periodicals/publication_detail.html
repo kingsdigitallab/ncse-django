@@ -5,6 +5,13 @@
 {% block title %}{{ publication }} {% if publication.description %} - {{ publication.description }} {% endif %}{% endblock %}
 
 {% block main %}
+<section class="section">
+  <div class="container">
+    <h3 class="title">Description</h3>
+    {% lorem 2 p %}
+  </div>
+</section>
+
 {% with issues=publication.issues.all %}
 {% regroup issues by issue_date.year as year_list %}
 
