@@ -8,10 +8,20 @@
 {% with issues=publication.issues.all %}
 {% regroup issues by issue_date.year as year_list %}
 
-{% for year, issues_in_year in year_list %}
 <section class="section">
   <div class="container">
-    <h3 class="subtitle">{{ year }}</h3>
+    <h3 class="title">Years</h3>
+    {% for year, issues_in_year in year_list %}
+    <a href="#{{ year }}">{{ year }}</a>: {{ issues_in_year|length }} issues
+    {% if not forloop.last %} | {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+{% for year, issues_in_year in year_list %}
+<section class="section" id="{{ year }}">
+  <div class="container">
+    <h3 class="title">{{ year }}</h3>
     <div class="columns is-multiline">
       {% for issue in issues_in_year %}
       <div class="column  is-one-quarter">
