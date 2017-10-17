@@ -27,7 +27,6 @@
         <h3 class="subtitle">Filters</h3>
 
         <div class="columns is-multiline">
-
             {% for key, values in facets.fields.items %}
             <div class="column is-one-third">
                 <h4>By {{ key|capfirst }}</h4>
@@ -47,24 +46,25 @@
 
 <section class="section">
     <div class="container">
-
         <h3 class="title">Results</h3>
 
         <div class="columns">
-            <div class="column"><strong>Publication</strong></div>
-            <div class="column"><strong>Issue</strong></div>
+            <div class="column"><strong>Article Title</strong></div>
             <div class="column"><strong>Category</strong></div>
             <div class="column"><strong>Page</strong></div>
-            <div class="column"><strong>Article Title</strong></div>
-
+            <div class="column"><strong>Issue</strong></div>
+            <div class="column"><strong>Publication</strong></div>
         </div>
         {% for result in page_obj.object_list %}
         <div class="columns">
             <div class="column">
-                <a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a>
-            </div>
-            <div class="column">
-                <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
+                <a href="{{ result.url }}?highlight={{ query }}">
+                    {% if result.title %}
+                    {{ result.title }}
+                    {% else %}
+                    {{ result.aid }}
+                    {% endif %}
+                </a>
             </div>
             <div class="column">
                 {{ result.category }}
@@ -75,20 +75,19 @@
                 </a>
             </div>
             <div class="column">
-                <a href="{{ result.url }}?highlight={{ query }}">
-                    {% if result.title %}
-                    {{ result.title }}
-                    {% else %}
-                    {{ result.aid }}
-                    {% endif %}
-                </a>
-                {% if query %}
-                <p>
-                    {% highlight result.text with query html_tag "strong" %}
-                </p>
-                {% endif %}
+                <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
+            </div>
+            <div class="column">
+                <a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a>
             </div>
         </div>
+        {% if query %}
+        <div class="columns">
+            <div class="column">
+                {% highlight result.text with query html_tag "strong" %}
+            </div>
+        </div>
+        {% endif %}
         {% empty %}
         <p>No results found.</p>
         {% endfor %}

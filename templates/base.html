@@ -15,7 +15,6 @@
   {% endcompress %}
 </head>
 <body>
-
   {% block navigation %}
   {% include 'includes/navigation.html' %}
   {% endblock %}
@@ -36,22 +35,19 @@
   </section>
   {% endblock %}
 
-
   <main>
     {% block main %}
     {% endblock %}
   </main>
 
   <footer class="footer">
-  {% block footer %}
-  {% include 'includes/footer.html' %}
-  {% endblock %}
+    {% block footer %}
+    {% include 'includes/footer.html' %}
+    {% endblock %}
   </footer>
-
 
   {% compress js %}
   <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
-
   <script src="{% static 'js/main.js' %}"></script>
   {% endcompress %}
 
