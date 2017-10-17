@@ -5,28 +5,37 @@
 {% block meta_title %}{{ page.publication }} {{ page.issue }}, Page {{ page.number }}{% endblock %}
 
 {% block main %}
+<div class="tabs is-centered">
+  <ul>
+    <li class="is-active" data-option="1"><a>Image</a></li>
+    <li data-option="2"><a>Transcription</a></li>
+</ul>
+</div>
+
 <section class="section">
-    <div class="container">
-        <div class="page-controls">
-            {% if page.previous_page %}
-            <a class="button is-link" href="{{ page.previous_page.url }}">Previous Page</a>
-            {% endif %}
+    <div class="page-controls">
+        {% if page.previous_page %}
+        <a class="button is-link" href="{{ page.previous_page.url }}">Previous Page</a>
+        {% endif %}
 
-            {% if page.next_page %}
-            <a class="button is-link is-pulled-right" href="{{ page.next_page.url }}">Next Page</a>
-            {% endif %}
-        </div>
-
-         <canvas class="pageCanvas" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
-         <!-- Fallback for non-canvas supporting devices -->
-            <img id="page{{ page.number}}" src="{{ page.image.url }}">
-        </canvas>
+        {% if page.next_page %}
+        <a class="button is-link is-pulled-right" href="{{ page.next_page.url }}">Next Page</a>
+        {% endif %}
     </div>
 </section>
 
-<section class="section">
+<div class="tabs-container">
+    <section class="section is-active" data-item="1">
+        <div class="container">
+            <canvas class="pageCanvas" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
+               <!-- Fallback for non-canvas supporting devices -->
+               <img id="page{{ page.number}}" src="{{ page.image.url }}">
+           </canvas>
+       </div>
+   </section>
+
+   <section class="section" data-item="2">
     <div class="container">
-        <h3 class="title">Transcription</h3>
         <div class="columns is-multiline is-centered">
             {% for article in page.articles_in_page.all %}
             <div class="column is-half article" id="{{ article.aid }}">
@@ -37,6 +46,7 @@
         </div>
     </div>
 </section>
+</div>
 {% endblock %}
 
 {% block footer_scripts %}
@@ -45,4 +55,16 @@
 var highlight_words = {{ highlight_words|safe }};
 </script>
 {% endif %}
+
+<script>
+$(document).ready(function() {
+    $('.tabs ul li').on('click', function() {
+        var number = $(this).data('option');
+        $('.tabs ul li').removeClass('is-active');
+        $(this).addClass('is-active');
+        $('.tabs-container section').removeClass('is-active');
+        $('section[data-item="' + number + '"]').addClass('is-active');
+    });
+});
+</script>
 {% endblock %}

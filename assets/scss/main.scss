@@ -10,6 +10,14 @@ canvas {
     @extend .content !optional;
 }
 
+.tabs-container .section {
+  display: none;
+}
+
+.tabs-container .section.is-active {
+  display: block;
+}
+
 $primary-color: #6898CC;
 $white: #fff;
 // $black: #5c5c5c;
