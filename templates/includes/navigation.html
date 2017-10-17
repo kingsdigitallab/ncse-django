@@ -1,7 +1,6 @@
-{% load periodicals_tags  %}
+{% load periodicals_tags %}
 
 {% block main_menu %}
-
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">Home</a>
@@ -15,21 +14,20 @@
 
   <div class="navbar-menu">
     <div class="navbar-start">
-        <a class="navbar-item" href="{% url 'publication-list' %}">Publications List</a>
-        <a class="navbar-item" href="{% url 'search' %}?{% initial_search_parameters %}">Search</a>
+      <a class="navbar-item" href="{% url 'publication-list' %}">Publications List</a>
+      <a class="navbar-item" href="{% url 'search' %}?{% initial_search_parameters %}">Search</a>
     </div>
 
     <div class="navbar-end">
-        {% if request.user.is_authenticated %}
-            {% if request.user.is_staff %}
-                <a class="navbar-item" href="/admin/">Admin Panel</a>
-            {% endif %}
-            <a class="navbar-item" href="/admin/logout/">Logout {{ request.user.first_name }}</a>
-        {% else %}
-            <a class="navbar-item" href="/admin/login/">Login</a>
-        {% endif %}
+      {% if request.user.is_authenticated %}
+      {% if request.user.is_staff %}
+      <a class="navbar-item" href="/admin/">Admin Panel</a>
+      {% endif %}
+      <a class="navbar-item" href="/admin/logout/">Logout {{ request.user.first_name }}</a>
+      {% else %}
+      <a class="navbar-item" href="/admin/login/">Login</a>
+      {% endif %}
     </div>
   </div>
 </nav>
-
 {% endblock %}
