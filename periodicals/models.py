@@ -133,7 +133,7 @@ class Article(models.Model):
     article_type = models.ForeignKey(ArticleType, blank=True, null=True)
 
     class Meta:
-        ordering = ['page', 'position_in_page', 'aid']
+        ordering = ['page__number', 'position_in_page', 'aid']
 
     def __str__(self):
         return self.title if self.title else self.aid
