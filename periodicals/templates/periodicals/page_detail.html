@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ page.publication }} {{ page.issue }}, Page {{ page.number }}{% endblock %}
+
 {% block meta_title %}{{ page.publication }} {{ page.issue }}, Page {{ page.number }}{% endblock %}
 
 {% block main %}
-
 <section class="section">
     <div class="container">
         <div class="page-controls">
@@ -15,14 +15,12 @@
             {% if page.next_page %}
             <a class="button is-link is-pulled-right" href="{{ page.next_page.url }}">Next Page</a>
             {% endif %}
-
         </div>
 
          <canvas class="pageCanvas" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
          <!-- Fallback for non-canvas supporting devices -->
             <img id="page{{ page.number}}" src="{{ page.image.url }}">
         </canvas>
-
     </div>
 </section>
 
