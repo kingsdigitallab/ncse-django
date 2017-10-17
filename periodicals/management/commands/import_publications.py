@@ -140,6 +140,10 @@ class Command(BaseCommand):
                 '-- page not found for issue {} article {}'.format(
                     issue, aid))
             return
+        except Exception as e:
+            self.logger.error('-- failed to get page_number/page')
+            self.logger.error(e.get_message())
+            return
 
         try:
             article = Article.objects.get(issue=issue, aid=aid)
