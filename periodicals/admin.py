@@ -32,6 +32,8 @@ class IssueAdmin(admin.ModelAdmin):
     list_display = ['uid', 'publication', 'issue_date']
     list_filter = ['publication__abbreviation', 'issue_date']
 
+    raw_id_fields = ['publication']
+
 
 class ArticleInline(admin.TabularInline):
     model = Article
@@ -46,11 +48,15 @@ class PageAdmin(admin.ModelAdmin):
 
     list_filter = ['issue__publication']
 
+    raw_id_fields = ['issue']
+
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ['page', 'title',
                     'continuation_from', 'aid', 'continuation_to']
+
+    raw_id_fields = ['issue', 'page']
 
 
 @admin.register(ArticleType)
