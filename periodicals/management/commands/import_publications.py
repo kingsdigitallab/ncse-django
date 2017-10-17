@@ -28,11 +28,8 @@ class Command(BaseCommand):
         coords = input.split(' ')
         if len(coords) == 4:
             # Success
-            return {"x0": coords[0],
-                    "x1": coords[2],
-                    "y0": coords[1],
-                    "y1": coords[3]
-                    }
+            return {'x0': coords[0], 'x1': coords[2],
+                    'y0': coords[1], 'y1': coords[3]}
         else:
             return {}
 
@@ -150,15 +147,31 @@ class Command(BaseCommand):
             article = Article(issue=issue, page=page, aid=aid)
 
         meta = xmlroot.xpath('Meta')[0]
-        content = xmlroot.xpath('Content')[0]
-        content_xpath = ('//text()[normalize-space() and '
-                         'parent::node()[name() != "Q" and name () != "q"]]')
 
         article.page = page
         article.position_in_page = xmlroot.get('INDEX_IN_DOC')
         article.title = meta.get('NAME')
         article.description = meta.get('DESCRIPTION')
-        article.content = ' '.join(content.xpath(content_xpath))
+
+        header_text = ''
+        header = xmlroot.xpath('HedLine_hl1')
+        if header:
+            header_xpath = (
+                'Primitive/node()/text()[normalize-space() and '
+                'parent::node()[name() != "Q" and name () != "q"]]')
+            header_text = ' '.join(header[0].xpath(header_xpath))
+
+        content_text = ''
+        content = xmlroot.xpath('Content')
+        if content:
+            content_xpath = (
+                '//text()[normalize-space() and '
+                'parent::node()[name() != "Q" and name () != "q"]]')
+            content_text = '{}{}'.format(
+                article.content, ' '.join(content[0].xpath(content_xpath)))
+
+        article.content = '{}{}'.format(header_text, content_text)
+
         article.bounding_box = self._str_to_box(xmlroot.get('BOX'))
         article.save()
 
@@ -200,10 +213,9 @@ class Command(BaseCommand):
     def _add_article_html(self, issue, dir, filename, article):
         tree = etree.parse(os.path.join(dir, filename))
         xmlroot = tree.getroot()
-        content = xmlroot.xpath('Content')[0]
 
         # Pretty HTML
-        header_html = None  # Prefer to be explicit
+        header_html = ''
         header = xmlroot.xpath('HedLine_hl1')
         if len(header):
             header_html = '<p class="article-header">{}</p>\n'.format(
@@ -212,16 +224,15 @@ class Command(BaseCommand):
                     'parent::node()[name() != "Q" and name () != "q"]]')))
 
         content_html = ''
-        for primitive in content.xpath('Primitive'):
-            content_html = '{}<p class="article-content">{}</p>\n'.format(
-                content_html, ' '.join(primitive.xpath(
-                    'node()/text()[normalize-space() and '
-                    'parent::node()[name() != "Q" and name () != "q"]]')))
+        content = xmlroot.xpath('Content')
+        if content:
+            for primitive in content[0].xpath('Primitive'):
+                content_html = '{}<p class="article-content">{}</p>\n'.format(
+                    content_html, ' '.join(primitive.xpath(
+                        'node()/text()[normalize-space() and '
+                        'parent::node()[name() != "Q" and name () != "q"]]')))
 
-        if header_html:
-            article.content_html = '{}{}'.format(header_html, content_html)
-        else:
-            article.content_html = content_html
+        article.content_html = '{}{}'.format(header_html, content_html)
 
         article.save()
 
