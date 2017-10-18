@@ -1,3 +1,7 @@
+// Global variables
+var word_highlight_colour = "rgba(225,225,0,0.2)"; // Word highlight colour
+var article_bounding_box_colour = "rgba(104,152,204,1)"; // Article bounding box colour
+
 // Enables drawing to a canvas
 function enableCanvas() {
     // Only run if we have a page canvas!
@@ -10,7 +14,7 @@ function enableCanvas() {
                 ctx.drawImage(this, 0, 0);
                 if (typeof highlight_words !== "undefined") {
                     ctx.lineWidth = "1";
-                    ctx.fillStyle = "rgba(225,225,0,0.5)";
+                    ctx.fillStyle = word_highlight_colour;
                     ctx.strokeStyle = "rgba(0,0,0,0)";
                     
                     jQuery.each(highlight_words, function(k1, v1) {
@@ -30,7 +34,7 @@ function enableCanvas() {
                 if (typeof article_bounding_box !== "undefined") {
                     ctx.lineWidth = "2";
                     ctx.fillStyle = "rgba(0,0,0,0)";
-                    ctx.strokeStyle = "rgba(255,0,0,1)";
+                    ctx.strokeStyle = article_bounding_box_colour;
 
                     var x0 = parseInt(article_bounding_box["x0"]);
                     var x1 = parseInt(article_bounding_box["x1"]);
