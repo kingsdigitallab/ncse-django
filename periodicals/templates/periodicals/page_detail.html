@@ -13,39 +13,43 @@
 </div>
 
 <section class="section">
-    <div class="page-controls">
+    <div class="pagination is-centered">
         {% if page.previous_page %}
-        <a class="button is-link" href="{{ page.previous_page.url }}">Previous Page</a>
+        <a class="pagination-previous" href="{{ page.previous_page.url }}">Previous Page</a>
         {% endif %}
 
         {% if page.next_page %}
-        <a class="button is-link is-pulled-right" href="{{ page.next_page.url }}">Next Page</a>
+        <a class="pagination-next" href="{{ page.next_page.url }}">Next Page</a>
         {% endif %}
-    </div>
-</section>
 
-<div class="tabs-container">
-    <section class="section is-active" data-item="image">
-        <div class="container">
-            <canvas class="pageCanvas" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
-               <!-- Fallback for non-canvas supporting devices -->
-               <img id="page{{ page.number}}" src="{{ page.image.url }}">
-           </canvas>
-       </div>
-   </section>
-
-   <section class="section" data-item="transcription">
-    <div class="container">
-        <div class="columns is-multiline is-centered">
-            {% for article in page.articles_in_page.all %}
-            <div class="column is-half article" id="{{ article.aid }}">
-                <h3 class="subtitle">{{ article|title }}</h3>
-                {{ article.content_html|safe }}
-            </div>
-            {% endfor %}
+        <ul class="pagination-list">
+            <li><a class="pagination-link" href="{{ page.issue.url }}">Go to Issue</a><li>
+            </ul>
         </div>
-    </div>
-</section>
+    </section>
+
+    <div class="tabs-container">
+        <section class="section is-active" data-item="image">
+            <div class="container">
+                <canvas class="pageCanvas" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
+                   <!-- Fallback for non-canvas supporting devices -->
+                   <img id="page{{ page.number}}" src="{{ page.image.url }}">
+               </canvas>
+           </div>
+       </section>
+
+       <section class="section" data-item="transcription">
+        <div class="container">
+            <div class="columns is-multiline is-centered">
+                {% for article in page.articles_in_page.all %}
+                <div class="column is-half article" id="{{ article.aid }}">
+                    <h3 class="subtitle">{{ article|title }}</h3>
+                    {{ article.content_html|safe }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 </div>
 {% endblock %}
 
