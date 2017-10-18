@@ -217,12 +217,13 @@ class Article(models.Model):
                    (int(f['x1']) - int(f['x0'])) * weight:
                     # Double column
                     return [
-                        {'x': a['x0'], 'y': a['y0']},
+                        {'x': a['x0'], 'y': f['y1']},
+                        {'x': f['x1'], 'y': f['y1']},
+                        {'x': f['x1'], 'y': a['y0']},
                         {'x': a['x1'], 'y': a['y0']},
-                        {'x': a['x1'], 'y': f['y0']},
-                        {'x': f['x0'], 'y': f['y0']},
-                        {'x': f['x0'], 'y': a['y1']},
+                        {'x': a['x1'], 'y': a['y1']},
                         {'x': a['x0'], 'y': a['y1']},
+
                     ]
                 else:
                     # Single column
