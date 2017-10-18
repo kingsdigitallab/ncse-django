@@ -7,8 +7,8 @@
 {% block main %}
 <div class="tabs is-centered">
   <ul>
-    <li class="is-active" data-option="1"><a>Image</a></li>
-    <li data-option="2"><a>Transcription</a></li>
+    <li class="is-active" data-option="image"><a>Image</a></li>
+    <li data-option="transcription"><a>Transcription</a></li>
 </ul>
 </div>
 
@@ -25,7 +25,7 @@
 </section>
 
 <div class="tabs-container">
-    <section class="section is-active" data-item="1">
+    <section class="section is-active" data-item="image">
         <div class="container">
             <canvas class="pageCanvas" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
                <!-- Fallback for non-canvas supporting devices -->
@@ -34,7 +34,7 @@
        </div>
    </section>
 
-   <section class="section" data-item="2">
+   <section class="section" data-item="transcription">
     <div class="container">
         <div class="columns is-multiline is-centered">
             {% for article in page.articles_in_page.all %}
@@ -55,16 +55,4 @@
 var highlight_words = {{ highlight_words|safe }};
 </script>
 {% endif %}
-
-<script>
-$(document).ready(function() {
-    $('.tabs ul li').on('click', function() {
-        var number = $(this).data('option');
-        $('.tabs ul li').removeClass('is-active');
-        $(this).addClass('is-active');
-        $('.tabs-container section').removeClass('is-active');
-        $('section[data-item="' + number + '"]').addClass('is-active');
-    });
-});
-</script>
 {% endblock %}
