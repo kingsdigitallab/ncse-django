@@ -1,38 +1,44 @@
 {% extends "base.html" %}
 
-
-{% block title %}Publications List{% endblock %}
-{% block meta_title %}Publications List{% endblock %}
-
+{% block title %}Publications{% endblock %}
+{% block meta_title %}Publications | Explore{% endblock %}
 
 {% block main %}
 <section class="section">
-    <div class="container">
-        <div class="columns multiline">
-            {% for publication in publications %}
-            <div class="column is-one-quarter">
-                <div class="card">
-                  <header class="card-header">
-                    <p class="card-header-title">
-                      <a href="{{ publication.url }}">{{ publication.abbreviation }}</a>
-
-                      {% if publication.description %} - <a href="{{ publication.url }}">{{ publication.description }}{% endif %}</a>
-                    </p>
-                  </header>
-                  <div class="card-content">
-                    <div class="content">
-                      Contains {{ publication.issues.count }} issues.
-                    </div>
-                  </div>
-                  {% if request.user.is_staff %}
-                  <footer class="card-footer">
-                    <a href="/admin/periodicals/publication/{{ publication.id }}/change/" class="card-footer-item">Edit</a>
-                  </footer>
-                  {% endif %}
-                </div>
+  <div class="container">
+    <div class="columns is-multiline">
+      {% for publication in publications %}
+      <div class="column is-one-quarter">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">
+              <a href="{{ publication.url }}">
+                {{ publication.abbreviation }}{% if publication.title %}:
+                {{ publication.title }}{% endif %}
+              </a>
+            </p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              {% with number_of_years=publication.get_number_of_years %}
+              <p><strong>{{ number_of_years }}</strong> Year{{ number_of_years|pluralize }}</p>
+              {% endwith %}
+              {% with year_span=publication.get_year_span %}
+              <p>{{ year_span.0 }} to {{ year_span.1 }}</p>
+              {% endwith %}
+              <p>{{ publication.issues.count }} Issues</p>
+              <p>{{ publication.get_total_number_of_pages }} Pages</p>
             </div>
-            {% endfor %}
+          </div>
+          {% if request.user.is_staff %}
+          <footer class="card-footer">
+            <a href="/admin/periodicals/publication/{{ publication.id }}/change/" class="card-footer-item">Edit</a>
+          </footer>
+          {% endif %}
         </div>
+      </div>
+      {% endfor %}
     </div>
+  </div>
 </section>
 {% endblock %}
