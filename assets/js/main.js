@@ -32,16 +32,22 @@ function enableCanvas() {
                 }
 
                 if (typeof article_bounding_box !== "undefined") {
-                    ctx.lineWidth = "2";
+                    ctx.lineWidth = "4";
                     ctx.fillStyle = "rgba(0,0,0,0)";
                     ctx.strokeStyle = article_bounding_box_colour;
 
-                    var x0 = parseInt(article_bounding_box["x0"]);
-                    var x1 = parseInt(article_bounding_box["x1"]);
+                    ctx.beginPath();
+                    ctx.moveTo(parseInt(article_bounding_box[0]["x"]), parseInt(article_bounding_box[0]["y"]));
 
-                    var y0 = parseInt(article_bounding_box["y0"]);
-                    var y1 = parseInt(article_bounding_box["y1"]);
-                    ctx.strokeRect(x0, y0, x1 -x0, y1 - y0);
+                    count = article_bounding_box.length;
+
+                    for (var i  = 1; i <= count; i++)
+                    {
+                        ctx.lineTo(parseInt(article_bounding_box[i % count]["x"]), parseInt(article_bounding_box[i % count]["y"]));
+                    }
+                    
+
+                    ctx.stroke();
                 }
             };
             img.src = $("#" + $(this).attr("data-image-id")).attr("src");

@@ -160,4 +160,108 @@ class Article(models.Model):
         return self.content
 
     def get_real_bounding_box(self):
-        return self.bounding_box
+
+        # Global variables
+        page = self.page
+        a = self.bounding_box  # Easier to read later on
+        weight = 1.2  # Margin of error for wonky pages
+
+        # Check if single article on page
+        if page.number_of_articles == 1:
+            return [
+                {'x': a['x0'], 'y': a['y0']},
+                {'x': a['x0'], 'y': a['y1']},
+                {'x': a['x1'], 'y': a['y1']},
+                {'x': a['x1'], 'y': a['y0']},
+            ]
+        else:
+            # Article spans multiple columns
+            page_articles = page.articles_in_page.order_by(
+                'position_in_page').all()
+            first_article = page_articles[0]
+            last_article = page_articles[page.number_of_articles - 1]
+
+            if self == first_article:
+                next_article = page.articles_in_page.get(
+                    position_in_page=self.position_in_page + 1)
+
+                l = next_article.bounding_box
+
+                if int(a['x1']) - int(a['x0']) > \
+                   (int(l['x1']) - int(l['x0'])) * weight:
+                    # Double column
+                    return [
+                        {'x': a['x0'], 'y': a['y0']},
+                        {'x': a['x1'], 'y': a['y0']},
+                        {'x': a['x1'], 'y': l['y0']},
+                        {'x': l['x0'], 'y': l['y0']},
+                        {'x': l['x0'], 'y': a['y1']},
+                        {'x': a['x0'], 'y': a['y1']},
+                    ]
+                else:
+                    # Single column
+                    return [
+                        {'x': a['x0'], 'y': a['y0']},
+                        {'x': a['x0'], 'y': a['y1']},
+                        {'x': a['x1'], 'y': a['y1']},
+                        {'x': a['x1'], 'y': a['y0']}
+                    ]
+            elif self == last_article:
+                # This is the last article on the page
+
+                previous_article = page.articles_in_page.get(
+                    position_in_page=self.position_in_page - 1)
+                f = previous_article.bounding_box
+
+                if int(a['x1']) - int(a['x0']) > \
+                   (int(f['x1']) - int(f['x0'])) * weight:
+                    # Double column
+                    return [
+                        {'x': a['x0'], 'y': a['y0']},
+                        {'x': a['x1'], 'y': a['y0']},
+                        {'x': a['x1'], 'y': f['y0']},
+                        {'x': f['x0'], 'y': f['y0']},
+                        {'x': f['x0'], 'y': a['y1']},
+                        {'x': a['x0'], 'y': a['y1']},
+                    ]
+                else:
+                    # Single column
+                    return [
+                        {'x': a['x0'], 'y': a['y0']},
+                        {'x': a['x0'], 'y': a['y1']},
+                        {'x': a['x1'], 'y': a['y1']},
+                        {'x': a['x1'], 'y': a['y0']}
+                    ]
+            else:
+                previous_article = page.articles_in_page.get(
+                    position_in_page=self.position_in_page - 1)
+                next_article = page.articles_in_page.get(
+                    position_in_page=self.position_in_page + 1)
+
+                f = previous_article.bounding_box
+                l = next_article.bounding_box
+
+                # Check if over single or double column
+                if int(a['x1']) - int(a['x0']) > \
+                   (int(f['x1']) - int(f['x0'])) * weight \
+                   and int(a['x1']) - int(a['x0']) > \
+                   (int(l['x1']) - int(l['x0'])) * weight:
+                    # Double column
+                    return [
+                        {'x': a['x0'], 'y': f['y1']},
+                        {'x': f['x1'], 'y': f['y1']},
+                        {'x': f['x1'], 'y': a['y0']},
+                        {'x': a['x1'], 'y': a['y0']},
+                        {'x': a['x1'], 'y': l['y0']},
+                        {'x': l['x0'], 'y': l['y0']},
+                        {'x': l['x0'], 'y': a['y1']},
+                        {'x': a['x0'], 'y': a['y1']}
+                    ]
+                else:
+                    # Single column
+                    return [
+                        {'x': a['x0'], 'y': a['y0']},
+                        {'x': a['x0'], 'y': a['y1']},
+                        {'x': a['x1'], 'y': a['y1']},
+                        {'x': a['x1'], 'y': a['y0']}
+                    ]
