@@ -4,17 +4,20 @@
 {% block meta_title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %}{{ article.issue }}{% endblock %}
 
 {% block main %}
-
 <section class="section">
     <div class="container">
-        <div class="page-controls">
+        <div class="pagination is-centered">
             {% if article.page.previous_page %}
-            <a class="button is-link" href="{{ article.page.previous_page.url }}">Previous Page</a>
+            <a class="pagination-previous" href="{{ article.page.previous_page.url }}">Previous Page</a>
             {% endif %}
 
             {% if article.page.next_page %}
-            <a class="button is-link is-pulled-right" href="{{ article.page.next_page.url }}">Next Page</a>
+            <a class="pagination-next" href="{{ article.page.next_page.url }}">Next Page</a>
             {% endif %}
+
+            <ul class="pagination-list">
+                <li><a class="pagination-link" href="{{ article.issue.url }}">Go to Issue</a><li>
+            </ul>
         </div>
 
         <canvas class="pageCanvas" data-image-id="page{{ article.page.number}}" width="{{ article.page.width }}" height="{{ article.page.height }}">
