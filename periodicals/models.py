@@ -1,5 +1,6 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.db.models import Sum
 from django.urls import reverse
 from django.utils.text import slugify
 
@@ -22,6 +23,29 @@ class Publication(models.Model):
             'publication-detail', kwargs={
                 'slug': self.slug
             })
+
+    def get_year_span(self):
+        if self.issues.all().count() > 0:
+            return [self.issues.first().issue_date.year,
+                    self.issues.last().issue_date.year]
+
+        return None
+
+    def get_number_of_years(self):
+        year_span = self.get_year_span()
+
+        if year_span:
+            return year_span[1] - year_span[0] + 1
+
+        return None
+
+    def get_total_number_of_pages(self):
+        aggregation = self.issues.aggregate(total_pages=Sum('number_of_pages'))
+
+        if aggregation:
+            return aggregation['total_pages']
+
+        return 0
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.abbreviation)
