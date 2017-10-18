@@ -1,7 +1,9 @@
 // Global variables
-var word_highlight_colour = "rgba(225,225,0,0.2)"; // Word highlight colour
-var article_bounding_box_colour = "rgba(104,152,204,1)"; // Article bounding box colour
+var word_highlight_colour = "rgba(225,225,0,0.2)";
+// Word highlight colour
+var article_bounding_box_colour = "rgba(104,152,204,1)";
 
+// Article bounding box colour
 // Enables drawing to a canvas
 function enableCanvas() {
     // Only run if we have a page canvas!
@@ -16,7 +18,7 @@ function enableCanvas() {
                     ctx.lineWidth = "1";
                     ctx.fillStyle = word_highlight_colour;
                     ctx.strokeStyle = "rgba(0,0,0,0)";
-                    
+
                     jQuery.each(highlight_words, function(k1, v1) {
                         jQuery.each(v1, function(k2, v2) {
                             var x0 = parseInt(this["x0"]);
@@ -37,15 +39,19 @@ function enableCanvas() {
                     ctx.strokeStyle = article_bounding_box_colour;
 
                     ctx.beginPath();
-                    ctx.moveTo(parseInt(article_bounding_box[0]["x"]), parseInt(article_bounding_box[0]["y"]));
+                    ctx.moveTo(
+                        parseInt(article_bounding_box[0]["x"]),
+                        parseInt(article_bounding_box[0]["y"]),
+                    );
 
                     count = article_bounding_box.length;
 
-                    for (var i  = 1; i <= count; i++)
-                    {
-                        ctx.lineTo(parseInt(article_bounding_box[i % count]["x"]), parseInt(article_bounding_box[i % count]["y"]));
+                    for (var i = 1; i <= count; i++) {
+                        ctx.lineTo(
+                            parseInt(article_bounding_box[i % count]["x"]),
+                            parseInt(article_bounding_box[i % count]["y"]),
+                        );
                     }
-                    
 
                     ctx.stroke();
                 }
@@ -57,5 +63,17 @@ function enableCanvas() {
 
 $(function() {
     // Your JS Here
-    enableCanvas();
+    if ($("canvas")) {
+        enableCanvas();
+    }
+
+    if ($(".tabs")) {
+        $(".tabs ul li").on("click", function() {
+            var option = $(this).data("option");
+            $(".tabs ul li").removeClass("is-active");
+            $(this).addClass("is-active");
+            $(".tabs-container section").removeClass("is-active");
+            $('section[data-item="' + option + '"]').addClass("is-active");
+        });
+    }
 });
