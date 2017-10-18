@@ -53,9 +53,9 @@
 var highlight_words = {{ highlight_words|safe }};
 </script>
 {% endif %}
-{% if article_bounding_box and article.page.number_of_articles > 1 %}
+{% if article.page.number_of_articles > 1 %}
 <script>
-var article_bounding_box = {{ article_bounding_box|safe }};
+var article_bounding_box = {{ article.get_real_bounding_box|safe }};
 </script>
 {% endif %}
 {% endblock %}

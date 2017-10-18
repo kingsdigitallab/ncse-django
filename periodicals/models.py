@@ -158,3 +158,6 @@ class Article(models.Model):
                 self.continuation_to.get_text())
 
         return self.content
+
+    def get_real_bounding_box(self):
+        return self.bounding_box
