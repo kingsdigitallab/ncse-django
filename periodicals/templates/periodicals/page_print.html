@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>{{ page }}</title>
+
+        <style type="text/css">
+            @media print {
+                html, body {
+                    margin: 0;
+                    padding: 0;
+                    height: 100%;
+                }
+
+                .page
+                {   
+                    height: 90%;
+                }
+
+                    .page img
+                    {
+                        display: block;
+                        max-height: 100%;
+                        margin: 0 auto;
+                    }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="page">
+            <img src="{{ page.image.url }}">
+        </div>
+        <script>
+            window.print();
+            setTimeout(function () { window.close(); }, 100);
+        </script>
+    </body>
+</html>

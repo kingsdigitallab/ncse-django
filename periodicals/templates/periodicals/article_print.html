@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>{{article.issue}} - {{ article|title }}</title>
+      
+        <style type="text/css">
+            @media print {
+                html, body {
+                    margin: 0;
+                    padding: 0;
+                    height: 100%;
+                }
+
+                .page
+                {   
+                    height: 90%;
+                }
+
+                    .page img
+                    {
+                        display: block;
+                        max-height: 100%;
+                        margin: 0 auto;
+                    }
+            }
+        </style>
+
+    </head>
+    <body>
+        {% for p in pages %}
+        <div class="page">
+            <img src="{{ p.image.url }}">
+        </div>
+        {% endfor %}
+        <script>
+            window.print();
+            setTimeout(function () { window.close(); }, 100);
+        </script>
+    </body>
+</html>
