@@ -10,6 +10,18 @@ canvas {
     @extend .content !optional;
 }
 
+// Equal height blocks
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card-footer
+{
+    margin-top: auto;
+}
+
 .tabs-container .section {
   display: none;
 }
