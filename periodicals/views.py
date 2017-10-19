@@ -1,4 +1,4 @@
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, TemplateView
 from django.shortcuts import get_object_or_404
 from haystack.generic_views import FacetedSearchView
 
@@ -48,6 +48,23 @@ class ArticleDetailView(DetailView):
             slug=self.kwargs['article_slug'])
 
 
+class ArticlePrintView(TemplateView):
+    template_name = 'periodicals/article_print.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticlePrintView, self).get_context_data(**kwargs)
+        context['article'] = self.get_object()
+        context['pages'] = context['article'].get_all_pages()
+
+        return context
+
+    def get_object(self):
+        return get_object_or_404(
+            Article, issue__slug=self.kwargs['issue_slug'],
+            page__number=self.kwargs['number'],
+            slug=self.kwargs['article_slug'])
+
+
 class PageDetailView(DetailView):
 
     def get_object(self):
@@ -62,6 +79,21 @@ class PageDetailView(DetailView):
         highlight_words = _get_highlighted_words(self.request, page)
         if highlight_words:
             context['highlight_words'] = highlight_words
+
+        return context
+
+
+class PagePrintView(TemplateView):
+    template_name = 'periodicals/page_print.html'
+
+    def get_object(self):
+        return get_object_or_404(
+            Page, issue__slug=self.kwargs['issue_slug'],
+            number=self.kwargs['number'])
+
+    def get_context_data(self, **kwargs):
+        context = super(PagePrintView, self).get_context_data(**kwargs)
+        context['page'] = self.get_object()
 
         return context
 

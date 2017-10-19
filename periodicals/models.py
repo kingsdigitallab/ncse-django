@@ -113,6 +113,14 @@ class Page(models.Model):
                 'issue_slug': self.issue.slug, 'number': self.number
             })
 
+    @property
+    def print_url(self):
+        return reverse(
+            'page-print', kwargs={
+                'publication_slug': self.issue.publication.slug,
+                'issue_slug': self.issue.slug, 'number': self.number
+            })
+
     def previous_page(self):
         if self.number > 1:
             return self.issue.pages.all()[self.number - 2]
@@ -171,9 +179,33 @@ class Article(models.Model):
                 'article_slug': self.slug
             })
 
+    @property
+    def print_url(self):
+        return reverse(
+            'article-print', kwargs={
+                'publication_slug': self.issue.publication.slug,
+                'issue_slug': self.issue.slug, 'number': self.page.number,
+                'article_slug': self.slug
+            })
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.aid)
         super(Article, self).save(*args, **kwargs)
+
+    # Gets all pages in the article (including those continued to/from)
+    def get_all_pages(self):
+        current_article = self
+
+        while current_article.continuation_from:
+            current_article = current_article.continuation_from
+
+        pages = [current_article.page]
+        while current_article.continuation_to:
+            current_article = current_article.continuation_to
+            if current_article.page not in pages:
+                pages.append(current_article.page)
+
+        return pages
 
     def get_text(self):
         if self.continuation_to:
