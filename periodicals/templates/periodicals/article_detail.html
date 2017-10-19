@@ -4,6 +4,14 @@
 {% block meta_title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %}{{ article.issue }}{% endblock %}
 
 {% block main %}
+
+<div class="tabs is-centered">
+  <ul>
+    <li class="is-active" data-option="image"><a>Image</a></li>
+    <li data-option="transcription"><a>Transcription</a></li>
+</ul>
+</div>
+
 <section class="section">
     <div class="container">
         <div class="pagination is-centered">
@@ -17,37 +25,45 @@
 
             <ul class="pagination-list">
                 <li><a class="pagination-link" href="{{ article.issue.url }}">Go to Issue</a><li>
+                <li><a class="pagination-link" href="{{ article.page.print_url }}" target="_blank">Print Page</a><li>
+                <li><a class="pagination-link" href="{{ article.print_url }}" target="_blank">Print Article</a></li>
             </ul>
-        </div>
-
-        <canvas class="pageCanvas" data-image-id="page{{ article.page.number}}" width="{{ article.page.width }}" height="{{ article.page.height }}">
-            <!-- Fallback for non-canvas supporting devices -->
-            <img id="page{{ article.page.number}}" src="{{ article.page.image.url }}">
-        </canvas>
-
-        <div class="page-controls">
-            {% if article.continuation_from %}
-            <a class="button" href="{{ article.continuation_from.url }}">Article continued from Page {{article.continuation_from.page.number}}</a>
-            {% endif %}
-
-            {% if article.continuation_to %}
-            <a class="button is-pulled-right" href="{{ article.continuation_to.url }}">Article continued on Page {{article.continuation_to.page.number}}</a>
-            {% endif %}
-        </div>
-    </div>
-</div>
-
-<section class="section">
-    <div class="container">
-        <h3 class="title">Transcription</h3>
-
-        <div class="columns is-multiline is-centered">
-            <div class="column is-half  article" id="{{ article.aid }}">
-                {{ article.content_html|safe }}
-            </div>
         </div>
     </div>
 </section>
+
+<div class="tabs-container">
+    <section class="section is-active" data-item="image">
+        <div class="container">
+
+            <canvas class="pageCanvas" data-image-id="page{{ article.page.number}}" width="{{ article.page.width }}" height="{{ article.page.height }}">
+            <!-- Fallback for non-canvas supporting devices -->
+                <img id="page{{ article.page.number}}" src="{{ article.page.image.url }}">
+            </canvas>
+
+            <div class="page-controls">
+                {% if article.continuation_from %}
+                <a class="button" href="{{ article.continuation_from.url }}">Continued from previous page</a>
+                {% endif %}
+
+                {% if article.continuation_to %}
+                <a class="button is-pulled-right" href="{{ article.continuation_to.url }}">Continued on next page</a>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <section class="section" data-item="transcription">
+        <div class="container">
+
+            <div class="columns is-multiline is-centered">
+                <div class="column is-half  article" id="{{ article.aid }}">
+                    {{ article.content_html|safe }}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 {% endblock %}
 
 {% block footer_scripts %}

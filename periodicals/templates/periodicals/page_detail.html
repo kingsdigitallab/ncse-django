@@ -7,9 +7,9 @@
 {% block main %}
 <div class="tabs is-centered">
   <ul>
-    <li class="is-active" data-option="image"><a>Image</a></li>
-    <li data-option="transcription"><a>Transcription</a></li>
-</ul>
+        <li class="is-active" data-option="image"><a>Image</a></li>
+        <li data-option="transcription"><a>Transcription</a></li>
+    </ul>
 </div>
 
 <section class="section">
@@ -24,21 +24,22 @@
 
         <ul class="pagination-list">
             <li><a class="pagination-link" href="{{ page.issue.url }}">Go to Issue</a><li>
-            </ul>
+            <li><a class="pagination-link" href="{{ page.print_url }}" target="_blank">Print Page</a><li>
+        </ul>
+    </div>
+</section>
+
+<div class="tabs-container">
+    <section class="section is-active" data-item="image">
+        <div class="container">
+            <canvas class="pageCanvas" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
+                <!-- Fallback for non-canvas supporting devices -->
+                <img id="page{{ page.number}}" src="{{ page.image.url }}">
+            </canvas>
         </div>
     </section>
 
-    <div class="tabs-container">
-        <section class="section is-active" data-item="image">
-            <div class="container">
-                <canvas class="pageCanvas" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
-                   <!-- Fallback for non-canvas supporting devices -->
-                   <img id="page{{ page.number}}" src="{{ page.image.url }}">
-               </canvas>
-           </div>
-       </section>
-
-       <section class="section" data-item="transcription">
+    <section class="section" data-item="transcription">
         <div class="container">
             <div class="columns is-multiline is-centered">
                 {% for article in page.articles_in_page.all %}
