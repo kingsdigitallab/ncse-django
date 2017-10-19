@@ -103,6 +103,7 @@ INSTALLED_APPS += [    # your project apps here
     'modelcluster',
     'haystack',
     'wagtail.wagtailsearch',
+    'cms',
     'periodicals'
 ]
 

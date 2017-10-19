@@ -1,0 +1,11 @@
+{% if pages %}
+{% load cms_tags wagtailimages_tags wagtailcore_tags wagtailroutablepage_tags %}
+
+<h2 class="section-title">{{ page.title }}</h2>
+
+{% block newsitem %}
+{% include "cms/includes/news_preview.html" %}
+{% endblock %}
+{% else %}
+<p>There are no news items published at the moment.</p>
+{% endif %}

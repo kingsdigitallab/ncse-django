@@ -1,0 +1,8 @@
+{% load wagtailcore_tags cms_tags %}
+    {% for page in menu_pages %}
+    <li{% if page.active %} class="active" {% endif %}>
+        <a href="{% pageurl page %}">{{ page.title }}</a>
+
+        {% sub_menu root=page %}
+    </li>
+    {% endfor %}

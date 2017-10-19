@@ -1,0 +1,9 @@
+{% if events %}
+{% load cms_tags wagtailimages_tags wagtailcore_tags wagtailroutablepage_tags %}
+
+{% block eventitem %}
+{% include "cms/includes/event_preview.html" %}
+{% endblock %}
+{% else %}
+<p>No events to show.</p>
+{% endif %}
