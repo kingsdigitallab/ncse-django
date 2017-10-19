@@ -13,6 +13,7 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, model_attr='content')
     slug = indexes.CharField(model_attr='slug', indexed=False)
     page = indexes.IntegerField(model_attr='page__id', indexed=False)
+    position_in_page = indexes.IntegerField(model_attr='position_in_page')
     page_url = indexes.CharField(indexed=False)
     page_number = indexes.IntegerField(
         model_attr='page__number', indexed=False)

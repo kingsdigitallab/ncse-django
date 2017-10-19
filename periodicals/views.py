@@ -95,6 +95,7 @@ class PeriodicalsSearchView(FacetedSearchView):
 
         if 'order_by' in self.request.GET:
             order_by = self.request.GET['order_by']
-            queryset = queryset.order_by(order_by, 'page_number')
+            queryset = queryset.order_by(order_by, 'page_number',
+                                         'position_in_page')
 
         return queryset
