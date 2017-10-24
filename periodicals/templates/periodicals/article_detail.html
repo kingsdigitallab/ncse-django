@@ -43,11 +43,11 @@
 
             <div class="page-controls">
                 {% if article.continuation_from %}
-                <a class="button" href="{{ article.continuation_from.url }}">Continued from previous page</a>
+                <a class="button" href="{{ article.continuation_from.url }}">Previous Section</a>
                 {% endif %}
 
                 {% if article.continuation_to %}
-                <a class="button is-pulled-right" href="{{ article.continuation_to.url }}">Continued on next page</a>
+                <a class="button is-pulled-right" href="{{ article.continuation_to.url }}">Next Setion</a>
                 {% endif %}
             </div>
         </div>
