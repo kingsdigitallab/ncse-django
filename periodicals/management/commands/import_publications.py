@@ -64,23 +64,28 @@ class Command(BaseCommand):
             issue_date_parts[2], issue_date_parts[1], issue_date_parts[0]))
         number_of_pages = meta.get('PAGES_NUMBER')
 
-        filename = link.get('SOURCE')
-        pdf_path = os.path.join(dir, filename)
-        pdf = File(open(pdf_path, 'rb'), name=filename)
+        if '_' not in dir:
+            filename = link.get('SOURCE')
+            pdf_path = os.path.join(dir, filename)
+            pdf = File(open(pdf_path, 'rb'), name=filename)
 
-        try:
-            issue = Issue.objects.get(uid=uid)
-        except Issue.DoesNotExist:
-            issue = Issue(uid=uid)
+            try:
+                issue = Issue.objects.get(uid=uid)
+            except Issue.DoesNotExist:
+                issue = Issue(uid=uid)
 
-        issue.publication = publication
-        issue.issue_date = issue_date
-        issue.number_of_pages = number_of_pages
-        issue.pdf = pdf
+            issue.publication = publication
+            issue.issue_date = issue_date
+            issue.number_of_pages = number_of_pages
+            issue.pdf = pdf
 
-        issue.save()
+            issue.save()
 
-        self._import_pages(issue, dir)
+            self._import_pages(issue, dir)
+        else:
+            self.logger.critical('** Skipping issue {} because the\
+                directory {} failed to meet requirements'.format(
+                uid, dir))
 
     def _import_pages(self, issue, dir):
         extract_to = '_document'
