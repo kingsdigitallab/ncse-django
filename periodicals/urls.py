@@ -29,5 +29,5 @@ urlpatterns = [
         IssueDetailView.as_view(), name='issue-detail'),
     url(r'^(?P<slug>[-\w]+)/$',
         PublicationDetailView.as_view(), name='publication-detail'),
-    url(r'', PublicationListView.as_view(), name='publication-list')
+    url(r'^$', PublicationListView.as_view(), name='publication-list')
 ]
