@@ -3,7 +3,6 @@ import json
 import logging
 import shutil
 from zipfile import ZipFile
-
 from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.utils.dateparse import parse_date
@@ -15,6 +14,7 @@ class Command(BaseCommand):
     args = '<publication_path publication_path ...>'
     help = 'Imports/updates publications'
     logger = logging.getLogger(__name__)
+    extract_to = '_document'
 
     def add_arguments(self, parser):
         parser.add_argument('publication_path', nargs='+', type=str)
@@ -22,6 +22,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for publication_path in options['publication_path']:
             self._import_publication(publication_path)
+
+        # Cleanup
+        if os.path.isdir(self.extract_to):
+            shutil.rmtree(self.extract_to)
 
     # Helper object:
     def _str_to_box(self, input):
@@ -88,20 +92,28 @@ class Command(BaseCommand):
                 uid, dir))
 
     def _import_pages(self, issue, dir):
-        extract_to = '_document'
         self.logger.debug('- unzipping Document.zip')
         document = ZipFile(os.path.join(dir, 'Document.zip'), mode='r')
-        document.extractall(path=extract_to)
 
-        for root, dirs, files in os.walk(extract_to):
+        if os.path.isdir(self.extract_to):
+            shutil.rmtree(self.extract_to)
+
+        try:
+            document.extractall(path=self.extract_to)
+        except NotADirectoryError:
+            # This is to fix broken zip exports in Olive
+            file_list = [f for f in document.namelist() if '.' in f]
+            if os.path.isdir(self.extract_to):
+                shutil.rmtree(self.extract_to)
+            document.extractall(path=self.extract_to, members=file_list)
+
+        for root, dirs, files in os.walk(self.extract_to):
             for filename in files:
                 if filename.endswith('.xml') and filename.startswith('Pg'):
                     self._import_page(issue, dir, root, filename)
             for filename in files:
                 if filename.endswith('.xml') and not filename.startswith('P'):
                     self._import_article(issue, root, filename)
-
-        shutil.rmtree(extract_to)
 
     def _import_page(self, issue, pdfdir, dir, filename):
         tree = etree.parse(os.path.join(dir, filename))
