@@ -1,6 +1,6 @@
 # mpol-django
 
-This is the repository for the mpol project at [https://kdl.kcl.ac.uk](King's Digital Lab)
+This is the repository for the mpol project at [https://kdl.kcl.ac.uk](Kings Digital Lab)
 
 This project is configured to use [Vagrant](https://www.vagrantup.com/) for local development and [Fabric](http://www.fabfile.org/) for deployment. 
 
