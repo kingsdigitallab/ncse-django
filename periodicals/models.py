@@ -135,7 +135,7 @@ class Page(models.Model):
 
 
 class ArticleType(models.Model):
-    title = models.CharField(max_length=512, blank=False, null=False)
+    title = models.CharField(max_length=2048, blank=False, null=False)
 
     class Meta:
         ordering = ['title']
@@ -151,7 +151,7 @@ class Article(models.Model):
     aid = models.CharField(max_length=32)
     slug = models.SlugField(max_length=32, null=True)
     position_in_page = models.PositiveIntegerField(blank=True, null=True)
-    title = models.CharField(max_length=512, blank=True, null=True)
+    title = models.CharField(max_length=2048, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     content = models.TextField(blank=True, null=True)
     content_html = models.TextField(blank=True, null=True)
@@ -241,7 +241,9 @@ class Article(models.Model):
                 next_article = page.articles_in_page.get(
                     position_in_page=self.position_in_page + 1)
 
-                l = next_article.bounding_box
+                # noqa here as single letter variables are nicer
+                # when dealing with this
+                l = next_article.bounding_box  # noqa
 
                 if int(a['x1']) - int(a['x0']) > \
                    (int(l['x1']) - int(l['x0'])) * weight:
@@ -296,7 +298,7 @@ class Article(models.Model):
                     position_in_page=self.position_in_page + 1)
 
                 f = previous_article.bounding_box
-                l = next_article.bounding_box
+                l = next_article.bounding_box  # noqa
 
                 # Check if over single or double column
                 if int(a['x1']) - int(a['x0']) > \
