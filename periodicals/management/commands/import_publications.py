@@ -61,6 +61,12 @@ class Command(BaseCommand):
 
         uid = meta.get('DOC_UID')
 
+        # This fixes an issue where olive sometimes doesn't
+        # include a UID field:
+        if not uid:
+            base_href = meta.get('BASE_HREF').split('/')
+            uid = "{}_{}".format(base_href[0], '/'.join(base_href[1:4][::-1]))
+
         self.logger.info('- importing issue: {}'.format(uid))
 
         issue_date_parts = xmlroot.get('ISSUE_DATE').split('/')
