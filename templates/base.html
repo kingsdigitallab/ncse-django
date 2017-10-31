@@ -15,6 +15,7 @@
   {% compress css %}
   <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/main.scss' %}">
   {% endcompress %}
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 </head>
 <body>
   {% block navigation %}
@@ -23,16 +24,14 @@
 
   {% block header %}
   {% comment %} This is here because of overriding the title {% endcomment %}
-  <section class="hero is-small is-info is-bold">
-    <div class="hero-body">
-      <div class="container">
-        <h1 class="title">
-          {% block title %}{% endblock %}
-        </h1>
-        <h2 class="subtitle">
-          Masonic Periodicals (Functional Demo)
-        </h2>
-      </div>
+  <section class="grid-x">
+    <div class="cell">
+      <h1 class="title">
+        {% block title %}{% endblock %}
+      </h1>
+      <h2 class="subtitle">
+        Masonic Periodicals (Functional Demo)
+      </h2>
     </div>
   </section>
   {% endblock %}
@@ -51,7 +50,7 @@
   {% compress js %}
   <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
   <script src="{% static 'vendor/what-input/src/what-input.js' %}"></script>
-  <script src="{% static 'vendor/foundation-sites/js/entries/foundation.js' %}"></script>
+  <script src="{% static 'js/foundation.min.js' %}"></script>
   <script>
     $(document).foundation();
   </script>
