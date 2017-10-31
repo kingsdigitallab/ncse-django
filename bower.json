@@ -3,7 +3,9 @@
     "version": "0.1",
     "dependencies": {
         "jquery": null,
-        "foundation-sites": null
+        "foundation-sites": null,
+        "font-awesome": null,
+        "motion-ui": null
     },
     "main": "assets/js/main.js",
     "ignore": [

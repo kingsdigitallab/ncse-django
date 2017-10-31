@@ -8,8 +8,10 @@
   <meta name="author" content="King's Digital Lab">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css" />
+  {% comment %}
+  {# Replacing Bulma #}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css">
+  {% endcomment %}
   {% compress css %}
   <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/main.scss' %}">
   {% endcompress %}
@@ -48,6 +50,11 @@
 
   {% compress js %}
   <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/what-input/src/what-input.js' %}"></script>
+  <script src="{% static 'vendor/foundation-sites/js/entries/foundation.js' %}"></script>
+  <script>
+    $(document).foundation();
+  </script>
   <script src="{% static 'js/main.js' %}"></script>
   {% endcompress %}
 
