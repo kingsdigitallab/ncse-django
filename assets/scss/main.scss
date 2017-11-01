@@ -1,12 +1,22 @@
 @import 'settings';
 @import 'font-awesome';
-@import '../vendor/foundation-sites/scss/foundation';
+@import '../vendor/foundation-sites/assets/foundation';
 @import '../vendor/motion-ui/motion-ui';
+
+/* Table of Contents */
+
+/**
+ *  Globals
+ *  Footer
+ */
+
+/* Globals */
 
 canvas {
     width: 100%;
 }
 
+/* NOT SURE WHAT THIS IS SUPPOSED TO DO (Coming from Bulma?) */
 .article-header {
     @extend .title !optional;
 }
@@ -14,6 +24,7 @@ canvas {
 .article-content {
     @extend .content !optional;
 }
+/***/
 
 // Equal height blocks
 .card {
@@ -22,139 +33,28 @@ canvas {
     height: 100%;
 }
 
-.card-footer
-{
+.card-footer {
     margin-top: auto;
 }
 
-.tabs-container .section {
-  display: none;
+.tabs-container {
+    .section {
+        display: none;
+
+        &.is-active {
+            display: block;
+        }
+    }
 }
 
-.tabs-container .section.is-active {
-  display: block;
-}
+/* Footer */
 
-$primary-color: #6898CC;
-$white: #fff;
-// $black: #5c5c5c;
-// $lightgray:#f5f5f5;
-// $darkgray: #3d3331;
-
-
-// /* General */
-
-// html {
-//     height: 100%;
-// }
-
-// body {
-//     display: flex;
-//     flex-direction: column;
-//     height: 100vh;
-//     /* Avoid the IE 10-11 `min-height` bug. */
-// }
-
-
-// /* Grid */
-
-// .columns {
-//     flex: 1 0 auto;
-//     /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
-//     padding: 20px;
-// }
-
-
-
-
-
-// /* Footer */
-
-footer.footer {
-    flex-shrink: 0;
-    /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
+footer {
     padding: 20px;
-    background: $primary-color;
+    background: scale-color($primary-color, $lightness: 40%);
+    
     p {
         font-size: 0.7rem;
         color: $white;
     }
 }
-
-
-
-
-
-
-// /* Nav */
-
-// .navbar-brand,
-// .navbar-menu {
-//     background: $primary-color;
-//     z-index: 9;
-// }
-
-// .select,
-// select {
-
-//     width: 100%;
-// }
-
-// .search.column {
-//     border-bottom: 1px solid #dbdbdb;
-// }
-
-// .button {
-//     width: 100%;
-//     background: $lightgray!important;
-// }
-
-// @media screen and (min-width:768px) {
-//     .search.column {
-//         border-right: 1px solid #dbdbdb;
-//         border-bottom: none;
-//     }
-// }
-
-// @media screen and (min-width:1000px) {
-
-//     .navbar-item {
-//         width: 100%!important;
-//     }
-
-//     .navbar-item,
-//     .navbar-link {
-//         color: white!important;
-//     }
-
-//     .navbar-dropdown.is-boxed {
-//         background: $darkgray;
-//         border-radius: 0!important;
-//         box-shadow: none!important;
-//         -webkit-box-shadow: none!important;
-//         top: 100%!important;
-//         z-index: -1;
-//     }
-
-//     .navbar-link {
-//         &:before {
-//             border: 15px solid transparent;
-//             border-right: 15px solid transparent;
-//             border-top: 15px solid #6898CC;
-//             content: " ";
-//             display: block;
-//             pointer-events: none;
-//             position: absolute;
-//             transform: rotate(0);
-//             -webkit-transform: rotate(0);
-//             top: 100%;
-//         }
-//         &:after {
-//             display: none!important;
-//         }
-//     }
-
-//     article {
-//         z-index: -2;
-//     }
-// }
