@@ -7,6 +7,8 @@
 
 /**
  *  Globals
+ *  Navigation
+ *  Hero
  *  Footer
  */
 
@@ -14,6 +16,32 @@
 
 canvas {
     width: 100%;
+}
+
+main {
+    margin: rem-calc(20 0);
+}
+
+/* Navigation */
+
+nav {
+    background: $light-gray;
+}
+
+/* Hero */
+
+.hero {
+    background: $primary-color;
+    color: $white;
+
+    h1 {
+        line-height: .75;
+        padding: rem-calc(20 0);
+    }
+
+    small {
+        font-size: rem-calc(24);
+    }
 }
 
 /* NOT SURE WHAT THIS IS SUPPOSED TO DO (Coming from Bulma?) */
@@ -50,11 +78,17 @@ canvas {
 /* Footer */
 
 footer {
-    padding: 20px;
-    background: scale-color($primary-color, $lightness: 40%);
+    background: $primary-color;
+    color: $white;
+    font-size: rem-calc(14);
+    padding: rem-calc(20 0);
     
-    p {
-        font-size: 0.7rem;
-        color: $white;
+    a {
+        color: $warning-color;
+        font-weight: 700;
+    }
+
+    img {
+        max-width: rem-calc(60);
     }
 }

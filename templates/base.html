@@ -13,33 +13,49 @@
   {% endcompress %}
 </head>
 <body>
-  {% block navigation %}
-  {% include 'includes/navigation.html' %}
-  {% endblock %}
+  <nav>
+    <div class="grid-container">
+      <div class="grid-x">
+        <div class="cell">
+        {% block navigation %}
+          {% include 'includes/navigation.html' %}
+        {% endblock %}
+        </div>
+      </div>
+    </div>
+  </nav>
 
   {% block header %}
   {% comment %} This is here because of overriding the title {% endcomment %}
-  <section class="grid-x">
-    <div class="cell">
-      <h1 class="title">
-        {% block title %}{% endblock %}
-      </h1>
-      <h2 class="subtitle">
-        Masonic Periodicals (Functional Demo)
-      </h2>
+  <section class="hero">
+    <div class="grid-container">
+      <div class="grid-x">
+        <div class="cell">
+          <h1 class="title">
+            {% block title %}{% endblock %}<br>
+            <small>Masonic Periodicals (Functional Demo)</small>
+          </h1>
+        </div>
+      </div>
     </div>
   </section>
   {% endblock %}
 
   <main>
-    {% block main %}
-    {% endblock %}
+  {% block main %}
+  {% endblock %}
   </main>
 
-  <footer class="footer">
-    {% block footer %}
-    {% include 'includes/footer.html' %}
-    {% endblock %}
+  <footer>
+    <div class="grid-container">
+      <div class="grid-x">
+        <div class="cell">
+        {% block footer %}
+          {% include 'includes/footer.html' %}
+        {% endblock %}
+        </div>
+      </div>
+    </div>
   </footer>
 
   {% compress js %}

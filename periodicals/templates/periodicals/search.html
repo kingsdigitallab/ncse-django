@@ -6,58 +6,76 @@
 
 {% block main %}
 
-<section class="section">
-    <div class="container">
-        <form method="get" action=".">
-            <table>
-                {{ form.as_table }}
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>
-                        <input type="submit" value="Search">
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
-</section>
+<section class="search">
+    <div class="grid-container">
 
-<section class="section">
-    <div class="container">
-        <h3 class="subtitle">Filters</h3>
-
-        <div class="columns is-multiline">
-            {% for key, values in facets.fields.items %}
-            <div class="column is-one-third">
-                <h4>By {{ key|capfirst }}</h4>
-                <ul>
-                    {% for item in values %}
-                    <li>
-                        <a href="?{{ form.data.urlencode }}&amp;selected_facets={{ key }}:{{ item.0|urlencode }}">{{ item.0 }}</a>
-                        ({{ item.1 }})
-                    </li>
-                    {% endfor %}
-                </ul>
+        <div class="grid-x">
+            <div class="cell">
+                <form method="get" action=".">
+                    <table>
+                        {{ form.as_table }}
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>
+                                <input type="submit" value="Search">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
             </div>
-            {% endfor %}
         </div>
-    </div>
-</section>
 
-<section class="section">
-    <div class="container">
-        <h3 class="title">Results</h3>
-
-        <div class="columns">
-            <div class="column"><strong>Article Title</strong></div>
-            <div class="column"><strong>Category</strong></div>
-            <div class="column"><strong>Page</strong></div>
-            <div class="column"><strong>Issue</strong></div>
-            <div class="column"><strong>Publication</strong></div>
+        <div class="grid-x">
+            <div class="cell">
+                <h3>Filters</h3>
+            </div>
         </div>
-        {% for result in page_obj.object_list %}
-        <div class="columns">
-            <div class="column">
+
+        <div class="grid-x grid-padding-x medium-up-2 large-up-4">
+            <div class="cell">
+                {% for key, values in facets.fields.items %}
+                <div class="column is-one-third">
+                    <h4>By {{ key|capfirst }}</h4>
+                    <ul>
+                        {% for item in values %}
+                        <li>
+                            <a href="?{{ form.data.urlencode }}&amp;selected_facets={{ key }}:{{ item.0|urlencode }}">{{ item.0 }}</a>
+                            ({{ item.1 }})
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="grid-x">
+            <div class="cell">
+                <h3>Results</h3>
+            </div>
+        </div>
+
+        <div class="grid-x grid-padding-x medium-up-5 headings">
+            <div class="cell">
+                Article title
+            </div>
+            <div class="cell">
+                Category
+            </div>
+            <div class="cell">
+                Page
+            </div>
+            <div class="cell">
+                Issue
+            </div>
+            <div class="cell">
+                Publication
+            </div>
+        </div>
+
+        <div class="grid-x grid-padding-x medium-up-5">
+            {% for result in page_obj.object_list %}
+            <div class="cell">
                 <a href="{{ result.url }}?highlight={{ query }}">
                     {% if result.title %}
                     {{ result.title }}
@@ -66,39 +84,51 @@
                     {% endif %}
                 </a>
             </div>
-            <div class="column">
+            <div class="cell">
                 {{ result.category }}
             </div>
-            <div class="column">
+            <div class="cell">
                 <a href="{{ result.page_url }}?highlight={{ query }}">
                     p. {{ result.page_number }}
                 </a>
             </div>
-            <div class="column">
+            <div class="cell">
                 <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
             </div>
-            <div class="column">
+            <div class="cell">
                 <a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a>
             </div>
         </div>
-        {% if query %}
-        <div class="columns">
-            <div class="column">
+
+        <div class="grid-x">
+
+            {% if query %}
+            <div class="cell">
                 {% highlight result.text with query html_tag "strong" %}
             </div>
+            {% endif %}
+            {% empty %}
+            <div class="cell">
+                <h3>No results found.</h3>
+            </div>
+            {% endfor %}
         </div>
-        {% endif %}
-        {% empty %}
-        <p>No results found.</p>
-        {% endfor %}
+    </div>
 
-        {% if page_obj.has_previous or page_obj.has_next %}
-        <div>
-            {% if page_obj.has_previous %}<a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.previous_page_number }}">{% endif %}&laquo; Previous{% if page_obj.has_previous %}</a>{% endif %}
-            |
-            {% if page_obj.has_next %}<a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.next_page_number }}">{% endif %}Next &raquo;{% if page_obj.has_next %}</a>{% endif %}
+    <div class="grid-container">
+        <div class="grid-x">
+            <div class="cell">
+
+                {% if page_obj.has_previous or page_obj.has_next %}
+                <div>
+                    {% if page_obj.has_previous %}<a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.previous_page_number }}">{% endif %}&laquo; Previous{% if page_obj.has_previous %}</a>{% endif %}
+                    |
+                    {% if page_obj.has_next %}<a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.next_page_number }}">{% endif %}Next &raquo;{% if page_obj.has_next %}</a>{% endif %}
+                </div>
+                {% endif %}
+
+            </div>
         </div>
-        {% endif %}
     </div>
 </section>
 {% endblock %}

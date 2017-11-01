@@ -1,33 +1,30 @@
 {% load periodicals_tags %}
 
 {% block main_menu %}
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item" href="/">Home</a>
+<div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
+  <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
+  <div class="title-bar-title">Menu</div>
+</div>
 
-    <button class="button navbar-burger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+<div class="top-bar" id="responsive-menu">
+  <div class="top-bar-left">
+    <ul class="menu">
+      <li><a href="/">Home</a></li>
+      <li><a href="{% url 'publication-list' %}">Explore</a></li>
+      <li><a href="{% url 'search' %}?{% initial_search_parameters %}">Search</a></li>
+    </ul>
   </div>
-
-  <div class="navbar-menu">
-    <div class="navbar-start">
-      <a class="navbar-item" href="{% url 'publication-list' %}">Explore</a>
-      <a class="navbar-item" href="{% url 'search' %}?{% initial_search_parameters %}">Search</a>
-    </div>
-
-    <div class="navbar-end">
+  <div class="top-bar-right">
+    <ul class="menu">
       {% if request.user.is_authenticated %}
       {% if request.user.is_staff %}
-      <a class="navbar-item" href="/admin/">Admin Panel</a>
+      <li><a href="/admin/">Admin Panel</a></li>
       {% endif %}
-      <a class="navbar-item" href="/admin/logout/">Logout {{ request.user.first_name }}</a>
+      <li><a href="/admin/logout/">Logout {{ request.user.first_name }}</a></li>
       {% else %}
-      <a class="navbar-item" href="/admin/login/">Login</a>
+      <li><a href="/admin/login/">Login</a></li>
       {% endif %}
-    </div>
+    </ul>
   </div>
-</nav>
+</div>
 {% endblock %}
