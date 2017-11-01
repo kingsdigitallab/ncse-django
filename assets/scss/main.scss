@@ -9,6 +9,7 @@
  *  Globals
  *  Navigation
  *  Hero
+ *  Main content
  *  Footer
  */
 
@@ -41,6 +42,28 @@ nav {
 
     small {
         font-size: rem-calc(24);
+    }
+}
+
+/* Main content */
+
+.form {
+    ul {
+        list-style: none;
+    }
+}
+
+.headings {
+    .cell {
+        font-weight: 700;
+    }
+}
+
+.results-list {
+    .cell {
+        border-top: 1px solid $light-gray;
+        margin: rem-calc(10 0);
+        padding-top: rem-calc(10);
     }
 }
 
