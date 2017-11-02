@@ -36,29 +36,21 @@
       <h3 class="title">{{ year }}</h3>
     </div>
   </div>
-  <div class="grid-x medium-up-2 large-up-4">
+  <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4">
     {% for issue in issues_in_year %}
     <div class="cell">
       <div class="card">
         <div class="card-image">
-          <figure class="image">
-            <img src="{{ issue.pages.all.0.image.url }}">
-          </figure>
+          <a href="{{ issue.url }}"><img src="{{ issue.pages.all.0.image.url }}"></a>
         </div>
-        <header class="card-header">
-          <p class="card-header-title">
-            <a href="{{ issue.url }}">{{ issue }}</a>
-          </p>
-        </header>
-        <div class="card-content">
-          <div class="content">
-            {{ issue.articles.count }} articles in {{ issue.pages.count }} pages.
-          </div>
+        <div class="card-section">
+          <h4><a href="{{ issue.url }}">{{ issue }}</a></h4>
+          {{ issue.articles.count }} articles in {{ issue.pages.count }} pages.
         </div>
         {% if request.user.is_staff %}
-        <footer class="card-footer">
+        <div class="card-divider">
           <a href="/admin/periodicals/issue/{{ issue.id }}/change/" class="card-footer-item">Edit</a>
-        </footer>
+        </div>
         {% endif %}
       </div>
     </div>

@@ -117,16 +117,18 @@
 
                     <li class="{% if page_obj.has_previous %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
                         {% if page_obj.has_previous %}
-                        <a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.previous_page_number }}" aria-label="Previous page">{% endif %}
+                        <a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.previous_page_number }}" aria-label="Previous page">
+                        {% endif %}
                             Prev <span class="show-for-sr">page</span>
                         {% if page_obj.has_previous %}
                         </a>
                         {% endif %}
                     </li>
 
-                    <li class="{% if page_obj.has_next %}pagination-next{% else %}pagination-previous disabled{% endif %}">
+                    <li class="{% if page_obj.has_next %}pagination-next{% else %}pagination-next disabled{% endif %}">
                         {% if page_obj.has_next %}
-                        <a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.next_page_number }}" aria-label="Next page">{% endif %}
+                        <a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.next_page_number }}" aria-label="Next page">
+                        {% endif %}
                             Next <span class="show-for-sr">page</span>
                         {% if page_obj.has_next %}
                         </a>

@@ -5,33 +5,48 @@
 {% block meta_title %}{{ page.publication }} {{ page.issue }}, Page {{ page.number }}{% endblock %}
 
 {% block main %}
-<div class="tabs is-centered">
-  <ul>
+<div class="tabs">
+    <ul class="menu align-center">
         <li class="is-active" data-option="image"><a>Image</a></li>
         <li data-option="transcription"><a>Transcription</a></li>
     </ul>
 </div>
 
-<section class="section">
-    <div class="pagination is-centered">
-        {% if page.previous_page %}
-        <a class="pagination-previous" href="{{ page.previous_page.url }}">Previous Page</a>
-        {% endif %}
+<div class="grid-container">
+    <div class="grid-x">
+        <div class="cell">
+            <ul class="pagination text-center" role="navigation" aria-label="Pagination">
 
-        {% if page.next_page %}
-        <a class="pagination-next" href="{{ page.next_page.url }}">Next Page</a>
-        {% endif %}
+                <li class="{% if page.previous_page %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
+                    {% if page.previous_page %}
+                    <a href="{{ page.previous_page.url }}" aria-label="Previous page">
+                    {% endif %}
+                        Prev <span class="show-for-sr">page</span>
+                    {% if page.previous_page %}
+                    </a>
+                    {% endif %}
+                </li>
 
-        <ul class="pagination-list">
-            <li><a class="pagination-link" href="{{ page.issue.url }}">Go to Issue</a><li>
-            <li><a class="pagination-link" href="{{ page.print_url }}" target="_blank">Print Page</a><li>
-        </ul>
+                <li><a href="{{ page.issue.url }}">Go to Issue</a><li>
+                <li><a href="{{ page.print_url }}">Print Page</a><li>
+
+                <li class="{% if page.next_page %}pagination-next{% else %}pagination-next disabled{% endif %}">
+                    {% if page.next_page %}
+                    <a href="{{ page.next_page.url }}" aria-label="Next page">
+                    {% endif %}
+                        Next <span class="show-for-sr">page</span>
+                    {% if page.next_page %}
+                    </a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
     </div>
-</section>
+</div>
 
-<div class="tabs-container">
-    <section class="section is-active" data-item="image">
-        <div class="container">
+<div class="grid-container tabs-container">
+    <section class="grid-x section is-active" data-item="image">
+        <div class="cell container">
             <canvas class="pageCanvas" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
                 <!-- Fallback for non-canvas supporting devices -->
                 <img id="page{{ page.number}}" src="{{ page.image.url }}">
@@ -39,16 +54,14 @@
         </div>
     </section>
 
-    <section class="section" data-item="transcription">
-        <div class="container">
-            <div class="columns is-multiline is-centered">
-                {% for article in page.articles_in_page.all %}
-                <div class="column is-half article" id="{{ article.aid }}">
-                    <h3 class="subtitle">{{ article|title }}</h3>
-                    {{ article.content_html|safe }}
-                </div>
-                {% endfor %}
+    <section class="grid-x section" data-item="transcription">
+        <div class="cell container">
+            {% for article in page.articles_in_page.all %}
+            <div class="column is-half article" id="{{ article.aid }}">
+                <h3 class="subtitle">{{ article|title }}</h3>
+                {{ article.content_html|safe }}
             </div>
+            {% endfor %}
         </div>
     </section>
 </div>
