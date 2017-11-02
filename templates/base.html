@@ -8,47 +8,65 @@
   <meta name="author" content="King's Digital Lab">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css" />
   {% compress css %}
   <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/main.scss' %}">
   {% endcompress %}
 </head>
 <body>
-  {% block navigation %}
-  {% include 'includes/navigation.html' %}
-  {% endblock %}
+  <nav>
+    <div class="grid-container">
+      <div class="grid-x">
+        <div class="cell">
+        {% block navigation %}
+          {% include 'includes/navigation.html' %}
+        {% endblock %}
+        </div>
+      </div>
+    </div>
+  </nav>
 
   {% block header %}
   {% comment %} This is here because of overriding the title {% endcomment %}
-  <section class="hero is-small is-info is-bold">
-    <div class="hero-body">
-      <div class="container">
-        <h1 class="title">
-          {% block title %}{% endblock %}
-        </h1>
-        <h2 class="subtitle">
-          Masonic Periodicals (Functional Demo)
-        </h2>
+  <section class="hero">
+    <div class="grid-container">
+      <div class="grid-x">
+        <div class="cell">
+          <h1 class="title">
+            {% block title %}{% endblock %}<br>
+            <small>Masonic Periodicals (Functional Demo)</small>
+          </h1>
+        </div>
       </div>
     </div>
   </section>
   {% endblock %}
 
   <main>
-    {% block main %}
-    {% endblock %}
+  {% block main %}
+  {% endblock %}
   </main>
 
-  <footer class="footer">
-    {% block footer %}
-    {% include 'includes/footer.html' %}
-    {% endblock %}
+  <footer>
+    <div class="grid-container">
+      <div class="grid-x">
+        <div class="cell">
+        {% block footer %}
+          {% include 'includes/footer.html' %}
+        {% endblock %}
+        </div>
+      </div>
+    </div>
   </footer>
 
   {% compress js %}
   <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
+  <script src="{% static 'js/babel.min.js' %}"></script>
+  <script src="{% static 'vendor/what-input/dist/what-input.min.js' %}"></script>
+  <script src="{% static 'js/foundation.min.js' %}"></script>
   <script src="{% static 'js/main.js' %}"></script>
+  <script>
+    $(document).foundation();
+  </script>
   {% endcompress %}
 
   {% block footer_scripts %}{% endblock %}
@@ -56,8 +74,8 @@
   {% compress js %}
   <script src="{% static 'js/google_analytics.js' %}"></script>
   <script>
-  ga('create', '{{ GA_ID }}', 'auto');
-  ga('send', 'pageview');
+    ga('create', '{{ GA_ID }}', 'auto');
+    ga('send', 'pageview');
   </script>
   {% endcompress %}
 </body>
