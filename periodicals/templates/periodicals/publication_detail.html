@@ -20,11 +20,14 @@
 <section class="grid-container">
   <div class="grid-x">
     <div class="cell">
+      
+      <ul class="menu subnav" data-magellan>
       <h3 class="title">Years</h3>
       {% for year, issues_in_year in year_list %}
-      <a href="#{{ year }}">{{ year }}</a>: {{ issues_in_year|length }} issues
-      {% if not forloop.last %} | {% endif %}
+      <li><a href="#{{ year }}">{{ year }}</a></li><!--: {{ issues_in_year|length }} issues
+      {% if not forloop.last %} | {% endif %}--> <!-- Removed: Brian pls check -->
       {% endfor %}
+      </ul>
     </div>
   </div>
 </section>
@@ -33,30 +36,40 @@
 <section class="grid-container" id="{{ year }}">
   <div class="grid-x">
     <div class="cell">
-      <h3 class="title">{{ year }}</h3>
+      <h3 class="title">{{ year }} <span>({{ issues_in_year|length }} issues)
+      {% if not forloop.last %} {% endif %} <!-- Added: Brian pls check -->      
+      <span></h3>
     </div>
   </div>
-  <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4">
+  <div class="grid-x grid-padding-x grid-padding-y small-up-2 medium-up-3 large-up-5">
     {% for issue in issues_in_year %}
     <div class="cell">
       <div class="card">
+      <a href="{{ issue.url }}">
         <div class="card-image">
-          <a href="{{ issue.url }}"><img src="{{ issue.pages.all.0.image.url }}"></a>
+        
+          <img src="{{ issue.pages.all.0.image.url }}">
         </div>
-        <div class="card-section">
-          <h4><a href="{{ issue.url }}">{{ issue }}</a></h4>
-          {{ issue.articles.count }} articles in {{ issue.pages.count }} pages.
+        <div class="card-section overlay">
+          <h3>{{ issue }}</h3>
+ 
+          <div class="card-footer">{{ issue.articles.count }} articles in {{ issue.pages.count }} pages
         </div>
+        </div>
+        
         {% if request.user.is_staff %}
         <div class="card-divider">
           <a href="/admin/periodicals/issue/{{ issue.id }}/change/" class="card-footer-item">Edit</a>
         </div>
         {% endif %}
+      
+        </a>
       </div>
     </div>
     {% endfor %}
   </div>
 </section>
+
 {% endfor %}
 
 {% endwith %}

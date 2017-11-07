@@ -5,12 +5,22 @@
 {% block meta_title %}{{ page.publication }} {{ page.issue }}, Page {{ page.number }}{% endblock %}
 
 {% block main %}
-<div class="tabs">
-    <ul class="menu align-center">
-        <li class="is-active" data-option="image"><a>Image</a></li>
+
+<section class="grid-container">
+  <div class="grid-x">
+    <div class="cell tabs">
+      <ul class="menu subnav" data-magellan>
+      <li class="is-active" data-option="image"><a>Image</a></li>
         <li data-option="transcription"><a>Transcription</a></li>
-    </ul>
-</div>
+        <li><a>Citation</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+
+
 
 <div class="grid-container">
     <div class="grid-x">
@@ -43,6 +53,34 @@
         </div>
     </div>
 </div>
+
+
+<div class="grid-container tabs-container">
+  <section class="section is-active" data-item="articles">
+
+    <div class="grid-x grid-padding-x grid-padding-y medium-up-full large-up-2 container">
+        <div class="cell container">
+            <canvas class="pageCanvas" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
+                <!-- Fallback for non-canvas supporting devices -->
+                <img id="page{{ page.number}}" src="{{ page.image.url }}">
+            </canvas>
+        </div>
+        <div class="cell container">
+            {% for article in page.articles_in_page.all %}
+            <div class="column is-half article" id="{{ article.aid }}">
+                <h3 class="subtitle">{{ article|title }}</h3>
+                {{ article.content_html|safe }}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="grid-x grid-padding-x grid-padding-y medium-up-full large-up-2 container">
+        
+    </div>
+  </section>
+</div>
+
+
 
 <div class="grid-container tabs-container">
     <section class="grid-x section is-active" data-item="image">

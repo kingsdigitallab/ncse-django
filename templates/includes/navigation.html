@@ -7,15 +7,15 @@
 </div>
 
 <div class="top-bar" id="responsive-menu">
-  <div class="top-bar-left">
-    <ul class="menu">
-      <li><a href="/">Home</a></li>
-      <li><a href="{% url 'publication-list' %}">Explore</a></li>
-      <li><a href="{% url 'search' %}?{% initial_search_parameters %}">Search</a></li>
-    </ul>
-  </div>
+ <div class="top-bar-left">
+ <h1><a href="/">The Masonic Periodicals</a></h1>
+ </div>
   <div class="top-bar-right">
     <ul class="menu">
+      
+      <li><a href="{% url 'publication-list' %}">Explore</a></li>
+      <li><a href="{% url 'search' %}?{% initial_search_parameters %}">Search</a></li>
+      <li><a href="/">About</a></li>
       {% if request.user.is_authenticated %}
       {% if request.user.is_staff %}
       <li><a href="/admin/">Admin Panel</a></li>
@@ -26,5 +26,5 @@
       {% endif %}
     </ul>
   </div>
-</div>
+ 
 {% endblock %}

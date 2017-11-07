@@ -8,23 +8,30 @@
 
 <section class="search">
     <div class="grid-container">
-
-        <div class="grid-x">
+        <div class="grid-x  grid-padding-y large-up-3">
+    
             <div class="cell form">
                 <form method="get" action=".">
-                    {{ form }}
+                    {{ form}}
                     <input class="button" type="submit" value="Search">
                 </form>
             </div>
         </div>
 
-        <hr>
+    </div>  
 
-        <div class="grid-x">
-            <div class="cell">
-                <h3>Filters</h3>
-            </div>
+
+
+        <div class="grid-container">
+      <div class="grid-x">
+        <div class="cell">
+          <h1 class="title">
+            Filters 
+          </h1>
         </div>
+      </div>
+
+
 
         <div class="grid-x grid-padding-x medium-up-3">
             {% for key, values in facets.fields.items %}
@@ -42,11 +49,11 @@
             {% endfor %}
         </div>
 
-        <hr>
-
         <div class="grid-x">
             <div class="cell">
-                <h3>Results</h3>
+                <h1 class="title">
+            Results
+          </h1>
             </div>
         </div>
 
@@ -102,7 +109,7 @@
         {% endif %}
         {% empty %}
         <div class="cell">
-            <h3>No results found.</h3>
+            <p>No results found.</p>
         </div>
     </div>
     {% endfor %}

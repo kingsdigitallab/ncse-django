@@ -4,17 +4,29 @@
 {% block meta_title %}{{ issue }}{% endblock %}
 
 {% block main %}
-<div class="tabs">
-    <ul class="menu align-center">
-        <li class="is-active" data-option="articles"><a>Articles</a></li>
-        <li data-option="pages"><a>Pages</a></li>
-    </ul>
-</div>
 
-<ul class="menu align-center">
+
+
+
+<section class="grid-container">
+  <div class="grid-x">
+    <div class="cell tabs">
+      <ul class="menu subnav" data-magellan>
+        <li><a>Contents</a></li>
+        <li data-option="pages"><a>Pages</a></li>
+        <li class="is-active" data-option="articles"><a>Articles</a></li>
+        <li><a>Ads</a></li>
+      </ul>
+      <ul class="menu align-right">
     <li><a href="{{ issue.pdf.url }}">View PDF</a></li>
     <li><a href="{{ issue.pdf.url }}" download="{{ issue }}">Download PDF</a></li>
 </ul>
+
+    </div>
+  </div>
+</section>
+
+
 
 <div class="grid-container tabs-container">
   <section class="section is-active" data-item="articles">
@@ -30,9 +42,11 @@
           <div class="card-image">
             <a href="{{ article.url }}"><img src="{{ article.title_image.url }}"></a>
           </div>
-          <div class="card-section">
-            <h4><a href="{{ article.url }}">{{ article|title }}</a></h4>
-            Page {{ article.page.number }}
+          <div class="card-section overlay">
+            <h3><a href="{{ article.url }}">{{ article|title }}</a></h3>
+            <div class="card-footer">Page {{ article.page.number }}
+        </div>
+            
           </div>
           {% if request.user.is_staff %}
           <div class="card-divider">
@@ -58,9 +72,11 @@
           <div class="card-image">
             <a href="{{page.url}}"><img src="{{ page.image.url }}"></a>
           </div>
-          <div class="card-section">
-            <h4><a href="{{ page.url }}">Page {{ page.number }}</a></h4>
-            Articles: {{ page.number_of_articles }}
+          <div class="card-section overlay">
+            <h3><a href="{{ page.url }}">Page {{ page.number }}</a></h3>
+            <div class="card-footer">{{ page.number_of_articles }} Articles
+        </div>
+            
           </div>
 
           {% if request.user.is_staff %}
