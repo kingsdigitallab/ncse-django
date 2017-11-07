@@ -1,17 +1,23 @@
 {% load periodicals_tags %}
 
 {% block main_menu %}
+
+<div class="logo">
+  <h1><a href="/">The Masonic Periodicals</a></h1>
+</div>
+
+
 <div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
+  <div class="title-bar-right">
   <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
   <div class="title-bar-title">Menu</div>
 </div>
+</div>
 
 <div class="top-bar" id="responsive-menu">
- <div class="top-bar-left">
- <h1><a href="/">The Masonic Periodicals</a></h1>
- </div>
+
   <div class="top-bar-right">
-    <ul class="menu">
+    <ul class=" medium-horizontal vertical dropdown menu">
       
       <li><a href="{% url 'publication-list' %}">Explore</a></li>
       <li><a href="{% url 'search' %}?{% initial_search_parameters %}">Search</a></li>
@@ -26,5 +32,5 @@
       {% endif %}
     </ul>
   </div>
- 
+ </div>
 {% endblock %}

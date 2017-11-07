@@ -34,9 +34,9 @@
                     {% endif %}
                 </li>
 
-                <li><a href="{{ article.issue.url }}">Go to Issue</a><li>
-                <li><a href="{{ article.page.print_url }}">Print Page</a><li>
-                <li><a href="{{ article.print_url }}">Print Article</a></li>
+                <li><a href="{{ article.issue.url }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Go to Issue</a><li>
+                <li><a href="{{ article.page.print_url }}"><i class="fa fa-print" aria-hidden="true"></i> Print Page</a><li>
+                <li><a href="{{ article.print_url }}"><i class="fa fa-print" aria-hidden="true"></i> Print Article</a></li>
 
                 <li class="{% if article.page.next_page %}pagination-next{% else %}pagination-next disabled{% endif %}">
                     {% if article.page.next_page %}
@@ -67,7 +67,7 @@
                 {% endif %}
 
                 {% if article.continuation_to %}
-                <a class="button is-pulled-right" href="{{ article.continuation_to.url }}">Next Setion</a>
+                <a class="button is-pulled-right" href="{{ article.continuation_to.url }}">Next Section</a>
                 {% endif %}
             </div>
         </div>

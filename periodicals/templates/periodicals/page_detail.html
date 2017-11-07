@@ -37,8 +37,8 @@
                     {% endif %}
                 </li>
 
-                <li><a href="{{ page.issue.url }}">Go to Issue</a><li>
-                <li><a href="{{ page.print_url }}">Print Page</a><li>
+                <li><a href="{{ page.issue.url }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Go to Issue</a><li>
+                <li><a href="{{ page.print_url }}"><i class="fa fa-print" aria-hidden="true"></i> Print Page</a><li>
 
                 <li class="{% if page.next_page %}pagination-next{% else %}pagination-next disabled{% endif %}">
                     {% if page.next_page %}

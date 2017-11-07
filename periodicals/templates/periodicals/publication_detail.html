@@ -1,76 +1,57 @@
-{% extends 'base.html' %}
-
-{% block meta_title %}{{ publication }} {% if publication.description %} - {{ publication.description }} {% endif %}{% endblock %}
-
-{% block title %}{{ publication }} {% if publication.description %} - {{ publication.description }} {% endif %}{% endblock %}
-
-{% block main %}
+{% extends 'base.html' %} {% block meta_title %}{{ publication }} {% if publication.description %} - {{ publication.description }} {% endif %}{% endblock %} {% block title %}{{ publication }} {% if publication.description %} - {{ publication.description }} {% endif %}{% endblock %} {% block main %}
 <section class="grid-container">
-  <div class="grid-x">
-    <div class="cell">
-      <h3 class="title">Description</h3>
-      {% lorem 2 p %}
+    <div class="grid-x">
+        <div class="cell">
+            <h3 class="title">Description</h3> {% lorem 2 p %}
+        </div>
     </div>
-  </div>
 </section>
-
-{% with issues=publication.issues.all %}
-{% regroup issues by issue_date.year as year_list %}
-
+{% with issues=publication.issues.all %} {% regroup issues by issue_date.year as year_list %}
 <section class="grid-container">
-  <div class="grid-x">
-    <div class="cell">
-      
-      <ul class="menu subnav" data-magellan>
-      <h3 class="title">Years</h3>
-      {% for year, issues_in_year in year_list %}
-      <li><a href="#{{ year }}">{{ year }}</a></li><!--: {{ issues_in_year|length }} issues
-      {% if not forloop.last %} | {% endif %}--> <!-- Removed: Brian pls check -->
-      {% endfor %}
-      </ul>
+    <div class="grid-x">
+        <div class="cell">
+            <ul class="menu subnav" data-magellan>
+                <h2> Years</h2> {% for year, issues_in_year in year_list %}
+                <li><a href="#{{ year }}">{{ year }}</a></li>
+                <!--: {{ issues_in_year|length }} issues
+      {% if not forloop.last %} | {% endif %}-->
+                <!-- Removed: Brian pls check -->
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-  </div>
 </section>
-
 {% for year, issues_in_year in year_list %}
 <section class="grid-container" id="{{ year }}">
-  <div class="grid-x">
-    <div class="cell">
-      <h3 class="title">{{ year }} <span>({{ issues_in_year|length }} issues)
+    <div class="grid-x">
+        <div class="cell">
+            <h3 class="title">{{ year }} <span>({{ issues_in_year|length }} issues)
       {% if not forloop.last %} {% endif %} <!-- Added: Brian pls check -->      
       <span></h3>
+        </div>
     </div>
-  </div>
-  <div class="grid-x grid-padding-x grid-padding-y small-up-2 medium-up-3 large-up-5">
-    {% for issue in issues_in_year %}
-    <div class="cell">
-      <div class="card">
-      <a href="{{ issue.url }}">
-        <div class="card-image">
-        
-          <img src="{{ issue.pages.all.0.image.url }}">
+    <div class="grid-x grid-padding-x grid-padding-y small-up-2 medium-up-3 large-up-5">
+        {% for issue in issues_in_year %}
+        <div class="cell">
+            <div class="card">
+                <a href="{{ issue.url }}">
+                    <div class="card-image">
+                        <img src="{{ issue.pages.all.0.image.url }}">
+                    </div>
+                    <div class="card-section overlay">
+                        <h3>{{ issue }}</h3>
+                        <div class="card-footer">{{ issue.articles.count }} articles in {{ issue.pages.count }} pages
+                        </div>
+                    </div>
+                </a>
+                {% if request.user.is_staff %}
+                <div class="card-divider">
+                    <a href="/admin/periodicals/issue/{{ issue.id }}/change/" class="card-footer-item">Edit</a>
+                </div>
+                {% endif %}
+            </div>
         </div>
-        <div class="card-section overlay">
-          <h3>{{ issue }}</h3>
- 
-          <div class="card-footer">{{ issue.articles.count }} articles in {{ issue.pages.count }} pages
-        </div>
-        </div>
-        
-        {% if request.user.is_staff %}
-        <div class="card-divider">
-          <a href="/admin/periodicals/issue/{{ issue.id }}/change/" class="card-footer-item">Edit</a>
-        </div>
-        {% endif %}
-      
-        </a>
-      </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-  </div>
 </section>
-
-{% endfor %}
-
-{% endwith %}
-{% endblock %}
+{% endfor %} {% endwith %} {% endblock %}
