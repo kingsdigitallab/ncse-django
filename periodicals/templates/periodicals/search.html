@@ -38,20 +38,6 @@
                         </li>
                         <li class="accordion-item is-active" data-accordion-item>
                             <div class="accordion-content" data-tab-content>
-                                <div class="grid-x grid-padding-x medium-up-3">
-                                    {% for key, values in facets.fields.items %}
-                                    <div class="cell">
-                                        <h4>By {{ key|capfirst }}</h4>
-                                        <ul>
-                                            {% for item in values %}
-                                            <li>
-                                                <a href="?{{ form.data.urlencode }}&amp;selected_facets={{ key }}:{{ item.0|urlencode }}">{{ item.0 }}</a> ({{ item.1 }})
-                                            </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                    {% endfor %}
-                                </div>
                                 <div class="grid-x">
                                     <div class="cell">
                                         <h1 class="title">
