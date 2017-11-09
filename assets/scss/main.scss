@@ -124,6 +124,21 @@ nav {
     }
 }
 
+/* Trying this to fix equalizer issue with equalizer */
+
+.tabs-panel {
+    display: block;
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+.tabs-panel.is-active {
+    height: auto;
+    padding: rem-calc(16);
+}
+/* *** */
+
 .menu {
     &.subnav {
         border-bottom: 1px solid gray;
@@ -138,18 +153,12 @@ nav {
 }
 
 
-
-
-
-
-
-
 /* Search form */
 
 section {
     &.search {
         form {
-            padding: 1rem;
+            padding: rem-calc(16);
             background: $light-gray;
         }
     }
@@ -199,11 +208,14 @@ section {
 
 // Card
 .card {
+
     position: relative;
     height: 100%;
     text-align: center;
+
     &:hover {
         border: 1px solid $primary-color;
+
         .card-section {
             background: $primary-color;
             h3 {
@@ -218,38 +230,45 @@ section {
             }
         }
     }
+
     .card-divider {
         display: block;
         color: black;
         background: none;
+
         img {
             display: block;
             margin: 0 auto;
             width: 80%;
         }
+
         h2 {
-            font-size: 1.5rem;
+            font-size: rem-calc(24);
         }
     }
+
     .card-image {
-        min-height: 200px;
         /* Hack until Equaliser is fixed */
-        max-height: 300px;
+        // min-height: 200px;
         /* Hack until Equaliser is fixed */
+        // max-height: 300px;
     }
+
     .card-section {
-        margin: 1rem 0 0 0;
+        margin: rem-calc(16 0 0);
 
         h3 {
             color: black;
-            font-size: 1.2rem;
+            font-size: rem-calc(20);
         }
+
         .card-footer {
             border-top: 1px solid gray;
             color: gray;
-            margin-top: 1rem;
-            padding-top: 1rem;
+            margin-top: rem-calc(16);
+            padding-top: rem-calc(16);
         }
+
         &.overlay {
             color: white;
             background: rgba(0, 0, 0, 0.7);
@@ -257,10 +276,12 @@ section {
             position: absolute;
             text-align: center;
             width: 100%;
+
             h3 {
                 color: white;
                 font-weight: bold;
             }
+
             .card-footer {
                 border-top: 1px solid white;
                 color: $light-gray;
@@ -269,10 +290,10 @@ section {
     }
 }
 
-
 .pagination {
     text-align: center;
 }
+
 .page-controls{
     text-align: center;
 }
@@ -283,8 +304,9 @@ section {
     background: $primary-color;
     border: none;
     color: white;
-    padding: 1rem 1rem;
-    width: 100px;
+    padding: rem-calc(16);
+    width: rem-calc(100);
+
     &:hover {
         background: darken($primary-color, 10%);
         color: white;
@@ -294,15 +316,17 @@ section {
 .accordion-title {
     border: none;
     color: black;
-    font-size: 1rem;
+    font-size: rem-calc(16);
     padding: 0;
-    padding-top: 1.25rem;
+    padding-top: rem-calc(20);
 }
 
 .is-active>.accordion-title {
+
     &::before {
         color: white;
     }
+
     &:hover {
         background: none;
         color: black;
