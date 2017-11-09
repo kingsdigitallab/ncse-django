@@ -1,150 +1,144 @@
-{% extends 'base.html' %}
-{% load highlight %}
-
-{% block meta_title %}Search{% endblock %}
-{% block title %}Search {% endblock %}
-
-{% block main %}
-
+{% extends 'base.html' %} {% load highlight %} {% block meta_title %}Search{% endblock %} {% block title %}Search {% endblock %} {% block main %}
 <section class="search">
     <div class="grid-container">
         <div class="grid-x  grid-padding-y large-up-3">
-    
             <div class="cell form">
                 <form method="get" action=".">
-                    {{ form}}
+                    {{ form }}
                     <input class="button" type="submit" value="Search">
                 </form>
             </div>
         </div>
-
-    </div>  
-
-
-
-        <div class="grid-container">
-      <div class="grid-x">
+    </div>
+</section>
+<div class="grid-container">
+    <div class="grid-x">
         <div class="cell">
-          <h1 class="title">
-            Filters 
-          </h1>
-        </div>
-      </div>
-
-
-
-        <div class="grid-x grid-padding-x medium-up-3">
-            {% for key, values in facets.fields.items %}
-            <div class="cell">
-                <h4>By {{ key|capfirst }}</h4>
-                <ul>
-                    {% for item in values %}
-                    <li>
-                        <a href="?{{ form.data.urlencode }}&amp;selected_facets={{ key }}:{{ item.0|urlencode }}">{{ item.0 }}</a>
-                        ({{ item.1 }})
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            {% endfor %}
-        </div>
-
-        <div class="grid-x">
-            <div class="cell">
-                <h1 class="title">
+            <div class="row">
+                <div class="columns">
+                    <ul class="accordion" data-accordion data-multi-expand="true">
+                        <li class="accordion-item" data-accordion-item>
+                            <a href="#" class="accordion-title">Filters</a>
+                            <div class="accordion-content" data-tab-content>
+                                <div class="grid-x grid-padding-x medium-up-3">
+                                    {% for key, values in facets.fields.items %}
+                                    <div class="cell">
+                                        <h4>By {{ key|capfirst }}</h4>
+                                        <ul>
+                                            {% for item in values %}
+                                            <li>
+                                                <a href="?{{ form.data.urlencode }}&amp;selected_facets={{ key }}:{{ item.0|urlencode }}">{{ item.0 }}</a> ({{ item.1 }})
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordion-item is-active" data-accordion-item>
+                            <div class="accordion-content" data-tab-content>
+                                <div class="grid-x grid-padding-x medium-up-3">
+                                    {% for key, values in facets.fields.items %}
+                                    <div class="cell">
+                                        <h4>By {{ key|capfirst }}</h4>
+                                        <ul>
+                                            {% for item in values %}
+                                            <li>
+                                                <a href="?{{ form.data.urlencode }}&amp;selected_facets={{ key }}:{{ item.0|urlencode }}">{{ item.0 }}</a> ({{ item.1 }})
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="grid-x">
+                                    <div class="cell">
+                                        <h1 class="title">
             Results
           </h1>
-            </div>
-        </div>
-
-        <div class="grid-x grid-padding-x medium-up-5 headings">
-            <div class="cell">
-                Article title
-            </div>
-            <div class="cell">
-                Category
-            </div>
-            <div class="cell">
-                Page
-            </div>
-            <div class="cell">
-                Issue
-            </div>
-            <div class="cell">
-                Publication
-            </div>
-        </div>
-
-        {% for result in page_obj.object_list %}
-        <div class="grid-x grid-padding-x medium-up-5 results-list">
-            <div class="cell">
-                <a href="{{ result.url }}?highlight={{ query }}">
+                                    </div>
+                                </div>
+                                <div class="grid-x grid-padding-x medium-up-5 headings">
+                                    <div class="cell">
+                                        Article title
+                                    </div>
+                                    <div class="cell">
+                                        Category
+                                    </div>
+                                    <div class="cell">
+                                        Page
+                                    </div>
+                                    <div class="cell">
+                                        Issue
+                                    </div>
+                                    <div class="cell">
+                                        Publication
+                                    </div>
+                                </div>
+                                {% for result in page_obj.object_list %}
+                                <div class="grid-x grid-padding-x medium-up-5 results-list">
+                                    <div class="cell">
+                                        <a href="{{ result.url }}?highlight={{ query }}">
                     {% if result.title %}
                     {{ result.title }}
                     {% else %}
                     {{ result.aid }}
                     {% endif %}
                 </a>
-            </div>
-            <div class="cell">
-                {{ result.category }}
-            </div>
-            <div class="cell">
-                <a href="{{ result.page_url }}?highlight={{ query }}">
+                                    </div>
+                                    <div class="cell">
+                                        {{ result.category }}
+                                    </div>
+                                    <div class="cell">
+                                        <a href="{{ result.page_url }}?highlight={{ query }}">
                     p. {{ result.page_number }}
                 </a>
-            </div>
-            <div class="cell">
-                <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
-            </div>
-            <div class="cell">
-                <a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a>
-            </div>
-        </div>
-
-        {% if query %}
-        <div class="cell">
-            {% highlight result.text with query html_tag "strong" %}
-        </div>
-        {% endif %}
-        {% empty %}
-        <div class="cell">
-            <p>No results found.</p>
-        </div>
-    </div>
-    {% endfor %}
-
-    <hr>
-
-    {% if page_obj.has_previous or page_obj.has_next %}
-    <div class="grid-container">
-        <div class="grid-x">
-            <div class="cell">
-                <ul class="pagination text-center" role="navigation" aria-label="Pagination">
-
-                    <li class="{% if page_obj.has_previous %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
-                        {% if page_obj.has_previous %}
-                        <a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.previous_page_number }}" aria-label="Previous page">
+                                    </div>
+                                    <div class="cell">
+                                        <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
+                                    </div>
+                                    <div class="cell">
+                                        <a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a>
+                                    </div>
+                                </div>
+                                {% if query %}
+                                <div class="cell">
+                                    {% highlight result.text with query html_tag "strong" %}
+                                </div>
+                                {% endif %} {% empty %}
+                                <div class="cell">
+                                    <p>No results found.</p>
+                                </div>
+                                {% endfor %} {% if page_obj.has_previous or page_obj.has_next %}
+                                <div class="grid-x">
+                                    <div class="cell">
+                                        <ul class="pagination text-center" role="navigation" aria-label="Pagination">
+                                            <li class="{% if page_obj.has_previous %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
+                                                {% if page_obj.has_previous %}
+                                                <a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.previous_page_number }}" aria-label="Previous page">
                         {% endif %}
                             Prev <span class="show-for-sr">page</span>
                         {% if page_obj.has_previous %}
-                        </a>
-                        {% endif %}
-                    </li>
-
-                    <li class="{% if page_obj.has_next %}pagination-next{% else %}pagination-next disabled{% endif %}">
-                        {% if page_obj.has_next %}
-                        <a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.next_page_number }}" aria-label="Next page">
+                        </a> {% endif %}
+                                            </li>
+                                            <li class="{% if page_obj.has_next %}pagination-next{% else %}pagination-next disabled{% endif %}">
+                                                {% if page_obj.has_next %}
+                                                <a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.next_page_number }}" aria-label="Next page">
                         {% endif %}
                             Next <span class="show-for-sr">page</span>
                         {% if page_obj.has_next %}
-                        </a>
-                        {% endif %}
-                    </li>
-                </ul>
+                        </a> {% endif %}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                {% endif %} {% endblock %}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-    {% endif %}
-</section>
-{% endblock %}
+</div>

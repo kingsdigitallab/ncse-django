@@ -1,87 +1,73 @@
-{% extends 'base.html' %}
-
-{% block title %}{{ page.publication }} {{ page.issue }}, Page {{ page.number }}{% endblock %}
-
-{% block meta_title %}{{ page.publication }} {{ page.issue }}, Page {{ page.number }}{% endblock %}
-
-{% block main %}
-
+{% extends 'base.html' %} {% block title %}{{ page.publication }} {{ page.issue }}, Page {{ page.number }}{% endblock %} {% block meta_title %}{{ page.publication }} {{ page.issue }}, Page {{ page.number }}{% endblock %} {% block main %}
 <section class="grid-container">
-  <div class="grid-x">
-    <div class="cell tabs">
-      <ul class="menu subnav" data-magellan>
-      <li class="is-active" data-option="image"><a>Image</a></li>
-        <li data-option="transcription"><a>Transcription</a></li>
-        <li><a>Citation</a></li>
-      </ul>
+    <div class="grid-x">
+        <div class="cell tabs">
+            <ul class="menu subnav" data-magellan>
+                <li class="is-active" data-option="image"><a>Image</a></li>
+                <li data-option="transcription"><a>Transcription</a></li>
+                <li><a>Citation</a></li>
+            </ul>
+            <ul class="menu align-right">
+                <li><a href="{{ page.issue.url }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Go to Issue</a>
+                    <li>
+                        <li><a href="{{ page.print_url }}"><i class="fa fa-print" aria-hidden="true"></i> Print Page</a>
+                            <li>
+            </ul>
+        </div>
     </div>
-  </div>
 </section>
-
-
-
-
-
 <div class="grid-container">
     <div class="grid-x">
         <div class="cell">
             <ul class="pagination text-center" role="navigation" aria-label="Pagination">
-
                 <li class="{% if page.previous_page %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
                     {% if page.previous_page %}
                     <a href="{{ page.previous_page.url }}" aria-label="Previous page">
                     {% endif %}
                         Prev <span class="show-for-sr">page</span>
                     {% if page.previous_page %}
-                    </a>
-                    {% endif %}
+                    </a> {% endif %}
                 </li>
-
-                <li><a href="{{ page.issue.url }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Go to Issue</a><li>
-                <li><a href="{{ page.print_url }}"><i class="fa fa-print" aria-hidden="true"></i> Print Page</a><li>
-
+                <li class="current"><span class="show-for-sr">You're on page</span> 1</li>
+                <li><a href="#" aria-label="Page 2">2</a></li>
+                <li><a href="#" aria-label="Page 3">3</a></li>
+                <li><a href="#" aria-label="Page 4">4</a></li>
+                <li class="ellipsis"></li>
+                <li><a href="#" aria-label="Page 12">12</a></li>
+                <li><a href="#" aria-label="Page 13">13</a></li>
                 <li class="{% if page.next_page %}pagination-next{% else %}pagination-next disabled{% endif %}">
                     {% if page.next_page %}
                     <a href="{{ page.next_page.url }}" aria-label="Next page">
                     {% endif %}
                         Next <span class="show-for-sr">page</span>
                     {% if page.next_page %}
-                    </a>
-                    {% endif %}
+                    </a> {% endif %}
                 </li>
             </ul>
         </div>
     </div>
 </div>
-
-
 <div class="grid-container tabs-container">
-  <section class="section is-active" data-item="articles">
-
-    <div class="grid-x grid-padding-x grid-padding-y medium-up-full large-up-2 container">
-        <div class="cell container">
-            <canvas class="pageCanvas" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
-                <!-- Fallback for non-canvas supporting devices -->
-                <img id="page{{ page.number}}" src="{{ page.image.url }}">
-            </canvas>
-        </div>
-        <div class="cell container">
-            {% for article in page.articles_in_page.all %}
-            <div class="column is-half article" id="{{ article.aid }}">
-                <h3 class="subtitle">{{ article|title }}</h3>
-                {{ article.content_html|safe }}
+    <section class="section is-active" data-item="articles">
+        <div class="grid-x grid-padding-x grid-padding-y container">
+            <div class="cell container border">
+                <canvas class="pageCanvas" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
+                    <!-- Fallback for non-canvas supporting devices -->
+                    <img id="page{{ page.number}}" src="{{ page.image.url }}">
+                </canvas>
             </div>
-            {% endfor %}
+            <div class="cell container">
+                {% for article in page.articles_in_page.all %}
+                <div class="column is-half article" id="{{ article.aid }}">
+                    <h3 class="subtitle">{{ article|title }}</h3> {{ article.content_html|safe }}
+                </div>
+                {% endfor %}
+            </div>
         </div>
-    </div>
-    <div class="grid-x grid-padding-x grid-padding-y medium-up-full large-up-2 container">
-        
-    </div>
-  </section>
+        <div class="grid-x grid-padding-x grid-padding-y medium-up-full large-up-2 container">
+        </div>
+    </section>
 </div>
-
-
-
 <div class="grid-container tabs-container">
     <section class="grid-x section is-active" data-item="image">
         <div class="cell container">
@@ -91,24 +77,18 @@
             </canvas>
         </div>
     </section>
-
     <section class="grid-x section" data-item="transcription">
         <div class="cell container">
             {% for article in page.articles_in_page.all %}
             <div class="column is-half article" id="{{ article.aid }}">
-                <h3 class="subtitle">{{ article|title }}</h3>
-                {{ article.content_html|safe }}
+                <h3 class="subtitle">{{ article|title }}</h3> {{ article.content_html|safe }}
             </div>
             {% endfor %}
         </div>
     </section>
 </div>
-{% endblock %}
-
-{% block footer_scripts %}
-{% if highlight_words %}
+{% endblock %} {% block footer_scripts %} {% if highlight_words %}
 <script>
-var highlight_words = {{ highlight_words|safe }};
+var highlight_words = { { highlight_words | safe } };
 </script>
-{% endif %}
-{% endblock %}
+{% endif %} {% endblock %}

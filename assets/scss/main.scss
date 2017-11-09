@@ -4,13 +4,16 @@
 @import '../vendor/motion-ui/motion-ui';
 
 
+
 /* Table of Contents */
 
 
 /**
  *  Globals
  *  Navigation
+ *  Sub navigation
  *  Main content
+ *  Accordian
  *  Footer
  */
 
@@ -25,28 +28,52 @@ main {
     margin: rem-calc(20 0);
 }
 
+h1.title {
+    border-bottom: 1px solid black;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    text-transform: uppercase;
+    line-height: 1.5rem;
+}
+
+h2 {
+    font-size: 1.2rem;
+}
+
+h3 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    span {
+        font-size: 1rem;
+        font-weight: normal;
+    }
+}
+
+.border {
+    border: 1px solid $dark-gray;
+}
 
 /* Navigation */
 
 nav {
     background: $primary-color;
-    .logo{
+    .logo {
         float: left;
-     h1 {
+        h1 {
             font-size: 1rem;
+            line-height: 2.3rem;
             text-transform: uppercase;
             margin: 0;
-            line-height: 2.3rem;
             a {
                 color: white;
             }
         }
     }
 
-    .title-bar{
+    .title-bar {
         background: none;
-        padding:0;
-        }
+        padding: 0;
+    }
     .top-bar {
         background: $primary-color;
         padding: 0;
@@ -81,65 +108,60 @@ nav {
     }
 }
 
-/* Search form */
+/* Sub Navigation */
 
-section{
-    &.search{
-       form{
-         padding: 1rem;
-         background:$light-gray;
-       } 
-    }
+.tabs {
+    border: none;
 }
 
-/* Title/Breadcrumbs */
+.tabs-container {
+    .section {
+        display: none;
 
-section {
-    h1.title {
-        border-bottom: 1px solid black;
-        font-size: 1.1rem;
-        margin-top: 1rem;
-        text-transform: uppercase;
-    }
-    h2{
-        font-size: 1.2rem;
-    }
-    h3{
-        font-size:1.4rem;
-        font-weight:bold;
-                span{
-            font-size: 1rem;
-            font-weight:normal;
+        &.is-active {
+            display: block;
         }
     }
 }
 
-/* Sub Navigation */
-.tabs{
-    border:none;
+.menu {
+    &.subnav {
+        border-bottom: 1px solid gray;
+        li {
+            &.is-active>a {
+                background: none;
+                border-bottom: 3px solid $primary-color;
+                color: black;
+            }
+        }
+    }
 }
-.menu{
-    &.subnav{
-    border-bottom: 1px solid gray;
-    li{
-        &.is-active>a{
-        background: none;
-        color: black; 
-        border-bottom: 3px solid $primary-color;
-    }
-    }
-    }
-    
- }   
 
 
+
+
+
+
+
+
+/* Search form */
+
+section {
+    &.search {
+        form {
+            padding: 1rem;
+            background: $light-gray;
+        }
+    }
+}
 
 
 /* Main content */
+
 .cell {
-        margin: rem-calc(10 0);
-        padding-top: rem-calc(10);  
-    }
+    margin: rem-calc(10 0);
+    padding-top: rem-calc(10);
+}
 
 .form {
     ul {
@@ -162,6 +184,7 @@ section {
 }
 
 
+
 /* NOT SURE WHAT THIS IS SUPPOSED TO DO (Coming from Bulma?) */
 
 .article-header {
@@ -173,80 +196,69 @@ section {
 }
 
 
-/***/
 
-// Equal height blocks
+// Card
 .card {
     position: relative;
     height: 100%;
     text-align: center;
-    &:hover{
-        border:1px solid $primary-color;
-    .card-section{
-        background: $primary-color;
-        h3{
-            color:white;
-        }
-         .card-footer {
-            border-top: 1px solid $light-gray;
-            color: $light-gray;
-        }
-        &.overlay{
+    &:hover {
+        border: 1px solid $primary-color;
+        .card-section {
             background: $primary-color;
+            h3 {
+                color: white;
+            }
+            .card-footer {
+                border-top: 1px solid $light-gray;
+                color: $light-gray;
+            }
+            &.overlay {
+                background: $primary-color;
+            }
         }
-    }
-
     }
     .card-divider {
         display: block;
-        color:black;
+        color: black;
         background: none;
         img {
             display: block;
             margin: 0 auto;
             width: 80%;
         }
-        h2{
-            font-size:1.5rem;
-            //&:hover{
-            //opacity:0.7;
-            //}
+        h2 {
+            font-size: 1.5rem;
         }
     }
-    .card-image{
-        height: 300px;
-        object-fit:cover;
-        //&:before{
-          //  content: "";
-//display: block;
-//padding: 1%;
-  //      }
+    .card-image {
+        min-height: 200px;
+        /* Hack until Equaliser is fixed */
+        max-height: 300px;
+        /* Hack until Equaliser is fixed */
     }
-    .card-section{
-        margin:1rem 0 0 0;
-        
-        h3{
-            font-size:1.2rem;
+    .card-section {
+        margin: 1rem 0 0 0;
+
+        h3 {
             color: black;
-            //&:hover{
-            //opacity:0.7;
-            //}
+            font-size: 1.2rem;
         }
-         .card-footer {
+        .card-footer {
             border-top: 1px solid gray;
             color: gray;
-            margin-top:1rem;
+            margin-top: 1rem;
             padding-top: 1rem;
         }
-        &.overlay{
-            color:white;
-            background: rgba(0,0,0,0.7);
-            bottom:0;
+        &.overlay {
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            bottom: 0;
             position: absolute;
             text-align: center;
-            width:100%;
-            h3{
-                color:white;
+            width: 100%;
+            h3 {
+                color: white;
                 font-weight: bold;
             }
             .card-footer {
@@ -258,14 +270,52 @@ section {
 }
 
 
+.pagination {
+    text-align: center;
+}
 
-.tabs-container {
-    .section {
-        display: none;
 
-        &.is-active {
-            display: block;
-        }
+/* Accordion */
+
+.accordion-item:first-child>:first-child {
+    background: $primary-color;
+    border: none;
+    color: white;
+    padding: 1rem 1rem;
+    width: 100px;
+    &:hover {
+        background: darken($primary-color, 10%);
+        color: white;
+    }
+}
+
+.accordion-title {
+    border: none;
+    color: black;
+    font-size: 1rem;
+    padding: 0;
+    padding-top: 1.25rem;
+}
+
+.is-active>.accordion-title {
+    &::before {
+        color: white;
+    }
+    &:hover {
+        background: none;
+        color: black;
+    }
+}
+
+.accordion-content {
+    border: none;
+    padding-left: 0;
+    ul {
+        margin-left: 0;
+        list-style-type: none;
+    }
+    .cell {
+        padding: 0;
     }
 }
 

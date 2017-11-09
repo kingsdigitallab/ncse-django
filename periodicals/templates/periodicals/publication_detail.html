@@ -7,6 +7,27 @@
     </div>
 </section>
 {% with issues=publication.issues.all %} {% regroup issues by issue_date.year as year_list %}
+
+<!-- ** Sticky nav to implement **
+<section class="grid-container">
+    <div class="grid-x">
+        <div class="cell">
+            <div data-sticky-container>
+                <div class="title-bar" data-sticky data-options="marginTop:0;">
+                    <div class="title-bar-left">
+                        <ul class="menu subnav" data-magellan>
+                            <h2> Years</h2> {% for year, issues_in_year in year_list %}
+                            <li><a href="#{{ year }}">{{ year }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+-->
+
 <section class="grid-container">
     <div class="grid-x">
         <div class="cell">
@@ -21,6 +42,8 @@
         </div>
     </div>
 </section>
+
+
 {% for year, issues_in_year in year_list %}
 <section class="grid-container" id="{{ year }}">
     <div class="grid-x">
@@ -32,7 +55,7 @@
     </div>
     <div class="grid-x grid-padding-x grid-padding-y small-up-2 medium-up-3 large-up-5">
         {% for issue in issues_in_year %}
-        <div class="cell">
+        <div class="cell ">
             <div class="card">
                 <a href="{{ issue.url }}">
                     <div class="card-image">
