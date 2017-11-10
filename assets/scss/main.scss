@@ -2,7 +2,7 @@
 @import 'font-awesome';
 @import '../vendor/foundation-sites/assets/foundation';
 @import '../vendor/motion-ui/motion-ui';
-
+@import url('https://fonts.googleapis.com/css?family=Lusitana|Neuton|Peddana|Petrona|Scheherazade|Suravaram|Unna');
 
 
 /* Table of Contents */
@@ -23,6 +23,7 @@
 
 
 /* Globals */
+
 body,
 h1,
 h2,
@@ -240,7 +241,6 @@ ul.menu.align-right > li > a {
         margin: rem-calc(16 0 0);
 
         h3 {
-            color: black;
             font-size: rem-calc(20);
             font-weight: normal;
         }
@@ -280,6 +280,7 @@ ul.menu.align-right > li > a {
 .page-controls {
     text-align: center;
 }
+
 
 /* Accordion */
 
@@ -374,7 +375,6 @@ footer {
         max-width: rem-calc(60);
     }
 }
-
 
 /* Media queries */
 

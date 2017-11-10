@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% block title %}{{ page.publication }} {{ page.issue }}, Page {{ page.number }}{% endblock %} {% block meta_title %}{{ page.publication }} {{ page.issue }}, Page {{ page.number }}{% endblock %} {% block main %}
+<!-- *** Original full width
 <section class="grid-container">
     <div class="grid-x">
         <div class="cell tabs">
@@ -8,9 +9,9 @@
                 <li><a>Citation</a></li>
             </ul>
             <ul class="menu align-right">
-                <li><a href="{{ page.issue.url }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Go to Issue</a>
+                <li><a href="{{ page.issue.url }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Issue</a>
                 </li>
-                <li><a href="{{ page.print_url }}"><i class="fa fa-print" aria-hidden="true"></i> Print Page</a>
+                <li><a href="{{ page.print_url }}"><i class="fa fa-print" aria-hidden="true"></i> Print </a>
                 </li>
             </ul>
         </div>
@@ -47,33 +48,13 @@
         </div>
     </div>
 </div>
-<div class="grid-container tabs-container">
-    <section class="section is-active" data-item="articles">
-        <div class="grid-x grid-padding-x grid-padding-y container">
-            <div class="cell container border">
-                <canvas class="pageCanvas" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
-                    <!-- Fallback for non-canvas supporting devices -->
-                    <img id="page{{ page.number}}" src="{{ page.image.url }}">
-                </canvas>
-            </div>
-            <div class="cell container">
-                {% for article in page.articles_in_page.all %}
-                <div class="column is-half article" id="{{ article.aid }}">
-                    <h3 class="subtitle">{{ article|title }}</h3> {{ article.content_html|safe }}
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="grid-x grid-padding-x grid-padding-y medium-up-full large-up-2 container">
-        </div>
-    </section>
-</div>
+
 <div class="grid-container tabs-container">
     <section class="grid-x section is-active" data-item="image">
         <div class="cell container">
             <canvas class="pageCanvas" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
                 <!-- Fallback for non-canvas supporting devices -->
-                <img id="page{{ page.number}}" src="{{ page.image.url }}">
+<!-- *** Original full width<img id="page{{ page.number}}" src="{{ page.image.url }}">
             </canvas>
         </div>
     </section>
@@ -84,6 +65,80 @@
                 <h3 class="subtitle">{{ article|title }}</h3> {{ article.content_html|safe }}
             </div>
             {% endfor %}
+        </div>
+    </section>
+</div> -->
+<section class="grid-container">
+    <div class="grid-x">
+        <div class="cell minus-margin-top">
+            <ul class="menu align-right">
+                <li><a href="{{ page.issue.url }}"><i class="fa fa-arrow-left" aria-hidden="true"></i></i> Issue</a>
+                </li>
+                <li><a href="{{ page.print_url }}"><i class="fa fa-print" aria-hidden="true"></i> Print </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<div class="grid-container">
+    <div class="grid-x">
+        <div class="cell">
+            <ul class="pagination text-center" role="navigation" aria-label="Pagination">
+                <li class="{% if page.previous_page %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
+                    {% if page.previous_page %}
+                    <a href="{{ page.previous_page.url }}" aria-label="Previous page">
+                    {% endif %}
+                        Prev <span class="show-for-sr">page</span>
+                    {% if page.previous_page %}
+                    </a> {% endif %}
+                </li>
+                <li class="current"><span class="show-for-sr">You're on page</span> 1</li>
+                <li><a href="#" aria-label="Page 2">2</a></li>
+                <li><a href="#" aria-label="Page 3">3</a></li>
+                <li><a href="#" aria-label="Page 4">4</a></li>
+                <li class="ellipsis"></li>
+                <li><a href="#" aria-label="Page 12">12</a></li>
+                <li><a href="#" aria-label="Page 13">13</a></li>
+                <li class="{% if page.next_page %}pagination-next{% else %}pagination-next disabled{% endif %}">
+                    {% if page.next_page %}
+                    <a href="{{ page.next_page.url }}" aria-label="Next page">
+                    {% endif %}
+                        Next <span class="show-for-sr">page</span>
+                    {% if page.next_page %}
+                    </a> {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="grid-container tabs-container">
+    <section class="section is-active" data-item="articles">
+        <div class="grid-x grid-padding-x grid-padding-y medium-up-full large-up-2 container">
+            <div class="cell container">
+                <div class="cell tabs">
+                    <ul class="menu subnav" data-magellan>
+                        <li class="is-active" data-option="image"><a>Image</a></li>
+                    </ul>
+                </div>
+                <canvas class="pageCanvas border" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
+                    <!-- Fallback for non-canvas supporting devices -->
+                    <img id="page{{ page.number}}" src="{{ page.image.url }}">
+                </canvas>
+            </div>
+            <div class="cell container">
+            <div class="cell tabs">
+            <ul class="menu subnav" data-magellan>
+                <li class="is-active" data-option="transcription"><a>Transcription</a></li>
+                <li data-option="image"><a>Citation</a></li>
+            </ul>
+            </div>
+                {% for article in page.articles_in_page.all %}
+                <div class="column is-half article" id="{{ article.aid }}">
+                    <h3 class="subtitle">{{ article|title }}</h3> {{ article.content_html|safe }}
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </section>
 </div>

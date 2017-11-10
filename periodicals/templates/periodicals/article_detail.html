@@ -8,11 +8,11 @@
                 <li><a>Citation</a></li>
             </ul>
             <ul class="menu align-right">
-                <li><a href="{{ article.issue.url }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> Go to Issue</a>
+                <li><a href="{{ article.issue.url }}"><i class="fa fa-arrow-left" aria-hidden="true"></i></i> Issue</a>
                     </li>
-                        <li><a href="{{ article.page.print_url }}"><i class="fa fa-print" aria-hidden="true"></i> Print Page</a>
-                            </li>
-                                <li><a href="{{ article.print_url }}"><i class="fa fa-print" aria-hidden="true"></i> Print Article</a></li>
+                        <!-- <li><a href="{{ article.page.print_url }}"><i class="fa fa-print" aria-hidden="true"></i> Print Page</a>
+                            </li>-->
+                                <li><a href="{{ article.print_url }}"><i class="fa fa-print" aria-hidden="true"></i> Print</a></li>
             </ul>
         </div>
     </div>
@@ -53,10 +53,10 @@
         <div class="cell container">
             <div class="page-controls">
                 {% if article.continuation_from %}
-                <a class="button" href="{{ article.continuation_from.url }}">&larr; </a> Title of Article {% endif %} {% if article.continuation_to %}
+                <a class="button" href="{{ article.continuation_from.url }}">&larr; </a>{% endif %} { Article Title, Page x of X }{% if article.continuation_to %} 
                 <a class="button is-pulled-right" href="{{ article.continuation_to.url }}"> &rarr;</a> {% endif %}
             </div>
-            <canvas class="pageCanvas" data-image-id="page{{ article.page.number}}" width="{{ article.page.width }}" height="{{ article.page.height }}">
+            <canvas class="pageCanvas border" data-image-id="page{{ article.page.number}}" width="{{ article.page.width }}" height="{{ article.page.height }}">
                 <!-- Fallback for non-canvas supporting devices -->
                 <img id="page{{ article.page.number}}" src="{{ article.page.image.url }}">
             </canvas>
