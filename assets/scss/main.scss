@@ -11,9 +11,11 @@
 /**
  *  Globals
  *  Navigation
- *  Sub navigation
+ *      Sub navigation
  *  Main content
+ *      Cards
  *  Accordion
+ *  Search
  *  Footer
  */
 
@@ -30,21 +32,21 @@ main {
 
 h1.title {
     border-bottom: 1px solid black;
-    font-size: 1.1rem;
-    margin-top: 1rem;
+    font-size: rem-calc(18);
+    margin-top: rem-calc(16);
     text-transform: uppercase;
-    line-height: 1.5rem;
+    line-height: rem-calc(24);
 }
 
 h2 {
-    font-size: 1.2rem;
+    font-size: rem-calc(20);
 }
 
 h3 {
-    font-size: 1.4rem;
+    font-size: rem-calc(22);
     font-weight: bold;
     span {
-        font-size: 1rem;
+        font-size: rem-calc(16);
         font-weight: normal;
     }
 }
@@ -60,8 +62,8 @@ nav {
     .logo {
         float: left;
         h1 {
-            font-size: 1rem;
-            line-height: 2.3rem;
+            font-size: rem-calc(16);
+            line-height: rem-calc(36);
             text-transform: uppercase;
             margin: 0;
             a {
@@ -98,7 +100,7 @@ nav {
             }
         }
         h1 {
-            font-size: 1rem;
+            font-size: rem-calc(16);
             text-transform: uppercase;
             margin: 0;
             a {
@@ -109,35 +111,6 @@ nav {
 }
 
 /* Sub Navigation */
-
-.tabs {
-    border: none;
-}
-
-// .tabs-container {
-//     .section {
-//         display: none;
-
-//         &.is-active {
-//             display: block;
-//         }
-//     }
-// }
-
-/* Trying this to fix equalizer issue with equalizer */
-
-.tabs-panel {
-    display: block;
-    height: 0;
-    overflow: hidden;
-    padding: 0;
-}
-
-.tabs-panel.is-active {
-    height: auto;
-    padding: rem-calc(16);
-}
-/* *** */
 
 .menu {
     &.subnav {
@@ -152,15 +125,15 @@ nav {
     }
 }
 
+.tabs,
+.tabs-content {
+    border: none;
+}
 
-/* Search form */
-
-section {
-    &.search {
-        form {
-            padding: rem-calc(16);
-            background: $light-gray;
-        }
+.tabs-title {
+    a{
+        font-size: rem-calc(16);
+        padding: rem-calc(11 16);
     }
 }
 
@@ -327,6 +300,16 @@ section {
     }
 }
 
+/* Search form */
+
+section {
+    &.search {
+        form {
+            padding: rem-calc(16);
+            background: $light-gray;
+        }
+    }
+}
 
 /* Footer */
 
