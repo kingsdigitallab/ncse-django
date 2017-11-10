@@ -67,13 +67,13 @@ $(function() {
         enableCanvas();
     }
 
-    if ($(".tabs")) {
-        $(".tabs ul li").on("click", function() {
-            var option = $(this).data("option");
-            $(".tabs ul li").removeClass("is-active");
-            $(this).addClass("is-active");
-            $(".tabs-container section").removeClass("is-active");
-            $('section[data-item="' + option + '"]').addClass("is-active");
-        });
-    }
+    // if ($(".tabs")) {
+    //     $(".tabs ul li").on("click", function() {
+    //         var option = $(this).data("option");
+    //         $(".tabs ul li").removeClass("is-active");
+    //         $(this).addClass("is-active");
+    //         $(".tabs-container section").removeClass("is-active");
+    //         $('section[data-item="' + option + '"]').addClass("is-active");
+    //     });
+    // }
 });
