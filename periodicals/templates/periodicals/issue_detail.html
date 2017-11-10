@@ -6,12 +6,12 @@
 {% block main %}
 <section class="grid-container">
     <div class="grid-x">
-        <div class="cell tabs">
+        <div class="cell tabs" data-tabs id="issue-tabs">
             <ul class="menu subnav">
-                <li><a>Contents</a></li>
-                <li class="is-active"data-option="pages"><a>Pages</a></li>
-                <li data-option="articles"><a>Articles</a></li>
-                <li><a>Ads</a></li>
+                <li class="tabs-title is-active"><a href="#toc" aria-selected="true">Table of contents</a></li>
+                <li class="tabs-title"><a data-tabs-target="pages" href="#pages">Pages</a></li>
+                <li class="tabs-title"><a data-tabs-target="articles" href="#articles">Articles</a></li>
+                <li class="tabs-title"><a data-tabs-target="ads" href="#ads">Ads</a></li>
             </ul>
             <ul class="menu align-right">
                 <li><a href="{{ issue.pdf.url }}"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF</a></li>
@@ -22,32 +22,34 @@
         </div>
     </div>
 </section>
-<div class="grid-container tabs-container">
-    <section class="section" data-item="articles">
+<div class="grid-container tabs-content" data-tabs-content="issue-tabs">
+    <section class="tabs-panel is-active" id="toc">
+        <div class="gird-x">
+            <div class="cell">
+                <h2>Table of contents will go here</h2>
+            </div>
+        </div>
+    </section>
+    <section class="tabs-panel" id="articles">
         <div class="gird-x">
             <div class="cell">
                 <h3 class="title">Articles</h3>
             </div>
         </div>
-        <!-- *** Equaliser to fix ***
-        <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container" data-equalizer="article" data-equalize-on="medium">
-        -->
-        <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container" >
+        <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container" data-equalizer="card-article" data-equalize-on="medium" data-equalize-by-row="true">
             {% for article in issue.articles %}
             <div class="cell">
-                <!-- *** Equaliser to fix ***
-                <div class="card" data-equalizer-watch="article">
-                -->
-                <div class="card">
+                <div class="card" data-equalizer-watch="card-article">
                     <a href="{{ article.url }}">
                         <div class="card-image">
                             <img src="{{ article.title_image.url }}">
                         </div>
                         <div class="card-section overlay">
                             <h3>{{ article|title }}</h3>
-                            <div class="card-footer">Page {{ article.page.number }}
+                            <div class="card-footer">
+                                Page {{ article.page.number }}
                             </div>
-                    </div>
+                        </div>
                     </a>
                     {% if request.user.is_staff %}
                     <div class="card-divider">
@@ -59,21 +61,15 @@
             {% endfor %}
         </div>
     </section>
-    <section class="section is-active" data-item="pages">
+    <section class="tabs-panel" id="pages">
         <div class="grid-x">
             <div class="cell">
                 <h3 class="title">Pages</h3>
             </div>
         </div>
-        <!-- *** Equaliser to fix *** 
-        <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container" data-equalizer="pages" data-equalize-on="medium">
-        -->
         <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container">
             {% for page in issue.pages.all %}
             <div class="cell">
-                 <!-- ***
-                Equaliser to fix *** <div class="card" data-equalizer-watch="pages">
-                -->
                  <div class="card">
                     <a href="{{ page.url }}">
                         <div class="card-image">
@@ -95,6 +91,9 @@
             </div>
             {% endfor %}
         </div>
+    </section>
+    <section class="tabs-panel" id="ads">
+        <h2>Ads will go here</h2>
     </section>
 </div>
 {% endblock %}
