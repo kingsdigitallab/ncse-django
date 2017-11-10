@@ -16,11 +16,21 @@
  *      Cards
  *  Accordion
  *  Search
+ *  Table of contents
  *  Footer
+ *  Media queries
  */
 
 
 /* Globals */
+body,
+h1,
+h2,
+h3 {
+    // font-family: 'Neuton', serif;
+    // font-family: 'Lusitana', serif;
+    font-family: 'Petrona', serif;
+}
 
 canvas {
     width: 100%;
@@ -33,9 +43,9 @@ main {
 h1.title {
     border-bottom: 1px solid black;
     font-size: rem-calc(18);
+    line-height: rem-calc(24);
     margin-top: rem-calc(16);
     text-transform: uppercase;
-    line-height: rem-calc(24);
 }
 
 h2 {
@@ -59,13 +69,16 @@ h3 {
 
 nav {
     background: $primary-color;
+
     .logo {
         float: left;
+
         h1 {
             font-size: rem-calc(16);
             line-height: rem-calc(36);
-            text-transform: uppercase;
             margin: 0;
+            text-transform: uppercase;
+
             a {
                 color: white;
             }
@@ -76,6 +89,7 @@ nav {
         background: none;
         padding: 0;
     }
+
     .top-bar {
         background: $primary-color;
         padding: 0;
@@ -95,14 +109,18 @@ nav {
                     top: 100%;
                 }
             }
+
             a {
                 color: white;
+                font-size: rem-calc(16);
             }
         }
+
         h1 {
             font-size: rem-calc(16);
-            text-transform: uppercase;
             margin: 0;
+            text-transform: uppercase;
+
             a {
                 color: white;
             }
@@ -115,13 +133,23 @@ nav {
 .menu {
     &.subnav {
         border-bottom: 1px solid gray;
+
         li {
+
             &.is-active > a {
                 background: none;
                 border-bottom: 3px solid $primary-color;
                 color: black;
             }
         }
+    }
+}
+
+ul.menu.align-right > li > a {
+    color: black;
+
+    &:hover {
+        color: $primary-color;
     }
 }
 
@@ -165,7 +193,6 @@ nav {
     }
 }
 
-
 // Card
 .card {
 
@@ -204,6 +231,8 @@ nav {
 
         h2 {
             font-size: rem-calc(24);
+            font-variant: small-caps;
+            font-weight: bold;
         }
     }
 
@@ -213,6 +242,7 @@ nav {
         h3 {
             color: black;
             font-size: rem-calc(20);
+            font-weight: normal;
         }
 
         .card-footer {
@@ -233,6 +263,9 @@ nav {
             h3 {
                 color: white;
                 font-weight: bold;
+                &.small-caps{
+                   font-variant: small-caps; 
+                }
             }
 
             .card-footer {
@@ -243,11 +276,8 @@ nav {
     }
 }
 
-.pagination {
-    text-align: center;
-}
-
-.page-controls{
+.pagination,
+.page-controls {
     text-align: center;
 }
 
@@ -311,6 +341,22 @@ section {
     }
 }
 
+/* Table of contents */
+
+tbody {
+    border: none;
+}
+
+td {
+    &.float-left {
+        float: none!important;
+    }
+
+    &.paragraph {
+        width: 50%;
+    }
+}
+
 /* Footer */
 
 footer {
@@ -326,5 +372,40 @@ footer {
 
     img {
         max-width: rem-calc(60);
+    }
+}
+
+
+/* Media queries */
+
+@media screen and (max-width: 1024px) {
+
+    /* Table of Contents */
+
+    td {
+        .float-left {
+            float: left;
+        
+            &:before {
+                content: "Page ";
+            }
+
+            &:after {
+                content: ", ";
+            }
+        }
+        
+        &.paragraph {
+            width: 100%;
+        }
+    }
+
+    tbody th,
+    tbody td {
+        padding: rem-calc(0 7);
+    }
+
+    tr {
+        padding: rem-calc(7 0);
     }
 }
