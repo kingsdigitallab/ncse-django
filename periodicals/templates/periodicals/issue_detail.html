@@ -3,19 +3,119 @@
     <div class="grid-x">
         <div class="cell tabs">
             <ul class="menu subnav">
-                <li><a>Contents</a></li>
-                <li class="is-active"data-option="pages"><a>Pages</a></li>
+                <li class="is-active" data-option="contents"><a>Contents</a></li>
+                <li data-option="pages"><a>Pages</a></li>
                 <li data-option="articles"><a>Articles</a></li>
                 <li><a>Ads</a></li>
             </ul>
             <ul class="menu align-right">
-                <li><a href="{{ issue.pdf.url }}"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF</a></li>
+                <li><a href="{{ issue.pdf.url }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> PDF</a></li>
                 <!-- *** Removed to have one option *** <li><a href="{{ issue.pdf.url }}" download="{{ issue }}"><i class="fa fa-download" aria-hidden="true"></i> Download PDF</a></li>-->
             </ul>
         </div>
     </div>
 </section>
 <div class="grid-container tabs-container">
+
+    <section class="section is-active" data-item="contents">
+        <div class="grid-x">
+            <div class="cell">
+                <h3 class="title">Contents</h3>
+            </div>
+        </div>
+        <!-- *** Equaliser to fix ***  <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container" data-equalizer="pages" data-equalize-on="medium"> -->
+        <div class="row">
+  <div class="columns">
+    <table class="stack unstriped"> <!-- *** Data to be added *** -->
+      <thead>
+        <tr>
+          <th>Page</th>
+          <th>Category</th>
+          <th>Title</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="float-left">1</td>
+          <td>Article</td>
+          <td>The United Orders Of The Temple And Hospital And The Press.</td>
+        </tr>
+        <tr>
+          <td class="float-left">2</td>
+          <td>Ad</td>
+          <td>King Solomon’s Temple</td>
+        </tr>
+        <tr>
+          <td class="float-left">3 - 5</td>
+          <td>Ad</td>
+          <td>The United Orders Of The Temple And Hospital And The Press.</td>
+        </tr>
+        <tr>
+          <td class="float-left">6</td>
+          <td>Ad</td>
+          <td>The United Orders Of The Temple And Hospital And The Press.</td>
+        </tr>
+        <tr>
+          <td class="float-left">6</td>
+          <td>Article</td>
+          <td>The United Orders Of The Temple And Hospital And The Press.</td>
+        </tr>
+        <tr>
+          <td class="float-left">6</td>
+          <td>Ad</td>
+          <td>The United Orders Of The Temple And Hospital And The Press.</td>
+        </tr>
+        <tr>
+          <td class="float-left">7 - 8</td>
+          <td>Article</td>
+          <td>The United Orders Of The Temple And Hospital And The Press.</td>
+        </tr>
+        <tr>
+          <td class="float-left">9</td>
+          <td>Article</td>
+          <td>The United Orders Of The Temple And Hospital And The Press.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+    </section>
+
+    <section class="section" data-item="pages">
+        <div class="grid-x">
+            <div class="cell">
+                <h3 class="title">Pages</h3>
+            </div>
+        </div>
+        <!-- *** Equaliser to fix ***  <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container" data-equalizer="pages" data-equalize-on="medium"> -->
+        <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container">
+            {% for page in issue.pages.all %}
+            <div class="cell">
+                <!-- *** Equaliser to fix *** <div class="card" data-equalizer-watch="pages"> -->
+                <div class="card">
+                    <a href="{{ page.url }}">
+                        <div class="card-image">
+                            <img src="{{ page.image.url }}">
+                        </div>
+                        <div class="card-section overlay">
+                            <h3>Page {{ page.number }}</h3>
+                            <div class="card-footer">
+                                {{ page.number_of_articles }} Articles
+                            </div>
+                        </div>
+                    </a>
+                    {% if request.user.is_staff %}
+                    <div class="card-divider">
+                        <a href="/admin/periodicals/page/{{ page.id }}/change/" class="card-footer-item">Edit</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
     <section class="section" data-item="articles">
         <div class="gird-x">
             <div class="cell">
@@ -23,7 +123,7 @@
             </div>
         </div>
         <!-- *** Equaliser to fix ***  <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container" data-equalizer="article" data-equalize-on="medium"> -->
-        <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container" >
+        <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container">
             {% for article in issue.articles %}
             <div class="cell">
                 <!-- *** Equaliser to fix *** <div class="card" data-equalizer-watch="article">-->
@@ -36,44 +136,11 @@
                             <h3>{{ article|title }}</h3>
                             <div class="card-footer">Page {{ article.page.number }}
                             </div>
-                    </div>
+                        </div>
                     </a>
                     {% if request.user.is_staff %}
                     <div class="card-divider">
                         <a href="/admin/periodicals/article/{{ article.id }}/change/" class="card-footer-item">Edit</a>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-    <section class="section is-active" data-item="pages">
-        <div class="grid-x">
-            <div class="cell">
-                <h3 class="title">Pages</h3>
-            </div>
-        </div>
-        <!-- *** Equaliser to fix ***  <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container" data-equalizer="pages" data-equalize-on="medium"> -->
-        <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container">
-            {% for page in issue.pages.all %}
-            <div class="cell">
-                 <!-- *** Equaliser to fix *** <div class="card" data-equalizer-watch="pages"> -->
-                 <div class="card">
-                    <a href="{{ page.url }}">
-                        <div class="card-image">
-                            <img src="{{ page.image.url }}">
-                        </div>
-                        <div class="card-section overlay">
-                            <h3>Page {{ page.number }}</h3>
-                            <div class="card-footer">
-                                {{ page.number_of_articles }} Articles
-                            </div>
-                    </div>
-                    </a>
-                    {% if request.user.is_staff %}
-                    <div class="card-divider">
-                        <a href="/admin/periodicals/page/{{ page.id }}/change/" class="card-footer-item">Edit</a>
                     </div>
                     {% endif %}
                 </div>
