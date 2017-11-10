@@ -348,6 +348,14 @@ section {
 tbody{
     border: none;
 }
+ td{
+ &.float-left{
+    float:none!important;
+}
+&.paragraph{
+    width:50%;
+}
+}
 /* Footer */
 
 footer {
@@ -373,13 +381,20 @@ footer {
 
 @media screen and (max-width: 1024px) {
     /* Table of Contents */
-    td.float-left{
+    td{
+        .float-left{
+        float:left;
         &:before{
         content: "Page ";
     }
         &:after{
         content: ", ";
     }
+    }
+&.paragraph{
+    width:100%;
+}
+
     }
     tbody th, tbody td {
     padding: 0 0.625rem 0 0.625rem;
