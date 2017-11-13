@@ -7,74 +7,61 @@
     </div>
 </section>
 {% with issues=publication.issues.all %} {% regroup issues by issue_date.year as year_list %}
-
-<!-- ** Sticky nav to implement **
 <section class="grid-container">
     <div class="grid-x">
         <div class="cell">
-            <div data-sticky-container>
-                <div class="title-bar" data-sticky data-options="marginTop:0;">
-                    <div class="title-bar-left">
-                        <ul class="menu subnav" data-magellan>
-                            <h2> Years</h2> {% for year, issues_in_year in year_list %}
-                            <li><a href="#{{ year }}">{{ year }}</a></li>
-                            {% endfor %}
-                        </ul>
+            <div id="sticky">
+                <div data-sticky-container>
+                    <div class="sticky" data-sticky-on="small" data-sticky data-margin-top="0" data-anchor="sticky">
+                        <nav data-magellan>
+                            <ul class="menu subnav" data-magellan data-events="scroll" id="magellan">
+                                <h2> Years</h2> {% for year, issues_in_year in year_list %}
+                                <li><a href="#{{ year }}">{{ year }}</a></li>
+                                <!--: {{ issues_in_year|length }} issues
+      {% if not forloop.last %} | {% endif %}-->
+                                <!-- Removed: Brian pls check -->
+                                {% endfor %}
+                            </ul>
+                        </nav>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
--->
-
-<section class="grid-container">
-    <div class="grid-x">
-        <div class="cell">
-            <ul class="menu subnav" data-magellan>
-                <h2> Years</h2> {% for year, issues_in_year in year_list %}
-                <li><a href="#{{ year }}">{{ year }}</a></li>
-                <!--: {{ issues_in_year|length }} issues
-      {% if not forloop.last %} | {% endif %}-->
-                <!-- Removed: Brian pls check -->
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-</section>
-
-
-{% for year, issues_in_year in year_list %}
-<section class="grid-container" id="{{ year }}">
-    <div class="grid-x">
-        <div class="cell">
-            <h3>{{ year }} <span>({{ issues_in_year|length }} issues)
-      {% if not forloop.last %} {% endif %} <!-- Added: Brian pls check -->      
-      <span></h3>
-        </div>
-    </div>
-    <div class="grid-x grid-padding-x grid-padding-y small-up-2 medium-up-3 large-up-5">
-        {% for issue in issues_in_year %}
-        <div class="cell ">
-            <div class="card">
-                <a href="{{ issue.url }}">
-                    <div class="card-image">
-                        <img src="{{ issue.pages.all.0.image.url }}">
-                    </div>
-                    <div class="card-section overlay">
-                        <h3 class="small-caps">{{ issue }}</h3>
-                        <div class="card-footer">{{ issue.articles.count }} Articles, {{ issue.pages.count }} Pages
+                {% for year, issues_in_year in year_list %}
+                <section class="grid-container" id="{{ year }}">
+                    <div class="grid-x">
+                        <div class="cell">
+                            <h3>{{ year }} 
+                            <span>({{ issues_in_year|length }} issues)
+                            {% if not forloop.last %} {% endif %} <!-- Added: Brian pls check -->      
+                            <span>
+                            </h3>
                         </div>
                     </div>
-                </a>
-                {% if request.user.is_staff %}
-                <div class="card-divider">
-                    <a href="/admin/periodicals/issue/{{ issue.id }}/change/" class="card-footer-item">Edit</a>
-                </div>
-                {% endif %}
+                    <div class="grid-x grid-padding-x grid-padding-y small-up-2 medium-up-3 large-up-5">
+                        {% for issue in issues_in_year %}
+                        <div class="cell ">
+                            <div class="card">
+                                <a href="{{ issue.url }}">
+                                    <div class="card-image">
+                                        <img src="{{ issue.pages.all.0.image.url }}">
+                                    </div>
+                                    <div class="card-section overlay">
+                                        <h3 class="small-caps">{{ issue }}</h3>
+                                        <div class="card-footer">{{ issue.articles.count }} Articles, {{ issue.pages.count }} Pages
+                                        </div>
+                                    </div>
+                                </a>
+                                {% if request.user.is_staff %}
+                                <div class="card-divider">
+                                    <a href="/admin/periodicals/issue/{{ issue.id }}/change/" class="card-footer-item">Edit</a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endfor %} {% endwith %} {% endblock %}
             </div>
         </div>
-        {% endfor %}
-    </div>
+    </div>    
 </section>
-{% endfor %} {% endwith %} {% endblock %}

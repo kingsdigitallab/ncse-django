@@ -170,6 +170,10 @@ ul.menu.align-right > li > a {
     }
 }
 
+.sticky nav{
+    background: white;
+}
+
 /* Breadcrumbs */
 .breadcrumbs{
  li{
@@ -380,6 +384,7 @@ td {
     }
 }
 
+
 /* Footer */
 
 footer {
@@ -397,6 +402,17 @@ footer {
         max-width: rem-calc(60);
     }
 }
+
+
+
+/* Hacks to rectify */
+.minus-margin-top{
+    margin-top: -2.5rem;
+}
+
+
+
+
 
 /* Media queries */
 
