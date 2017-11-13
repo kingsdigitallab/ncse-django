@@ -4,7 +4,15 @@
         <div class="grid-x  grid-padding-y large-up-3">
             <div class="cell form">
                 <form method="get" action=".">
-                    {{ form }}
+                    {% for field in form %}
+                    <div class="fieldWrapper">
+                        {{ field.errors }}
+                        {{ field.label_tag }} {{ field }}
+                        {% if field.help_text %}
+                        <p class="help">{{ field.help_text|safe }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
                     <input class="button" type="submit" value="Search">
                 </form>
             </div>
@@ -25,7 +33,8 @@
                                 <ul>
                                     {% for item in values %}
                                     <li>
-                                        <a href="?{{ form.data.urlencode }}&amp;selected_facets={{ key }}:{{ item.0|urlencode }}">{{ item.0 }}</a> ({{ item.1 }})
+                                        <a href="?{{ form.data.urlencode }}&amp;selected_facets={{ key }}:{{ item.0|urlencode }}">{{
+                                            item.0 }}</a> ({{ item.1 }})
                                     </li>
                                     {% endfor %}
                                 </ul>
@@ -102,61 +111,61 @@
         <div class="columns">
             <table class="stack unstriped">
                 <thead>
-                    <tr>
-                        <th>
-                            Page
-                        </th>
-                        <th>
-                            Category
-                        </th>
-                        <th>
-                            Issue
-                        </th>
-                        <th>
-                            Publication
-                        </th>
-                        <th>
-                            Article title
-                        </th>
-                        <th>
-                            <!-- *** Not sure how to add heading here *** -->
-                            {% if result.title %} Extract {% else %} {% endif %}
-                        </th>
-                    </tr>
+                <tr>
+                    <th>
+                        Page
+                    </th>
+                    <th>
+                        Category
+                    </th>
+                    <th>
+                        Issue
+                    </th>
+                    <th>
+                        Publication
+                    </th>
+                    <th>
+                        Article title
+                    </th>
+                    <th>
+                        <!-- *** Not sure how to add heading here *** -->
+                        {% if result.title %} Extract {% else %} {% endif %}
+                    </th>
+                </tr>
                 </thead>
                 {% for result in page_obj.object_list %}
                 <tbody>
-                    <tr>
-                        <td class="float-left">
-                            <a href="{{ result.page_url }}?highlight={{ query }}">
-                {{ result.page_number }}
-            </a>
-                        </td>
-                        <td>
-                            {{ result.category }}
-                        </td>
-                        <td>
-                            <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
-                        </td>
-                        <td>
-                            <a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a>
-                        </td>
-                        <td width="20%"> <a href="{{ result.url }}?highlight={{ query }}">
-                {% if result.title %}
-                {{ result.title }}
-                {% else %}
-                {{ result.aid }}
-                {% endif %}
-            </a></td>
-                        {% if query %}
-                        <td class="paragraph">
-                            {% highlight result.text with query html_tag "strong" %}
-                        </td>
-                        {% endif %} {% empty %}
-                        <div class="cell">
-                            <p>No results found.</p>
-                        </div>
-                    </tr>
+                <tr>
+                    <td class="float-left">
+                        <a href="{{ result.page_url }}?highlight={{ query }}">
+                            {{ result.page_number }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ result.category }}
+                    </td>
+                    <td>
+                        <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
+                    </td>
+                    <td>
+                        <a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a>
+                    </td>
+                    <td width="20%"><a href="{{ result.url }}?highlight={{ query }}">
+                        {% if result.title %}
+                        {{ result.title }}
+                        {% else %}
+                        {{ result.aid }}
+                        {% endif %}
+                    </a></td>
+                    {% if query %}
+                    <td class="paragraph">
+                        {% highlight result.text with query html_tag "strong" %}
+                    </td>
+                    {% endif %} {% empty %}
+                    <div class="cell">
+                        <p>No results found.</p>
+                    </div>
+                </tr>
                 </tbody>
                 {% endfor %}
             </table>
@@ -165,11 +174,11 @@
     <!-- *** New Table End *** -->
 
 
-   {% for result in page_obj.object_list %}
-   <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container">
-      
+    {% for result in page_obj.object_list %}
+    <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container">
+
         <div class="cell">
-             <a href="{{ result.url }}?highlight={{ query }}">
+            <a href="{{ result.url }}?highlight={{ query }}">
                 {% if result.title %}
                 {{ result.title }}
                 {% else %}
@@ -179,46 +188,46 @@
             {{ result.category }}
             <div class="card">
                 <a href="">
-                   
+
                     <div class="card-section overlay">
                         <h3></h3>
                         <div class="card-footer">
-                            
+
                         </div>
                     </div>
                 </a>
-             
-                
+
+
             </div>
         </div>
-       
+
     </div>
     {% endfor %}
 
 
-{% for result in page_obj.object_list %}
+    {% for result in page_obj.object_list %}
     <div class="grid-x grid-padding-x medium-up-5 results-list">
         <div class="cell">
-        <div class="card">
-            <a href="{{ result.url }}?highlight={{ query }}">
-                {% if result.title %}
-                {{ result.title }}
-                {% else %}
-                {{ result.aid }}
-                {% endif %}
-            </a>
-            <div class="card-section overlay">
-            {{ result.category }}
-            <a href="{{ result.page_url }}?highlight={{ query }}">
-                p. {{ result.page_number }}
-            </a>
-            <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
-                <h3><a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a></h3>
-                <div class="card-footer">
-                    {{ page.number_of_articles }} Articles
+            <div class="card">
+                <a href="{{ result.url }}?highlight={{ query }}">
+                    {% if result.title %}
+                    {{ result.title }}
+                    {% else %}
+                    {{ result.aid }}
+                    {% endif %}
+                </a>
+                <div class="card-section overlay">
+                    {{ result.category }}
+                    <a href="{{ result.page_url }}?highlight={{ query }}">
+                        p. {{ result.page_number }}
+                    </a>
+                    <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
+                    <h3><a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a></h3>
+                    <div class="card-footer">
+                        {{ page.number_of_articles }} Articles
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
 
     </div>
@@ -239,19 +248,21 @@
             <ul class="pagination text-center" role="navigation" aria-label="Pagination">
                 <li class="{% if page_obj.has_previous %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
                     {% if page_obj.has_previous %}
-                    <a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.previous_page_number }}" aria-label="Previous page">
-                    {% endif %}
+                    <a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.previous_page_number }}"
+                       aria-label="Previous page">
+                        {% endif %}
                         Prev <span class="show-for-sr">page</span>
-                    {% if page_obj.has_previous %}
+                        {% if page_obj.has_previous %}
                     </a> {% endif %}
                 </li>
                 <li class="{% if page_obj.has_next %}pagination-next{% else %}pagination-next disabled{% endif %}">
                     {% if page_obj.has_next %}
-                    <a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.next_page_number }}" aria-label="Next page">
-                {% endif %}
-                    Next <span class="show-for-sr">page</span>
-                {% if page_obj.has_next %}
-                </a> {% endif %}
+                    <a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.next_page_number }}"
+                       aria-label="Next page">
+                        {% endif %}
+                        Next <span class="show-for-sr">page</span>
+                        {% if page_obj.has_next %}
+                    </a> {% endif %}
                 </li>
             </ul>
         </div>
