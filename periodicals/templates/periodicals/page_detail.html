@@ -68,6 +68,26 @@
         </div>
     </section>
 </div> -->
+
+<section class="grid-container">
+    <div class="grid-x">
+        <div class="cell tabs" data-tabs id="issue-tabs">
+            <ul class="menu subnav">
+                <li class="tabs-title is-active"><a href="#contents" aria-selected="true">Contents</a></li>
+                <li class="tabs-title"><a data-tabs-target="pages" href="#pages">Pages</a></li>
+                <li class="tabs-title"><a data-tabs-target="articles" href="#articles">Articles</a></li>
+                <li class="tabs-title"><a data-tabs-target="ads" href="#ads">Ads</a></li>
+            </ul>
+            <ul class="menu align-right">
+                <li><a href="{{ issue.pdf.url }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> PDF</a></li>
+                <!-- *** Removed to have one option ***
+                <li><a href="{{ issue.pdf.url }}" download="{{ issue }}"><i class="fa fa-download" aria-hidden="true"></i> Download PDF</a></li>
+                -->
+            </ul>
+        </div>
+    </div>
+</section>
+
 <section class="grid-container">
     <div class="grid-x">
         <div class="cell minus-margin-top">
