@@ -1,8 +1,11 @@
-{% extends "base.html" %}
+{% extends "periodicals/base.html" %}
 
 {% block title %}Explore{% endblock %}
 {% block meta_title %}Publications | Explore{% endblock %}
-
+{% block breadcrumbs %}
+    <li><a href="/">Home</a></li>
+    <li>Explore</li>
+{% endblock %}
 {% block main %}
 <div class="grid-container data-equalizer">
   <div class="grid-x grid-padding-x small-up-2 medium-up-3 large-up-5">

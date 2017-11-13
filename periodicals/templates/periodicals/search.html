@@ -1,4 +1,9 @@
-{% extends 'base.html' %} {% load highlight %} {% block meta_title %}Search{% endblock %} {% block title %}Search {% endblock %} {% block main %}
+{% extends 'periodicals/../periodicals/base.html' %} {% load highlight %} {% block meta_title %}Search{% endblock %} {% block title %}Search {% endblock %}
+{% block breadcrumbs %}
+    <li><a href="/">Home</a></li>
+    <li>Search</li>
+{% endblock %}
+{% block main %}
 <section class="search">
     <div class="grid-container">
         <div class="grid-x  grid-padding-y large-up-3">

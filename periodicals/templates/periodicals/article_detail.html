@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %} {{ article.issue }}{% endblock %} {% block meta_title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %}{{ article.issue }}{% endblock %} {% block main %}
+{% extends 'periodicals/base.html' %} {% block title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %} {{ article.issue }}{% endblock %} {% block meta_title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %}{{ article.issue }}{% endblock %} {% block main %}
 <section class="grid-container">
     <div class="grid-x">
         <div class="cell tabs">

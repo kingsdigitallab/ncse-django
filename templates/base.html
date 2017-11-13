@@ -1,4 +1,4 @@
-{% load staticfiles compress periodicals_tags  %}
+{% load staticfiles compress periodicals_tags wagtailcore_tags  %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,11 +32,12 @@
       <div class="grid-x">
         <div class="cell">
           <div aria-label="You are here:" role="navigation">
+
             <ul class="breadcrumbs">
-              <li><a href="#">Breadcrumb</a></li>
-              <li><a href="#">Breadcrumb</a></li>
-              <li><a href="#">Breadcrumb</a></li>
+            {% block breadcrumbs %}
+            {% endblock %}
             </ul>
+
             <span class="show-for-sr">Current: </span> 
              <h1 class="underline">
             {% block title %}{% endblock %}<br>
