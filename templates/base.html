@@ -31,14 +31,27 @@
     <div class="grid-container">
       <div class="grid-x">
         <div class="cell">
-          <h1 class="title">
+          <div aria-label="You are here:" role="navigation">
+            <ul class="breadcrumbs">
+              <li><a href="#">Breadcrumb</a></li>
+              <li><a href="#">Breadcrumb</a></li>
+              <li><a href="#">Breadcrumb</a></li>
+            </ul>
+            <span class="show-for-sr">Current: </span> 
+             <h1 class="underline">
             {% block title %}{% endblock %}<br>
           </h1>
+          </div>
+          
         </div>
       </div>
     </div>
   </section>
   {% endblock %}
+
+
+
+
 
   <main>
   {% block main %}

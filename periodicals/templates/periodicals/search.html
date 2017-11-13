@@ -42,7 +42,7 @@
             <h2>Results</h2>
         </div>
     </div>
-    <!-- *** Original Table  *** -->
+    <!-- *** Original Table ***
     <div class="grid-x grid-padding-x medium-up-5 headings">
         <div class="cell">
             Article title
@@ -95,8 +95,7 @@
         <p>No results found.</p>
     </div>
     {% endfor %}
-    <!-- *** Original Table End *** -->
-
+    *** Original Table End *** -->
     <!-- *** New Table *** -->
     <div class="row">
         <div class="columns">
@@ -104,16 +103,16 @@
                 <thead>
                     <tr>
                         <th>
+                            Publication
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                        <th>
                             Page
                         </th>
                         <th>
                             Category
-                        </th>
-                        <th>
-                            Issue
-                        </th>
-                        <th>
-                            Publication
                         </th>
                         <th>
                             Article title
@@ -127,6 +126,12 @@
                 {% for result in page_obj.object_list %}
                 <tbody>
                     <tr>
+                        <td>
+                            <a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a>
+                        </td>
+                        <td>
+                            <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
+                        </td>                        
                         <td class="float-left">
                             <a href="{{ result.page_url }}?highlight={{ query }}">
                 {{ result.page_number }}
@@ -135,13 +140,9 @@
                         <td>
                             {{ result.category }}
                         </td>
-                        <td>
-                            <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
-                        </td>
-                        <td>
-                            <a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a>
-                        </td>
-                        <td width="20%"> <a href="{{ result.url }}?highlight={{ query }}">
+
+
+                        <td> <a href="{{ result.url }}?highlight={{ query }}">
                 {% if result.title %}
                 {{ result.title }}
                 {% else %}
@@ -163,76 +164,48 @@
         </div>
     </div>
     <!-- *** New Table End *** -->
-
-
-   {% for result in page_obj.object_list %}
-   <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container">
-      
-        <div class="cell">
-             <a href="{{ result.url }}?highlight={{ query }}">
+    <!-- *** Card *** -->
+    <div class="grid-container data-equalizer">
+        <div class="grid-x grid-padding-x small-up-2 medium-up-3 large-up-5">
+            {% for result in page_obj.object_list %}
+            <div class="cell">
+                <div class="card data-equalizer-watch">
+                    <div class="card-section">
+                    <h2><a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a></h2>
+                    <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
+                        <p><a href="{{ result.url }}?highlight={{ query }}">
                 {% if result.title %}
                 {{ result.title }}
                 {% else %}
                 {{ result.aid }}
                 {% endif %}
-            </a>
-            {{ result.category }}
-            <div class="card">
-                <a href="">
-                   
-                    <div class="card-section overlay">
-                        <h3></h3>
-                        <div class="card-footer">
-                            
+            </a> </p>
+                        
+                        {% if query %}
+                        <div class="card-highlight">
+                            <div class="cell">
+                                {% highlight result.text with query html_tag "strong" %}
+                            </div>
                         </div>
-                    </div>
-                </a>
-             
-                
-            </div>
-        </div>
-       
-    </div>
-    {% endfor %}
-
-
-{% for result in page_obj.object_list %}
-    <div class="grid-x grid-padding-x medium-up-5 results-list">
-        <div class="cell">
-        <div class="card">
-            <a href="{{ result.url }}?highlight={{ query }}">
-                {% if result.title %}
-                {{ result.title }}
-                {% else %}
-                {{ result.aid }}
-                {% endif %}
-            </a>
-            <div class="card-section overlay">
-            {{ result.category }}
-            <a href="{{ result.page_url }}?highlight={{ query }}">
+                         {% endif %}
+                        <div class="card-footer">
+                            {{ result.category }}, 
+                        <a href="{{ result.page_url }}?highlight={{ query }}">
                 p. {{ result.page_number }}
-            </a>
-            <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
-                <h3><a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a></h3>
-                <div class="card-footer">
-                    {{ page.number_of_articles }} Articles
+            </a> 
+                        </div>
+
+                    </div>
                 </div>
             </div>
+            {% empty %}
+            <div class="cell">
+                <p>No results found.</p>
+            </div>
+            {% endfor %}
         </div>
-        </div>
-
     </div>
-    {% if query %}
-    <div class="cell">
-        {% highlight result.text with query html_tag "strong" %}
-    </div>
-    {% endif %} {% empty %}
-    <div class="cell">
-        <p>No results found.</p>
-    </div>
-    {% endfor %}
-
-
+    <!-- *** Card End *** -->
     {% if page_obj.has_previous or page_obj.has_next %}
     <div class="grid-x">
         <div class="cell">
