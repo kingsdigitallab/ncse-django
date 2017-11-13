@@ -103,31 +103,7 @@
 <div class="grid-container">
     <div class="grid-x">
         <div class="cell">
-            <ul class="pagination text-center" role="navigation" aria-label="Pagination">
-                <li class="{% if page.previous_page %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
-                    {% if page.previous_page %}
-                    <a href="{{ page.previous_page.url }}" aria-label="Previous page">
-                    {% endif %}
-                        Prev <span class="show-for-sr">page</span>
-                    {% if page.previous_page %}
-                    </a> {% endif %}
-                </li>
-                <li class="current"><span class="show-for-sr">You're on page</span> 1</li>
-                <li><a href="#" aria-label="Page 2">2</a></li>
-                <li><a href="#" aria-label="Page 3">3</a></li>
-                <li><a href="#" aria-label="Page 4">4</a></li>
-                <li class="ellipsis"></li>
-                <li><a href="#" aria-label="Page 12">12</a></li>
-                <li><a href="#" aria-label="Page 13">13</a></li>
-                <li class="{% if page.next_page %}pagination-next{% else %}pagination-next disabled{% endif %}">
-                    {% if page.next_page %}
-                    <a href="{{ page.next_page.url }}" aria-label="Next page">
-                    {% endif %}
-                        Next <span class="show-for-sr">page</span>
-                    {% if page.next_page %}
-                    </a> {% endif %}
-                </li>
-            </ul>
+            {% include 'periodicals/includes/pagination.html' %}
         </div>
     </div>
 </div>

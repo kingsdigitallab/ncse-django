@@ -68,7 +68,15 @@ class Issue(models.Model):
 
     @property
     def articles(self):
-        return self.articles_in_issue.filter(continuation_from=None)
+        article = ArticleType.objects.get_or_create(title='Article')[0]
+        return self.articles_in_issue.filter(continuation_from=None,
+                                             article_type=article)
+
+    @property
+    def ads(self):
+        ad = ArticleType.objects.get_or_create(title='Ad')[0]
+        return self.articles_in_issue.filter(continuation_from=None,
+                                             article_type=ad)
 
     @property
     def url(self):

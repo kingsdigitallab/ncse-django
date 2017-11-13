@@ -10,13 +10,13 @@
             <div class="cell form">
                 <form method="get" action=".">
                     {% for field in form %}
-                    <div class="fieldWrapper">
+
                         {{ field.errors }}
                         {{ field.label_tag }} {{ field }}
                         {% if field.help_text %}
                         <p class="help">{{ field.help_text|safe }}</p>
                         {% endif %}
-                    </div>
+
                     {% endfor %}
                     <input class="button" type="submit" value="Search">
                 </form>
