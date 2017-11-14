@@ -200,11 +200,6 @@ ul.menu.align-right > li > a {
     padding-top: rem-calc(10);
 }
 
-.form {
-    ul {
-        list-style: none;
-    }
-}
 
 .headings {
     .cell {
@@ -243,6 +238,16 @@ ul.menu.align-right > li > a {
                 background: $primary-color;
             }
         }
+        &.search-results:hover{
+            border: 1px solid $light-gray;
+            .card-section{
+                background: none;
+            }
+                .card-footer {
+                    border-top: 1px solid gray;
+                    color: gray;
+            }
+            }
     }
 
     .card-divider {
@@ -365,9 +370,13 @@ ul.menu.align-right > li > a {
 
 section {
     &.search {
-        form {
-            padding: rem-calc(16);
-            background: $light-gray;
+                     ul {
+        list-style: none;
+    }
+
+        .cell{
+             background: $light-gray;
+             padding:1rem 1.5rem;
         }
     }
 }
