@@ -1,64 +1,34 @@
-{% extends 'periodicals/../periodicals/base.html' %} {% load highlight %} {% block meta_title %}Search{% endblock %} {% block title %}Search {% endblock %}
-{% block breadcrumbs %}
-    <li><a href="/">Home</a></li>
-    <li>Search</li>
-{% endblock %}
-{% block main %}
+{% extends 'periodicals/../periodicals/base.html' %} {% load highlight %} {% block meta_title %}Search{% endblock %} {% block title %}Search {% endblock %} {% block breadcrumbs %}
+<li><a href="/">Home</a></li>
+<li>Search</li>
+{% endblock %} {% block main %}
 <section class="search">
+<form method="get" action=".">
     <div class="grid-container">
-        <div class="grid-x  grid-padding-y large-up-3">
-            <div class="cell form">
-                <form method="get" action=".">
-
-                {%  with field=form.q %}
-                        {{ field.errors }}
-                        {{ field.label_tag }} {{ field }}
-                        {% if field.help_text %}
-                        <p class="help">{{ field.help_text|safe }}</p>
-                        {% endif %}
-                {% endwith %}
-
-                 {%  with field=form.mode %}
-                        {{ field.errors }}
-                        {{ field.label_tag }} {{ field }}
-                        {% if field.help_text %}
-                        <p class="help">{{ field.help_text|safe }}</p>
-                        {% endif %}
-                {% endwith %}
-
-                {%  with field=form.start_year %}
-                        {{ field.errors }}
-                        {{ field.label_tag }} {{ field }}
-                        {% if field.help_text %}
-                        <p class="help">{{ field.help_text|safe }}</p>
-                        {% endif %}
-                {% endwith %}
-
-                {%  with field=form.end_year %}
-                        {{ field.errors }}
-                        {{ field.label_tag }} {{ field }}
-                        {% if field.help_text %}
-                        <p class="help">{{ field.help_text|safe }}</p>
-                        {% endif %}
-                {% endwith %}
-
-                {%  with field=form.order_by %}
-                        {{ field.errors }}
-                        {{ field.label_tag }} {{ field }}
-                        {% if field.help_text %}
-                        <p class="help">{{ field.help_text|safe }}</p>
-                        {% endif %}
-                {% endwith %}
-
-
-
-
-
-                    <input class="button" type="submit" value="Search">
-                </form>
+        <div class="grid-x  grid-padding-y medium-up-3 large-up-3">
+            <div class="cell">
+                {% with field=form.q %} {{ field.errors }} {{ field.label_tag }} {{ field }} {% if field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %} {% endwith %} {% with field=form.mode %} {{ field.errors }} {{ field.label_tag }} {{ field }} {% if field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %} {% endwith %}
+            </div>
+            <div class="cell">
+                {% with field=form.start_year %} {{ field.errors }} {{ field.label_tag }} {{ field }} {% if field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %} {% endwith %} {% with field=form.end_year %} {{ field.errors }} {{ field.label_tag }} {{ field }} {% if field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %} {% endwith %}
+            </div>
+            <div class="cell">
+                {% with field=form.order_by %} {{ field.errors }} {{ field.label_tag }} {{ field }} {% if field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %} {% endwith %}
+                <input class="button" type="submit" value="Search">
             </div>
         </div>
     </div>
+    </form>
 </section>
 <div class="grid-container">
     <div class="grid-x">
@@ -70,7 +40,7 @@
                         <div class="grid-x grid-padding-x medium-up-3">
                             {% for key, values in facets.fields.items %}
                             <div class="cell">
-                                <h4>{{ key|capfirst }}</h4>
+                                <h2>{{ key|capfirst }}</h2>
                                 <ul>
                                     {% for item in values %}
                                     <li>
@@ -91,61 +61,6 @@
             <h2>{{ paginator.count }} Results</h2>
         </div>
     </div>
-    <!-- *** Original Table ***
-    <div class="grid-x grid-padding-x medium-up-5 headings">
-        <div class="cell">
-            Article title
-        </div>
-        <div class="cell">
-            Category
-        </div>
-        <div class="cell">
-            Page
-        </div>
-        <div class="cell">
-            Issue
-        </div>
-        <div class="cell">
-            Publication
-        </div>
-    </div>
-    {% for result in page_obj.object_list %}
-    <div class="grid-x grid-padding-x medium-up-5 results-list">
-        <div class="cell">
-            <a href="{{ result.url }}?highlight={{ query }}">
-                {% if result.title %}
-                {{ result.title }}
-                {% else %}
-                {{ result.aid }}
-                {% endif %}
-            </a>
-        </div>
-        <div class="cell">
-            {{ result.category }}
-        </div>
-        <div class="cell">
-            <a href="{{ result.page_url }}?highlight={{ query }}">
-                p. {{ result.page_number }}
-            </a>
-        </div>
-        <div class="cell">
-            <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
-        </div>
-        <div class="cell">
-            <a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a>
-        </div>
-    </div>
-    {% if query %}
-    <div class="cell">
-        {% highlight result.text with query html_tag "strong" %}
-    </div>
-    {% endif %} {% empty %}
-    <div class="cell">
-        <p>No results found.</p>
-    </div>
-    {% endfor %}
-    *** Original Table End *** -->
-    <!-- *** New Table *** -->
     <div class="row">
         <div class="columns">
             <table class="stack unstriped">
@@ -189,8 +104,6 @@
                         <td>
                             {{ result.category }}
                         </td>
-
-
                         <td> <a href="{{ result.url }}?highlight={{ query }}">
                 {% if result.title %}
                 {{ result.title }}
@@ -218,10 +131,10 @@
         <div class="grid-x grid-padding-x small-up-2 medium-up-3 large-up-5">
             {% for result in page_obj.object_list %}
             <div class="cell">
-                <div class="card data-equalizer-watch">
-                    <div class="card-section">
-                    <h2><a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a></h2>
-                    <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
+                <div class="card search-results data-equalizer-watch">
+                    <div class="card-section ">
+                        <h2><a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a></h2>
+                        <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
                         <p><a href="{{ result.url }}?highlight={{ query }}">
                 {% if result.title %}
                 {{ result.title }}
@@ -229,21 +142,19 @@
                 {{ result.aid }}
                 {% endif %}
             </a> </p>
-
                         {% if query %}
                         <div class="card-highlight">
                             <div class="cell">
                                 {% highlight result.text with query html_tag "strong" %}
                             </div>
                         </div>
-                         {% endif %}
+                        {% endif %}
                         <div class="card-footer">
                             {{ result.category }},
-                        <a href="{{ result.page_url }}?highlight={{ query }}">
+                            <a href="{{ result.page_url }}?highlight={{ query }}">
                 p. {{ result.page_number }}
             </a>
                         </div>
-
                     </div>
                 </div>
             </div>
