@@ -9,15 +9,51 @@
         <div class="grid-x  grid-padding-y large-up-3">
             <div class="cell form">
                 <form method="get" action=".">
-                    {% for field in form %}
 
+                {%  with field=form.q %}
                         {{ field.errors }}
                         {{ field.label_tag }} {{ field }}
                         {% if field.help_text %}
                         <p class="help">{{ field.help_text|safe }}</p>
                         {% endif %}
+                {% endwith %}
 
-                    {% endfor %}
+                 {%  with field=form.mode %}
+                        {{ field.errors }}
+                        {{ field.label_tag }} {{ field }}
+                        {% if field.help_text %}
+                        <p class="help">{{ field.help_text|safe }}</p>
+                        {% endif %}
+                {% endwith %}
+
+                {%  with field=form.start_year %}
+                        {{ field.errors }}
+                        {{ field.label_tag }} {{ field }}
+                        {% if field.help_text %}
+                        <p class="help">{{ field.help_text|safe }}</p>
+                        {% endif %}
+                {% endwith %}
+
+                {%  with field=form.end_year %}
+                        {{ field.errors }}
+                        {{ field.label_tag }} {{ field }}
+                        {% if field.help_text %}
+                        <p class="help">{{ field.help_text|safe }}</p>
+                        {% endif %}
+                {% endwith %}
+
+                {%  with field=form.order_by %}
+                        {{ field.errors }}
+                        {{ field.label_tag }} {{ field }}
+                        {% if field.help_text %}
+                        <p class="help">{{ field.help_text|safe }}</p>
+                        {% endif %}
+                {% endwith %}
+
+
+
+
+
                     <input class="button" type="submit" value="Search">
                 </form>
             </div>
@@ -52,7 +88,7 @@
     </div>
     <div class="grid-x">
         <div class="cell">
-            <h2>Results</h2>
+            <h2>{{ paginator.count }} Results</h2>
         </div>
     </div>
     <!-- *** Original Table ***

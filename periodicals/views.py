@@ -114,9 +114,19 @@ class PublicationListView(ListView):
 
 
 class PeriodicalsSearchView(FacetedSearchView):
+
     facet_fields = ['publication_abbreviation', 'category', 'issue_year']
     form_class = PeriodicalsSearchForm
     template_name = 'periodicals/search.html'
+
+    def __init__(self):
+        super(FacetedSearchView, self).__init__()
+        # Find the first and last published years
+        # set as default for the form
+        first = Issue.objects.all().order_by('issue_date')[0]
+        last = Issue.objects.all().order_by('-issue_date')[0]
+        self.initial = {'start_year': first.issue_date.year,
+                        'end_year': last.issue_date.year}
 
     def get_queryset(self):
         queryset = super(FacetedSearchView, self).get_queryset()
