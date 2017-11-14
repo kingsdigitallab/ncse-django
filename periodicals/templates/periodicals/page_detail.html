@@ -1,5 +1,3 @@
-Page detail
-
 {% extends 'periodicals/base.html' %} {% block title %}{{ page.publication }} {{ page.issue }}, Page {{ page.number }}{% endblock %} {% block meta_title %}{{ page.publication }} {{ page.issue }}, Page {{ page.number }}{% endblock %} {% block main %}
 <!-- *** Original full width
 <section class="grid-container">
@@ -151,6 +149,6 @@ Page detail
 </div>
 {% endblock %} {% block footer_scripts %} {% if highlight_words %}
 <script>
-var highlight_words = { { highlight_words | safe } };
+var highlight_words = {{ highlight_words | safe }};
 </script>
 {% endif %} {% endblock %}

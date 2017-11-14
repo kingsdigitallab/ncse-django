@@ -1,4 +1,5 @@
-{% extends 'periodicals/../periodicals/base.html' %} {% load highlight %} {% block meta_title %}Search{% endblock %} {% block title %}Search {% endblock %}
+{% extends 'periodicals/../periodicals/base.html' %} {% load highlight periodicals_tags  %}
+{% block meta_title %}Search{% endblock %} {% block title %}Search {% endblock %}
 {% block breadcrumbs %}
     <li><a href="/">Home</a></li>
     <li>Search</li>
@@ -88,7 +89,7 @@
     </div>
     <div class="grid-x">
         <div class="cell">
-            <h2>{{ paginator.count }} Results</h2>
+            <h2>Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ paginator.count }} Results</h2>
         </div>
     </div>
     <!-- *** Original Table ***
@@ -256,20 +257,24 @@
     </div>
     <!-- *** Card End *** -->
     {% if page_obj.has_previous or page_obj.has_next %}
+        {% get_request_parameters exclude="page" as params %}
     <div class="grid-x">
         <div class="cell">
             <ul class="pagination text-center" role="navigation" aria-label="Pagination">
                 <li class="{% if page_obj.has_previous %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
                     {% if page_obj.has_previous %}
-                    <a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.previous_page_number }}" aria-label="Previous page">
+                    <a href="?page={{ page_obj.previous_page_number }}{{ params }}" aria-label="Previous page">
                     {% endif %}
                         Prev <span class="show-for-sr">page</span>
                     {% if page_obj.has_previous %}
                     </a> {% endif %}
                 </li>
+
+                <li>Page {{ page_obj.number }} of {{ paginator.num_pages }} </li>
+
                 <li class="{% if page_obj.has_next %}pagination-next{% else %}pagination-next disabled{% endif %}">
                     {% if page_obj.has_next %}
-                    <a href="?{{ form.data.urlencode }}&amp;page={{ page_obj.next_page_number }}" aria-label="Next page">
+                    <a href="?page={{ page_obj.next_page_number }}{{ params }}" aria-label="Next page">
                 {% endif %}
                     Next <span class="show-for-sr">page</span>
                 {% if page_obj.has_next %}
