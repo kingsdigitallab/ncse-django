@@ -420,32 +420,32 @@ footer {
 
 /* Media queries */
 
-// @media screen and (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
 
-//     td {
-//         &.float-left {
-//             float: left!important;
+    td {
+        &.float-left {
+            float: left!important;
         
-//             &:before {
-//                 content: "Page ";
-//             }
+            &:before {
+                content: "Page ";
+            }
 
-//             &:after {
-//                 content: ", ";
-//             }
-//         }
+            &:after {
+                content: ", ";
+            }
+        }
         
-//         &.paragraph {
-//             width: 100%;
-//         }
-//     }
+        &.paragraph {
+            width: 100%;
+        }
+    }
 
-//     tbody th,
-//     tbody td {
-//         padding: rem-calc(0 7);
-//     }
+    tbody th,
+    tbody td {
+        padding: rem-calc(0 7);
+    }
 
-//     tr {
-//         padding: rem-calc(7 0);
-//     }
-// }
+    tr {
+        padding: rem-calc(7 0);
+    }
+}
