@@ -15,10 +15,11 @@
                     <div class="sticky" data-sticky-on="small" data-sticky data-margin-top="0" data-anchor="sticky">
                         <nav data-magellan>
                             <ul class="menu subnav" data-magellan data-events="scroll" id="magellan">
-                                <h2> Years</h2> {% for year, issues_in_year in year_list %}
+                                <li><h2>Years</h2></li>
+                                {% for year, issues_in_year in year_list %}
                                 <li><a href="#{{ year }}">{{ year }}</a></li>
                                 <!--: {{ issues_in_year|length }} issues
-      {% if not forloop.last %} | {% endif %}-->
+                                {% if not forloop.last %} | {% endif %}-->
                                 <!-- Removed: Brian pls check -->
                                 {% endfor %}
                             </ul>
@@ -26,13 +27,14 @@
                     </div>
                 </div>
                 {% for year, issues_in_year in year_list %}
-                <section class="grid-container" id="{{ year }}">
+                <section class="grid-container" id="{{ year }}" data-magellan-target="{{ year }}">
                     <div class="grid-x">
                         <div class="cell">
-                            <h3>{{ year }} 
-                            <span>({{ issues_in_year|length }} issues)
-                            {% if not forloop.last %} {% endif %} <!-- Added: Brian pls check -->      
-                            <span>
+                            <h3>
+                                {{ year }} 
+                                <span>({{ issues_in_year|length }} issues)
+                                {% if not forloop.last %} {% endif %} <!-- Added: Brian pls check -->      
+                                <span>
                             </h3>
                         </div>
                     </div>
