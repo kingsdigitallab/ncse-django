@@ -1,4 +1,3 @@
-{% with publication=page.issue.publication issue=page.issue%}
 <ul class="pagination text-center" role="navigation" aria-label="Pagination">
     <li class="{% if page.previous_page %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
         {% if page.previous_page %}
@@ -28,4 +27,3 @@
             </a> {% endif %}
     </li>
 </ul>
-{% endwith %}

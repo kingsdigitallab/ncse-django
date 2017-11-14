@@ -62,7 +62,9 @@
 <div class="grid-container">
     <div class="grid-x">
         <div class="cell">
-            {% include 'periodicals/includes/pagination.html' %}
+            {% with publication=page.issue.publication issue=page.issue  page=page %}
+                {% include 'periodicals/includes/pagination.html' %}
+            {% endwith %}
         </div>
     </div>
 </div>
