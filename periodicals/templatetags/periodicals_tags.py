@@ -1,6 +1,8 @@
 from django import template
 
 from ..forms import PeriodicalsSearchForm
+import datetime
+from periodicals.models import Issue
 
 register = template.Library()
 
@@ -31,3 +33,19 @@ def get_request_parameters(context, exclude=None):
         if key != exclude:
             params += '&{key}={value}'.format(key=key, value=value)
     return params
+
+
+# Get all issues published on same day as current day
+@register.assignment_tag()
+def get_issues_published_today():
+    now = datetime.datetime.now()
+    issues = Issue.objects.filter(issue_date__day=now.day)
+    return issues
+
+
+# Get all issues published on same day as current month
+@register.assignment_tag()
+def get_issues_published_this_month():
+    now = datetime.datetime.now()
+    issues = Issue.objects.filter(issue_date__month=now.month)
+    return issues

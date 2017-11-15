@@ -57,7 +57,7 @@
             </div>
         </div>
     </section>
-</div>    
+</div>
 
 <div class="grid-container">
     <div class="grid-x">
@@ -70,10 +70,10 @@
 </div>
     {% endblock %} {% block footer_scripts %} {% if highlight_words %}
     <script>
-    var highlight_words = { { highlight_words | safe } };
+    var highlight_words = {{ highlight_words | safe }};
     </script>
     {% endif %} {% if article.page.number_of_articles > 1 %}
     <script>
-    var article_bounding_box = { { article.get_real_bounding_box | safe } };
+    var article_bounding_box = {{ article.get_real_bounding_box | safe }};
     </script>
     {% endif %} {% endblock %}
