@@ -30,8 +30,10 @@ def get_request_parameters(context, exclude=None):
     request = context['request']
 
     for key, value in request.GET.items():
-        if key != exclude:
+        if key != exclude and len(value) > 0:
             params += '&{key}={value}'.format(key=key, value=value)
+    if len(params) == 0:
+        params = None
     return params
 
 

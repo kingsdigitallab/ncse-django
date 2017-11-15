@@ -1,10 +1,22 @@
-{% extends 'periodicals/../periodicals/base.html' %}
-
+{% extends 'periodicals/base.html' %}
+{% load periodicals_tags  %}
 {% block title %}{{ issue }}{% endblock %}
 {% block meta_title %}{{ issue }}{% endblock %}
 
 {% block main %}
+<section class="grid-container">
+    <div class="grid-x">
+        <div class="cell minus-margin-top">
+            <ul class="menu align-right">
+                {% get_request_parameters as search_params %}
+                {% if search_params %}
+                <li><a href="{% url 'search' %}?{{ search_params }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to results</a> </li>
+                {% endif %}
 
+            </ul>
+        </div>
+    </div>
+</section>
 
     <section class="grid-container">
         <div class="grid-x">

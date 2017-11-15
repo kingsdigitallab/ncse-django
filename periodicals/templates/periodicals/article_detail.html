@@ -1,9 +1,15 @@
-{% extends 'periodicals/base.html' %} {% block title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %} {{ article.issue }}{% endblock %} {% block meta_title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %}{{ article.issue }}{% endblock %} {% block main %}
+{% extends 'periodicals/base.html' %}
+{% load highlight periodicals_tags  %}
+{% block title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %} {{ article.issue }}{% endblock %} {% block meta_title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %}{{ article.issue }}{% endblock %} {% block main %}
 <section class="grid-container">
     <div class="grid-x">
         <div class="cell minus-margin-top">
             <ul class="menu align-right">
-                <li><a href="{{ article.issue.url }}"><i class="fa fa-arrow-left" aria-hidden="true"></i></i> Issue</a>
+                {% get_request_parameters as search_params %}
+                {% if search_params %}
+                <li><a href="{% url 'search' %}?{{ search_params }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to results</a> </li>
+                {% endif %}
+                <li><a href="{{ article.issue.url }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Issue</a>
                 </li>
                 <!-- <li><a href="{{ article.page.print_url }}"><i class="fa fa-print" aria-hidden="true"></i> Print Page</a>
                             </li>-->

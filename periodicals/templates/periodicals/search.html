@@ -90,24 +90,25 @@
                         </th>
                     </tr>
                 </thead>
+            {% get_request_parameters as search_params %}
                 {% for result in page_obj.object_list %}
                 <tbody>
                     <tr>
                         <td>
-                            <a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a>
+                            <a href="{{ result.publication_url }}?{{ search_params }}">{{ result.publication_abbreviation }}</a>
                         </td>
                         <td>
-                            <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
+                            <a href="{{ result.issue_url }}?{{ search_params }}">{{ result.issue_date }}</a>
                         </td>
                         <td class="float-left">
-                            <a href="{{ result.page_url }}?highlight={{ query }}">
+                            <a href="{{ result.page_url }}?highlight={{ query }}{{ search_params }}">
                 {{ result.page_number }}
             </a>
                         </td>
                         <td>
                             {{ result.category }}
                         </td>
-                        <td> <a href="{{ result.url }}?highlight={{ query }}">
+                        <td> <a href="{{ result.url }}?highlight={{ query }}{{ search_params }}">
                 {% if result.title %}
                 {{ result.title }}
                 {% else %}
@@ -130,6 +131,7 @@
     </div>
     <!-- *** New Table End *** -->
     <!-- *** Card *** -->
+
     <div class="grid-container data-equalizer">
         <div class="grid-x grid-padding-x small-up-2 medium-up-3 large-up-5">
             {% for result in page_obj.object_list %}
