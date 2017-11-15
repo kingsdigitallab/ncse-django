@@ -64,6 +64,8 @@
             <h2>Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ paginator.count }} Results</h2>
         </div>
     </div>
+
+    {% comment %}
     <div class="row">
         <div class="columns">
             <table class="stack unstriped">
@@ -138,24 +140,28 @@
         </div>
     </div>
     <!-- *** New Table End *** -->
+
+    {% endcomment %}
+
     <!-- *** Card *** -->
 
-    <!-- 
     <div class="grid-container data-equalizer">
         <div class="grid-x grid-padding-x small-up-2 large-up-4">
             {% for result in page_obj.object_list %}
             <div class="cell">
                 <div class="card search-results data-equalizer-watch">
-                    <div class="card-section ">
+                    <div class="card-section">
                         <h2><a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a></h2>
                         <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
-                        <p><a href="{{ result.url }}?highlight={{ query }}">
-                {% if result.title %}
-                {{ result.title }}
-                {% else %}
-                {{ result.aid }}
-                {% endif %}
-            </a> </p>
+                        <p>
+                            <a href="{{ result.url }}?highlight={{ query }}">
+                                {% if result.title %}
+                                {{ result.title }}
+                                {% else %}
+                                {{ result.aid }}
+                                {% endif %}
+                            </a>
+                        </p>
                         {% if query %}
                         <div class="card-highlight">
                             <div class="cell">
@@ -166,8 +172,8 @@
                         <div class="card-footer">
                             {{ result.category }},
                             <a href="{{ result.page_url }}?highlight={{ query }}">
-                p. {{ result.page_number }}
-            </a>
+                                p. {{ result.page_number }}
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -179,7 +185,6 @@
             {% endfor %}
         </div>
     </div>
-    -->
     
     <!-- *** Card End *** -->
     
@@ -194,7 +199,8 @@
                         {% endif %}
                             Prev <span class="show-for-sr">page</span>
                         {% if page_obj.has_previous %}
-                        </a> {% endif %}
+                        </a>
+                        {% endif %}
                     </li>
 
                     <li>Page {{ page_obj.number }} of {{ paginator.num_pages }} </li>
@@ -202,10 +208,11 @@
                     <li class="{% if page_obj.has_next %}pagination-next{% else %}pagination-next disabled{% endif %}">
                         {% if page_obj.has_next %}
                         <a href="?page={{ page_obj.next_page_number }}{% if params %}{{ params }}{% endif %}" aria-label="Next page">
-                    {% endif %}
-                        Next <span class="show-for-sr">page</span>
-                    {% if page_obj.has_next %}
-                    </a> {% endif %}
+                        {% endif %}
+                            Next <span class="show-for-sr">page</span>
+                        {% if page_obj.has_next %}
+                        </a>
+                        {% endif %}
                     </li>
                 </ul>
             </div>
