@@ -34,7 +34,7 @@
 <div class="grid-container tabs-content" data-tabs-content="article-tabs">
     <section class="page-controls">
         {% if article.continuation_from %}
-        <a class="button" href="{{ article.continuation_from.url }}">&larr; </a>{% endif %}  Article span: p. {{ article.page.number}} of [Total num of pages] {% if article.continuation_to %}
+        <a class="button" href="{{ article.continuation_from.url }}">&larr; </a>{% endif %}  Article span: <strong>p. {{ article.page.number}}</strong> of [Total num of pages] {% if article.continuation_to %}
         <a class="button is-pulled-right" href="{{ article.continuation_to.url }}"> &rarr;</a> {% endif %}
     </section>
     <section class="tabs-panel is-active" id="image">
