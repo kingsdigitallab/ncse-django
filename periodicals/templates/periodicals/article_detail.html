@@ -34,10 +34,9 @@
 <div class="grid-container tabs-content" data-tabs-content="article-tabs">
     <section class="page-controls">
         {% if article.continuation_from %}
-        {% comment %}
-        TODO for dev: implement article navigation (pages: from 1 to end of article)
-        {% endcomment %}
-        <a class="button" href="{{ article.continuation_from.url }}">&larr; </a>{% endif %}  Article span: <strong>[From 1st page of the article]</strong> / [Total num of pages] {% if article.continuation_to %}
+        <a class="button" href="{{ article.continuation_from.url }}">&larr; </a>{% endif %}
+        Page <strong>{{ article.get_position_in_article }}</strong> of {{ article.get_number_of_pages }} 
+        {% if article.continuation_to %}
         <a class="button is-pulled-right" href="{{ article.continuation_to.url }}"> &rarr;</a> {% endif %}
     </section>
     <section class="tabs-panel is-active" id="image">

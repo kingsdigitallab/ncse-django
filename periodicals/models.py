@@ -215,6 +215,22 @@ class Article(models.Model):
 
         return pages
 
+    # Get total number of pages in article:
+    def get_number_of_pages(self):
+        return len(self.get_all_pages())
+
+    # Gets the position of this page in a multi-page article
+    # e.g. *1* of 5 (returns 1).
+    def get_position_in_article(self):
+        count = 1
+        current_article = self
+
+        while current_article.continuation_from:
+            current_article = current_article.continuation_from
+            count = count + 1
+
+        return count
+
     def get_text(self):
         if self.continuation_to:
             return '{} {}'.format(
