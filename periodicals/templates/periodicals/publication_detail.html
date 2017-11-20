@@ -37,7 +37,7 @@
                             <ul class="menu subnav" id="publication-year-switcher">
                                 <li><h2>Years</h2></li>
                                 {% for year, issues_in_year in year_list %}
-                                <li><a href="?year={{year}}">{{ year }} ({{ issues_in_year|length }})</a></li>
+                                <li><a {% if forloop.first %}class='is-active'{% endif %}href="{% url 'publication-issue-ajax' slug=publication.slug year=year %}">{{ year }} ({{ issues_in_year|length }})</a></li>
                                 {% endfor %}
                             </ul>
                         </nav>
