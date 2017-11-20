@@ -19,7 +19,7 @@
     {% with page=article.page publication=article.page.issue.publication issue=article.page.issue%}
         <li><a href="{% url 'publication-detail' slug=publication.slug %}">{{ publication }}</a></li>
     <li><a href="{% url 'issue-detail' publication_slug=publication.slug slug=issue.slug %}">{{ issue.issue_date }}</a></li>
-        <li><a href="{% url 'page-detail' publication_slug=publication.slug issue_slug=issue.slug number=page.number%}">{{ page.number }}</a></li>
+        <li><a href="{% url 'page-detail' publication_slug=publication.slug issue_slug=issue.slug number=page.number%}">Page {{ page.number }}</a></li>
     <li>{{ article }}</li>
     {% endwith %}
 {% endif %}
