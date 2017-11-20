@@ -102,10 +102,30 @@ class IssueDetailView(DetailView):
     context_object_name = 'issue'
     queryset = Issue.objects.all()
 
+    def get_context_data(self, **kwargs):
+        context = super(IssueDetailView, self).get_context_data(**kwargs)
+        context['page'] = self.get_object()
+        return context
+
 
 class PublicationDetailView(DetailView):
     context_object_name = 'publication'
     queryset = Publication.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(PublicationDetailView, self).get_context_data(**kwargs)
+
+        if 'year' in self.request.GET:
+            year = self.request.GET['year']
+        else:
+            year = self.get_object().get_year_span()[0]
+
+        issues = self.get_object().issues.filter(issue_date__year=year)
+
+        context['selected_year'] = year
+        context['selected_issues'] = issues
+
+        return context
 
 
 class PublicationListView(ListView):

@@ -26,7 +26,7 @@
         </div>
     </div>
 </section>
-{% with issues=publication.issues.all %} {% regroup issues by issue_date.year as year_list %}
+{% regroup publication.issues.all by issue_date.year as year_list %}
 <section class="grid-container">
     <div class="grid-x">
         <div class="cell">
@@ -34,32 +34,28 @@
                 <div data-sticky-container>
                     <div class="sticky" data-sticky-on="small" data-sticky data-margin-top="0" data-anchor="sticky">
                         <nav data-magellan>
-                            <ul class="menu subnav" data-magellan data-events="scroll" id="magellan">
+                            <ul class="menu subnav" id="publication-year-switcher">
                                 <li><h2>Years</h2></li>
                                 {% for year, issues_in_year in year_list %}
-                                <li><a href="#{{ year }}">{{ year }}</a></li>
-                                <!--: {{ issues_in_year|length }} issues
-                                {% if not forloop.last %} | {% endif %}-->
-                                <!-- Removed: Brian pls check -->
+                                <li><a href="?year={{year}}">{{ year }} ({{ issues_in_year|length }})</a></li>
                                 {% endfor %}
                             </ul>
                         </nav>
                     </div>
                 </div>
-                {% for year, issues_in_year in year_list %}
-                <section class="grid-container" id="{{ year }}" data-magellan-target="{{ year }}">
+                <section class="grid-container" id="issues-ajax">
                     <div class="grid-x">
                         <div class="cell">
                             <h3>
-                                {{ year }} 
-                                <span>({{ issues_in_year|length }} issues)
-                                {% if not forloop.last %} {% endif %} <!-- Added: Brian pls check -->      
+                                {{ selected_year }} 
+                                <span>({{ selected_issues|length }} issues)
+                                {% if not forloop.last %} {% endif %}
                                 <span>
                             </h3>
                         </div>
                     </div>
                     <div class="grid-x grid-padding-x grid-padding-y small-up-2 medium-up-3 large-up-5">
-                        {% for issue in issues_in_year %}
+                        {% for issue in selected_issues %}
                         <div class="cell ">
                             <div class="card">
                                 <a href="{{ issue.url }}">
@@ -82,8 +78,8 @@
                         {% endfor %}
                     </div>
                 </section>
-                {% endfor %} {% endwith %} {% endblock %}
             </div>
         </div>
     </div>    
 </section>
+{% endblock %}
