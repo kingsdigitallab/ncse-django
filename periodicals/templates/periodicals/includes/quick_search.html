@@ -1,0 +1,16 @@
+<section class="search">
+        <form method="get" action="{% url 'search' %}">
+            <div class="grid-container">
+                <div class="grid-x  grid-padding-y medium-up-3 large-up-3">
+                    <div class="cell">
+                        {{  form.q }}
+                    </div>
+                    {{ form.order_by.as_hidden }}
+                    {{ form.mode.as_hidden }}
+                    <div class="cell">
+                        <input class="button" type="submit" value="Search">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>

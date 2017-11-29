@@ -1,8 +1,9 @@
+import datetime
+
 from django import template
 
-from ..forms import PeriodicalsSearchForm
-import datetime
 from periodicals.models import Issue
+from ..forms import PeriodicalsSearchForm
 
 register = template.Library()
 
@@ -37,17 +38,26 @@ def get_request_parameters(context, exclude=None):
     return params
 
 
-# Get all issues published on same day as current day
-@register.assignment_tag()
+@register.inclusion_tag('periodicals/includes/issue_gallery.html')
 def get_issues_published_today():
+    """ Get all issues published on same day as current day"""
     now = datetime.datetime.now()
     issues = Issue.objects.filter(issue_date__day=now.day)
-    return issues
+    return {'issues': issues}
 
 
-# Get all issues published on same day as current month
-@register.assignment_tag()
+@register.inclusion_tag('periodicals/includes/issue_gallery.html')
 def get_issues_published_this_month():
+    """  Get all issues published on same day as current month """
     now = datetime.datetime.now()
     issues = Issue.objects.filter(issue_date__month=now.month)
-    return issues
+    return {'issues': issues}
+
+
+@register.inclusion_tag('periodicals/includes/quick_search.html')
+def quick_periodical_search_form():
+    """ Add quick search with keyword only to periodical form"""
+    form = PeriodicalsSearchForm(data={'order_by': "issue_date",
+                                       'mode': 'or'
+                                       })
+    return {'form': form}
