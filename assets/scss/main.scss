@@ -5,6 +5,7 @@
 
 @import url('https://fonts.googleapis.com/css?family=Lusitana|Neuton|Peddana|Petrona|Scheherazade|Suravaram|Unna');
 
+
 /* Table of Contents */
 
 
@@ -41,7 +42,7 @@ main {
     margin: rem-calc(20 0);
 }
 
-h1{
+h1 {
     font-size: rem-calc(18);
     line-height: rem-calc(24);
     margin-top: rem-calc(16);
@@ -65,9 +66,10 @@ h3 {
     border: 1px solid $dark-gray;
 }
 
-.underline{
+.underline {
     border-bottom: 1px solid black;
 }
+
 
 
 /* Navigation */
@@ -99,9 +101,7 @@ nav {
         background: $primary-color;
         padding: 0;
         ul {
-            background: $primary-color;
-
-            // For TO: This doesn't seem to be used - GF
+            background: $primary-color; // For TO: This doesn't seem to be used - GF
             li.active {
                 &:before {
                     border: 5px solid transparent;
@@ -115,9 +115,7 @@ nav {
                     -webkit-transform: rotate(0);
                     top: 100%;
                 }
-            }
-            //
-
+            } //
             a {
                 color: white;
                 font-size: rem-calc(16);
@@ -136,6 +134,7 @@ nav {
     }
 }
 
+
 /* Sub Navigation */
 
 .menu {
@@ -144,17 +143,17 @@ nav {
 
         li {
 
-            &.is-active > a,
+            &.is-active>a,
             a.is-active {
                 background: none;
                 border-bottom: 3px solid $primary-color;
-                color: black;
+                color: $primary-color;
             }
         }
     }
 }
 
-ul.menu.align-right > li > a {
+ul.menu.align-right>li>a {
     color: black;
 
     &:hover {
@@ -168,30 +167,52 @@ ul.menu.align-right > li > a {
 }
 
 .tabs-title {
-    a{
+    a {
         font-size: rem-calc(16);
         padding: rem-calc(11 16);
+        color: $black;
     }
 }
 
-.sticky nav{
+.tabs-title>a:focus,
+.tabs-title>a[aria-selected='true'] {
+    background: none;
+    outline: 0;
+}
+
+ul.menu.align-right>li>a[aria-selected='true'] {
+    color: $primary-color;
+}
+
+
+#contents.tabs-panel {
+    padding: 0;
+    .tabs-panel {
+        padding: 0;
+    }
+}
+
+.sticky nav {
     background: white;
 }
 
+
 /* Breadcrumbs */
-.breadcrumbs{
- li{
-&:not(:last-child)::after{
-    content: ">";
+
+.breadcrumbs {
+    li {
+        &:not(:last-child)::after {
+            content: ">";
+        }
+        &:after {
+            content: ">";
+            color: #cacaca;
+            margin: 0 0.75rem;
+            opacity: 1;
+        }
+    }
 }
-&:after{
-    content: ">";
-    color: #cacaca;
-    margin: 0 0.75rem;
-    opacity: 1;
-}
-}
-}
+
 
 /* Main content */
 
@@ -238,16 +259,16 @@ ul.menu.align-right > li > a {
                 background: $primary-color;
             }
         }
-        &.search-results:hover{
+        &.search-results:hover {
             border: 1px solid $light-gray;
-            .card-section{
+            .card-section {
                 background: none;
             }
-                .card-footer {
-                    border-top: 1px solid gray;
-                    color: gray;
+            .card-footer {
+                border-top: 1px solid gray;
+                color: gray;
             }
-            }
+        }
     }
 
     .card-divider {
@@ -298,8 +319,8 @@ ul.menu.align-right > li > a {
             h3 {
                 color: white;
                 font-weight: bold;
-                &.small-caps{
-                   font-variant: small-caps; 
+                &.small-caps {
+                    font-variant: small-caps;
                 }
             }
 
@@ -317,9 +338,10 @@ ul.menu.align-right > li > a {
 }
 
 
+
 /* Accordion */
 
-.accordion-item:first-child > :first-child {
+.accordion-item:first-child> :first-child {
     background: $primary-color;
     border: none;
     color: white;
@@ -340,7 +362,7 @@ ul.menu.align-right > li > a {
     padding-top: rem-calc(20);
 }
 
-.is-active > .accordion-title {
+.is-active>.accordion-title {
 
     &::before {
         color: white;
@@ -355,31 +377,51 @@ ul.menu.align-right > li > a {
 .accordion-content {
     border: none;
     padding-left: 0;
-
     ul {
         margin-left: 0;
         list-style-type: none;
-    }
-    
-    .cell {
-        padding: 0;
+        float: left;
+        li {
+            float: left;
+            margin: 0 0.5rem 0.5rem 0;
+            text-align: center;
+
+            a {
+                border: 1px solid $primary-color;
+                display: block;
+                padding: 0.2rem 2rem;
+                span {
+                    color: gray;
+                    font-size: 0.75rem;
+                }
+                &:hover {
+                    background: $primary-color;
+                    color: white;
+                    span {
+                        color: $light-gray;
+                    }
+                }
+            }
+        }
     }
 }
+
 
 /* Search form */
 
 section {
     &.search {
-                     ul {
-        list-style: none;
-    }
+        ul {
+            list-style: none;
+        }
 
-        .cell{
-             background: $light-gray;
-             padding:1rem 1.5rem;
+        .cell {
+            background: $light-gray;
+            padding: 1rem 1.5rem;
         }
     }
 }
+
 
 /* Table of contents */
 
@@ -396,6 +438,11 @@ td {
         width: 50%;
     }
 }
+
+
+
+
+
 
 
 /* Footer */
@@ -418,10 +465,13 @@ footer {
 
 
 
+
 /* Hacks to rectify */
-.minus-margin-top{
+
+.minus-margin-top {
     margin-top: -2.5rem;
 }
+
 
 
 
@@ -434,7 +484,7 @@ footer {
     td {
         &.float-left {
             float: left!important;
-        
+
             &:before {
                 content: "Page ";
             }
@@ -443,7 +493,7 @@ footer {
                 content: ", ";
             }
         }
-        
+
         &.paragraph {
             width: 100%;
         }

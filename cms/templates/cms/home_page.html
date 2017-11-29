@@ -1,1 +1,44 @@
 {% extends "cms/base.html" %} 
+
+{% block main %}
+
+
+<section class="search">
+    <form method="get" action=".">
+        <div class="grid-container">
+            <div class="grid-x  grid-padding-y medium-up-3 large-up-3">
+                <div class="cell">
+                    {% with field=form.q %} {{ field.errors }} {{ field.label_tag }} {{ field }} {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %} {% endwith %} {% with field=form.mode %} {{ field.errors }} {{ field.label_tag }} {{ field }} {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %} {% endwith %}
+                </div>
+                <div class="cell">
+                    <div class="grid-x  grid-padding-y medium-up-full large-up-2">
+                        <div class="cell">
+                            {% with field=form.start_year %} {{ field.errors }} {{ field.label_tag }} {{ field }} {% if field.help_text %}
+                            <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %} {% endwith %}
+                        </div>
+                        <div class="cell">
+                            {% with field=form.end_year %} {{ field.errors }} {{ field.label_tag }} {{ field }} {% if field.help_text %}
+                            <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %} {% endwith %}
+                        </div>
+                    </div>
+                </div>
+                <div class="cell">
+                    {% with field=form.order_by %} {{ field.errors }} {{ field.label_tag }} {{ field }} {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %} {% endwith %}
+                    <input class="button" type="submit" value="Search">
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+
+
+
+{% endblock %}

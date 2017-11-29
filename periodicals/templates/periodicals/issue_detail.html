@@ -14,25 +14,26 @@
                 {% endif %}
 
             </ul>
-        </div>
-    </div>
-</section>
-
-    <section class="grid-container">
-        <div class="grid-x">
-            <div class="cell tabs" data-tabs id="issue-tabs">
-                <ul class="menu subnav">
-                    <li class="tabs-title is-active"><a href="#contents" aria-selected="true">Contents</a></li>
-                    <li class="tabs-title"><a data-tabs-target="pages" href="#pages">Pages</a></li>
-                    <li class="tabs-title"><a data-tabs-target="articles" href="#articles">Articles</a></li>
-                    <li class="tabs-title"><a data-tabs-target="ads" href="#ads">Ads</a></li>
-                </ul>
-                <ul class="menu align-right">
+            <ul class="menu align-right">
                     <li><a href="{{ issue.pdf.url }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> PDF</a></li>
                     <!-- *** Removed to have one option ***
                 <li><a href="{{ issue.pdf.url }}" download="{{ issue }}"><i class="fa fa-download" aria-hidden="true"></i> Download PDF</a></li>
                 -->
+             </ul>
+        </div>
+    </div>
+</section>
+
+
+    <section class="grid-container">
+        <div class="grid-x">
+            <div class="cell tabs" data-tabs id="issue-tabs">
+                Contents
+                <ul class="menu align-right">
+                    <li class="tabs-title is-active"><a href="#list" aria-selected="true"><i class="fa fa-list-ul" aria-hidden="true"></i> List</a></li>
+                    <li class="tabs-title"><a data-tabs-target="grid" href="#grid"><i class="fa fa-th" aria-hidden="true"></i> Grid</a></li>
                 </ul>
+
             </div>
         </div>
     </section>
@@ -40,11 +41,8 @@
     <div class="grid-container tabs-content" data-tabs-content="issue-tabs">
 
         <!-- *** TODO: Data to be added *** -->
-        <section class="tabs-panel is-active" id="contents">
+        <section class="tabs-panel is-active" id="list">
             <div class="grid-x">
-                <div class="cell">
-                    <h2>Contents</h2>
-                </div>
                 <div class="cell">
                     <table class="stack unstriped">
                         <thead>
@@ -57,13 +55,15 @@
                         <tbody>
                         {% for article in issue.articles %}
                             {% with page=article.page publication=article.page.issue.publication issue=article.page.issue %}
+                            
                                 <tr>
+                            
                                     <td>{{ article.page.number }}</td>
                                     <td>{{ article.article_type }}</td>
-                                    <td>
-                                        <a href="{% url 'article-detail' publication_slug=publication.slug issue_slug=issue.slug number=page.number article_slug=article.slug%}">{{ article.title }}</a>
-                                    </td>
+                                    <td>{{ article.title }}<a href="{% url 'article-detail' publication_slug=publication.slug issue_slug=issue.slug number=page.number article_slug=article.slug%}"></a></td>
+
                                 </tr>
+                               
                             {% endwith %}
                         {% endfor %}
 
@@ -73,13 +73,7 @@
             </div>
         </section>
 
-        <section class="tabs-panel" id="pages">
-            <div class="grid-x">
-                <div class="cell">
-                    <h3 class="underline">Pages</h3>
-                </div>
-            </div>
-
+        <section class="tabs-panel" id="grid">
             <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container">
                 {% for page in issue.pages.all %}
                     <div class="cell">
@@ -91,7 +85,8 @@
                                 <div class="card-section overlay">
                                     <h3>Page {{ page.number }}</h3>
                                     <div class="card-footer">
-                                        {{ page.number_of_articles }} Articles
+                                         { Article and/or Ad Title/s }
+
                                     </div>
                                 </div>
                             </a>
@@ -105,78 +100,5 @@
                 {% endfor %}
             </div>
         </section>
-
-        <section class="tabs-panel" id="articles">
-            <div class="gird-x">
-                <div class="cell">
-                    <h3 class="underline">Articles</h3>
-                </div>
-            </div>
-
-            <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container"
-                 data-equalizer="card-article" data-equalize-on="medium" data-equalize-by-row="true">
-                {% for article in issue.articles %}
-                    <div class="cell">
-                        <div class="card" data-equalizer-watch="card-article">
-                            <a href="{{ article.url }}">
-                                <div class="card-image">
-                                    <img src="{{ article.title_image.url }}">
-                                </div>
-                                <div class="card-section">
-                                    <h3>{{ article|title }}</h3>
-
-                                    <div class="card-footer">
-                                        Page {{ article.page.number }}
-                                    </div>
-                                </div>
-                            </a>
-                            {% if request.user.is_staff %}
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/article/{{ article.id }}/change/"
-                                       class="card-footer-item">Edit</a>
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </section>
-
-        <section class="tabs-panel" id="ads">
-            <div class="gird-x">
-                <div class="cell">
-                    <h3 class="underline">Ads</h3>
-                </div>
-            </div>
-
-            <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4 container"
-                 data-equalizer="card-article" data-equalize-on="medium" data-equalize-by-row="true">
-                {% for ad in issue.ads %}
-                    <div class="cell">
-                        <div class="card" data-equalizer-watch="card-ad">
-                            <a href="{{ ad.url }}">
-                                <div class="card-image">
-                                    <img src="{{ ad.title_image.url }}">
-                                </div>
-                                <div class="card-section overlay">
-                                    <h3>{{ ad|title }}</h3>
-
-                                    <div class="card-footer">
-                                        Page {{ ad.page.number }}
-                                    </div>
-                                </div>
-                            </a>
-                            {% if request.user.is_staff %}
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/article/{{ ad.id }}/change/"
-                                       class="card-footer-item">Edit</a>
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </section>
-
     </div>
 {% endblock %}
