@@ -1,4 +1,4 @@
-{% load periodicals_tags %}
+{% load periodicals_tags cms_tags %}
 
 {% block main_menu %}
 
@@ -17,20 +17,8 @@
 <div class="top-bar" id="responsive-menu">
 
   <div class="top-bar-right">
-    <ul class=" medium-horizontal vertical dropdown menu">
-      
-      <li><a href="{% url 'publication-list' %}">Explore</a></li>
-      <li><a href="{% url 'search' %}?{% initial_search_parameters %}">Search</a></li>
-      <li><a href="/">About</a></li>
-      {% if request.user.is_authenticated %}
-      {% if request.user.is_staff %}
-      <li><a href="/admin/">Admin Panel</a></li>
-      {% endif %}
-      <li><a href="/admin/logout/">Logout {{ request.user.first_name }}</a></li>
-      {% else %}
-      <li><a href="/admin/login/">Login</a></li>
-      {% endif %}
-    </ul>
-  </div>
+              {% get_site_root as site_root %}
+            {% main_menu root=site_root current_page=self %}
+    </div>
  </div>
 {% endblock %}
