@@ -5,7 +5,7 @@
       <li {% if page.active %} class="is-active" {% endif %}><a href="{% pageurl page %}">{{ page.title }}</a></li>
        {% endfor %}
 
-     <li><a href="{% url 'search' %}?{% initial_search_parameters %}">Search</a></li>
+     <li><a href="{% url 'search' %}">Search</a></li>
 
       {% if request.user.is_authenticated %}
           {% if request.user.is_staff %}
