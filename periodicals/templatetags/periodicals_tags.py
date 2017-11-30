@@ -14,9 +14,8 @@ def initial_search_parameters():
     params = ''
 
     for key, value in form.fields.items():
-        params = '{}&{}='.format(params, key)
-
         if value.initial:
+            params = '{}&{}='.format(params, key)
             params = '{}{}'.format(params, value.initial)
 
     return params
