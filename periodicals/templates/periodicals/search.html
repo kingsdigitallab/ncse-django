@@ -87,20 +87,15 @@
                     <thead>
                         <tr>
                             <th>
-                                Publication
-                            </th>
-                            <th>
-                                Date
+                                Category
                             </th>
                             <th>
                                 Page
                             </th>
                             <th>
-                                Category
+                                Title
                             </th>
-                            <th>
-                                Article title
-                            </th>
+                            
                             <th>
                                 <!-- *** Not sure how to add heading here *** -->
                                 {% if result.title %} Extract {% else %} {% endif %}
@@ -111,26 +106,21 @@
                     <tbody>
                         <tr>
                             <td>
-                                <a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a>
-                            </td>
-                            <td>
-                                <a href="{{ result.issue_url }}">{{ result.issue_date }}</a>
-                            </td>
-                            <td class="float-left">
-                                <a href="{{ result.page_url }}?highlight={{ query }}">
-                {{ result.page_number }}
-            </a>
-                            </td>
-                            <td>
                                 {{ result.category }}
                             </td>
-                            <td> <a href="{{ result.url }}?highlight={{ query }}">
-                {% if result.title %}
-                {{ result.title }}
-                {% else %}
-                {{ result.aid }}
-                {% endif %}
-            </a></td>
+
+                            <td>
+                                {{ result.publication_abbreviation }}, {{result.issue_date }}, page {{ result.page_number }}
+                            </td>
+
+                             <td> <a href="{{ result.url }}?highlight={{ query }}">
+                                {% if result.title %}
+                                {{ result.title }}
+                                {% else %}
+                                {{ result.aid }}
+                                {% endif %}
+                            </a></td>
+                           
                             {% if query %}
                             <td class="paragraph">
                                 {% highlight result.text with query html_tag "strong" %}
