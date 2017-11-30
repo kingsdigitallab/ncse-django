@@ -150,13 +150,14 @@ class PeriodicalsSearchView(FacetedSearchView):
     template_name = 'periodicals/search.html'
 
     def get_initial(self):
-        super(FacetedSearchView, self).get_initial()
+        initial = super(FacetedSearchView, self).get_initial()
         # Find the first and last published years
         # set as default for the form
         first = Issue.objects.all().order_by('issue_date')[0]
         last = Issue.objects.all().order_by('-issue_date')[0]
-        self.initial = {'start_year': first.issue_date.year,
-                        'end_year': last.issue_date.year}
+        initial['start_year'] = first.issue_date.year
+        initial['end_year'] = last.issue_date.year
+        return initial
 
     def get_queryset(self):
         queryset = super(FacetedSearchView, self).get_queryset()
