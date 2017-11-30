@@ -1,5 +1,5 @@
-from django.views.generic import DetailView, ListView, TemplateView
 from django.shortcuts import get_object_or_404
+from django.views.generic import DetailView, ListView, TemplateView
 from haystack.generic_views import FacetedSearchView
 
 from .forms import PeriodicalsSearchForm
@@ -66,7 +66,6 @@ class ArticlePrintView(TemplateView):
 
 
 class PageDetailView(DetailView):
-
     def get_object(self):
         return get_object_or_404(
             Page, issue__slug=self.kwargs['issue_slug'],
@@ -104,7 +103,6 @@ class IssueDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(IssueDetailView, self).get_context_data(**kwargs)
-        context['page'] = self.get_object()
         return context
 
 
@@ -147,13 +145,12 @@ class PublicationListView(ListView):
 
 
 class PeriodicalsSearchView(FacetedSearchView):
-
     facet_fields = ['publication_abbreviation', 'category', 'issue_year']
     form_class = PeriodicalsSearchForm
     template_name = 'periodicals/search.html'
 
-    def __init__(self):
-        super(FacetedSearchView, self).__init__()
+    def get_initial(self):
+        super(FacetedSearchView, self).get_initial()
         # Find the first and last published years
         # set as default for the form
         first = Issue.objects.all().order_by('issue_date')[0]
