@@ -5,7 +5,7 @@
 {% if issue %}
     {% with publication=issue.publication%}
         <li><a href="{% url 'publication-detail' slug=publication.slug %}">{{ publication }}</a></li>
-        <li>{{ issue }}</li>
+        <li>{{ issue.issue_date }}</li>
     {% endwith %}
 {% endif %}
 {% if page %}

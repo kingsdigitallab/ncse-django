@@ -1,7 +1,7 @@
 {% extends 'periodicals/base.html' %}
 {% load periodicals_tags  %}
-{% block title %}{{ issue }}{% endblock %}
-{% block meta_title %}{{ issue }}{% endblock %}
+{% block title %}{{ issue.publication}}, {{ issue.issue_date }}{% endblock %}
+{% block meta_title %}{{ issue.publication}}, {{ issue.issue_date }}{% endblock %}
 
 {% block main %}
 <section class="grid-container">
@@ -60,7 +60,7 @@
                             
                                     <td>{{ article.page.number }}</td>
                                     <td>{{ article.article_type }}</td>
-                                    <td>{{ article.title }}<a href="{% url 'article-detail' publication_slug=publication.slug issue_slug=issue.slug number=page.number article_slug=article.slug%}"></a></td>
+                                    <td><a href="{% url 'article-detail' publication_slug=publication.slug issue_slug=issue.slug number=page.number article_slug=article.slug%}">{{ article.title }}</a></td>
 
                                 </tr>
                                
