@@ -39,14 +39,17 @@
         <div class="cell">
             <div class="tabs" data-tabs id="page-tabs">
                 <ul class="menu subnav">
-                    <li class="tabs-title is-active"><a data-tabs-target="transcription" href="#transcription">Transcription</a></li>
+                    <li class="tabs-title is-active"><a data-tabs-target="contents" href="#contents">Contents</a></li>
+                    <li class="tabs-title"><a data-tabs-target="transcription" href="#transcription">Transcription</a></li>
                     <li class="tabs-title"><a data-tabs-target="citation" href="#citation">Citation</a></li>
-                    <li class="tabs-title"><a data-tabs-target="contents" href="#contents">Contents</a></li>
                 </ul>
             </div>
             <div class="tabs-content" data-tabs-content="page-tabs">
-                <section class="tabs-panel is-active" id="transcription">
+                <section class="tabs-panel" id="transcription">
                     <div class="cell container">
+                    <div class="note"> Note: This is an Optical Character Recognition (OCR) programs “read” these images and convert them to text documents which can be easily searched, copied, edited, or used for computational text analysis methods.
+                    </div>
+
                         {% for article in page.articles_in_page.all %}
                         <div class="column is-half article" id="{{ article.aid }}">
                             <h3 class="subtitle">{{ article|title }}</h3> {{ article.content_html|safe }}
@@ -59,7 +62,7 @@
                         Content of citation
                     </div>
                 </section>
-                <section class="tabs-panel" id="contents">
+                <section class="tabs-panel is-active" id="contents">
                
                         <div class="tabs" data-tabs id="issue-tabs">
                             <ul class="menu align-right">

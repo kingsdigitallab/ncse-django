@@ -10,8 +10,7 @@
 {% endif %}
 {% if page %}
     {% with publication=page.issue.publication issue=page.issue%}
-        <li><a href="{% url 'publication-detail' slug=publication.slug %}">{{ publication }}</a></li>
-    <li><a href="{% url 'issue-detail' publication_slug=publication.slug slug=issue.slug %}">{{ issue.issue_date }}</a></li>
+        {{ issue.issue_date }}</a></li>
     <li>Page {{ page.number }}</li>
     {% endwith %}
 {% endif %}

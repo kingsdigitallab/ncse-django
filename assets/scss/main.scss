@@ -70,7 +70,9 @@ h3 {
     border-bottom: 1px solid black;
 }
 
-
+.button{
+    width: 100%;
+}
 
 /* Navigation */
 
@@ -440,7 +442,14 @@ td {
 }
 
 
-
+/* Page level */
+.note{
+    background:#f8f8f8;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border:1px solid $light-gray;
+    font-style: italic;
+}
 
 
 

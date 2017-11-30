@@ -1,16 +1,29 @@
 <section class="search">
-        <form method="get" action="{% url 'search' %}">
-            <div class="grid-container">
-                <div class="grid-x  grid-padding-y medium-up-3 large-up-3">
-                    <div class="cell">
-                        {{  form.q }}
-                    </div>
-                    {{ form.order_by.as_hidden }}
-                    {{ form.mode.as_hidden }}
-                    <div class="cell">
-                        <input class="button" type="submit" value="Search">
-                    </div>
+    <form method="get" action="{% url 'search' %}">
+            <div class="grid-x  grid-padding-y large-up-full">
+                <div class="cell">
+                    <label>Keyword:</label>
+                    {{ form.q }} {{ form.order_by.as_hidden }} {{ form.mode.as_hidden }}
+                    <!-- ** Mode placeholder ** -->
+                    <ul id="id_mode">
+                        <li>
+                            <label for="id_mode_0">
+                                <input type="radio" name="mode" value="or" id="id_mode_0" required="" checked=""> Any word</label>
+                        </li>
+                        <li>
+                            <label for="id_mode_1">
+                                <input type="radio" name="mode" value="and" id="id_mode_1" required=""> All the words</label>
+                        </li>
+                        <li>
+                            <label for="id_mode_2">
+                                <input type="radio" name="mode" value="phrase" id="id_mode_2" required=""> Phrase
+                            </label>
+                        </li>
+                    </ul>
+                    <!-- ** Mode placeholder ** -->
+                    <input class="button" type="submit" value="Search">
                 </div>
             </div>
-        </form>
-    </section>
+     
+    </form>
+</section>
