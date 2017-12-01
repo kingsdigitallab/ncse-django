@@ -1,63 +1,86 @@
-{% extends 'base.html' %}
-
+{% extends 'periodicals/base.html' %}
+{% load periodicals_tags  %}
 {% block meta_title %}{{ publication }} {% if publication.description %} - {{ publication.description }} {% endif %}{% endblock %}
-
 {% block title %}{{ publication }} {% if publication.description %} - {{ publication.description }} {% endif %}{% endblock %}
 
 {% block main %}
+    <section class="grid-container">
+    <div class="grid-x">
+        <div class="cell minus-margin-top">
+            <ul class="menu align-right">
+                {% get_request_parameters as search_params %}
+                {% if search_params %}
+                <li><a href="{% url 'search' %}?{{ search_params }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to results</a> </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</section>
+
+
+    <section class="grid-container">
+    <div class="grid-x">
+        <div class="cell">
+            <h3>Description</h3> {% lorem 2 p %}
+        </div>
+    </div>
+</section>
+{% regroup publication.issues.all by issue_date.year as year_list %}
 <section class="grid-container">
-  <div class="grid-x">
-    <div class="cell">
-      <h3 class="title">Description</h3>
-      {% lorem 2 p %}
-    </div>
-  </div>
-</section>
-
-{% with issues=publication.issues.all %}
-{% regroup issues by issue_date.year as year_list %}
-
-<section class="grid-container">
-  <div class="grid-x">
-    <div class="cell">
-      <h3 class="title">Years</h3>
-      {% for year, issues_in_year in year_list %}
-      <a href="#{{ year }}">{{ year }}</a>: {{ issues_in_year|length }} issues
-      {% if not forloop.last %} | {% endif %}
-      {% endfor %}
-    </div>
-  </div>
-</section>
-
-{% for year, issues_in_year in year_list %}
-<section class="grid-container" id="{{ year }}">
-  <div class="grid-x">
-    <div class="cell">
-      <h3 class="title">{{ year }}</h3>
-    </div>
-  </div>
-  <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-4">
-    {% for issue in issues_in_year %}
-    <div class="cell">
-      <div class="card">
-        <div class="card-image">
-          <a href="{{ issue.url }}"><img src="{{ issue.pages.all.0.image.url }}"></a>
+    <div class="grid-x">
+        <div class="cell">
+            <div id="sticky">
+                <div data-sticky-container>
+                    <div class="sticky" data-sticky-on="small" data-sticky data-margin-top="0" data-anchor="sticky">
+                        <nav data-magellan>
+                            <ul class="menu subnav" id="publication-year-switcher">
+                                <li><h2>Years</h2></li>
+                                {% for year, issues_in_year in year_list %}
+                                <li><a {% if forloop.first %}class='is-active'{% endif %}href="{% url 'publication-issue-ajax' slug=publication.slug year=year %}">{{ year }} ({{ issues_in_year|length }})</a></li>
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <section class="grid-container" id="issues-ajax">
+                    <div class="grid-x">
+                        <div class="cell">
+                            <h3>
+                                {{ selected_year }} 
+                                <span>({{ selected_issues|length }} issues)
+                                {% if not forloop.last %} {% endif %}
+                                <span>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="grid-x grid-padding-x grid-padding-y small-up-2 medium-up-3 large-up-5">
+                        {% for issue in selected_issues %}
+                        <div class="cell ">
+                            <div class="card">
+                                <a href="{{ issue.url }}">
+                                    <div class="card-image">
+                                        <img src="{{ issue.pages.all.0.image.url }}">
+                                    </div>
+                                    <div class="card-section overlay">
+                                        <h3 class="small-caps">{{ publication }}</h3>
+                                        <h3 class="small-caps">{{ issue.issue_date }}</h3>
+                                        <div class="card-footer">{{ issue.articles.count }} Articles spanning {{ issue.pages.count }} Pages
+                                        </div>
+                                    </div>
+                                </a>
+                                {% if request.user.is_staff %}
+                                <div class="card-divider">
+                                    <a href="/admin/periodicals/issue/{{ issue.id }}/change/" class="card-footer-item">Edit</a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
         </div>
-        <div class="card-section">
-          <h4><a href="{{ issue.url }}">{{ issue }}</a></h4>
-          {{ issue.articles.count }} articles in {{ issue.pages.count }} pages.
-        </div>
-        {% if request.user.is_staff %}
-        <div class="card-divider">
-          <a href="/admin/periodicals/issue/{{ issue.id }}/change/" class="card-footer-item">Edit</a>
-        </div>
-        {% endif %}
-      </div>
-    </div>
-    {% endfor %}
-  </div>
+    </div>    
 </section>
-{% endfor %}
-
-{% endwith %}
 {% endblock %}

@@ -1,38 +1,44 @@
-{% extends "base.html" %}
-
-{% block title %}Publications{% endblock %}
+{% extends "periodicals/base.html" %}
+{% load periodicals_tags %}
+{% block title %}Explore{% endblock %}
 {% block meta_title %}Publications | Explore{% endblock %}
-
+{% block breadcrumbs %}
+    <li><a href="/">Home</a></li>
+    <li>Explore</li>
+{% endblock %}
 {% block main %}
-<div class="grid-container">
-  <div class="grid-x grid-padding-x medium-up-2 large-up-4">
-    {% for publication in publications %}
-    <div class="cell">
-      <div class="card">
-        <div class="card-divider">
-          <a href="{{ publication.url }}">
-            {{ publication.abbreviation }}{% if publication.title %}:
-            {{ publication.title }}{% endif %}
-          </a>
+
+    <div class="grid-container data-equalizer">
+        <div class="grid-x grid-padding-x small-up-2 medium-up-3 large-up-5">
+            {% for publication in publications %}
+                <div class="cell">
+                    <div class="card data-equalizer-watch">
+                        <a href="{{ publication.url }}">
+                            <div class="card-divider">
+                                <h2>{{ publication }}</h2>
+                            </div>
+                            <!-- ** Add Publication image here ** <img src="http://127.0.0.1:8000/static/media/periodicals/119-MOB-1858-03-20-001-SINGLE/Ar0090100.png"> -->
+                            <div class="card-section">
+                                {% with year_span=publication.get_year_span %}
+                                    <h3>{{ year_span.0 }} to {{ year_span.1 }}</h3>
+                                {% endwith %}
+                                {% with number_of_years=publication.get_number_of_years %}
+                                    <h3><strong>{{ number_of_years }}</strong> Year{{ number_of_years|pluralize }}</h3>
+                                {% endwith %}
+                                <div class="card-footer">{{ publication.issues.count }}
+                                    Issues spanning {{ publication.get_total_number_of_pages }} Pages
+                                </div>
+                            </div>
+                        </a>
+                        {% if request.user.is_staff %}
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/publication/{{ publication.id }}/change/"
+                                   class="card-footer-item">Edit</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-        <div class="card-section">
-          {% with number_of_years=publication.get_number_of_years %}
-          <p><strong>{{ number_of_years }}</strong> Year{{ number_of_years|pluralize }}</p>
-          {% endwith %}
-          {% with year_span=publication.get_year_span %}
-          <p>{{ year_span.0 }} to {{ year_span.1 }}</p>
-          {% endwith %}
-          <p>{{ publication.issues.count }} Issues</p>
-          <p>{{ publication.get_total_number_of_pages }} Pages</p>
-        </div>
-        {% if request.user.is_staff %}
-        <div class="card-divider">
-          <a href="/admin/periodicals/publication/{{ publication.id }}/change/" class="card-footer-item">Edit</a>
-        </div>
-        {% endif %}
-      </div>
     </div>
-    {% endfor %}
-  </div>
-</div>
 {% endblock %}

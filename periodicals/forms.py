@@ -4,6 +4,7 @@ from haystack.forms import FacetedSearchForm
 
 
 class PeriodicalsSearchForm(FacetedSearchForm):
+
     MODE_DEFAULT = ('or', 'Any word')
     MODE_AND = ('and', 'All the words')
     MODE_PHRASE = ('phrase', 'Phrase')

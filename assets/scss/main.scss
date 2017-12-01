@@ -3,17 +3,36 @@
 @import '../vendor/foundation-sites/assets/foundation';
 @import '../vendor/motion-ui/motion-ui';
 
+@import url('https://fonts.googleapis.com/css?family=Lusitana|Neuton|Peddana|Petrona|Scheherazade|Suravaram|Unna');
+
+
 /* Table of Contents */
+
 
 /**
  *  Globals
  *  Navigation
- *  Hero
+ *      Sub navigation
  *  Main content
+ *      Cards
+ *  Accordion
+ *  Search
+ *  Table of contents
  *  Footer
+ *  Media queries
  */
 
+
 /* Globals */
+
+body,
+h1,
+h2,
+h3 {
+    // font-family: 'Neuton', serif;
+    // font-family: 'Lusitana', serif;
+    font-family: 'Petrona', serif;
+}
 
 canvas {
     width: 100%;
@@ -23,35 +42,187 @@ main {
     margin: rem-calc(20 0);
 }
 
+h1 {
+    font-size: rem-calc(18);
+    line-height: rem-calc(24);
+    margin-top: rem-calc(16);
+    text-transform: uppercase;
+}
+
+h2 {
+    font-size: rem-calc(20);
+}
+
+h3 {
+    font-size: rem-calc(22);
+    font-weight: bold;
+    span {
+        font-size: rem-calc(16);
+        font-weight: normal;
+    }
+}
+
+.border {
+    border: 1px solid $dark-gray;
+}
+
+.underline {
+    border-bottom: 1px solid black;
+}
+
+.button{
+    width: 100%;
+}
+
 /* Navigation */
 
 nav {
-    background: $light-gray;
-}
-
-/* Hero */
-
-.hero {
     background: $primary-color;
-    color: $white;
 
-    h1 {
-        line-height: .75;
-        padding: rem-calc(20 0);
+    .logo {
+        float: left;
+
+        h1 {
+            font-size: rem-calc(16);
+            line-height: rem-calc(36);
+            margin: 0;
+            text-transform: uppercase;
+
+            a {
+                color: white;
+            }
+        }
     }
 
-    small {
-        font-size: rem-calc(24);
+    .title-bar {
+        background: none;
+        padding: 0;
+    }
+
+    .top-bar {
+        background: $primary-color;
+        padding: 0;
+        ul {
+            background: $primary-color; // For TO: This doesn't seem to be used - GF
+            li.active {
+                &:before {
+                    border: 5px solid transparent;
+                    border-right: 5px solid transparent;
+                    border-top: 5px solid $primary-color;
+                    content: " ";
+                    display: block;
+                    pointer-events: none;
+                    position: absolute;
+                    transform: rotate(0);
+                    -webkit-transform: rotate(0);
+                    top: 100%;
+                }
+            } //
+            a {
+                color: white;
+                font-size: rem-calc(16);
+            }
+        }
+
+        h1 {
+            font-size: rem-calc(16);
+            margin: 0;
+            text-transform: uppercase;
+
+            a {
+                color: white;
+            }
+        }
     }
 }
+
+
+/* Sub Navigation */
+
+.menu {
+    &.subnav {
+        border-bottom: 1px solid gray;
+
+        li {
+
+            &.is-active>a,
+            a.is-active {
+                background: none;
+                border-bottom: 3px solid $primary-color;
+                color: $primary-color;
+            }
+        }
+    }
+}
+
+ul.menu.align-right>li>a {
+    color: black;
+
+    &:hover {
+        color: $primary-color;
+    }
+}
+
+.tabs,
+.tabs-content {
+    border: none;
+}
+
+.tabs-title {
+    a {
+        font-size: rem-calc(16);
+        padding: rem-calc(11 16);
+        color: $black;
+    }
+}
+
+.tabs-title>a:focus,
+.tabs-title>a[aria-selected='true'] {
+    background: none;
+    outline: 0;
+}
+
+ul.menu.align-right>li>a[aria-selected='true'] {
+    color: $primary-color;
+}
+
+
+#contents.tabs-panel {
+    padding: 0;
+    .tabs-panel {
+        padding: 0;
+    }
+}
+
+.sticky nav {
+    background: white;
+}
+
+
+/* Breadcrumbs */
+
+.breadcrumbs {
+    li {
+        &:not(:last-child)::after {
+            content: ">";
+        }
+        &:after {
+            content: ">";
+            color: #cacaca;
+            margin: 0 0.75rem;
+            opacity: 1;
+        }
+    }
+}
+
 
 /* Main content */
 
-.form {
-    ul {
-        list-style: none;
-    }
+.cell {
+    margin: rem-calc(10 0);
+    padding-top: rem-calc(10);
 }
+
 
 .headings {
     .cell {
@@ -67,36 +238,221 @@ nav {
     }
 }
 
-/* NOT SURE WHAT THIS IS SUPPOSED TO DO (Coming from Bulma?) */
-.article-header {
-    @extend .title !optional;
-}
-
-.article-content {
-    @extend .content !optional;
-}
-/***/
-
-// Equal height blocks
+// Card
 .card {
-    display: flex;
-    flex-direction: column;
+
+    position: relative;
     height: 100%;
-}
+    text-align: center;
 
-.card-footer {
-    margin-top: auto;
-}
+    &:hover {
+        border: 1px solid $primary-color;
 
-.tabs-container {
-    .section {
-        display: none;
+        .card-section {
+            background: $primary-color;
+            h3 {
+                color: white;
+            }
+            .card-footer {
+                border-top: 1px solid $light-gray;
+                color: $light-gray;
+            }
+            &.overlay {
+                background: $primary-color;
+            }
+        }
+        &.search-results:hover {
+            border: 1px solid $light-gray;
+            .card-section {
+                background: none;
+            }
+            .card-footer {
+                border-top: 1px solid gray;
+                color: gray;
+            }
+        }
+    }
 
-        &.is-active {
+    .card-divider {
+        display: block;
+        color: black;
+        background: none;
+
+        img {
             display: block;
+            margin: 0 auto;
+            width: 80%;
+        }
+
+        h2 {
+            font-size: rem-calc(24);
+            font-variant: small-caps;
+            font-weight: bold;
+        }
+    }
+
+    .card-section {
+
+        h3 {
+            font-size: rem-calc(20);
+            font-weight: normal;
+        }
+
+        .card-footer {
+            border-top: 1px solid gray;
+            color: gray;
+            margin-top: rem-calc(16);
+            padding-top: rem-calc(16);
+        }
+        .card-highlight {
+            border-top: 1px solid gray;
+            color: gray;
+            margin-top: rem-calc(16);
+            text-align: justify;
+        }
+        &.overlay {
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            bottom: 0;
+            position: absolute;
+            text-align: center;
+            width: 100%;
+
+            h3 {
+                color: white;
+                font-weight: bold;
+                &.small-caps {
+                    font-variant: small-caps;
+                }
+            }
+
+            .card-footer {
+                border-top: 1px solid white;
+                color: $light-gray;
+            }
         }
     }
 }
+
+.pagination,
+.page-controls {
+    text-align: center;
+}
+
+
+
+/* Accordion */
+
+.accordion-item:first-child> :first-child {
+    background: $primary-color;
+    border: none;
+    color: white;
+    padding: rem-calc(16);
+    width: rem-calc(100);
+
+    &:hover {
+        background: darken($primary-color, 10%);
+        color: white;
+    }
+}
+
+.accordion-title {
+    border: none;
+    color: black;
+    font-size: rem-calc(16);
+    padding: 0;
+    padding-top: rem-calc(20);
+}
+
+.is-active>.accordion-title {
+
+    &::before {
+        color: white;
+    }
+
+    &:hover {
+        background: none;
+        color: black;
+    }
+}
+
+.accordion-content {
+    border: none;
+    padding-left: 0;
+    ul {
+        margin-left: 0;
+        list-style-type: none;
+        float: left;
+        li {
+            float: left;
+            margin: 0 0.5rem 0.5rem 0;
+            text-align: center;
+
+            a {
+                border: 1px solid $primary-color;
+                display: block;
+                padding: 0.2rem 2rem;
+                span {
+                    color: gray;
+                    font-size: 0.75rem;
+                }
+                &:hover {
+                    background: $primary-color;
+                    color: white;
+                    span {
+                        color: $light-gray;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* Search form */
+
+section {
+    &.search {
+        ul {
+            list-style: none;
+        }
+
+        .cell {
+            background: $light-gray;
+            padding: 1rem 1.5rem;
+        }
+    }
+}
+
+
+/* Table of contents */
+
+tbody {
+    border: none;
+}
+
+td {
+    &.float-left {
+        float: none!important;
+    }
+
+    &.paragraph {
+        width: 50%;
+    }
+}
+
+
+/* Page level */
+.note{
+    background:#f8f8f8;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border:1px solid $light-gray;
+    font-style: italic;
+}
+
+
+
 
 /* Footer */
 
@@ -105,7 +461,7 @@ footer {
     color: $white;
     font-size: rem-calc(14);
     padding: rem-calc(20 0);
-    
+
     a {
         color: $warning-color;
         font-weight: 700;
@@ -113,5 +469,51 @@ footer {
 
     img {
         max-width: rem-calc(60);
+    }
+}
+
+
+
+
+/* Hacks to rectify */
+
+.minus-margin-top {
+    margin-top: -2.5rem;
+}
+
+
+
+
+
+
+/* Media queries */
+
+@media screen and (max-width: 1024px) {
+
+    td {
+        &.float-left {
+            float: left!important;
+
+            &:before {
+                content: "Page ";
+            }
+
+            &:after {
+                content: ", ";
+            }
+        }
+
+        &.paragraph {
+            width: 100%;
+        }
+    }
+
+    tbody th,
+    tbody td {
+        padding: rem-calc(0 7);
+    }
+
+    tr {
+        padding: rem-calc(7 0);
     }
 }

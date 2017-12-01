@@ -1,8 +1,18 @@
-{% load wagtailcore_tags cms_tags %}
+{% load wagtailcore_tags periodicals_tags cms_tags %}
+<ul class=" medium-horizontal vertical dropdown menu">
+      
     {% for page in menu_pages %}
-    <li{% if page.active %} class="is-active" {% endif %}>
-        <a href="{% pageurl page %}">{{ page.title }}</a>
+      <li {% if page.active %} class="is-active" {% endif %}><a href="{% pageurl page %}">{{ page.title }}</a></li>
+       {% endfor %}
 
-        {% sub_menu root=page %}
-    </li>
-    {% endfor %}
+     <li><a href="{% url 'search' %}">Search</a></li>
+
+      {% if request.user.is_authenticated %}
+          {% if request.user.is_staff %}
+          <li><a href="/admin/">Admin Panel</a></li>
+          {% endif %}
+      {% endif %}
+      <li><a href="/admin/logout/">Logout {{ request.user.first_name }}</a></li>
+      
+</ul>
+   

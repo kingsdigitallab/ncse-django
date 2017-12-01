@@ -12,7 +12,7 @@ def next(some_list, current_index):
     """
     try:
         return some_list[int(current_index) + 1]  # access the next element
-    except:
+    except Exception:
         return ''  # return empty string in case of exception
 
 
@@ -24,7 +24,7 @@ def previous(some_list, current_index):
     """
     try:
         return some_list[int(current_index) - 1]  # access the previous element
-    except:
+    except Exception:
         return ''  # return empty string in case of exception
 
 
@@ -42,21 +42,6 @@ def get_site_root(context):
     :rtype: `wagtail.wagtailcore.models.Page`
     """
     return context['request'].site.root_page
-
-
-@register.assignment_tag(takes_context=False)
-def get_twitter_name():
-    return getattr(settings, 'TWITTER_NAME')
-
-
-@register.assignment_tag(takes_context=False)
-def get_twitter_url():
-    return getattr(settings, 'TWITTER_URL')
-
-
-@register.assignment_tag(takes_context=False)
-def get_twitter_widget_id():
-    return getattr(settings, 'TWITTER_WIDGET_ID')
 
 
 @register.simple_tag
@@ -91,20 +76,3 @@ def sub_menu(context, root):
 
     return {'request': context['request'], 'root': root,
             'menu_pages': menu_pages}
-
-
-@register.inclusion_tag('cms/tags/footer_menu.html', takes_context=True)
-def footer_menu(context, root, current_page=None):
-    """Returns the main menu items, the children of the root page. Only live
-    pages that have the show_in_menus setting on are returned."""
-    menu_pages = root.get_children().live().in_menu()
-
-    root.active = (current_page.url == root.url
-                   if current_page else False)
-
-    for page in menu_pages:
-        page.active = (current_page.url.startswith(page.url)
-                       if current_page else False)
-
-    return {'request': context['request'], 'root': root,
-            'current_page': current_page, 'menu_pages': menu_pages}

@@ -176,7 +176,7 @@ def deploy(version=None):
     install_requirements()
     upload_local_settings()
     own_django_log()
-    fix_permissions()
+    # fix_permissions()
     migrate()
     collect_static()
     # update_index()

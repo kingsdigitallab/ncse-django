@@ -61,19 +61,28 @@ function enableCanvas() {
     }
 }
 
+function enablePublicationSwitcher()
+{
+    if ($('#publication-year-switcher').length)
+    {
+        $('body').on('click', '#publication-year-switcher a', function(event)
+        {
+            event.preventDefault();
+            event.stopPropagation();
+
+            $.get($(this).attr('href'), function(data)
+            {
+                $('#issues-ajax').html( data );
+            });
+            $('#publication-year-switcher a').removeClass('is-active');
+            $(this).addClass('is-active');
+        });
+    }
+}
+
 $(function() {
-    // Your JS Here
     if ($("canvas")) {
         enableCanvas();
     }
-
-    if ($(".tabs")) {
-        $(".tabs ul li").on("click", function() {
-            var option = $(this).data("option");
-            $(".tabs ul li").removeClass("is-active");
-            $(this).addClass("is-active");
-            $(".tabs-container section").removeClass("is-active");
-            $('section[data-item="' + option + '"]').addClass("is-active");
-        });
-    }
+    enablePublicationSwitcher();
 });

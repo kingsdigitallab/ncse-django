@@ -51,10 +51,19 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
         return self.get_model().objects.all()
 
     def prepare_page_url(self, obj):
-        return obj.page.url
+        if obj.page:
+            return obj.page.url
+        else:
+            return None
 
     def prepare_issue_url(self, obj):
-        return obj.issue.url
+        if obj.issue:
+            return obj.issue.url
+        else:
+            return None
 
     def prepare_publication_url(self, obj):
-        return obj.issue.publication.url
+        if obj.issue and obj.issue.publication:
+            return obj.issue.publication.url
+        else:
+            return None

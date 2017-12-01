@@ -1,4 +1,4 @@
-{% load staticfiles compress periodicals_tags  %}
+{% load staticfiles compress periodicals_tags wagtailcore_tags  %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,19 +27,32 @@
 
   {% block header %}
   {% comment %} This is here because of overriding the title {% endcomment %}
-  <section class="hero">
+  <section>
     <div class="grid-container">
       <div class="grid-x">
         <div class="cell">
-          <h1 class="title">
+          <div aria-label="You are here:" role="navigation">
+
+            <ul class="breadcrumbs">
+            {% block breadcrumbs %}
+            {% endblock %}
+            </ul>
+
+            <span class="show-for-sr">Current: </span> 
+             <h1 class="underline">
             {% block title %}{% endblock %}<br>
-            <small>Masonic Periodicals (Functional Demo)</small>
           </h1>
+          </div>
+          
         </div>
       </div>
     </div>
   </section>
   {% endblock %}
+
+
+
+
 
   <main>
   {% block main %}

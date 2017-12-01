@@ -1,5 +1,5 @@
-from django.views.generic import DetailView, ListView, TemplateView
 from django.shortcuts import get_object_or_404
+from django.views.generic import DetailView, ListView, TemplateView
 from haystack.generic_views import FacetedSearchView
 
 from .forms import PeriodicalsSearchForm
@@ -66,7 +66,6 @@ class ArticlePrintView(TemplateView):
 
 
 class PageDetailView(DetailView):
-
     def get_object(self):
         return get_object_or_404(
             Page, issue__slug=self.kwargs['issue_slug'],
@@ -102,10 +101,42 @@ class IssueDetailView(DetailView):
     context_object_name = 'issue'
     queryset = Issue.objects.all()
 
+    def get_context_data(self, **kwargs):
+        context = super(IssueDetailView, self).get_context_data(**kwargs)
+        return context
+
 
 class PublicationDetailView(DetailView):
     context_object_name = 'publication'
     queryset = Publication.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(PublicationDetailView, self).get_context_data(**kwargs)
+
+        if 'year' in self.request.GET:
+            year = self.request.GET['year']
+        else:
+            year = self.get_object().get_year_span()[0]
+
+        issues = self.get_object().issues.filter(issue_date__year=year)
+
+        context['selected_year'] = year
+        context['selected_issues'] = issues
+
+        return context
+
+
+class PublicationIssueAjax(TemplateView):
+    template_name = 'periodicals/ajax/issues_by_year.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(PublicationIssueAjax, self).get_context_data(**kwargs)
+        issues = Issue.objects.filter(
+            publication__slug=self.kwargs['slug']).filter(
+            issue_date__year=self.kwargs['year'])
+        context['selected_issues'] = issues
+        context['selected_year'] = self.kwargs['year']
+        return context
 
 
 class PublicationListView(ListView):
@@ -118,8 +149,18 @@ class PeriodicalsSearchView(FacetedSearchView):
     form_class = PeriodicalsSearchForm
     template_name = 'periodicals/search.html'
 
+    def get_initial(self):
+        initial = super(FacetedSearchView, self).get_initial()
+        # Find the first and last published years
+        # set as default for the form
+        first = Issue.objects.all().order_by('issue_date')[0]
+        last = Issue.objects.all().order_by('-issue_date')[0]
+        initial['start_year'] = first.issue_date.year
+        initial['end_year'] = last.issue_date.year
+        return initial
+
     def get_queryset(self):
-        queryset = super(FacetedSearchView, self).get_queryset()
+        queryset = super(PeriodicalsSearchView, self).get_queryset()
 
         for field in self.facet_fields:
             queryset = queryset.facet(

@@ -1,91 +1,87 @@
-{% extends 'base.html' %}
+{% extends 'periodicals/base.html' %}
+{% load highlight periodicals_tags  %}
+{% block title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %} {{ article.issue }}{% endblock %} {% block meta_title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %}{{ article.issue }}{% endblock %} {% block main %}
+<section class="grid-container">
+    <div class="grid-x">
+        <div class="cell minus-margin-top">
+            <ul class="menu align-right">
+                {% get_request_parameters as search_params %}
+                {% if search_params %}
+                <li><a href="{% url 'search' %}?{{ search_params }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to results</a> </li>
+                {% endif %}
+                <li><a href="{{ article.issue.url }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Issue</a>
+                </li>
+                <!-- <li><a href="{{ article.page.print_url }}"><i class="fa fa-print" aria-hidden="true"></i> Print Page</a>
+                            </li>-->
+                <li><a href="{{ article.print_url }}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print full article</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
 
-{% block title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %} {{ article.issue }}{% endblock %}
-{% block meta_title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %}{{ article.issue }}{% endblock %}
+<section class="grid-container">
+    <div class="grid-x">
+        <div class="cell tabs" data-tabs id="article-tabs">
+            <ul class="menu subnav">
+                <li class="tabs-title is-active"><a href="#image" aria-selected="true">Image</a></li>
+                <li class="tabs-title"><a data-tabs-target="transcription" href="#transcription">Transcription</a></li>
+                <li class="tabs-title"><a data-tabs-target="citation" href="#citation">Citation</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
 
-{% block main %}
-
-<div class="tabs">
-    <ul class="menu align-center">
-        <li class="is-active" data-option="image"><a>Image</a></li>
-        <li data-option="transcription"><a>Transcription</a></li>
-    </ul>
+<div class="grid-container tabs-content" data-tabs-content="article-tabs">
+    <section class="page-controls">
+        {% if article.continuation_from %}
+        <a class="button" href="{{ article.continuation_from.url }}">&larr; </a>{% endif %}
+        Page <strong>{{ article.get_position_in_article }}</strong> of {{ article.get_number_of_pages }} 
+        {% if article.continuation_to %}
+        <a class="button is-pulled-right" href="{{ article.continuation_to.url }}"> &rarr;</a> {% endif %}
+    </section>
+    <section class="tabs-panel is-active" id="image">
+        <div class="grid-x">
+            <div class="cell">
+                <canvas class="pageCanvas border" data-image-id="page{{ article.page.number }}" width="{{ article.page.width }}" height="{{ article.page.height }}">
+                    <!-- Fallback for non-canvas supporting devices -->
+                    <img id="page{{ article.page.number}}" src="{{ article.page.image.url }}">
+                </canvas>
+            </div>
+        </div>
+    </section>
+    <section class="tabs-panel" id="transcription">
+        <div class="grid-x">
+            <div class="cell container">
+                <div class="column is-half  article" id="{{ article.aid }}">
+                    {{ article.content_html|safe }}
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="tabs-panel" id="citation">
+        <div class="grid-x">
+            <div class="cell container">
+                Content of citation
+            </div>
+        </div>
+    </section>
 </div>
 
 <div class="grid-container">
     <div class="grid-x">
         <div class="cell">
-            <ul class="pagination text-center" role="navigation" aria-label="Pagination">
-
-                <li class="{% if article.page.previous_page %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
-                    {% if article.page.previous_page %}
-                    <a href="{{ article.page.previous_page.url }}" aria-label="Previous page">
-                    {% endif %}
-                        Prev <span class="show-for-sr">page</span>
-                    {% if article.page.previous_page %}
-                    </a>
-                    {% endif %}
-                </li>
-
-                <li><a href="{{ article.issue.url }}">Go to Issue</a><li>
-                <li><a href="{{ article.page.print_url }}">Print Page</a><li>
-                <li><a href="{{ article.print_url }}">Print Article</a></li>
-
-                <li class="{% if article.page.next_page %}pagination-next{% else %}pagination-next disabled{% endif %}">
-                    {% if article.page.next_page %}
-                    <a href="{{ article.page.next_page.url }}" aria-label="Next page">
-                    {% endif %}
-                        Next <span class="show-for-sr">page</span>
-                    {% if article.page.next_page %}
-                    </a>
-                    {% endif %}
-                </li>
-            </ul>
+            {% with publication=article.page.issue.publication issue=article.page.issue page=article.page%}
+                {% include 'periodicals/includes/pagination.html' %}
+            {% endwith %}
         </div>
     </div>
 </div>
-
-<div class="grid-container tabs-container">
-    <section class="grid-x section is-active" data-item="image">
-        <div class="cell container">
-
-            <canvas class="pageCanvas" data-image-id="page{{ article.page.number}}" width="{{ article.page.width }}" height="{{ article.page.height }}">
-            <!-- Fallback for non-canvas supporting devices -->
-                <img id="page{{ article.page.number}}" src="{{ article.page.image.url }}">
-            </canvas>
-
-            <div class="page-controls">
-                {% if article.continuation_from %}
-                <a class="button" href="{{ article.continuation_from.url }}">Previous Section</a>
-                {% endif %}
-
-                {% if article.continuation_to %}
-                <a class="button is-pulled-right" href="{{ article.continuation_to.url }}">Next Setion</a>
-                {% endif %}
-            </div>
-        </div>
-    </section>
-
-    <section class="grid-x section" data-item="transcription">
-        <div class="cell container">
-            <div class="column is-half  article" id="{{ article.aid }}">
-                {{ article.content_html|safe }}
-            </div>
-        </div>
-    </section>
-</div>
-{% endblock %}
-
-{% block footer_scripts %}
-{% if highlight_words  %}
-<script>
-var highlight_words = {{ highlight_words|safe }};
-</script>
-{% endif %}
-{% if article.page.number_of_articles > 1 %}
-<script>
-var article_bounding_box = {{ article.get_real_bounding_box|safe }};
-</script>
-{% endif %}
-{% endblock %}
-
+    {% endblock %} {% block footer_scripts %} {% if highlight_words %}
+    <script>
+    var highlight_words = {{ highlight_words | safe }};
+    </script>
+    {% endif %} {% if article.page.number_of_articles > 1 %}
+    <script>
+    var article_bounding_box = {{ article.get_real_bounding_box | safe }};
+    </script>
+    {% endif %} {% endblock %}
