@@ -31,9 +31,6 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
     issue_number_of_pages = indexes.IntegerField(
         model_attr='issue__number_of_pages', indexed=False, null=True)
     issue_pdf = indexes.CharField(model_attr='issue__pdf', indexed=False)
-
-    publication = indexes.IntegerField(
-        model_attr='issue__publication__id', indexed=False)
     publication_url = indexes.CharField(indexed=False, null=True)
     publication_abbreviation = indexes.FacetCharField(
         model_attr='issue__publication__abbreviation', null=True)
@@ -43,6 +40,11 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
         model_attr='issue__publication__title', null=True)
     publication_description = indexes.CharField(
         model_attr='issue__publication__description', null=True)
+
+    # Prettier facets
+    publication = indexes.FacetCharField(null=True)
+    year = indexes.FacetIntegerField(
+        model_attr='issue__issue_date__year', null=True)
 
     def get_model(self):
         return Article
@@ -65,5 +67,14 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
     def prepare_publication_url(self, obj):
         if obj.issue and obj.issue.publication:
             return obj.issue.publication.url
+        else:
+            return None
+
+    def prepare_publication(self, obj):
+        if obj.issue and obj.issue.publication:
+            if obj.issue.publication.title:
+                return obj.issue.publication.title
+            else:
+                return obj.issue.publication.abbreviation
         else:
             return None
