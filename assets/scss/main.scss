@@ -235,20 +235,20 @@ ul.menu.align-right > li > a[aria-selected='true'] {
 
 /* Main content */
 
-.cell {
+.columns {
     margin: rem-calc(10 0);
     padding-top: rem-calc(10);
 }
 
 
 .headings {
-    .cell {
+    .columns {
         font-weight: 700;
     }
 }
 
 .results-list {
-    .cell {
+    .columns {
         border-top: 1px solid $light-gray;
         margin: rem-calc(10 0);
         padding-top: rem-calc(10);
@@ -447,7 +447,7 @@ section {
             list-style: none;
         }
 
-        .cell {
+        .columns {
             background: $light-gray;
             padding: rem-calc(16 24);
         }
