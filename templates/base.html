@@ -1,4 +1,4 @@
-{% load staticfiles compress periodicals_tags wagtailcore_tags  %}
+{% load staticfiles compress periodicals_tags wagtailcore_tags %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +15,8 @@
 <body>
   <nav>
     <div class="grid-container">
-      <div class="grid-x">
-        <div class="cell">
+      <div class="row">
+        <div class="small-12 columns">
         {% block navigation %}
           {% include 'includes/navigation.html' %}
         {% endblock %}
@@ -28,9 +28,9 @@
   {% block header %}
   {% comment %} This is here because of overriding the title {% endcomment %}
   <section>
-    <div class="grid-container">
-      <div class="grid-x">
-        <div class="cell">
+    <!-- <div class="grid-container"> -->
+      <div class="row">
+        <div class="small-12 columns">
           <div aria-label="You are here:" role="navigation">
 
             <ul class="breadcrumbs">
@@ -46,13 +46,9 @@
           
         </div>
       </div>
-    </div>
+    <!-- </div> -->
   </section>
   {% endblock %}
-
-
-
-
 
   <main>
   {% block main %}
@@ -60,15 +56,15 @@
   </main>
 
   <footer>
-    <div class="grid-container">
-      <div class="grid-x">
-        <div class="cell">
+    <!-- <div class="grid-container"> -->
+      <div class="row">
+        <div class="small-12 columns">
         {% block footer %}
           {% include 'includes/footer.html' %}
         {% endblock %}
         </div>
       </div>
-    </div>
+    <!-- </div> -->
   </footer>
 
   {% compress js %}

@@ -1,25 +1,52 @@
 {% extends 'periodicals/base.html' %}
-{% load highlight periodicals_tags  %}
-{% block title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %} {{ article.issue }}{% endblock %} {% block meta_title %}{% if article.title %}{{ article|title }}{% else %}{{ article.aid }}{% endif %}{{ article.issue }}{% endblock %} {% block main %}
-<section class="grid-container">
-    <div class="grid-x">
-        <div class="cell minus-margin-top">
+{% load highlight periodicals_tags %}
+
+{% block title %}
+    {% if article.title %}
+    {{ article|title }}
+    {% else %}
+    {{ article.aid }}
+    {% endif %}
+    {{ article.issue }}
+{% endblock %}
+
+{% block meta_title %}
+    {% if article.title %}
+    {{ article|title }}
+    {% else %}
+    {{ article.aid }}
+    {% endif %}
+    {{ article.issue }}
+{% endblock %}
+
+{% block main %}
+<!-- <section class="grid-container"> -->
+<section>
+    <div class="row">
+        <div class="small-12 columns minus-margin-top">
             <ul class="menu align-right">
                 {% get_request_parameters as search_params %}
                 {% if search_params %}
-                <li><a href="{% url 'search' %}?{{ search_params }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to results</a> </li>
-                {% endif %}
-                <li><a href="{{ article.issue.url }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Issue</a>
+                <li>
+                    <a href="{% url 'search' %}?{{ search_params }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to results</a>
                 </li>
-                <!-- <li><a href="{{ article.page.print_url }}"><i class="fa fa-print" aria-hidden="true"></i> Print Page</a>
-                            </li>-->
-                <li><a href="{{ article.print_url }}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print full article</a></li>
+                {% endif %}
+                <li>
+                    <a href="{{ article.issue.url }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Issue</a>
+                </li>
+                <!-- <li>
+                    <a href="{{ article.page.print_url }}"><i class="fa fa-print" aria-hidden="true"></i> Print Page</a>
+                </li> -->
+                <li>
+                    <a href="{{ article.print_url }}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print full article</a>
+                </li>
             </ul>
         </div>
     </div>
 </section>
 
-<section class="grid-container">
+<!-- <section class="grid-container"> -->
+<section>
     <div class="grid-x">
         <div class="cell tabs" data-tabs id="article-tabs">
             <ul class="menu subnav">
@@ -31,17 +58,20 @@
     </div>
 </section>
 
-<div class="grid-container tabs-content" data-tabs-content="article-tabs">
+<div class="tabs-content" data-tabs-content="article-tabs">
     <section class="page-controls">
         {% if article.continuation_from %}
-        <a class="button" href="{{ article.continuation_from.url }}">&larr; </a>{% endif %}
+        <a class="button" href="{{ article.continuation_from.url }}">&larr;</a>
+        {% endif %}
         Page <strong>{{ article.get_position_in_article }}</strong> of {{ article.get_number_of_pages }} 
         {% if article.continuation_to %}
-        <a class="button is-pulled-right" href="{{ article.continuation_to.url }}"> &rarr;</a> {% endif %}
+        <a class="button is-pulled-right" href="{{ article.continuation_to.url }}"> &rarr;</a>
+        {% endif %}
     </section>
+
     <section class="tabs-panel is-active" id="image">
-        <div class="grid-x">
-            <div class="cell">
+        <div class="row">
+            <div class="small-12 columns">
                 <canvas class="pageCanvas border" data-image-id="page{{ article.page.number }}" width="{{ article.page.width }}" height="{{ article.page.height }}">
                     <!-- Fallback for non-canvas supporting devices -->
                     <img id="page{{ article.page.number}}" src="{{ article.page.image.url }}">
@@ -49,39 +79,45 @@
             </div>
         </div>
     </section>
+
     <section class="tabs-panel" id="transcription">
-        <div class="grid-x">
-            <div class="cell container">
+        <div class="row">
+            <div class="small-12 columns container">
                 <div class="column is-half  article" id="{{ article.aid }}">
                     {{ article.content_html|safe }}
                 </div>
             </div>
         </div>
     </section>
+
     <section class="tabs-panel" id="citation">
-        <div class="grid-x">
-            <div class="cell container">
+        <div class="row">
+            <div class="small-12 columns container">
                 Content of citation
             </div>
         </div>
     </section>
 </div>
 
-<div class="grid-container">
-    <div class="grid-x">
-        <div class="cell">
+<!-- <div class="grid-container"> -->
+    <div class="row">
+        <div class="small-12 columns">
             {% with publication=article.page.issue.publication issue=article.page.issue page=article.page%}
-                {% include 'periodicals/includes/pagination.html' %}
+            {% include 'periodicals/includes/pagination.html' %}
             {% endwith %}
         </div>
     </div>
-</div>
-    {% endblock %} {% block footer_scripts %} {% if highlight_words %}
+<!-- </div> -->
+{% endblock %}
+
+{% block footer_scripts %}
+    {% if highlight_words %}
     <script>
-    var highlight_words = {{ highlight_words | safe }};
+        var highlight_words = {{ highlight_words | safe }};
     </script>
     {% endif %} {% if article.page.number_of_articles > 1 %}
     <script>
-    var article_bounding_box = {{ article.get_real_bounding_box | safe }};
+        var article_bounding_box = {{ article.get_real_bounding_box | safe }};
     </script>
-    {% endif %} {% endblock %}
+    {% endif %}
+{% endblock %}

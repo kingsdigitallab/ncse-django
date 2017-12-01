@@ -1,11 +1,12 @@
 <ul class="pagination text-center" role="navigation" aria-label="Pagination">
     <li class="{% if page.previous_page %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
         {% if page.previous_page %}
-            <a href="{{ page.previous_page.url }}" aria-label="Previous page">
+        <a href="{{ page.previous_page.url }}" aria-label="Previous page">
         {% endif %}
-        Prev <span class="show-for-sr">page</span>
+            Prev <span class="show-for-sr">page</span>
         {% if page.previous_page %}
-            </a> {% endif %}
+        </a>
+        {% endif %}
     </li>
     {% for issue_page in page.issue.pages.all %}
         {% if page.id == issue_page.id %}
@@ -15,15 +16,15 @@
         {% endif %}
     {% endfor %}
 
-
     <li class="ellipsis"></li>
 
     <li class="{% if page.next_page %}pagination-next{% else %}pagination-next disabled{% endif %}">
         {% if page.next_page %}
-            <a href="{{ page.next_page.url }}" aria-label="Next page">
+        <a href="{{ page.next_page.url }}" aria-label="Next page">
         {% endif %}
-        Next <span class="show-for-sr">page</span>
+            Next <span class="show-for-sr">page</span>
         {% if page.next_page %}
-            </a> {% endif %}
+        </a>
+        {% endif %}
     </li>
 </ul>

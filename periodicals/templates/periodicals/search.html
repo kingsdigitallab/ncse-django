@@ -1,19 +1,27 @@
-{% extends 'periodicals/base.html' %} {% load highlight periodicals_tags %} {% block meta_title %}Search{% endblock %} {% block title %}Search {% endblock %} {% block breadcrumbs %}
+{% extends 'periodicals/base.html' %}
+{% load highlight periodicals_tags %}
+
+{% block meta_title %}Search{% endblock %}
+{% block title %}Search {% endblock %}
+
+{% block breadcrumbs %}
 <li><a href="/">Home</a></li>
 <li>Search</li>
-{% endblock %} {% block main %}
+{% endblock %}
+
+{% block main %}
 <section class="search">
     <form method="get" action=".">
-        <div class="grid-container">
-            <div class="grid-x  grid-padding-y medium-up-3 large-up-3">
-                <div class="cell">
+        <!-- <div class="grid-container"> -->
+            <div class="row medium-up-3 large-up-3">
+                <div class="column column-block">
                     {% with field=form.q %} {{ field.errors }} {{ field.label_tag }} {{ field }} {% if field.help_text %}
                     <p class="help">{{ field.help_text|safe }}</p>
                     {% endif %} {% endwith %} {% with field=form.mode %} {{ field.errors }} {{ field.label_tag }} {{ field }} {% if field.help_text %}
                     <p class="help">{{ field.help_text|safe }}</p>
                     {% endif %} {% endwith %}
                 </div>
-                <div class="cell">
+                <div class="column column-block">
                     <div class="grid-x  grid-padding-y medium-up-full large-up-2">
                         <div class="cell">
                             {% with field=form.start_year %} {{ field.errors }} {{ field.label_tag }} {{ field }} {% if field.help_text %}
@@ -27,26 +35,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="cell">
+                <div class="column column-block">
                     {% with field=form.order_by %} {{ field.errors }} {{ field.label_tag }} {{ field }} {% if field.help_text %}
                     <p class="help">{{ field.help_text|safe }}</p>
                     {% endif %} {% endwith %}
                     <input class="button" type="submit" value="Search">
                 </div>
             </div>
-        </div>
+        <!-- </div> -->
     </form>
 </section>
-<section class="grid-container">
-    <div class="grid-x">
-        <div class="cell">
+
+<!-- <section class="grid-container"> -->
+<section>
+    <div class="row">
+        <div class="small-12 columns">
             <h1 class="underline">
             Results
         </h1>
             <br>
             <p>Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ paginator.count }} matches</p>
         </div>
-        <div class="cell">
+        <div class="small-12 columns">
             <ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">
                 <li class="accordion-item is-active" data-accordion-item>
                     <a href="#" class="accordion-title">Filters</a>
@@ -70,8 +80,8 @@
             </ul>
         </div>
     </div>
-    <div class="grid-x">
-        <div class="cell tabs" data-tabs id="issue-tabs">
+    <div class="row">
+        <div class="small-12 columns tabs" data-tabs id="issue-tabs">
             <ul class="menu align-right">
                 <li class="tabs-title is-active"><a href="#list" aria-selected="true"><i class="fa fa-list-ul" aria-hidden="true"></i> List</a></li>
                 <li class="tabs-title"><a data-tabs-target="grid" href="#grid"><i class="fa fa-th" aria-hidden="true"></i> Grid</a></li>
@@ -79,10 +89,10 @@
         </div>
     </div>
 </section>
-<div class="grid-container tabs-content" data-tabs-content="issue-tabs">
+<div class="tabs-content" data-tabs-content="issue-tabs">
     <section class="tabs-panel is-active" id="list">
-        <div class="grid-x">
-            <div class="cell">
+        <div class="row">
+            <div class="small-12 columns">
                 <table class="stack unstriped">
                     <thead>
                         <tr>
@@ -138,10 +148,10 @@
     </section>
     <section class="tabs-panel" id="grid">
         <!-- *** Card *** -->
-        <div class="grid-container data-equalizer">
-            <div class="grid-x grid-padding-x small-up-2 large-up-4">
+        <div class="data-equalizer">
+            <div class="row small-up-2 large-up-4">
                 {% for result in page_obj.object_list %}
-                <div class="cell">
+                <div class="column">
                     <div class="card search-results data-equalizer-watch">
                         <div class="card-section">
                             <h2><a href="{{ result.publication_url }}">{{ result.publication_abbreviation }}</a></h2>
@@ -156,8 +166,8 @@
                             </a>
                             </p>
                             {% if query %}
-                            <div class="card-highlight">
-                                <div class="cell">
+                            <div class="row card-highlight">
+                                <div class="small-12 columns">
                                     {% highlight result.text with query html_tag "strong" %}
                                 </div>
                             </div>
@@ -172,7 +182,7 @@
                     </div>
                 </div>
                 {% empty %}
-                <div class="cell">
+                <div class="column">
                     <p>No results found.</p>
                 </div>
                 {% endfor %}
@@ -181,31 +191,35 @@
         <!-- *** Card End *** -->
     </section>
 </div>
-<div class="grid-container">
+<!-- <div class="grid-container"> -->
     {% if page_obj.has_previous or page_obj.has_next %} {% get_request_parameters exclude="page" as params %}
-    <div class="grid-x">
-        <div class="cell">
+    <div class="row">
+        <div class="small-12 columns">
             <ul class="pagination text-center" role="navigation" aria-label="Pagination">
                 <li class="{% if page_obj.has_previous %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
                     {% if page_obj.has_previous %}
                     <a href="?page={{ page_obj.previous_page_number }}{% if params %}{{ params }}{% endif %}" aria-label="Previous page">
-                        {% endif %}
-                            Prev <span class="show-for-sr">page</span>
-                        {% if page_obj.has_previous %}
-                        </a> {% endif %}
+                    {% endif %}
+                        Prev <span class="show-for-sr">page</span>
+                    {% if page_obj.has_previous %}
+                    </a>
+                    {% endif %}
                 </li>
-                <li>Page {{ page_obj.number }} of {{ paginator.num_pages }} </li>
+                <li>
+                    Page {{ page_obj.number }} of {{ paginator.num_pages }}
+                </li>
                 <li class="{% if page_obj.has_next %}pagination-next{% else %}pagination-next disabled{% endif %}">
                     {% if page_obj.has_next %}
                     <a href="?page={{ page_obj.next_page_number }}{% if params %}{{ params }}{% endif %}" aria-label="Next page">
                         {% endif %}
-                            Next <span class="show-for-sr">page</span>
+                        Next <span class="show-for-sr">page</span>
                         {% if page_obj.has_next %}
-                        </a> {% endif %}
+                    </a>
+                    {% endif %}
                 </li>
             </ul>
         </div>
     </div>
     {% endif %}
-</div>
+<!-- </div> -->
 {% endblock %}

@@ -1,6 +1,6 @@
 @import 'settings';
 @import 'font-awesome';
-@import '../vendor/foundation-sites/assets/foundation';
+@import 'foundation';
 @import '../vendor/motion-ui/motion-ui';
 
 @import url('https://fonts.googleapis.com/css?family=Lusitana|Neuton|Peddana|Petrona|Scheherazade|Suravaram|Unna');
@@ -73,6 +73,23 @@ h3 {
 .button{
     width: 100%;
 }
+
+// Hiding mobile menu on loading
+
+.no-js {
+  @include breakpoint(small only) {
+    .top-bar {
+      display: none;
+    }
+  }
+
+  @include breakpoint(medium) {
+    .title-bar {
+      display: none;
+    }
+  }
+}
+
 
 /* Navigation */
 
@@ -340,7 +357,6 @@ ul.menu.align-right>li>a[aria-selected='true'] {
 }
 
 
-
 /* Accordion */
 
 .accordion-item:first-child> :first-child {
@@ -433,7 +449,7 @@ tbody {
 
 td {
     &.float-left {
-        float: none!important;
+        float: none !important;
     }
 
     &.paragraph {
@@ -450,8 +466,6 @@ td {
     border:1px solid $light-gray;
     font-style: italic;
 }
-
-
 
 
 /* Footer */
@@ -473,17 +487,11 @@ footer {
 }
 
 
-
-
 /* Hacks to rectify */
 
 .minus-margin-top {
     margin-top: -2.5rem;
 }
-
-
-
-
 
 
 /* Media queries */
@@ -492,7 +500,7 @@ footer {
 
     td {
         &.float-left {
-            float: left!important;
+            float: left !important;
 
             &:before {
                 content: "Page ";
