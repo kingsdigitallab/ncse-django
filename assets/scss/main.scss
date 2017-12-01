@@ -221,17 +221,13 @@ ul.menu.align-right > li > a[aria-selected='true'] {
 /* Breadcrumbs */
 
 .breadcrumbs {
+
     li {
+        font-size: rem-calc(14);
+        padding: rem-calc(8 0);
 
         &:not(:last-child)::after {
             content: ">";
-        }
-
-        &:after {
-            content: ">";
-            color: #cacaca;
-            margin: rem-calc(0 12);
-            opacity: 1;
         }
     }
 }

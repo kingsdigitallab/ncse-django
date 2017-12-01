@@ -28,25 +28,23 @@
   {% block header %}
   {% comment %} This is here because of overriding the title {% endcomment %}
   <section>
-    <!-- <div class="grid-container"> -->
-      <div class="row">
-        <div class="small-12 columns">
-          <div aria-label="You are here:" role="navigation">
+    <div class="row">
+      <div class="small-12 columns">
+        <div aria-label="You are here:" role="navigation">
 
-            <ul class="breadcrumbs">
-            {% block breadcrumbs %}
-            {% endblock %}
-            </ul>
+          <ul class="breadcrumbs">
+          {% block breadcrumbs %}
+          {% endblock %}
+          </ul>
 
-            <span class="show-for-sr">Current: </span> 
-             <h1 class="underline">
-            {% block title %}{% endblock %}<br>
-          </h1>
-          </div>
-          
+          <span class="show-for-sr">Current: </span> 
+           <h1 class="underline">
+          {% block title %}{% endblock %}<br>
+        </h1>
         </div>
+        
       </div>
-    <!-- </div> -->
+    </div>
   </section>
   {% endblock %}
 

@@ -10,7 +10,6 @@
 {% endblock %}
 
 {% block main %}
-<!-- <section class="grid-container"> -->
 <section>
     <div class="row">
         <div class="small-12 columns minus-margin-top">
@@ -19,13 +18,11 @@
                 {% if search_params %}
                 <li><a href="{% url 'search' %}?{{ search_params }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to results</a> </li>
                 {% endif %}
-
             </ul>
         </div>
     </div>
 </section>
 
-<!-- <section class="grid-container"> -->
 <section>
     <div class="row">
         <div class="small-12 columns">
@@ -35,7 +32,7 @@
 </section>
 
 {% regroup publication.issues.all by issue_date.year as year_list %}
-<!-- <section class="grid-container"> -->
+
 <section>
     <div class="row">
         <div class="small-12 columns">
@@ -65,7 +62,7 @@
                     </div>
                     <div class="row small-up-2 medium-up-3 large-up-5">
                         {% for issue in selected_issues %}
-                        <div class="column">
+                        <div class="column column-block">
                             <div class="card">
                                 <a href="{{ issue.url }}">
                                     <div class="card-image">
