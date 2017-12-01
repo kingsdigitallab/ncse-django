@@ -1,35 +1,41 @@
 {% extends 'periodicals/base.html' %}
-{% load periodicals_tags  %}
-{% block meta_title %}{{ publication }} {% if publication.description %} - {{ publication.description }} {% endif %}{% endblock %}
-{% block title %}{{ publication }} {% if publication.description %} - {{ publication.description }} {% endif %}{% endblock %}
+{% load periodicals_tags %}
+
+{% block meta_title %}
+    {{ publication }} {% if publication.description %} - {{ publication.description }}{% endif %}
+{% endblock %}
+
+{% block title %}
+    {{ publication }} {% if publication.description %} - {{ publication.description }}{% endif %}
+{% endblock %}
 
 {% block main %}
-    <section class="grid-container">
-    <div class="grid-x">
-        <div class="cell minus-margin-top">
+<section>
+    <div class="row">
+        <div class="small-12 columns minus-margin-top">
             <ul class="menu align-right">
                 {% get_request_parameters as search_params %}
                 {% if search_params %}
                 <li><a href="{% url 'search' %}?{{ search_params }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to results</a> </li>
                 {% endif %}
-
             </ul>
         </div>
     </div>
 </section>
 
-
-    <section class="grid-container">
-    <div class="grid-x">
-        <div class="cell">
+<section>
+    <div class="row">
+        <div class="small-12 columns">
             <h3>Description</h3> {% lorem 2 p %}
         </div>
     </div>
 </section>
+
 {% regroup publication.issues.all by issue_date.year as year_list %}
-<section class="grid-container">
-    <div class="grid-x">
-        <div class="cell">
+
+<section>
+    <div class="row">
+        <div class="small-12 columns">
             <div id="sticky">
                 <div data-sticky-container>
                     <div class="sticky" data-sticky-on="small" data-sticky data-margin-top="0" data-anchor="sticky">
@@ -43,9 +49,9 @@
                         </nav>
                     </div>
                 </div>
-                <section class="grid-container" id="issues-ajax">
-                    <div class="grid-x">
-                        <div class="cell">
+                <section id="issues-ajax">
+                    <div class="row">
+                        <div class="small-12 columns">
                             <h3>
                                 {{ selected_year }} 
                                 <span>({{ selected_issues|length }} issues)
@@ -54,9 +60,9 @@
                             </h3>
                         </div>
                     </div>
-                    <div class="grid-x grid-padding-x grid-padding-y small-up-2 medium-up-3 large-up-5">
+                    <div class="row small-up-2 medium-up-3 large-up-5">
                         {% for issue in selected_issues %}
-                        <div class="cell ">
+                        <div class="column column-block">
                             <div class="card">
                                 <a href="{{ issue.url }}">
                                     <div class="card-image">

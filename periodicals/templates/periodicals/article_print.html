@@ -4,27 +4,26 @@
       
         <style type="text/css">
             @media print {
-                html, body {
+                html,
+                body {
                     margin: 0;
                     padding: 0;
                     height: 100%;
                 }
 
-                .page
-                {   
+                .page {   
                     height: 90%;
                 }
 
-                    .page img
-                    {
-                        display: block;
-                        max-height: 100%;
-                        margin: 0 auto;
-                    }
+                .page img {
+                    display: block;
+                    max-height: 100%;
+                    margin: 0 auto;
+                }
             }
         </style>
-
     </head>
+    
     <body>
         {% for p in pages %}
         <div class="page">
