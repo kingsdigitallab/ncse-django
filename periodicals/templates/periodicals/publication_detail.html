@@ -60,9 +60,9 @@
                             </h3>
                         </div>
                     </div>
-                    <div class="row small-up-2 medium-up-3 large-up-5">
+                    <div class="row small-up-2 medium-up-3 large-up-5" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium">
                         {% for issue in selected_issues %}
-                        <div class="column column-block">
+                        <div class="column column-block" data-equalizer-watch="cards">
                             <div class="card">
                                 <a href="{{ issue.url }}">
                                     <div class="card-image">

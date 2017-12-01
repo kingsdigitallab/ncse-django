@@ -12,10 +12,10 @@
 
 {% block main %}
 <div data-equalizer>
-    <div class="row small-up-2 medium-up-3 large-up-5">
+    <div class="row small-up-2 medium-up-3 large-up-5" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium">
         {% for publication in publications %}
         <div class="column column-block">
-            <div class="card" data-equalizer-watch>
+            <div class="card" data-equalizer-watch="cards">
                 <a href="{{ publication.url }}">
                     <div class="card-divider">
                         <h2>{{ publication }}</h2>
