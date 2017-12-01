@@ -29,8 +29,6 @@ body,
 h1,
 h2,
 h3 {
-    // font-family: 'Neuton', serif;
-    // font-family: 'Lusitana', serif;
     font-family: 'Petrona', serif;
 }
 
@@ -119,22 +117,26 @@ nav {
     .top-bar {
         background: $primary-color;
         padding: 0;
+
         ul {
-            background: $primary-color; // For TO: This doesn't seem to be used - GF
-            li.active {
-                &:before {
-                    border: 5px solid transparent;
-                    border-right: 5px solid transparent;
-                    border-top: 5px solid $primary-color;
-                    content: " ";
-                    display: block;
-                    pointer-events: none;
-                    position: absolute;
-                    transform: rotate(0);
-                    -webkit-transform: rotate(0);
-                    top: 100%;
-                }
-            } //
+            background: $primary-color;
+
+            // For TO: This doesn't seem to be used - GF
+            // li.active {
+            //     &:before {
+            //         border: 5px solid transparent;
+            //         border-right: 5px solid transparent;
+            //         border-top: 5px solid $primary-color;
+            //         content: " ";
+            //         display: block;
+            //         pointer-events: none;
+            //         position: absolute;
+            //         transform: rotate(0);
+            //         -webkit-transform: rotate(0);
+            //         top: 100%;
+            //     }
+            // }
+
             a {
                 color: white;
                 font-size: rem-calc(16);
@@ -162,7 +164,7 @@ nav {
 
         li {
 
-            &.is-active>a,
+            &.is-active > a,
             a.is-active {
                 background: none;
                 border-bottom: 3px solid $primary-color;
@@ -172,7 +174,7 @@ nav {
     }
 }
 
-ul.menu.align-right>li>a {
+ul.menu.align-right > li >a {
     color: black;
 
     &:hover {
@@ -193,19 +195,19 @@ ul.menu.align-right>li>a {
     }
 }
 
-.tabs-title>a:focus,
-.tabs-title>a[aria-selected='true'] {
+.tabs-title > a:focus,
+.tabs-title > a[aria-selected='true'] {
     background: none;
     outline: 0;
 }
 
-ul.menu.align-right>li>a[aria-selected='true'] {
+ul.menu.align-right > li > a[aria-selected='true'] {
     color: $primary-color;
 }
 
-
 #contents.tabs-panel {
     padding: 0;
+
     .tabs-panel {
         padding: 0;
     }
@@ -220,13 +222,15 @@ ul.menu.align-right>li>a[aria-selected='true'] {
 
 .breadcrumbs {
     li {
+
         &:not(:last-child)::after {
             content: ">";
         }
+
         &:after {
             content: ">";
             color: #cacaca;
-            margin: 0 0.75rem;
+            margin: rem-calc(0 12);
             opacity: 1;
         }
     }
@@ -267,22 +271,28 @@ ul.menu.align-right>li>a[aria-selected='true'] {
 
         .card-section {
             background: $primary-color;
+
             h3 {
                 color: white;
             }
+
             .card-footer {
                 border-top: 1px solid $light-gray;
                 color: $light-gray;
             }
+
             &.overlay {
                 background: $primary-color;
             }
         }
+
         &.search-results:hover {
             border: 1px solid $light-gray;
+
             .card-section {
                 background: none;
             }
+
             .card-footer {
                 border-top: 1px solid gray;
                 color: gray;
@@ -321,12 +331,14 @@ ul.menu.align-right>li>a[aria-selected='true'] {
             margin-top: rem-calc(16);
             padding-top: rem-calc(16);
         }
+
         .card-highlight {
             border-top: 1px solid gray;
             color: gray;
             margin-top: rem-calc(16);
             text-align: justify;
         }
+
         &.overlay {
             color: white;
             background: rgba(0, 0, 0, 0.7);
@@ -338,6 +350,7 @@ ul.menu.align-right>li>a[aria-selected='true'] {
             h3 {
                 color: white;
                 font-weight: bold;
+
                 &.small-caps {
                     font-variant: small-caps;
                 }
@@ -359,7 +372,7 @@ ul.menu.align-right>li>a[aria-selected='true'] {
 
 /* Accordion */
 
-.accordion-item:first-child> :first-child {
+.accordion-item:first-child > :first-child {
     background: $primary-color;
     border: none;
     color: white;
@@ -380,7 +393,7 @@ ul.menu.align-right>li>a[aria-selected='true'] {
     padding-top: rem-calc(20);
 }
 
-.is-active>.accordion-title {
+.is-active > .accordion-title {
 
     &::before {
         color: white;
@@ -395,26 +408,31 @@ ul.menu.align-right>li>a[aria-selected='true'] {
 .accordion-content {
     border: none;
     padding-left: 0;
+
     ul {
         margin-left: 0;
         list-style-type: none;
         float: left;
+
         li {
             float: left;
-            margin: 0 0.5rem 0.5rem 0;
+            margin: rem-calc(0 8 8 0);
             text-align: center;
 
             a {
                 border: 1px solid $primary-color;
                 display: block;
-                padding: 0.2rem 2rem;
+                padding: rem-calc(3 32);
+
                 span {
                     color: gray;
-                    font-size: 0.75rem;
+                    font-size: rem-calc(12);
                 }
+
                 &:hover {
                     background: $primary-color;
                     color: white;
+
                     span {
                         color: $light-gray;
                     }
@@ -435,7 +453,7 @@ section {
 
         .cell {
             background: $light-gray;
-            padding: 1rem 1.5rem;
+            padding: rem-calc(16 24);
         }
     }
 }
@@ -448,6 +466,7 @@ tbody {
 }
 
 td {
+
     &.float-left {
         float: none !important;
     }
@@ -459,12 +478,13 @@ td {
 
 
 /* Page level */
-.note{
-    background:#f8f8f8;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border:1px solid $light-gray;
+
+.note {
+    background: #f8f8f8;
+    border: 1px solid $light-gray;
     font-style: italic;
+    margin-bottom: rem-calc(16);
+    padding: rem-calc(16);
 }
 
 
@@ -490,7 +510,7 @@ footer {
 /* Hacks to rectify */
 
 .minus-margin-top {
-    margin-top: -2.5rem;
+    margin-top: rem-calc(-40);
 }
 
 
