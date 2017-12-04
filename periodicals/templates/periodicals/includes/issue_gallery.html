@@ -1,10 +1,11 @@
+{% load periodicals_tags %}
 <div class="row small-up-2 medium-up-3 large-up-3" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium">
     {% for issue in issues %}
     <div class="column column-block" data-equalizer-watch="cards">
         <div class="card">
             <a href="{{ issue.url }}">
                 <div class="card-image">
-                    <img src="{{ issue.pages.all.0.image.url }}">
+                    <img src="{% thumbnail issue.pages.all.0.image.url %}">
                 </div>
                 <div class="card-section overlay">
                     <h3 class="small-caps">{{ publication }}</h3>
