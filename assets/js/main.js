@@ -85,4 +85,8 @@ $(function() {
         enableCanvas();
     }
     enablePublicationSwitcher();
+    if ($("#jump-to-results-section").size() > 0){
+        // Jump to results if search has been run
+        $(document).scrollTop( $("#jump-to-results-section").offset().top );
+    }
 });
