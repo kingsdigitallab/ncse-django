@@ -1,3 +1,4 @@
+{% load periodicals_tags %}
 <div class="row">
     <div class="small-12 columns">
         <h3>
@@ -15,7 +16,7 @@
         <div class="card">
             <a href="{{ issue.url }}">
                 <div class="card-image">
-                    <img src="{{ issue.pages.all.0.image.url }}">
+                    <img src="{% thumbnail issue.pages.all.0.image.url %}">
                 </div>
                 <div class="card-section overlay">
                     <h3 class="small-caps">{{ issue }}</h3>

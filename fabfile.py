@@ -180,7 +180,8 @@ def deploy(version=None):
     migrate()
     collect_static()
     # update_index()
-    # clear_cache()
+
+    clear_cache()
     touch_wsgi()
 
 
@@ -317,6 +318,12 @@ def clear_cache():
 
     with cd(env.path), prefix(env.within_virtualenv):
         run('./manage.py clear_cache')
+
+    if env.srvr in ['liv']:
+        print(yellow('Live environment detected, clearing cache'))
+        sudo('/etc/init.d/trafficserver stop')
+        sudo('traffic_server -Cclear')
+        sudo('/etc/init.d/trafficserver start')
 
 
 @task

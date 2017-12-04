@@ -1,4 +1,4 @@
-django
+django<2
 django-activecollab-digger
 django-compressor
 django-extensions

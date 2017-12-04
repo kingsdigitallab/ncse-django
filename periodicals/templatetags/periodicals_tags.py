@@ -1,6 +1,7 @@
 import datetime
 
 from django import template
+from django.conf import settings
 
 from periodicals.models import Issue
 from ..forms import PeriodicalsSearchForm
@@ -19,6 +20,18 @@ def initial_search_parameters():
             params = '{}{}'.format(params, value.initial)
 
     return params
+
+
+@register.simple_tag
+def thumbnail(url):
+    if hasattr(settings, 'IMAGE_SERVER_URL') and\
+            hasattr(settings, 'IMAGE_SERVER_THUMBNAIL'):
+        return '{}/{}/{}'.format(
+            settings.IMAGE_SERVER_URL,
+            url,
+            settings.IMAGE_SERVER_THUMBNAIL)
+    else:
+        return url
 
 
 # Borrowed from wagtailbase
