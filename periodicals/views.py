@@ -159,6 +159,15 @@ class PeriodicalsSearchView(FacetedSearchView):
         initial['end_year'] = last.issue_date.year
         return initial
 
+    def get_context_data(self, **kwargs):
+        context = super(PeriodicalsSearchView, self).get_context_data(**kwargs)
+        if 'form' in context:
+            form = context['form']
+            if 'mode' not in form.cleaned_data:
+                form.cleaned_data['mode'] = form.fields['mode'].initial
+            context['form'] = form
+        return context
+
     def get_queryset(self):
         queryset = super(PeriodicalsSearchView, self).get_queryset()
 
