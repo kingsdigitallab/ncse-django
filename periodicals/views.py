@@ -159,6 +159,13 @@ class PeriodicalsSearchView(FacetedSearchView):
         initial['end_year'] = last.issue_date.year
         return initial
 
+    def get_context_data(self, **kwargs):
+        context = super(PeriodicalsSearchView, self).get_context_data(**kwargs)
+        request = self.request
+        if 'selected_facets' in request.GET:
+            context['selected_facets'] = request.GET.getlist('selected_facets')
+        return context
+
     def get_queryset(self):
         queryset = super(PeriodicalsSearchView, self).get_queryset()
 
