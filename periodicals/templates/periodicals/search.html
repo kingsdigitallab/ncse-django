@@ -51,7 +51,7 @@
     </section>
 
     <!-- <section class="grid-container"> -->
-    <section id="results-section">
+    <section {% if jumptoresults %}id="jump-to-results-section"{% endif %}>
         <div class="row">
             <div class="small-12 columns">
                 <h1 class="underline">
@@ -250,4 +250,5 @@
         </div>
     {% endif %}
     <!-- </div> -->
+
 {% endblock %}

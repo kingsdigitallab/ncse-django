@@ -66,6 +66,7 @@ class ArticlePrintView(TemplateView):
 
 
 class PageDetailView(DetailView):
+
     def get_object(self):
         return get_object_or_404(
             Page, issue__slug=self.kwargs['issue_slug'],
@@ -162,8 +163,23 @@ class PeriodicalsSearchView(FacetedSearchView):
     def get_context_data(self, **kwargs):
         context = super(PeriodicalsSearchView, self).get_context_data(**kwargs)
         request = self.request
+        first = Issue.objects.all().order_by('issue_date')[0]
+        last = Issue.objects.all().order_by('-issue_date')[0]
         if 'selected_facets' in request.GET:
             context['selected_facets'] = request.GET.getlist('selected_facets')
+            context['jumptoresults'] = True
+        else:
+            form = context['form']
+            if ('q' in form.cleaned_data and
+                len(form.cleaned_data['q']) > 0) or (
+                'start_year' in form.cleaned_data and
+                int(form.cleaned_data['start_year']) >
+                first.issue_date.year) or (
+                'end_year' in form.cleaned_data and
+                int(form.cleaned_data[
+                    'end_year']) < last.issue_date.year
+            ):
+                context['jumptoresults'] = True
         return context
 
     def get_queryset(self):
