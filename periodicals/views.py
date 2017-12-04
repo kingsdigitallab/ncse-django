@@ -145,7 +145,7 @@ class PublicationListView(ListView):
 
 
 class PeriodicalsSearchView(FacetedSearchView):
-    facet_fields = ['publication_abbreviation', 'category', 'issue_year']
+    facet_fields = ['publication', 'category', 'year']
     form_class = PeriodicalsSearchForm
     template_name = 'periodicals/search.html'
 

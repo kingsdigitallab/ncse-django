@@ -1,630 +1,572 @@
-{% extends 'periodicals/base.html' %} {% load periodicals_tags %} {% block title %}{{ page.publication }} {{ page.issue }}, Page {{ page.number }}{% endblock %} {% block meta_title %}{{ page.publication }} {{ page.issue }}, Page {{ page.number }}{% endblock %} {% block main %}
-<section class="grid-container">
-    <div class="grid-x">
-        <div class="cell minus-margin-top">
-            <ul class="menu align-right">
-                {% get_request_parameters as search_params %} {% if search_params %}
-                <li><a href="{% url 'search' %}?{{ search_params }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to results</a> </li>
-                {% endif %}
-                <li><a href="{{ page.issue.url }}"><i class="fa fa-arrow-left" aria-hidden="true"></i></i> Issue</a>
+{% extends 'periodicals/base.html' %}
+{% load periodicals_tags %}
+
+{% block title %}
+    {{ page.publication }} {{ page.issue }}, Page {{ page.number }}
+{% endblock %}
+
+{% block meta_title %}
+    {{ page.publication }} {{ page.issue }}, Page {{ page.number }}
+{% endblock %}
+
+{% block main %}
+
+<section class="row">
+    <div class="small-12 columns">
+        <ul class="menu">
+            {% get_request_parameters as search_params %}
+            {% if search_params %}
+            <li>
+                <a href="{% url 'search' %}?{{ search_params }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to results</a>
+            </li>
+            {% endif %}
+            <li>
+                <a href="{{ page.issue.url }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Issue</a>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<section class="row large-up-2">
+    <div class="column column-block" data-equalizer-watch="cards">
+        <div class="tabs">
+            <ul class="menu subnav">
+                <li class="tabs-title is-active">
+                    <a href="#image" aria-selected="true">Image</a>
                 </li>
             </ul>
         </div>
-    </div>
-</section>
-<section class="grid-container">
-    <div class="grid-x grid-padding-x grid-padding-y medium-up-full large-up-2 container">
-        <div class="cell">
-            <div class="tabs">
-                <ul class="menu subnav">
-                    <li class="tabs-title is-active"><a href="#image" aria-selected="true">Image</a></li>
-                </ul>
-            </div>
-            <div class="tabs-content">
-                                            <ul class="menu align-right">
-                <li><a href="{{ page.print_url }}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print image</a>
+        <div class="tabs-content">
+            <ul class="menu">
+                <li>
+                    <a href="{{ page.print_url }}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print image</a>
                 </li>
             </ul>
-                <section class="tabs-panel is-active">
-                    <div class="cell">
-
+            <section class="tabs-panel is-active">
+                <div class="row">
+                    <div class="small-12 columns">
                         <canvas class="pageCanvas border" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
-                            <!-- Fallback for non-canvas supporting devices -->
+                            {% comment %} Fallback for non-canvas supporting devices {% endcomment %}
                             <img id="page{{ page.number}}" src="{{ page.image.url }}">
                         </canvas>
                     </div>
-                </section>
-            </div>
-        </div>
-        <div class="cell">
-            <div class="tabs" data-tabs id="page-tabs">
-                <ul class="menu subnav">
-                    <li class="tabs-title is-active"><a data-tabs-target="contents" href="#contents">Contents</a></li>
-                    <li class="tabs-title"><a data-tabs-target="transcription" href="#transcription">Transcription</a></li>
-                    <li class="tabs-title"><a data-tabs-target="citation" href="#citation">Citation</a></li>
-                </ul>
-            </div>
-            <div class="tabs-content" data-tabs-content="page-tabs">
-                <section class="tabs-panel" id="transcription">
-                    <div class="cell container">
-                    <div class="note"> Note: This is an Optical Character Recognition (OCR) programs “read” these images and convert them to text documents which can be easily searched, copied, edited, or used for computational text analysis methods.
-                    </div>
-
-                        {% for article in page.articles_in_page.all %}
-                        <div class="column is-half article" id="{{ article.aid }}">
-                            <h3 class="subtitle">{{ article|title }}</h3> {{ article.content_html|safe }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                </section>
-                <section class="tabs-panel" id="citation">
-                    <div class="cell container">
-                        Content of citation
-                    </div>
-                </section>
-                <section class="tabs-panel is-active" id="contents">
-               
-                        <div class="tabs" data-tabs id="issue-tabs">
-                            <ul class="menu align-right">
-                                <li class="tabs-title is-active"><a href="#list" aria-selected="true"><i class="fa fa-list-ul" aria-hidden="true"></i> List</a></li>
-                                <li class="tabs-title"><a data-tabs-target="grid" href="#grid"><i class="fa fa-th" aria-hidden="true"></i> Grid</a></li>
-                            </ul>
-                        </div>
-                        <div class="grid-container tabs-content" data-tabs-content="issue-tabs">
-                            <!-- *** TODO: Data to be added *** -->
-                            <section class="tabs-panel is-active" id="list">
-                                <div class="grid-x">
-                                    <div class="cell">
-                    <table class="stack unstriped">
-                        <thead>
-                        <tr>
-                            <th>Page</th>
-                            <th>Category</th>
-                            <th>Title</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        
-                            
-                                <tr>
-                                    <td>1</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/1/articles/ar00100/"></a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>2</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/2/articles/ar00200/">The Grand Lodge Life-boats.</a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>6</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/6/articles/ar00603/">Freemasonry in the West Indies.</a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>6</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/6/articles/ar00600/">Lodge of Edinburgh (Mary's Chapel), No. 1.</a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>9</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/9/articles/ar00901/">New Royal Arch Temple at Edinburgh.</a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>10</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/10/articles/ar01001/">Bro. Captain Towse, V.C.</a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>11</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/11/articles/ar01100/">Provincial Grand Chapter of Gloucestershire.</a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>11</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/11/articles/ar01104/">Bro. Sir Robert Harvey.</a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>11</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/11/articles/ar01102/">B ro. Joseph Albert Arnold.</a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>12</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/12/articles/ar01204/">The Queen and the Craft.</a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>13</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/13/articles/ar01300/"></a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>14</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/14/articles/ar01402/">At the Sign of the Perfect Ashlar</a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>16</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/16/articles/ar01600/">Thomas Dunckerley.</a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>18</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/18/articles/ar01800/">The late Bro. the Rev. C. J. Martyn.</a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>19</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/19/articles/ar01900/">Masonic Extracts from 18th Century Newspapers.</a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>20</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/20/articles/ar02001/">A Last Century Silver Wedding.</a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>22</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/22/articles/ar02201/">Derby Allcroft Lodge, No. 2168.</a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>22</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/22/articles/ar02202/">Savage Club Lodge, No. 2190.</a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>24</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/24/articles/ar02400/">Royal Masonic Institution for Boys.</a>
-                                    </td>
-                                </tr>
-                            
-                        
-                            
-                                <tr>
-                                    <td>24</td>
-                                    <td>Article</td>
-                                    <td>
-                                        <a href="/periodicals/mil/issues/mil_01021901/page/24/articles/ar02401/">Reviews.</a>
-                                    </td>
-                                </tr>
-                            
-                        
-
-                        </tbody>
-                    </table>
                 </div>
-                                </div>
-                            </section>
-                            <section class="tabs-panel" id="grid">
-                                <div class="grid-x grid-padding-x grid-padding-y medium-up-2 large-up-3 container">
-                
-                    <div class="cell">
-                        <div class="card">
-                            <a href="/periodicals/msm/issues/mxr_01081882/page/1/">
-                                <div class="card-image">
-                                    <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg001.png">
-                                </div>
-                                <div class="card-section overlay">
-                                    <h3>Page 1</h3>
-                                    <div class="card-footer">
-                                         { Article and/or Ad Title/s }
+            </section>
+        </div>
+    </div>
+    <div class="column column-block" data-equalizer-watch="cards">
+        <div class="tabs" data-tabs id="page-tabs">
+            <ul class="menu subnav">
+                <li class="tabs-title is-active"><a data-tabs-target="contents" href="#contents">Contents</a></li>
+                <li class="tabs-title"><a data-tabs-target="transcription" href="#transcription">Transcription</a></li>
+                <li class="tabs-title"><a data-tabs-target="citation" href="#citation">Citation</a></li>
+            </ul>
+        </div>
+        <div class="tabs-content" data-tabs-content="page-tabs">
+            <section class="tabs-panel" id="transcription">
+                <div class="note"> Note: This is an Optical Character Recognition (OCR) programs “read” these images and convert them to text documents which can be easily searched, copied, edited, or used for computational text analysis methods.
+                </div>
 
+                {% for article in page.articles_in_page.all %}
+                <div id="{{ article.aid }}">
+                    <h3 class="subtitle">{{ article|title }}</h3>
+                    {{ article.content_html|safe }}
+                </div>
+                {% endfor %}
+            </section>
+            <section class="tabs-panel" id="citation">
+                Content of citation
+            </section>
+            <section class="tabs-panel is-active" id="contents">
+                <div class="tabs" data-tabs id="issue-tabs">
+                    <ul class="menu align-right">
+                        <li class="tabs-title is-active"><a href="#list" aria-selected="true"><i class="fa fa-list-ul" aria-hidden="true"></i> List</a></li>
+                        <li class="tabs-title"><a data-tabs-target="grid" href="#grid"><i class="fa fa-th" aria-hidden="true"></i> Grid</a></li>
+                    </ul>
+                </div>
+                    
+                <div class="tabs-content" data-tabs-content="issue-tabs">
+                    {% comment %} *** TODO: Data to be added *** {% endcomment %}
+                    <section class="tabs-panel is-active" id="list">
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <table class="stack unstriped">
+                                    <thead>
+                                        <tr>
+                                            <th>Page</th>
+                                            <th>Category</th>
+                                            <th>Title</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/1/articles/ar00100/"></a>
+                                            </td>
+                                        </tr>
+                                    
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/2/articles/ar00200/">The Grand Lodge Life-boats.</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>6</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/6/articles/ar00603/">Freemasonry in the West Indies.</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>6</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/6/articles/ar00600/">Lodge of Edinburgh (Mary's Chapel), No. 1.</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>9</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/9/articles/ar00901/">New Royal Arch Temple at Edinburgh.</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>10</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/10/articles/ar01001/">Bro. Captain Towse, V.C.</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>11</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/11/articles/ar01100/">Provincial Grand Chapter of Gloucestershire.</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>11</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/11/articles/ar01104/">Bro. Sir Robert Harvey.</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>11</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/11/articles/ar01102/">B ro. Joseph Albert Arnold.</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>12</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/12/articles/ar01204/">The Queen and the Craft.</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>13</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/13/articles/ar01300/"></a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>14</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/14/articles/ar01402/">At the Sign of the Perfect Ashlar</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>16</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/16/articles/ar01600/">Thomas Dunckerley.</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>18</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/18/articles/ar01800/">The late Bro. the Rev. C. J. Martyn.</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>19</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/19/articles/ar01900/">Masonic Extracts from 18th Century Newspapers.</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>20</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/20/articles/ar02001/">A Last Century Silver Wedding.</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>22</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/22/articles/ar02201/">Derby Allcroft Lodge, No. 2168.</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>22</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/22/articles/ar02202/">Savage Club Lodge, No. 2190.</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>24</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/24/articles/ar02400/">Royal Masonic Institution for Boys.</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>24</td>
+                                            <td>Article</td>
+                                            <td>
+                                                <a href="/periodicals/mil/issues/mil_01021901/page/24/articles/ar02401/">Reviews.</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                
+                <section class="tabs-panel" id="grid">
+                    <div class="row medium-up-2 large-up-3 container" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium">
+                        <div class="column column-block" data-equalizer-watch="cards">
+                            <div class="card">
+                                <a href="/periodicals/msm/issues/mxr_01081882/page/1/">
+                                    <div class="card-image">
+                                        <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg001.png">
                                     </div>
-                                </div>
-                            </a>
-                            
+                                    <div class="card-section overlay">
+                                        <h3>Page 1</h3>
+                                        <div class="card-footer">
+                                             { Article and/or Ad Title/s }
+                                        </div>
+                                    </div>
+                                </a>
+                                
                                 <div class="card-divider">
                                     <a href="/admin/periodicals/page/4342/change/" class="card-footer-item">Edit</a>
                                 </div>
-                            
+                            </div>
                         </div>
-                    </div>
-                
-                    <div class="cell">
-                        <div class="card">
-                            <a href="/periodicals/msm/issues/mxr_01081882/page/2/">
-                                <div class="card-image">
-                                    <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg002.png">
-                                </div>
-                                <div class="card-section overlay">
-                                    <h3>Page 2</h3>
-                                    <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+            
+                        <div class="column column-block" data-equalizer-watch="cards">
+                            <div class="card">
+                                <a href="/periodicals/msm/issues/mxr_01081882/page/2/">
+                                    <div class="card-image">
+                                        <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg002.png">
                                     </div>
-                                </div>
-                            </a>
-                            
+                                    <div class="card-section overlay">
+                                        <h3>Page 2</h3>
+                                        <div class="card-footer">
+                                            { Article and/or Ad Title/s }
+                                        </div>
+                                    </div>
+                                </a>
+                                
                                 <div class="card-divider">
                                     <a href="/admin/periodicals/page/4375/change/" class="card-footer-item">Edit</a>
                                 </div>
-                            
+                            </div>
                         </div>
-                    </div>
-                
-                    <div class="cell">
-                        <div class="card">
-                            <a href="/periodicals/msm/issues/mxr_01081882/page/3/">
-                                <div class="card-image">
-                                    <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg003.png">
-                                </div>
-                                <div class="card-section overlay">
-                                    <h3>Page 3</h3>
-                                    <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+            
+                        <div class="column column-block" data-equalizer-watch="cards">
+                            <div class="card">
+                                <a href="/periodicals/msm/issues/mxr_01081882/page/3/">
+                                    <div class="card-image">
+                                        <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg003.png">
                                     </div>
-                                </div>
-                            </a>
-                            
+                                    <div class="card-section overlay">
+                                        <h3>Page 3</h3>
+                                        <div class="card-footer">
+                                            { Article and/or Ad Title/s }
+                                        </div>
+                                    </div>
+                                </a>
+                                
                                 <div class="card-divider">
                                     <a href="/admin/periodicals/page/4370/change/" class="card-footer-item">Edit</a>
                                 </div>
-                            
+                            </div>
                         </div>
-                    </div>
-                
-                    <div class="cell">
-                        <div class="card">
-                            <a href="/periodicals/msm/issues/mxr_01081882/page/4/">
-                                <div class="card-image">
-                                    <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg004.png">
-                                </div>
-                                <div class="card-section overlay">
-                                    <h3>Page 4</h3>
-                                    <div class="card-footer">
-                                         { Article and/or Ad Title/s }
 
+                        <div class="column column-block" data-equalizer-watch="cards">
+                            <div class="card">
+                                <a href="/periodicals/msm/issues/mxr_01081882/page/4/">
+                                    <div class="card-image">
+                                        <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg004.png">
                                     </div>
-                                </div>
-                            </a>
-                            
+                                    <div class="card-section overlay">
+                                        <h3>Page 4</h3>
+                                        <div class="card-footer">
+                                            { Article and/or Ad Title/s }
+                                        </div>
+                                    </div>
+                                </a>
+                                
                                 <div class="card-divider">
                                     <a href="/admin/periodicals/page/4368/change/" class="card-footer-item">Edit</a>
                                 </div>
-                            
+                            </div>
                         </div>
-                    </div>
-                
-                    <div class="cell">
-                        <div class="card">
-                            <a href="/periodicals/msm/issues/mxr_01081882/page/5/">
-                                <div class="card-image">
-                                    <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg005.png">
-                                </div>
-                                <div class="card-section overlay">
-                                    <h3>Page 5</h3>
-                                    <div class="card-footer">
-                                         { Article and/or Ad Title/s }
 
+                        <div class="column column-block" data-equalizer-watch="cards">
+                            <div class="card">
+                                <a href="/periodicals/msm/issues/mxr_01081882/page/5/">
+                                    <div class="card-image">
+                                        <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg005.png">
                                     </div>
-                                </div>
-                            </a>
-                            
+                                    <div class="card-section overlay">
+                                        <h3>Page 5</h3>
+                                        <div class="card-footer">
+                                            { Article and/or Ad Title/s }
+                                        </div>
+                                    </div>
+                                </a>
+                                
                                 <div class="card-divider">
                                     <a href="/admin/periodicals/page/4377/change/" class="card-footer-item">Edit</a>
                                 </div>
-                            
+                            </div>
                         </div>
-                    </div>
-                
-                    <div class="cell">
-                        <div class="card">
-                            <a href="/periodicals/msm/issues/mxr_01081882/page/6/">
-                                <div class="card-image">
-                                    <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg006.png">
-                                </div>
-                                <div class="card-section overlay">
-                                    <h3>Page 6</h3>
-                                    <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+            
+                        <div class="column column-block" data-equalizer-watch="cards">
+                            <div class="card">
+                                <a href="/periodicals/msm/issues/mxr_01081882/page/6/">
+                                    <div class="card-image">
+                                        <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg006.png">
                                     </div>
-                                </div>
-                            </a>
-                            
+                                    <div class="card-section overlay">
+                                        <h3>Page 6</h3>
+                                        <div class="card-footer">
+                                            { Article and/or Ad Title/s }
+                                        </div>
+                                    </div>
+                                </a>
+                                
                                 <div class="card-divider">
                                     <a href="/admin/periodicals/page/4339/change/" class="card-footer-item">Edit</a>
                                 </div>
-                            
+                            </div>
                         </div>
-                    </div>
-                
-                    <div class="cell">
-                        <div class="card">
-                            <a href="/periodicals/msm/issues/mxr_01081882/page/7/">
-                                <div class="card-image">
-                                    <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg007.png">
-                                </div>
-                                <div class="card-section overlay">
-                                    <h3>Page 7</h3>
-                                    <div class="card-footer">
-                                         { Article and/or Ad Title/s }
 
+                        <div class="column column-block" data-equalizer-watch="cards">
+                            <div class="card">
+                                <a href="/periodicals/msm/issues/mxr_01081882/page/7/">
+                                    <div class="card-image">
+                                        <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg007.png">
                                     </div>
-                                </div>
-                            </a>
-                            
+                                    <div class="card-section overlay">
+                                        <h3>Page 7</h3>
+                                        <div class="card-footer">
+                                            { Article and/or Ad Title/s }
+                                        </div>
+                                    </div>
+                                </a>
+                                
                                 <div class="card-divider">
                                     <a href="/admin/periodicals/page/4334/change/" class="card-footer-item">Edit</a>
                                 </div>
-                            
+                            </div>
                         </div>
-                    </div>
-                
-                    <div class="cell">
-                        <div class="card">
-                            <a href="/periodicals/msm/issues/mxr_01081882/page/8/">
-                                <div class="card-image">
-                                    <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg008.png">
-                                </div>
-                                <div class="card-section overlay">
-                                    <h3>Page 8</h3>
-                                    <div class="card-footer">
-                                         { Article and/or Ad Title/s }
 
+                        <div class="column column-block" data-equalizer-watch="cards">
+                            <div class="card">
+                                <a href="/periodicals/msm/issues/mxr_01081882/page/8/">
+                                    <div class="card-image">
+                                        <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg008.png">
                                     </div>
-                                </div>
-                            </a>
-                            
+                                    <div class="card-section overlay">
+                                        <h3>Page 8</h3>
+                                        <div class="card-footer">
+                                            { Article and/or Ad Title/s }
+                                        </div>
+                                    </div>
+                                </a>
+                                
                                 <div class="card-divider">
                                     <a href="/admin/periodicals/page/4346/change/" class="card-footer-item">Edit</a>
                                 </div>
-                            
+                            </div>
                         </div>
-                    </div>
-                
-                    <div class="cell">
-                        <div class="card">
-                            <a href="/periodicals/msm/issues/mxr_01081882/page/9/">
-                                <div class="card-image">
-                                    <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg009.png">
-                                </div>
-                                <div class="card-section overlay">
-                                    <h3>Page 9</h3>
-                                    <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+            
+                        <div class="column column-block" data-equalizer-watch="cards">
+                            <div class="card">
+                                <a href="/periodicals/msm/issues/mxr_01081882/page/9/">
+                                    <div class="card-image">
+                                        <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg009.png">
                                     </div>
-                                </div>
-                            </a>
-                            
+                                    <div class="card-section overlay">
+                                        <h3>Page 9</h3>
+                                        <div class="card-footer">
+                                            { Article and/or Ad Title/s }
+                                        </div>
+                                    </div>
+                                </a>
+
                                 <div class="card-divider">
                                     <a href="/admin/periodicals/page/4332/change/" class="card-footer-item">Edit</a>
                                 </div>
-                            
+                            </div>
                         </div>
-                    </div>
-                
-                    <div class="cell">
-                        <div class="card">
-                            <a href="/periodicals/msm/issues/mxr_01081882/page/10/">
-                                <div class="card-image">
-                                    <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg010.png">
-                                </div>
-                                <div class="card-section overlay">
-                                    <h3>Page 10</h3>
-                                    <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+            
+                        <div class="column column-block" data-equalizer-watch="cards">
+                            <div class="card">
+                                <a href="/periodicals/msm/issues/mxr_01081882/page/10/">
+                                    <div class="card-image">
+                                        <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg010.png">
                                     </div>
-                                </div>
-                            </a>
-                            
+                                    <div class="card-section overlay">
+                                        <h3>Page 10</h3>
+                                        <div class="card-footer">
+                                            { Article and/or Ad Title/s }
+                                        </div>
+                                    </div>
+                                </a>
+
                                 <div class="card-divider">
                                     <a href="/admin/periodicals/page/4343/change/" class="card-footer-item">Edit</a>
                                 </div>
-                            
+                            </div>
                         </div>
-                    </div>
-                
-                    <div class="cell">
-                        <div class="card">
-                            <a href="/periodicals/msm/issues/mxr_01081882/page/11/">
-                                <div class="card-image">
-                                    <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg011.png">
-                                </div>
-                                <div class="card-section overlay">
-                                    <h3>Page 11</h3>
-                                    <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+            
+                        <div class="column column-block" data-equalizer-watch="cards">
+                            <div class="card">
+                                <a href="/periodicals/msm/issues/mxr_01081882/page/11/">
+                                    <div class="card-image">
+                                        <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg011.png">
                                     </div>
-                                </div>
-                            </a>
-                            
+                                    <div class="card-section overlay">
+                                        <h3>Page 11</h3>
+                                        <div class="card-footer">
+                                            { Article and/or Ad Title/s }
+                                        </div>
+                                    </div>
+                                </a>
+                                
                                 <div class="card-divider">
                                     <a href="/admin/periodicals/page/4333/change/" class="card-footer-item">Edit</a>
                                 </div>
-                            
+                            </div>
                         </div>
-                    </div>
-                
-                    <div class="cell">
-                        <div class="card">
-                            <a href="/periodicals/msm/issues/mxr_01081882/page/12/">
-                                <div class="card-image">
-                                    <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg012.png">
-                                </div>
-                                <div class="card-section overlay">
-                                    <h3>Page 12</h3>
-                                    <div class="card-footer">
-                                         { Article and/or Ad Title/s }
 
+                        <div class="column column-block" data-equalizer-watch="cards">
+                            <div class="card">
+                                <a href="/periodicals/msm/issues/mxr_01081882/page/12/">
+                                    <div class="card-image">
+                                        <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg012.png">
                                     </div>
-                                </div>
-                            </a>
-                            
+                                    <div class="card-section overlay">
+                                        <h3>Page 12</h3>
+                                        <div class="card-footer">
+                                            { Article and/or Ad Title/s }
+                                        </div>
+                                    </div>
+                                </a>
+
                                 <div class="card-divider">
                                     <a href="/admin/periodicals/page/4371/change/" class="card-footer-item">Edit</a>
                                 </div>
-                            
+                            </div>
                         </div>
-                    </div>
-                
-                    <div class="cell">
-                        <div class="card">
-                            <a href="/periodicals/msm/issues/mxr_01081882/page/13/">
-                                <div class="card-image">
-                                    <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg013.png">
-                                </div>
-                                <div class="card-section overlay">
-                                    <h3>Page 13</h3>
-                                    <div class="card-footer">
-                                         { Article and/or Ad Title/s }
 
+                        <div class="column column-block" data-equalizer-watch="cards">
+                            <div class="card">
+                                <a href="/periodicals/msm/issues/mxr_01081882/page/13/">
+                                    <div class="card-image">
+                                        <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg013.png">
                                     </div>
-                                </div>
-                            </a>
-                            
+                                    <div class="card-section overlay">
+                                        <h3>Page 13</h3>
+                                        <div class="card-footer">
+                                            { Article and/or Ad Title/s }
+                                        </div>
+                                    </div>
+                                </a>
+                                
                                 <div class="card-divider">
                                     <a href="/admin/periodicals/page/4376/change/" class="card-footer-item">Edit</a>
                                 </div>
-                            
+                            </div>
                         </div>
-                    </div>
-                
-                    <div class="cell">
-                        <div class="card">
-                            <a href="/periodicals/msm/issues/mxr_01081882/page/14/">
-                                <div class="card-image">
-                                    <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg014.png">
-                                </div>
-                                <div class="card-section overlay">
-                                    <h3>Page 14</h3>
-                                    <div class="card-footer">
-                                         { Article and/or Ad Title/s }
 
+                        <div class="column column-block" data-equalizer-watch="cards">
+                            <div class="card">
+                                <a href="/periodicals/msm/issues/mxr_01081882/page/14/">
+                                    <div class="card-image">
+                                        <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg014.png">
                                     </div>
-                                </div>
-                            </a>
+                                    <div class="card-section overlay">
+                                        <h3>Page 14</h3>
+                                        <div class="card-footer">
+                                            { Article and/or Ad Title/s }
+                                        </div>
+                                    </div>
+                                </a>
                             
                                 <div class="card-divider">
                                     <a href="/admin/periodicals/page/4378/change/" class="card-footer-item">Edit</a>
                                 </div>
-                            
+                            </div>
                         </div>
-                    </div>
-                
-                    <div class="cell">
-                        <div class="card">
-                            <a href="/periodicals/msm/issues/mxr_01081882/page/15/">
-                                <div class="card-image">
-                                    <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg015.png">
-                                </div>
-                                <div class="card-section overlay">
-                                    <h3>Page 15</h3>
-                                    <div class="card-footer">
-                                         { Article and/or Ad Title/s }
 
+                        <div class="column column-block" data-equalizer-watch="cards">
+                            <div class="card">
+                                <a href="/periodicals/msm/issues/mxr_01081882/page/15/">
+                                    <div class="card-image">
+                                        <img src="/static/media/periodicals/119-MXR-1882-08-01-001-SINGLE/Pg015.png">
                                     </div>
-                                </div>
-                            </a>
-                            
+                                    <div class="card-section overlay">
+                                        <h3>Page 15</h3>
+                                        <div class="card-footer">
+                                            { Article and/or Ad Title/s }
+                                        </div>
+                                    </div>
+                                </a>
+                                
                                 <div class="card-divider">
                                     <a href="/admin/periodicals/page/4369/change/" class="card-footer-item">Edit</a>
                                 </div>
-                            
+                            </div>
                         </div>
-                    </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/16/">
                                 <div class="card-image">
@@ -633,20 +575,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 16</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
-                            
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4336/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                                
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4336/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/17/">
                                 <div class="card-image">
@@ -655,20 +595,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 17</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4341/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4341/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/18/">
                                 <div class="card-image">
@@ -677,20 +615,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 18</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4330/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4330/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/19/">
                                 <div class="card-image">
@@ -699,20 +635,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 19</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4344/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4344/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/20/">
                                 <div class="card-image">
@@ -721,20 +655,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 20</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4329/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4329/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/21/">
                                 <div class="card-image">
@@ -743,20 +675,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 21</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4347/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4347/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/22/">
                                 <div class="card-image">
@@ -765,20 +695,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 22</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4379/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4379/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/23/">
                                 <div class="card-image">
@@ -787,20 +715,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 23</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4367/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4367/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/24/">
                                 <div class="card-image">
@@ -809,20 +735,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 24</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4366/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4366/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/25/">
                                 <div class="card-image">
@@ -831,20 +755,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 25</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4380/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4380/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/26/">
                                 <div class="card-image">
@@ -853,20 +775,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 26</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4345/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4345/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/27/">
                                 <div class="card-image">
@@ -875,20 +795,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 27</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4331/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4331/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/28/">
                                 <div class="card-image">
@@ -897,20 +815,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 28</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4340/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4340/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/29/">
                                 <div class="card-image">
@@ -919,20 +835,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 29</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4335/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4335/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/30/">
                                 <div class="card-image">
@@ -941,20 +855,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 30</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4356/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4356/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/31/">
                                 <div class="card-image">
@@ -963,20 +875,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 31</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4352/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4352/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/32/">
                                 <div class="card-image">
@@ -985,20 +895,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 32</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4321/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4321/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/33/">
                                 <div class="card-image">
@@ -1007,20 +915,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 33</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4328/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4328/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/34/">
                                 <div class="card-image">
@@ -1029,20 +935,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 34</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4327/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4327/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/35/">
                                 <div class="card-image">
@@ -1051,20 +955,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 35</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4322/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4322/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/36/">
                                 <div class="card-image">
@@ -1073,20 +975,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 36</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4351/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4351/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/37/">
                                 <div class="card-image">
@@ -1095,20 +995,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 37</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4357/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4357/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/38/">
                                 <div class="card-image">
@@ -1117,20 +1015,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 38</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4350/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4350/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/39/">
                                 <div class="card-image">
@@ -1139,20 +1035,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 39</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4358/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4358/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/40/">
                                 <div class="card-image">
@@ -1161,20 +1055,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 40</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4373/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4373/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/41/">
                                 <div class="card-image">
@@ -1183,20 +1075,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 41</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4364/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4364/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/42/">
                                 <div class="card-image">
@@ -1205,20 +1095,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 42</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4337/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4337/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/43/">
                                 <div class="card-image">
@@ -1227,20 +1115,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 43</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4349/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4349/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/44/">
                                 <div class="card-image">
@@ -1249,20 +1135,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 44</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4348/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4348/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/45/">
                                 <div class="card-image">
@@ -1271,20 +1155,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 45</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4338/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4338/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/46/">
                                 <div class="card-image">
@@ -1293,20 +1175,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 46</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4363/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4363/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/47/">
                                 <div class="card-image">
@@ -1315,20 +1195,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 47</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4374/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4374/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/48/">
                                 <div class="card-image">
@@ -1337,20 +1215,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 48</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4365/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4365/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/49/">
                                 <div class="card-image">
@@ -1359,20 +1235,18 @@
                                 <div class="card-section overlay">
                                     <h3>Page 49</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4372/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4372/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-                
-                    <div class="cell">
+
+                    <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
                             <a href="/periodicals/msm/issues/mxr_01081882/page/50/">
                                 <div class="card-image">
@@ -1381,38 +1255,36 @@
                                 <div class="card-section overlay">
                                     <h3>Page 50</h3>
                                     <div class="card-footer">
-                                         { Article and/or Ad Title/s }
-
+                                        { Article and/or Ad Title/s }
                                     </div>
                                 </div>
                             </a>
                             
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/page/4319/change/" class="card-footer-item">Edit</a>
-                                </div>
-                            
+                            <div class="card-divider">
+                                <a href="/admin/periodicals/page/4319/change/" class="card-footer-item">Edit</a>
+                            </div>
                         </div>
                     </div>
-            
-                
-            </div>
-                            </section>
-                        </div>
-                    
-                </section>
-            </div>
+                </div>
+            </section>
         </div>
     </div>
 </section>
-<div class="grid-container">
-    <div class="grid-x">
-        <div class="cell">
-            {% with publication=page.issue.publication issue=page.issue page=page %} {% include 'periodicals/includes/pagination.html' %} {% endwith %}
-        </div>
+
+<div class="row">
+    <div class="small-12 columns">
+        {% with publication=page.issue.publication issue=page.issue page=page %}
+        {% include 'periodicals/includes/pagination.html' %}
+        {% endwith %}
     </div>
 </div>
-{% endblock %} {% block footer_scripts %} {% if highlight_words %}
+
+{% endblock %}
+
+{% block footer_scripts %}
+{% if highlight_words %}
 <script>
-var highlight_words = { { highlight_words | safe } };
+    var highlight_words = {{ highlight_words | safe }};
 </script>
-{% endif %} {% endblock %}
+{% endif %}
+{% endblock %}
