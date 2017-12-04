@@ -10,9 +10,10 @@ class Publication(models.Model):
     slug = models.SlugField(max_length=3, unique=True)
     title = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    ordering = models.PositiveIntegerField(blank=True, null=True)
 
     class Meta:
-        ordering = ['abbreviation']
+        ordering = ['ordering']
 
     def __str__(self):
         return '{}'.format(self.title if self.title else self.abbreviation)
@@ -49,6 +50,8 @@ class Publication(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.abbreviation)
+        if self.issues.all().count():
+            self.ordering = self.issues.first().issue_date.year
         super(Publication, self).save(*args, **kwargs)
 
 
