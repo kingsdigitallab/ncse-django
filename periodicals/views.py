@@ -163,7 +163,7 @@ class PeriodicalsSearchView(FacetedSearchView):
         context = super(PeriodicalsSearchView, self).get_context_data(**kwargs)
         request = self.request
         if 'selected_facets' in request.GET:
-            context['selected_facets'] = request.GET['selected_facets']
+            context['selected_facets'] = request.GET.getlist('selected_facets')
         return context
 
     def get_queryset(self):
