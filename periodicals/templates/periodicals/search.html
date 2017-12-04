@@ -96,6 +96,7 @@
                 <table class="stack unstriped">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Category</th>
                             <th>Page</th>
                             <th>Title</th>
@@ -108,6 +109,9 @@
                     <tbody>
                         {% for result in page_obj.object_list %}
                         <tr>
+                        <td>
+                            {{ forloop.counter }}
+                        </td>
                             <td>
                                 {{ result.category }}
                             </td>
