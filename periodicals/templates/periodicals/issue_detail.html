@@ -56,8 +56,8 @@
                         {% for article in issue.articles %}
                         {% with page=article.page publication=article.page.issue.publication issue=article.page.issue %}
                         <tr>
-                            <td>{{ article.page.number }}</td>
-                            <td>{{ article.article_type }}</td>
+                            <td><a href="{% url 'article-detail' publication_slug=publication.slug issue_slug=issue.slug number=page.number article_slug=article.slug%}">{{ article.page.number }}</a></td>
+                            <td><a href="{% url 'article-detail' publication_slug=publication.slug issue_slug=issue.slug number=page.number article_slug=article.slug%}">{{ article.article_type }}</a></td>
                             <td>
                                 <a href="{% url 'article-detail' publication_slug=publication.slug issue_slug=issue.slug number=page.number article_slug=article.slug%}">{{ article.title }}</a>
                             </td>

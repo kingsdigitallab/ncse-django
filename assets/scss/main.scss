@@ -541,8 +541,14 @@ td {
     }
 }
 
-
-
+table.unstriped tbody tr{
+&:hover {
+    background: $primary-color;
+    a{
+        color: $white;
+    }
+}
+}
 
 /* Page level */
 
