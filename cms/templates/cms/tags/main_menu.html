@@ -11,8 +11,8 @@
   {% if request.user.is_staff %}
   <li><a href="/admin/">Admin Panel</a></li>
   {% endif %}
-  {% endif %}
   <li><a href="/admin/logout/">Logout {{ request.user.first_name }}</a></li>
+  {% endif %}
   
 </ul>
 
