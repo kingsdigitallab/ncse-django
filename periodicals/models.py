@@ -83,7 +83,7 @@ class Issue(models.Model):
 
     @property
     def articles_and_ads(self):
-        return self.articles | self.ads
+        return (self.articles | self.ads).order_by('position_in_page')
 
     @property
     def url(self):
