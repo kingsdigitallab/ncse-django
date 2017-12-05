@@ -82,6 +82,10 @@ class Issue(models.Model):
                                              article_type=ad)
 
     @property
+    def articles_and_ads(self):
+        return self.articles | self.ads
+
+    @property
     def url(self):
         return reverse(
             'issue-detail', kwargs={

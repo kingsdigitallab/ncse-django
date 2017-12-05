@@ -54,27 +54,28 @@
         <div class="row">
             <div class="small-12 columns">
                 <table class="stack unstriped">
-                    <thead>
-                        <tr>
-                            <th>Page</th>
-                            <th>Category</th>
-                            <th>Title</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for article in issue.articles %}
-                        {% with page=article.page publication=article.page.issue.publication issue=article.page.issue %}
-                        <tr>
-                            <td>{{ article.page.number }}</td>
-                            <td>{{ article.article_type }}</td>
-                            <td>
-                                <a href="{% url 'article-detail' publication_slug=publication.slug issue_slug=issue.slug number=page.number article_slug=article.slug%}">{{ article.title }}</a>
-                            </td>
-                        </tr>
-                        {% endwith %}
-                        {% endfor %}
-                    </tbody>
-                </table>
+                                    <thead>
+                                        <tr>
+                                            <th>Page</th>
+                                            <th>Category</th>
+                                            <th>Title</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% regroup issue.articles_and_ads by page as page_list %}
+
+                                        {% for page in page_list %}
+                                            {% for article in page.list %}
+                                            <tr>
+                                                <td>{% if forloop.first%}{{ page.grouper.number }}{% endif %}</td>
+                                                <td>{{ article.article_type }}</td>
+                                                <td><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{% if article.title %}{{ article.title }}{% else %}Untitled Article{% endif %}</a></td>
+                                            </tr>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
             </div>
         </div>
     </section>
