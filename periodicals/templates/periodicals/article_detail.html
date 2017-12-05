@@ -89,7 +89,12 @@
 
     <section class="row tabs-panel" id="citation">
         <div class="small-12 columns">
-            Content of citation
+            “{{ article.issue }},
+            {% if article.title %}
+            {{ article|title }}
+            {% else %}
+            {{ article.aid }}
+            {% endif %}” <i>Masonic Periodicals Online</i>, Library and Museum Charitable Trust of the United Grand Lodge of England, {% now "j N Y" %}, {{ request.META.HTTP_HOST }}{{ article.url }}.
         </div>
     </section>
 </div>

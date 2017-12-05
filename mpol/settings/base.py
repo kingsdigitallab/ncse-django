@@ -20,7 +20,7 @@ from kdl_ldap.settings import *  # noqa
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 PROJECT_NAME = 'mpol'
-PROJECT_TITLE = 'Masonic Periodicals'
+PROJECT_TITLE = 'Masonic Periodicals Online'
 
 # -----------------------------------------------------------------------------
 # Core Settings
