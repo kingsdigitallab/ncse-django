@@ -91,7 +91,11 @@
                         <div class="card-section overlay">
                             <h3>Page {{ page.number }}</h3>
                             <div class="card-footer">
-                                { Article and/or Ad Title/s }
+                                {% if page.number_of_articles == 1 %}
+                                {{ page.articles.0.title }}
+                                {% else %}
+                                {{ page.number_of_articles }} Articles
+                                {% endif %}
                             </div>
                         </div>
                     </a>
