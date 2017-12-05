@@ -255,6 +255,23 @@ ul.menu.align-right > li > a[aria-selected='true'] {
     }
 }
 
+
+.description-trunk
+{
+    color: gray;
+
+    .read-more
+    {
+        display: block;
+    }
+}
+
+.description-full
+{
+    display: none;
+    color: gray;
+}
+
 // Card
 .card {
 

@@ -2,11 +2,11 @@
 {% load periodicals_tags %}
 
 {% block meta_title %}
-    {{ publication }} {% if publication.description %} - {{ publication.description }}{% endif %}
+    {{ publication }}
 {% endblock %}
 
 {% block title %}
-    {{ publication }} {% if publication.description %} - {{ publication.description }}{% endif %}
+    {{ publication }}
 {% endblock %}
 
 {% block main %}
@@ -23,13 +23,28 @@
     </div>
 </section>
 
+
+{% if publication.description %}
 <section>
     <div class="row">
         <div class="small-12 columns">
-            <h3>Description</h3> {% lorem 2 p %}
+            <h3>Description</h3> 
+
+            <div class="description-trunk">
+                {{ publication.description|truncatewords_html:40 }}
+
+                <a class="read-more" data-target="#description-full">Read more</a>
+            </div>
+
+            <div class="description-full" id="description-full">
+                {{ publication.description }}
+            </div>
+
+
         </div>
     </div>
 </section>
+{% endif %}
 
 {% regroup publication.issues.all by issue_date.year as year_list %}
 

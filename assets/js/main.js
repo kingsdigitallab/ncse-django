@@ -61,6 +61,18 @@ function enableCanvas() {
     }
 }
 
+
+function enableReadMore()
+{
+    $('body').on('click', '.read-more', function(event)
+    {
+        event.preventDefault();
+        event.stopPropagation();
+
+        $(this).parent().slideUp();
+        $($(this).attr('data-target')).slideDown();
+    });
+}
 function enablePublicationSwitcher()
 {
     if ($('#publication-year-switcher').length)
@@ -89,4 +101,6 @@ $(function() {
         // Jump to results if search has been run
         $(document).scrollTop( $("#jump-to-results-section").offset().top );
     }
+
+    enableReadMore();
 });
