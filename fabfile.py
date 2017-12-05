@@ -239,7 +239,7 @@ def own_django_log():
     with quiet():
         log_path = os.path.join(env.path, 'logs', 'django.log')
         if run('ls {}'.format(log_path)).succeeded:
-            sudo('chown www-data:www-data {}'.format(log_path))
+            sudo('chown www-data:kdl-staff {}'.format(log_path))
 
 
 @task
