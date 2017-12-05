@@ -2,21 +2,23 @@
 
 {% block main_menu %}
 
-<div class="logo">
-  <h1><a href="/">The Masonic Periodicals Online</a></h1>
-</div>
-
-<div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
-    <div class="title-bar-right">
-        <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
-        <div class="title-bar-title">Menu</div>
+<div class="navwrapper">
+    <div class="logo">
+    <h1><a href="/">Masonic Periodicals Online</a></h1>
     </div>
-</div>
-
-<div class="top-bar" id="responsive-menu">
-    <div class="top-bar-right">
-        {% get_site_root as site_root %}
+    <input type="checkbox" id="menu-toggle" />
+    
+    <label for="menu-toggle" class="label-toggle">  
+      <div class="menu-text">Menu</div>
+      <span></span>
+      <span></span>
+      <span></span>
+     
+</label> 
+    
+  {% get_site_root as site_root %}
         {% main_menu root=site_root current_page=self %}
-    </div>
-</div>
+  </div>
+
+
 {% endblock %}

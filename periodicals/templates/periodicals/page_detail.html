@@ -2,49 +2,93 @@
 {% load periodicals_tags %}
 
 {% block title %}
-    {{ page.publication }} {{ page.issue }}, Page {{ page.number }}
+{{ page.publication }} {{ page.issue }}, Page {{ page.number }}
 {% endblock %}
 
 {% block meta_title %}
-    {{ page.publication }} {{ page.issue }}, Page {{ page.number }}
+{{ page.publication }} {{ page.issue }}, Page {{ page.number }}
 {% endblock %}
 
 {% block main %}
 
-<section class="row">
-    <div class="small-12 columns">
-        <ul class="menu">
-            {% get_request_parameters as search_params %}
-            {% if search_params %}
+<div class="row">
+    <div class="small-12 columns minus-margin-top">
+         <ul class="menu float-left">
             <li>
-                <a href="{% url 'search' %}?{{ search_params }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to results</a>
-            </li>
-            {% endif %}
-            <li>
-                <a href="{{ page.issue.url }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Issue</a>
+                <a href="{{ page.issue.url }}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to Issue</a>
             </li>
         </ul>
     </div>
-</section>
+</div>
 
-<section class="row large-up-2">
-    <div class="column column-block" data-equalizer-watch="cards">
-        <div class="tabs">
-            <ul class="menu subnav">
-                <li class="tabs-title is-active">
-                    <a href="#image" aria-selected="true">Image</a>
-                </li>
-            </ul>
-        </div>
-        <div class="tabs-content">
-            <ul class="menu">
-                <li>
-                    <a href="{{ page.print_url }}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print image</a>
-                </li>
-            </ul>
-            <section class="tabs-panel is-active">
+<div class="row">
+    <div class="small-12 columns">
+        <div class="tab_container subnav">
+
+            <input id="tab1" type="radio" name="tabs" checked>
+            <label for="tab1">
+                Image
+            </label>        
+
+            <input id="tab2" type="radio" name="tabs">
+            <label for="tab2">
+                Transcript
+            </label>
+
+            <input id="tab5" type="radio" name="tabs">
+            <label for="tab5">
+                Citation
+            </label>  
+
+            <input id="tab3" type="radio" name="tabs">
+            <label for="tab3">
+                Contents
+            </label>   
+            
+            <input id="tab4" type="radio" name="tabs">
+            <label for="tab4">
+                Split view
+            </label>  
+
+
+            <section id="content1" class="tab-content">
                 <div class="row">
                     <div class="small-12 columns">
+                     <ul class="menu float-right">
+                    <li>
+                        <a href="{{ page.print_url }}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print image</a>
+                    </li>
+                       </ul>
+                    <ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">
+                        <li class="accordion-item" data-accordion-item>
+                            <a href="#" class="accordion-title">Articles/Ads</a>
+                            
+                            <div class="accordion-content" data-tab-content>
+                                <div class="row">
+                                    
+                            <table class="stack unstriped">
+                            <tbody>
+                                {% for article in page.articles %}
+                                <tr>
+                                    <td>{{ article.article_type }}</td>
+                                    
+                                    <td><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=article.slug%}">{% if article.title %}{{ article.title }}{% else %}Untitled Article{% endif %}</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                
+                                
+                                
+                            
+                            </tbody>
+                        </table>
+                                    
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+     
+            
                         <canvas class="pageCanvas border" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
                             {% comment %} Fallback for non-canvas supporting devices {% endcomment %}
                             <img id="page{{ page.number}}" src="{{ page.image.url }}">
@@ -52,18 +96,9 @@
                     </div>
                 </div>
             </section>
-        </div>
-    </div>
-    <div class="column column-block" data-equalizer-watch="cards">
-        <div class="tabs" data-tabs id="page-tabs">
-            <ul class="menu subnav">
-                <li class="tabs-title is-active"><a data-tabs-target="contents" href="#contents">Contents</a></li>
-                <li class="tabs-title"><a data-tabs-target="transcription" href="#transcription">Transcription</a></li>
-                <li class="tabs-title"><a data-tabs-target="citation" href="#citation">Citation</a></li>
-            </ul>
-        </div>
-        <div class="tabs-content" data-tabs-content="page-tabs">
-            <section class="tabs-panel" id="transcription">
+
+
+            <section id="content2" class="tab-content">
                 <div class="note"> Note: This is an Optical Character Recognition (OCR) programs “read” these images and convert them to text documents which can be easily searched, copied, edited, or used for computational text analysis methods.
                 </div>
 
@@ -74,10 +109,12 @@
                 </div>
                 {% endfor %}
             </section>
-            <section class="tabs-panel" id="citation">
+
+            <section id="content5" class="tab-content" >
                 “{{ page.issue }}, Page {{ page.number }}” <i>Masonic Periodicals Online</i>, Library and Museum Charitable Trust of the United Grand Lodge of England, {% now "j N Y" %}, {{ request.META.HTTP_HOST }}{{ page.url }}.
             </section>
-            <section class="tabs-panel is-active" id="contents">
+
+            <section id="content3" class="tab-content">
                 <div class="tabs" data-tabs id="issue-tabs">
                     <ul class="menu align-right">
                         <li class="tabs-title is-active"><a href="#list" aria-selected="true"><i class="fa fa-list-ul" aria-hidden="true"></i> List</a></li>
@@ -146,9 +183,51 @@
                     </div>
                 </section>
             </section>
+
+
+
+            <section id="content4" class="tab-content">
+
+             <div class="row large-up-2">
+                <div class="column column-block" >
+                       
+                            <div class="row">
+                                <div class="small-12 columns">
+                                    <canvas class="pageCanvas border" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
+                                        {% comment %} Fallback for non-canvas supporting devices {% endcomment %}
+                                        <img id="page{{ page.number}}" src="{{ page.image.url }}">
+                                    </canvas>
+                                </div>
+                            </div>
+                      
+                    </div>
+
+                    <div class="column column-block">
+                        
+                            <div class="note"> Note: This is an Optical Character Recognition (OCR) programs “read” these images and convert them to text documents which can be easily searched, copied, edited, or used for computational text analysis methods.
+                            </div>
+
+                            {% for article in page.articles_in_page.all %}
+                            <div id="{{ article.aid }}">
+                                <h3 class="subtitle">{{ article|title }}</h3>
+                                {{ article.content_html|safe }}
+                            </div>
+                            {% endfor %}
+                        
+                    </div>
+                </div>
+
+            </section>
+
         </div>
     </div>
-</section>
+</div>
+
+
+
+
+
+
 
 <div class="row">
     <div class="small-12 columns">

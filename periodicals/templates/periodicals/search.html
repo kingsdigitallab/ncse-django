@@ -193,6 +193,7 @@
                                     </a>
                                 </p>
                                 {% if query %}
+
                                     <div class="row card-highlight">
                                         <div class="small-12 columns">
                                             {% highlight result.text with query html_tag "strong" %}
@@ -239,6 +240,8 @@
                         {% if page_obj.has_next %}
                             <a href="?page={{ page_obj.next_page_number }}{% if params %}{{ params }}{% endif %}"
                                aria-label="Next page">
+
+
                         {% endif %}
                         Next <span class="show-for-sr">page</span>
                         {% if page_obj.has_next %}
@@ -251,4 +254,6 @@
     {% endif %}
     <!-- </div> -->
 
+
 {% endblock %}
+

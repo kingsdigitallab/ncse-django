@@ -2,113 +2,101 @@
 {% load periodicals_tags %}
 
 {% block title %}
-    {{ issue.publication}}, {{ issue.issue_date }}
+{{ issue.publication}}, {{ issue.issue_date }}
 {% endblock %}
 
 {% block meta_title %}
-    {{ issue.publication}}, {{ issue.issue_date }}
+{{ issue.publication}}, {{ issue.issue_date }}
 {% endblock %}
 
 {% block main %}
 
 <!-- <section class="grid-container"> -->
-<section>
-    <div class="row">
-        <div class="small-12 columns minus-margin-top">
-            <ul class="menu align-right">
-                {% get_request_parameters as search_params %}
-                {% if search_params %}
-                <li>
-                    <a href="{% url 'search' %}?{{ search_params }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to results</a>
-                </li>
-                {% endif %}
-            </ul>
-            <ul class="menu align-right">
-                <li>
-                    <a href="{{ issue.pdf.url }}"><i class="fa fa-file-text-o" aria-hidden="true"></i> PDF</a>
-                </li>
-                <!-- *** Removed to have one option *** -->
-                <!-- <li><a href="{{ issue.pdf.url }}" download="{{ issue }}"><i class="fa fa-download" aria-hidden="true"></i> Download PDF</a></li> -->
-            </ul>
-        </div>
+
+<div class="row">
+    <div class="small-12 columns minus-margin-top">
+         <ul class="menu float-left">
+            <li>
+                <a href="{% url 'search' %}?{{ search_params }}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to Publication</a>
+            </li>
+        
+        </ul>
+        <ul class="menu float-right">
+            <li>
+                <a href="{{ issue.pdf.url }}" class="button"><i class="fa fa-file-text-o" aria-hidden="true"></i> View PDF</a>
+            </li>
+        </ul>
     </div>
-</section>
+</div>
 
-<!-- <section class="grid-container"> -->
-<section>
-    <div class="row">
-        <div class="small-12 columns tabs" data-tabs id="issue-tabs">
-            Contents
-            <ul class="menu align-right">
-                <li class="tabs-title is-active"><a href="#list" aria-selected="true"><i class="fa fa-list-ul" aria-hidden="true"></i> List</a></li>
-                <li class="tabs-title"><a data-tabs-target="grid" href="#grid"><i class="fa fa-th" aria-hidden="true"></i> Grid</a></li>
-            </ul>
-        </div>
-    </div>
-</section>
+<div class="row">
+    <div class="small-12 columns">
+        <div class="tab_container">
+            <input id="tab2" type="radio" name="tabs">
+            <label for="tab2" class="float-right">
+                <i class="fa fa-th"></i>
+                Grid
+            </label>   
+            <input id="tab1" type="radio" name="tabs" checked>
+            <label for="tab1" class="float-right">
+                <i class="fa fa-list-ul"></i>
+                List
+            </label>
 
-<div class="tabs-content" data-tabs-content="issue-tabs">
-
-    <!-- *** TODO: Data to be added *** -->
-    <section class="tabs-panel is-active" id="list">
-        <div class="row">
-            <div class="small-12 columns">
+            <section id="content1" class="tab-content">
                 <table class="stack unstriped">
-                                    <thead>
-                                        <tr>
-                                            <th>Page</th>
-                                            <th>Category</th>
-                                            <th>Title</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% regroup issue.articles_and_ads by page as page_list %}
 
-                                        {% for page in page_list %}
-                                            {% for article in page.list %}
-                                            <tr>
-                                                <td>{% if forloop.first%}{{ page.grouper.number }}{% endif %}</td>
-                                                <td>{{ article.article_type }}</td>
-                                                <td><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{% if article.title %}{{ article.title }}{% else %}Untitled Article{% endif %}</a></td>
-                                            </tr>
-                                            {% endfor %}
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+                    <thead>
+                        <tr>
+                            <th>Page</th>
+                            <th>Category</th>
+                            <th>Title</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% regroup issue.articles_and_ads by page as page_list %}
 
-            </div>
-        </div>
-    </section>
+                        {% for page in page_list %}
+                            {% for article in page.list %}
+                            <tr>
+                                <td>{% if forloop.first%}{{ page.grouper.number }}{% endif %}</td>
+                                <td>{{ article.article_type }}</td>
+                                <td><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{% if article.title %}{{ article.title }}{% else %}Untitled Article{% endif %}</a></td>
+                            </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
 
-    <section class="tabs-panel" id="grid">
-        <div class="row medium-up-2 large-up-4 container" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium">
-            {% for page in issue.pages.all %}
-            <div class="column column-block" data-equalizer-watch="cards">
-                <div class="card">
-                    <a href="{{ page.url }}">
-                        <div class="card-image">
-                            <img src="{% thumbnail page.image.url %}">
+            <section id="content2" class="tab-content">
+
+                <div class="row medium-up-2 large-up-4 container" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium">
+                    {% for page in issue.pages.all %}
+                    <div class="column column-block" data-equalizer-watch="cards">
+                        <div class="card">
+                            <a href="{{ page.url }}">
+                                <div class="card-image">
+                                    <img src="{% thumbnail page.image.url %}">
+                                </div>
+                                <div class="card-section overlay">
+                                    <h3>Page {{ page.number }}</h3>
+                                    <div class="card-footer">
+                                        {% if page.number_of_articles == 1 %}
+                                        {{ page.articles.0.title }}
+                                        {% else %}
+                                        {{ page.number_of_articles }} Articles
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                        <div class="card-section overlay">
-                            <h3>Page {{ page.number }}</h3>
-                            <div class="card-footer">
-                                {% if page.number_of_articles == 1 %}
-                                {{ page.articles.0.title }}
-                                {% else %}
-                                {{ page.number_of_articles }} Articles
-                                {% endif %}
-                            </div>
-                        </div>
-                    </a>
-                    {% if request.user.is_staff %}
-                    <div class="card-divider">
-                        <a href="/admin/periodicals/page/{{ page.id }}/change/" class="card-footer-item">Edit</a>
                     </div>
-                    {% endif %}
+                    {% endfor %}
                 </div>
-            </div>
-            {% endfor %}
+            </section>
+
         </div>
-    </section>
+    </div>
 </div>
 {% endblock %}
