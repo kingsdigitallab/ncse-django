@@ -15,6 +15,7 @@
  *      Sub navigation
  *  Main content
  *      Cards
+ *  Tabs
  *  Accordion
  *  Search
  *  Table of contents
@@ -60,6 +61,12 @@ h3 {
     }
 }
 
+a{
+    &.text-center{
+        text-align: center;
+        display: block;
+    }
+}
 .border {
     border: 1px solid $dark-gray;
 }
@@ -69,7 +76,9 @@ h3 {
 }
 
 .button{
+    margin:0.5rem 0!important;
     width: 100%;
+    padding:0.7rem 1rem;
 }
 
 // Hiding mobile menu on loading
@@ -92,14 +101,20 @@ h3 {
 /* Navigation */
 
 nav {
-    background: $primary-color;
-
-    .logo {
-        float: left;
-
-        h1 {
+    background-color: #6898CC;
+    min-width: 100%;
+    .navwrapper {
+        margin: 0 auto;
+        padding: 0 2%;
+        display: block;
+        margin: 0 auto;
+        padding: 0 2%;
+        .logo {
+            color: white;
+            display: inline-block;
+            margin: 1em 0;
+            h1 {
             font-size: rem-calc(16);
-            line-height: rem-calc(36);
             margin: 0;
             text-transform: uppercase;
 
@@ -107,49 +122,86 @@ nav {
                 color: white;
             }
         }
-    }
-
-    .title-bar {
-        background: none;
-        padding: 0;
-    }
-
-    .top-bar {
-        background: $primary-color;
-        padding: 0;
-
+        }
         ul {
-            background: $primary-color;
-
-            // For TO: This doesn't seem to be used - GF
-            // li.active {
-            //     &:before {
-            //         border: 5px solid transparent;
-            //         border-right: 5px solid transparent;
-            //         border-top: 5px solid $primary-color;
-            //         content: " ";
-            //         display: block;
-            //         pointer-events: none;
-            //         position: absolute;
-            //         transform: rotate(0);
-            //         -webkit-transform: rotate(0);
-            //         top: 100%;
-            //     }
-            // }
-
-            a {
-                color: white;
-                font-size: rem-calc(16);
+            list-style-type: none;
+            display: inline-block;
+            float: right;
+            margin: 0;
+            li {
+                display: inline-block;
+                margin: 1rem 0;
+                a {
+                    color: white;
+                    text-decoration: none;
+                    transition: all .5s ease;
+                    padding: 0 2rem;
+                    &:hover {
+                        color: black;
+                    }
+                }
             }
         }
+    }
+    #menu-toggle {
+        display: none;
+    }
+    .label-toggle {
+        display: none;
+    }
+}
 
-        h1 {
-            font-size: rem-calc(16);
-            margin: 0;
-            text-transform: uppercase;
 
-            a {
+
+
+
+@media screen and (max-width: 768px) {
+    nav {
+        .navwrapper {
+            display: block;
+            ul {
+                background-color: #6898CC;
+                display: block;
+                height: 0;
+                list-style-type: none;
+                opacity: 0;
+                text-align: center;
+                transition: all 0.5s ease;
+                width: 100%;
+                visibility: hidden;
+                float: left;
+                li {
+                    display: block;
+                    padding: 0;
+                    width: 100%;
+                    margin: 0.5rem 0;
+                }
+            }
+            #menu-toggle:checked~ul {
+                opacity: 1;
+                height: 100%;
+                /* fallback */
+                height: 100vh;
+                visibility: visible;
+            }
+            .label-toggle {
+                cursor: pointer;
+                display: block;
+                float: right;
+                height: 35px;
+                margin-top: 1em;
+                width: 35px;
                 color: white;
+                .menu-text {
+                    float: left;
+                    margin-left: -60px;
+                }
+                span {
+                    display: block;
+                    width: 25px;
+                    height: 7px;
+                    border-top: 2px solid #eee;
+                }
             }
         }
     }
@@ -158,7 +210,10 @@ nav {
 
 /* Sub Navigation */
 
-.menu {
+.menu{
+    a{
+        padding: 0.7rem 0;
+    }
     &.subnav {
         border-bottom: 1px solid gray;
 
@@ -168,48 +223,9 @@ nav {
             a.is-active {
                 background: none;
                 border-bottom: 3px solid $primary-color;
-                color: $primary-color;
+                color: darken($primary-color, 10%);
             }
         }
-    }
-}
-
-ul.menu.align-right > li >a {
-    color: black;
-
-    &:hover {
-        color: $primary-color;
-    }
-}
-
-.tabs,
-.tabs-content {
-    border: none;
-}
-
-.tabs-title {
-    a {
-        font-size: rem-calc(16);
-        padding: rem-calc(11 16);
-        color: $black;
-    }
-}
-
-.tabs-title > a:focus,
-.tabs-title > a[aria-selected='true'] {
-    background: none;
-    outline: 0;
-}
-
-ul.menu.align-right > li > a[aria-selected='true'] {
-    color: $primary-color;
-}
-
-#contents.tabs-panel {
-    padding: 0;
-
-    .tabs-panel {
-        padding: 0;
     }
 }
 
@@ -316,6 +332,7 @@ ul.menu.align-right > li > a[aria-selected='true'] {
 
     .card-section {
 
+
         h3 {
             font-size: rem-calc(20);
             font-weight: normal;
@@ -365,6 +382,57 @@ ul.menu.align-right > li > a[aria-selected='true'] {
     text-align: center;
 }
 
+/* Tabs */
+.tab_container {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    input,
+    section {
+        clear: both;
+        display: none;
+    }
+    label {
+        display: block;
+        float: left;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: right; 
+    }
+    #tab1:checked~#content1,
+    #tab2:checked~#content2,
+    #tab3:checked~#content3,
+    #tab4:checked~#content4,
+    #tab1a:checked~#content1a,
+    #tab2a:checked~#content2a{
+        display: block;
+    }
+    [id^="tab"]:checked+label {
+        color: darken($primary-color, 10%);
+        .fa {
+        color: darken($primary-color, 10%);
+    }
+    }
+    label .fa {
+        margin: 0 0.5rem 0 0;
+    }
+    &.subnav{
+        [id^="tab"]:checked+label {
+            border-bottom:3px solid $primary-color;
+        }
+        section{
+          border-top:1px solid black;
+        }
+        [type='radio'] + label{
+            margin:0;
+            padding:0 2rem;
+        }
+    }
+}
+
+
+
+
 
 /* Accordion */
 
@@ -373,7 +441,7 @@ ul.menu.align-right > li > a[aria-selected='true'] {
     border: none;
     color: white;
     padding: rem-calc(16);
-    width: rem-calc(100);
+    width: rem-calc(150);
 
     &:hover {
         background: darken($primary-color, 10%);
@@ -461,6 +529,7 @@ tbody {
     border: none;
 }
 
+
 td {
 
     &.float-left {
@@ -471,6 +540,8 @@ td {
         width: 50%;
     }
 }
+
+
 
 
 /* Page level */
