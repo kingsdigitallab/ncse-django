@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView, TemplateView
 from haystack.generic_views import FacetedSearchView
-
+from django.db.models import Max, Min
 from .forms import PeriodicalsSearchForm
 from .models import Article, Issue, Page, Publication
 
@@ -154,17 +154,20 @@ class PeriodicalsSearchView(FacetedSearchView):
         initial = super(FacetedSearchView, self).get_initial()
         # Find the first and last published years
         # set as default for the form
-        first = Issue.objects.all().order_by('issue_date')[0]
-        last = Issue.objects.all().order_by('-issue_date')[0]
-        initial['start_year'] = first.issue_date.year
-        initial['end_year'] = last.issue_date.year
+        first_issue = Issue.objects.all().aggregate(Min('issue_date'))
+        first = first_issue['issue_date__min'].year
+        last_issue = Issue.objects.all().aggregate(Max('issue_date'))
+        last = last_issue['issue_date__max'].year
+        initial['start_year'] = first
+        initial['end_year'] = last
         return initial
 
     def get_context_data(self, **kwargs):
         context = super(PeriodicalsSearchView, self).get_context_data(**kwargs)
         request = self.request
-        first = Issue.objects.all().order_by('issue_date')[0]
-        last = Issue.objects.all().order_by('-issue_date')[0]
+        initial = self.get_initial()
+        first_year = initial['start_year']
+        last_year = initial['end_year']
         form = context['form']
         if 'selected_facets' in request.GET:
             context['selected_facets'] = request.GET.getlist('selected_facets')
@@ -175,11 +178,11 @@ class PeriodicalsSearchView(FacetedSearchView):
                 'start_year' in form.cleaned_data and
                 form.cleaned_data['start_year'] is not None and
                 int(form.cleaned_data['start_year']) >
-                first.issue_date.year) or (
+                first_year) or (
                 'end_year' in form.cleaned_data and
                 form.cleaned_data['end_year'] is not None and
                 int(form.cleaned_data[
-                    'end_year']) < last.issue_date.year
+                    'end_year']) < last_year
             )):
                 context['jumptoresults'] = True
         context['form'] = form
