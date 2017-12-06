@@ -165,21 +165,24 @@ class PeriodicalsSearchView(FacetedSearchView):
         request = self.request
         first = Issue.objects.all().order_by('issue_date')[0]
         last = Issue.objects.all().order_by('-issue_date')[0]
+        form = context['form']
         if 'selected_facets' in request.GET:
             context['selected_facets'] = request.GET.getlist('selected_facets')
             context['jumptoresults'] = True
         else:
-            form = context['form']
-            if ('q' in form.cleaned_data and
-                len(form.cleaned_data['q']) > 0) or (
+            if form.is_bound and (('q' in form.cleaned_data and
+                                   len(form.cleaned_data['q']) > 0) or (
                 'start_year' in form.cleaned_data and
+                form.cleaned_data['start_year'] is not None and
                 int(form.cleaned_data['start_year']) >
                 first.issue_date.year) or (
                 'end_year' in form.cleaned_data and
+                form.cleaned_data['end_year'] is not None and
                 int(form.cleaned_data[
                     'end_year']) < last.issue_date.year
-            ):
+            )):
                 context['jumptoresults'] = True
+        context['form'] = form
         return context
 
     def get_queryset(self):
