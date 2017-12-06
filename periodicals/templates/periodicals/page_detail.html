@@ -55,10 +55,10 @@
                 <div class="row">
                     <div class="small-12 columns">
                      <ul class="menu float-right">
-                    <li>
-                        <a href="{{ page.print_url }}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print image</a>
-                    </li>
-                       </ul>
+                        <li>
+                            <a href="{{ page.print_url }}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print image</a>
+                        </li>
+                    </ul>
                     <ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">
                         <li class="accordion-item" data-accordion-item>
                             <a href="#" class="accordion-title">Articles/Ads</a>
@@ -68,6 +68,41 @@
                                     
                             <table class="stack unstriped">
                             <tbody>
+                                <tr class="is-active">
+                                    <td>
+                                        <a href="/periodicals/mob/issues/mob_01121856/page/2/articles/ar00202/">Article</a>
+                                    </td>
+                                    <td>
+                                        <a href="/periodicals/mob/issues/mob_01121856/page/2/articles/ar00202/">CRAFT FREEMASONRY.</a>
+                                    </td>
+                                    <td>
+                                        <a href="#">
+                                        <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                                        Page 2 of 3
+                                        <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="#" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print Article</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="/periodicals/mob/issues/mob_01121856/page/2/articles/ar00202/">Article</a>
+                                    </td>
+                                    <td>
+                                        <a href="/periodicals/mob/issues/mob_01121856/page/2/articles/ar00202/">NOTICES TO CORRESPONDENTS.</a>
+                                    </td>
+                                    <td>
+                                        <a href="#">
+                                        5 pages
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="#" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print Article</a>
+                                    </td>
+                                </tr>
+
                                 {% for article in page.articles %}
                                 <tr>
                                     <td>{{ article.article_type }}</td>
@@ -187,38 +222,31 @@
 
 
             <section id="content4" class="tab-content">
-
-             <div class="row large-up-2">
-                <div class="column column-block" >
-                       
-                            <div class="row">
-                                <div class="small-12 columns">
-                                    <canvas class="pageCanvas border" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
-                                        {% comment %} Fallback for non-canvas supporting devices {% endcomment %}
-                                        <img id="page{{ page.number}}" src="{{ page.image.url }}">
-                                    </canvas>
-                                </div>
+                <div class="row large-up-2">
+                    <div class="column column-block" > 
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <canvas class="pageCanvas border" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
+                                    {% comment %} Fallback for non-canvas supporting devices {% endcomment %}
+                                    <img id="page{{ page.number}}" src="{{ page.image.url }}">
+                                </canvas>
                             </div>
-                      
+                        </div>
                     </div>
 
                     <div class="column column-block">
-                        
-                            <div class="note"> Note: This is an Optical Character Recognition (OCR) programs “read” these images and convert them to text documents which can be easily searched, copied, edited, or used for computational text analysis methods.
-                            </div>
+                        <div class="note"> Note: This is an Optical Character Recognition (OCR) programs “read” these images and convert them to text documents which can be easily searched, copied, edited, or used for computational text analysis methods.
+                        </div>
 
-                            {% for article in page.articles_in_page.all %}
-                            <div id="{{ article.aid }}">
-                                <h3 class="subtitle">{{ article|title }}</h3>
-                                {{ article.content_html|safe }}
-                            </div>
-                            {% endfor %}
-                        
+                        {% for article in page.articles_in_page.all %}
+                        <div id="{{ article.aid }}">
+                            <h3 class="subtitle">{{ article|title }}</h3>
+                            {{ article.content_html|safe }}
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
-
             </section>
-
         </div>
     </div>
 </div>
