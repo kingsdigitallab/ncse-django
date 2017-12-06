@@ -73,6 +73,9 @@ a{
 
 .underline {
     border-bottom: 1px solid black;
+    &.margin-bottom{
+        margin-bottom: 2rem;
+    }
 }
 
 .button{
@@ -112,7 +115,7 @@ nav {
         .logo {
             color: white;
             display: inline-block;
-            margin: 1em 0;
+            margin: 1rem 0;
             h1 {
             font-size: rem-calc(16);
             margin: 0;
@@ -444,6 +447,7 @@ nav {
         }
         section{
           border-top:1px solid black;
+          padding-top: 2rem;
         }
         [type='radio'] + label{
             margin:0;
@@ -540,27 +544,24 @@ nav {
 
 /* Search form */
 
-section {
-    &.search {
+
+section{
+    .callout{
+        border:none;
+        background: $light-gray;
+
+    }
+    form{
         ul {
             list-style: none;
+        li{
+            float: left;
+            margin-left:-18px;
+            width:33.3%;
+        }    
         }
-
-        .column {
-            background: $light-gray;
-            padding: rem-calc(16 24);
-        }
-    }
-
-    .panel{
-       background: $light-gray;
-       padding: 1rem 1rem 0 1rem;
-       ul {
-           list-style: none;
-       }
     }
 }
-
 
 /* Table of contents */
 
