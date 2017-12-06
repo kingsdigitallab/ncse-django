@@ -74,6 +74,9 @@ a{
 
 .underline {
     border-bottom: 1px solid black;
+    &.margin-bottom{
+        margin-bottom: 2rem;
+    }
 }
 
 .button{
@@ -465,6 +468,7 @@ nav {
 
         section {
           border-top: 1px solid black;
+          padding-top: rem-calc(32);
         }
     }
 }
@@ -559,28 +563,23 @@ nav {
 
 section {
 
-    &.search {
+    .callout {
+        border: none;
+        background: $light-gray;
 
+    }
+
+    form {
         ul {
             list-style: none;
+            li {
+                float: left;
+                margin-left: rem-calc(-18);
+                width: 33.3%;
+            }    
         }
-
-        .column {
-            background: $light-gray;
-            padding: rem-calc(16 24);
-        }
-    }
-
-    .panel{
-       background: $light-gray;
-       padding: rem-calc(16 16 0);
-
-       ul {
-           list-style: none;
-       }
     }
 }
-
 
 /* Table of contents */
 

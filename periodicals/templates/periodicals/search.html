@@ -11,44 +11,50 @@
 
 {% block main %}
     {% get_request_parameters exclude="page" as params %}
-    <section class="search"> 
-        <form method="get" action=".">
-            <div class="row medium-up-3 large-up-3 panel">
-                <div class="column column-block">
-                    {% with field=form.q %} {{ field.errors }} {{ field.label_tag }} {{ field }}
-                        {% if field.help_text %}
-                            <p class="help">{{ field.help_text|safe }}</p>
-                        {% endif %} {% endwith %} {% with field=form.mode %} {{ field.errors }} {{ field.label_tag }}
-                    {{ field }} {% if field.help_text %}
-                        <p class="help">{{ field.help_text|safe }}</p>
-                    {% endif %} {% endwith %}
-                </div>
-                <div class="column column-block">
-                    <div class="grid-x  grid-padding-y medium-up-full large-up-2">
-                        <div class="cell">
-                            {% with field=form.start_year %} {{ field.errors }} {{ field.label_tag }} {{ field }}
+<section>
+    <div class="row">
+        <div class="column">
+            <section class="callout">
+                <form method="get" action=".">
+                    <div class="row medium-up-3 large-up-3">
+                        <div class="column column-block">
+                            {% with field=form.q %} {{ field.errors }} {{ field.label_tag }} {{ field }}
+                                {% if field.help_text %}
+                                    <p class="help">{{ field.help_text|safe }}</p>
+                                {% endif %} {% endwith %} {% with field=form.mode %} {{ field.errors }} {{ field.label_tag }}
+                            {{ field }} {% if field.help_text %}
+                                <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %} {% endwith %}
+                        </div>
+                        <div class="column column-block">
+                            <div class="grid-x  grid-padding-y medium-up-full large-up-2">
+                                <div class="cell">
+                                    {% with field=form.start_year %} {{ field.errors }} {{ field.label_tag }} {{ field }}
+                                        {% if field.help_text %}
+                                            <p class="help">{{ field.help_text|safe }}</p>
+                                        {% endif %} {% endwith %}
+                                </div>
+                                <div class="cell">
+                                    {% with field=form.end_year %} {{ field.errors }} {{ field.label_tag }} {{ field }}
+                                        {% if field.help_text %}
+                                            <p class="help">{{ field.help_text|safe }}</p>
+                                        {% endif %} {% endwith %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column column-block">
+                            {% with field=form.order_by %} {{ field.errors }} {{ field.label_tag }} {{ field }}
                                 {% if field.help_text %}
                                     <p class="help">{{ field.help_text|safe }}</p>
                                 {% endif %} {% endwith %}
-                        </div>
-                        <div class="cell">
-                            {% with field=form.end_year %} {{ field.errors }} {{ field.label_tag }} {{ field }}
-                                {% if field.help_text %}
-                                    <p class="help">{{ field.help_text|safe }}</p>
-                                {% endif %} {% endwith %}
-                        </div>
+                            <input class="button" type="submit" value="Search">
+                        </div>  
                     </div>
-                </div>
-                <div class="column column-block">
-                    {% with field=form.order_by %} {{ field.errors }} {{ field.label_tag }} {{ field }}
-                        {% if field.help_text %}
-                            <p class="help">{{ field.help_text|safe }}</p>
-                        {% endif %} {% endwith %}
-                    <input class="button" type="submit" value="Search">
-                </div>
-            </div>
-        </form>
-    </section>
+                </form>
+            </section>
+        </div>
+    <div>
+</section>
 
     <!-- <section class="grid-container"> -->
     <section {% if jumptoresults %}id="jump-to-results-section"{% endif %}>
