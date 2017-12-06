@@ -315,16 +315,22 @@ nav {
             }
         }
 
-        &.search-results:hover {
-            border: 1px solid $light-gray;
+        &.search-results{
+        color: gray;
+            &:hover {
+                border: 1px solid $primary-color;
 
-            .card-section {
-                background: none;
-            }
+                .card-section {
 
-            .card-footer {
-                border-top: 1px solid gray;
-                color: gray;
+                    background: $primary-color;
+                    color: white;
+                }
+
+                .card-footer {
+                    border-top: 1px solid white;
+                    color: white;
+                                    
+                }
             }
         }
     }
@@ -341,17 +347,15 @@ nav {
         }
 
         h2 {
-            font-size: rem-calc(24);
+            font-size: rem-calc(22);
             font-variant: small-caps;
             font-weight: bold;
         }
     }
 
     .card-section {
-
-
         h3 {
-            font-size: rem-calc(20);
+            font-size: rem-calc(18);
             font-weight: normal;
         }
 
@@ -364,7 +368,7 @@ nav {
 
         .card-highlight {
             border-top: 1px solid gray;
-            color: gray;
+            color: black;
             margin-top: rem-calc(16);
             text-align: justify;
         }
@@ -542,10 +546,18 @@ section {
             list-style: none;
         }
 
-        .columns {
+        .column {
             background: $light-gray;
             padding: rem-calc(16 24);
         }
+    }
+
+    .panel{
+       background: $light-gray;
+       padding: 1rem 1rem 0 1rem;
+       ul {
+           list-style: none;
+       }
     }
 }
 
@@ -558,7 +570,6 @@ tbody {
 
 
 td {
-
     &.float-left {
         float: none !important;
     }
@@ -569,13 +580,20 @@ td {
 }
 
 table.unstriped tbody tr{
-&:hover {
-    background: $primary-color;
-    a{
-        color: $white;
+    &.is-active{
+            background: $primary-color;
+            a{
+            color: $white;
+        }
+        }    
+    &:hover {
+        background: $primary-color;
+        a{
+            color: $white;
+        }
     }
 }
-}
+
 
 /* Page level */
 
@@ -594,15 +612,18 @@ footer {
     background: $primary-color;
     color: $white;
     font-size: rem-calc(14);
-    padding: rem-calc(20 0);
-
     a {
-        color: $warning-color;
+        color: $white;
         font-weight: 700;
     }
 
     img {
         max-width: rem-calc(60);
+        margin: 1rem 1rem 2rem 1rem;
+    }
+    ul{
+        list-style-type: none;
+        text-align: center;
     }
 }
 
