@@ -85,6 +85,7 @@ function enablePublicationSwitcher()
             $.get($(this).attr('href'), function(data)
             {
                 $('#issues-ajax').html( data );
+                new Foundation.Equalizer($('.equalize-me-again'));
             });
             $('#publication-year-switcher a').removeClass('is-active');
             $(this).addClass('is-active');

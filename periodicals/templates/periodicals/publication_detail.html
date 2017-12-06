@@ -58,7 +58,7 @@
                             <ul class="menu subnav" id="publication-year-switcher">
                                 <li><h2>Years</h2></li>
                                 {% for year, issues_in_year in year_list %}
-                                <li><a {% if forloop.first %}class='is-active'{% endif %}href="{% url 'publication-issue-ajax' slug=publication.slug year=year %}">{{ year }} ({{ issues_in_year|length }})</a></li>
+                                <li><a {% if forloop.first %}class='is-active' {% endif %}href="{% url 'publication-issue-ajax' slug=publication.slug year=year %}">{{ year }} ({{ issues_in_year|length }})</a></li>
                                 {% endfor %}
                             </ul>
                         </nav>
@@ -77,7 +77,7 @@
                     </div>
                     <div class="row small-up-2 medium-up-3 large-up-5" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium">
                         {% for issue in selected_issues %}
-                        <div class="column column-block" data-equalizer-watch="cards">
+                        <div class="column" data-equalizer-watch="cards">
                             <div class="card">
                                 <a href="{{ issue.url }}">
                                     <div class="card-image">
@@ -86,7 +86,8 @@
                                     <div class="card-section overlay">
                                         <h3 class="small-caps">{{ publication }}</h3>
                                         <h3 class="small-caps">{{ issue.issue_date }}</h3>
-                                        <div class="card-footer">{{ issue.articles.count }} Articles spanning {{ issue.pages.count }} Pages
+                                        <div class="card-footer">
+                                            {{ issue.articles.count }} Articles spanning {{ issue.pages.count }} Pages
                                         </div>
                                     </div>
                                 </a>
