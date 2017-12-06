@@ -6,7 +6,7 @@ from haystack.forms import FacetedSearchForm
 class PeriodicalsSearchForm(FacetedSearchForm):
 
     MODE_DEFAULT = ('or', 'Any word')
-    MODE_AND = ('and', 'All the words')
+    MODE_AND = ('and', 'All words')
     MODE_PHRASE = ('phrase', 'Phrase')
     MODE_CHOICES = (MODE_DEFAULT, MODE_AND, MODE_PHRASE)
     mode = forms.ChoiceField(
@@ -15,9 +15,9 @@ class PeriodicalsSearchForm(FacetedSearchForm):
     start_year = forms.IntegerField(required=False, initial=1854)
     end_year = forms.IntegerField(required=False, initial=1906)
 
-    ORDER_BY_DEFAULT = ('issue_date', 'Order by date')
-    ORDER_BY_TITLE = ('title', 'Order by title')
-    ORDER_BY_RELEVANCE = ('score', 'Order by relevance')
+    ORDER_BY_DEFAULT = ('issue_date', 'Date')
+    ORDER_BY_TITLE = ('title', 'Title')
+    ORDER_BY_RELEVANCE = ('score', 'Relevance')
     ORDER_BY_CHOICES = (ORDER_BY_DEFAULT, ORDER_BY_TITLE, ORDER_BY_RELEVANCE)
     order_by = forms.ChoiceField(
         choices=ORDER_BY_CHOICES, initial=ORDER_BY_DEFAULT[0],
