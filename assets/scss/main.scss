@@ -20,6 +20,7 @@
  *  Search
  *  Table of contents
  *  Footer
+ *  Cookie disclaimer
  *  Media queries
  */
 
@@ -567,6 +568,9 @@ section {
         border: none;
         background: $light-gray;
 
+        i {
+            font-size: rem-calc(18);
+        }
     }
 
     form {
@@ -629,11 +633,7 @@ table {
 /* Page level */
 
 .note {
-    background: #f8f8f8;
-    border: 1px solid $light-gray;
     font-style: italic;
-    margin-bottom: rem-calc(16);
-    padding: rem-calc(16);
 }
 
 
@@ -657,6 +657,45 @@ footer {
     ul {
         list-style-type: none;
         text-align: center;
+    }
+}
+
+
+/* Cookie disclaimer */
+
+.cookies-box {
+    background: rgba(0, 0, 0, 0.8);
+    bottom: 0;
+    color: white;
+    position: fixed;
+    text-align: center;
+    width: 100%;
+
+    a {
+        color: white;
+        margin-bottom: 0;
+        text-decoration: underline;     
+    }
+
+    button,
+    .button {
+        background: $primary-color;
+        border: 0;
+        color: #000;
+        max-width: rem-calc(200px);
+
+        &:hover {
+            background: scale-color($primary-color, $lightness: -30%);
+            color: white;
+        }
+    }
+
+    p {
+        margin: rem-calc(16) 0 rem-calc(8);
+    }
+
+    &.callout {
+        margin-bottom: 0;
     }
 }
 

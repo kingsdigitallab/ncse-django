@@ -85,6 +85,8 @@ function enablePublicationSwitcher()
             $.get($(this).attr('href'), function(data)
             {
                 $('#issues-ajax').html( data );
+
+                // Re-initialise Equalizer
                 new Foundation.Equalizer($('.equalize-me-again'));
             });
             $('#publication-year-switcher a').removeClass('is-active');
@@ -98,10 +100,31 @@ $(function() {
         enableCanvas();
     }
     enablePublicationSwitcher();
-    if ($("#jump-to-results-section").size() > 0){
+    if ($("#jump-to-results-section").size > 0){
         // Jump to results if search has been run
         $(document).scrollTop( $("#jump-to-results-section").offset().top );
     }
 
     enableReadMore();
+});
+
+
+// Cookie policy banner
+
+$(document).ready(function() {
+    if (!Cookies.get('mpol-cookie')) {
+      $("#cookie-disclaimer").removeClass('hide');
+    }
+
+    // Set cookie
+    $('#cookie-disclaimer .closeme').on("click", function() {
+      Cookies.set('mpol-cookie', 'mpol-cookie-set', {
+          expires: 30
+      });
+    });
+
+    $('.closeme').bind("click", function () {
+        $('#cookie-disclaimer').addClass("hide");
+        return false;
+    });
 });
