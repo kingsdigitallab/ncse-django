@@ -54,22 +54,28 @@
   </main>
 
   <footer>
-    <!-- <div class="grid-container"> -->
-      <div class="row">
-        <div class="small-12 columns">
-        {% block footer %}
-          {% include 'includes/footer.html' %}
-        {% endblock %}
-        </div>
+    <div class="row">
+      <div class="small-12 columns">
+      {% block footer %}
+        {% include 'includes/footer.html' %}
+      {% endblock %}
       </div>
-    <!-- </div> -->
+    </div>
+
+    <!-- Cookie disclaimer -->
+
+    <div class="callout cookies-box hide" id="cookie-disclaimer">
+      <p>We use cookies to track usage and preferences.</p>
+      <p><button class="button reverse closeme" aria-label="Dismiss alert" type="button">Accept</button></p>
+      <p><a href="/privacy-policy/" class="small">Privacy &amp; cookie policy</a></p>
+    </div>
   </footer>
 
   {% compress js %}
   <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
   <script src="{% static 'js/babel.min.js' %}"></script>
   <script src="{% static 'vendor/what-input/dist/what-input.min.js' %}"></script>
-  <script src="{% static 'js/foundation.min.js' %}"></script>
+  <script src="{% static 'vendor/js-cookie/src/js.cookie.js' %}"></script>
   <script src="{% static 'js/main.js' %}"></script>
   <script>
     $(document).foundation();
