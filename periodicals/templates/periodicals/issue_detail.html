@@ -49,6 +49,7 @@
                             <th>Page</th>
                             <th>Category</th>
                             <th>Title</th>
+                            <th></th> <!-- Controls -->
                         </tr>
                     </thead>
                     <tbody>
@@ -60,6 +61,7 @@
                                 <td><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{% if forloop.first%}{{ page.grouper.number }}{% endif %}</a></td>
                                 <td><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{{ article.article_type }}</a></td>
                                 <td><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{% if article.title %}{{ article.title }}{% else %}Untitled Article{% endif %}</a></td>
+                                <td><a href="{{ article.print_url }}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i></a></td>
                             </tr>
                             {% endfor %}
 
