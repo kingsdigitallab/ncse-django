@@ -568,6 +568,9 @@ section {
         border: none;
         background: $light-gray;
 
+        i {
+            font-size: rem-calc(18);
+        }
     }
 
     form {
@@ -630,11 +633,7 @@ table {
 /* Page level */
 
 .note {
-    background: #f8f8f8;
-    border: 1px solid $light-gray;
     font-style: italic;
-    margin-bottom: rem-calc(16);
-    padding: rem-calc(16);
 }
 
 
