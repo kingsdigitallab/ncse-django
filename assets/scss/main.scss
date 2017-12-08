@@ -602,10 +602,8 @@ table {
                 &:hover {
                     background: $primary-color;
 
-                    td {
-                        a {
-                            color: $white;
-                        }
+                    a {
+                        color: $white;
                     }
                 }
             }
