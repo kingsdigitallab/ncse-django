@@ -11,8 +11,6 @@
 
 {% block main %}
 
-<!-- <section class="grid-container"> -->
-
 <div class="row">
     <div class="small-12 columns minus-margin-top">
          <ul class="menu float-left">
@@ -35,22 +33,21 @@
             <input id="tab2" type="radio" name="tabs">
             <label for="tab2" class="float-right">
                 <i class="fa fa-th"></i>
-                Grid
+                Pages
             </label>   
             <input id="tab1" type="radio" name="tabs" checked>
             <label for="tab1" class="float-right">
                 <i class="fa fa-list-ul"></i>
-                List
+                Table of contents
             </label>
 
             <section id="content1" class="tab-content">
                 <table class="stack unstriped">
-
                     <thead>
                         <tr>
-                            <th>Page</th>
-                            <th>Category</th>
                             <th>Title</th>
+                            <th>Category</th>
+                            <th>Page</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,9 +56,13 @@
                         {% for page in page_list %}
                             {% for article in page.list %}
                             <tr>
-                                <td><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{% if forloop.first%}{{ page.grouper.number }}{% endif %}</a></td>
-                                <td><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{{ article.article_type }}</a></td>
-                                <td><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{% if article.title %}{{ article.title }}{% else %}Untitled Article{% endif %}</a></td>
+                                <td><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{% if article.title %}{{ article.title }}{% else %}Untitled Article{% endif %}</a>
+                                </td>    
+                                <td class="fixed"><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{{ article.article_type }}</a>
+                                </td>                                                         
+                                <td class="fixed"><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{% if forloop.first%}{{ page.grouper.number }}{% endif %}</a>
+                                </td>   
+
                             </tr>
                             {% endfor %}
 
@@ -101,3 +102,4 @@
     </div>
 </div>
 {% endblock %}
+
