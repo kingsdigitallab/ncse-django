@@ -32,6 +32,13 @@
 
 /* Globals */
 
+a {
+    &.text-center {
+        display: block;
+        text-align: center;
+    }
+}
+
 body,
 h1,
 h2,
@@ -41,10 +48,6 @@ h3 {
 
 canvas {
     width: 100%;
-}
-
-main {
-    margin: rem-calc(20 0);
 }
 
 h1 {
@@ -68,29 +71,26 @@ h3 {
     }
 }
 
-a {
-    &.text-center {
-        text-align: center;
-        display: block;
-        text-align: center;
-    }
+main {
+    margin: rem-calc(20 0);
 }
 
 .border {
     border: 1px solid $dark-gray;
 }
 
-.underline {
-    border-bottom: 1px solid $black;
-    &.margin-bottom {
-        margin-bottom: 2rem;
-    }
-}
-
 .button{
     margin: rem-calc(8 0) !important;
     padding: rem-calc(12 16);
     width: 100%;
+}
+
+.underline {
+    border-bottom: 1px solid $black;
+
+    &.margin-bottom {
+        margin-bottom: rem-calc(32);
+    }
 }
 
 // Hiding mobile menu on loading
@@ -248,13 +248,13 @@ nav {
 // Card
 .card {
 
-    position: relative;
     height: 100%;
+    position: relative;
     text-align: center;
 
     &:hover {
-        border: 1px solid $primary-color;
         background: $primary-color;
+        border: 1px solid $primary-color;
 
         h2 {
             color: $white;
@@ -291,10 +291,8 @@ nav {
     }
 
     .card-divider {
-        display: block;
-        color: $black;
         background: none;
-        color: black;
+        color: $black;
         display: block;
 
         img {
@@ -312,11 +310,12 @@ nav {
 
     .card-section {
         h3 {
+            color: $primary-color;
             font-size: rem-calc(18);
             font-weight: normal;
-            color: $primary-color;
         }
-        p{
+
+        p {
             color:$black;
         }
 
@@ -419,8 +418,8 @@ nav {
         }
 
         section {
-          border-top: 1px solid black;
-          padding-top: rem-calc(32);
+            border-top: 1px solid black;
+            padding-top: rem-calc(32);
         }
     }
 }
@@ -480,6 +479,7 @@ nav {
                 
                 a {
                     color: $white;
+
                     span {
                         color: $white;
                     }
@@ -528,25 +528,29 @@ section {
         &.advanced {
             ul {
                 list-style: none;
+
                 li {
                     float: left;
-                    margin-left: -18px;
+                    margin-left: rem-calc(-18);
                     width: 35%;
                 }
             }
-            .column-block{
+
+            .column-block {
                 margin-bottom: 0;
             }
         }
 
         &.simple {
             ul {
-            list-style: none;
+                list-style: none;
 
-            li {
-                float: left;
-                margin-left: rem-calc(-18);
-                width: 100%;
+                li {
+                    float: left;
+                    margin-left: rem-calc(-18);
+                    width: 100%;
+                }
+            }
         }
     }
 }
@@ -599,10 +603,10 @@ table {
                     background: $primary-color;
 
                     td {
-                       a {
-                           color: $white;
-                       }
-                   }
+                        a {
+                            color: $white;
+                        }
+                    }
                 }
             }
         }
@@ -632,11 +636,6 @@ footer {
     img {
         margin: rem-calc(16 16 32);
         max-width: rem-calc(60);
-        margin: 1rem 1rem 2rem 1rem;
-    }
-    ul {
-        list-style-type: none;
-        text-align: center;
     }
 
     ul {
@@ -723,19 +722,20 @@ footer {
         padding: rem-calc(7 0);
     }
 
-    section {
-        form.advanced {
+    form {
+        &.advanced {
             ul {
                 li {
                     width: 100%;
                 }
             }
         }
-    }
-    form.simple {
-        ul {
-            li {
-                width: 33.3%;
+
+        &.simple {
+            ul {
+                li {
+                    width: 33.33%;
+                }
             }
         }
     }
