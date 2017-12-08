@@ -28,7 +28,7 @@
             <input id="tab1" type="radio" name="tabs" checked>
             <label for="tab1">
                 Image
-            </label>        
+            </label>
 
             <input id="tab2" type="radio" name="tabs">
             <label for="tab2">
@@ -38,68 +38,95 @@
             <input id="tab5" type="radio" name="tabs">
             <label for="tab5">
                 Citation
-            </label>  
+            </label>
 
             <input id="tab3" type="radio" name="tabs">
             <label for="tab3">
                 Contents
-            </label>   
+            </label>
             
             <input id="tab4" type="radio" name="tabs">
             <label for="tab4">
                 Split view
-            </label>  
-
+            </label>
 
             <section id="content1" class="tab-content">
-                <div class="row">
-                    <div class="small-12 columns">
-                     <ul class="menu float-right">
+                <ul class="menu float-right">
                     <li>
                         <a href="{{ page.print_url }}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print image</a>
                     </li>
-                       </ul>
-                    <ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">
-                        <li class="accordion-item" data-accordion-item>
-                            <a href="#" class="accordion-title">Articles/Ads</a>
+                </ul>
+                <ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">
+                    <li class="accordion-item" data-accordion-item>
+                        <a href="#" class="accordion-title">Articles/Ads</a>
+                        <div class="accordion-content" data-tab-content>
                             
-                            <div class="accordion-content" data-tab-content>
-                                <div class="row">
-                                    
-                            <table class="stack unstriped">
-                            <tbody>
-                                {% for article in page.articles %}
-                                <tr>
-                                    <td>{{ article.article_type }}</td>
-                                    
-                                    <td><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=article.slug%}">{% if article.title %}{{ article.title }}{% else %}Untitled Article{% endif %}</a>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                                
-                                
-                                
-                            
-                            </tbody>
-                        </table>
-                                    
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-     
-            
-                        <canvas class="pageCanvas border" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
-                            {% comment %} Fallback for non-canvas supporting devices {% endcomment %}
-                            <img id="page{{ page.number}}" src="{{ page.image.url }}">
-                        </canvas>
-                    </div>
-                </div>
+                                <table class="stack unstriped">
+                                    <tbody>
+                                        <tr class="is-active">
+                                            <td>
+                                                <a href="/periodicals/mob/issues/mob_01121856/page/2/articles/ar00202/">Article</a>
+                                            </td>
+                                            <td>
+                                                <a href="/periodicals/mob/issues/mob_01121856/page/2/articles/ar00202/">CRAFT FREEMASONRY.</a>
+                                            </td>
+                                            <td>
+                                                <a href="#">
+                                                <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                                                Page 2 of 3
+                                                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="#" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print Article</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="/periodicals/mob/issues/mob_01121856/page/2/articles/ar00202/">Article</a>
+                                            </td>
+                                            <td>
+                                                <a href="/periodicals/mob/issues/mob_01121856/page/2/articles/ar00202/">NOTICES TO CORRESPONDENTS.</a>
+                                            </td>
+                                            <td>
+                                                <a href="#">
+                                                5 pages
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="#" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print Article</a>
+                                            </td>
+                                        </tr>
+
+                                        {% for article in page.articles %}
+                                        <tr>
+                                            <td>{{ article.article_type }}</td>
+                                            
+                                            <td><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=article.slug%}">{% if article.title %}{{ article.title }}{% else %}Untitled Article{% endif %}</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+                          
+                        </div>
+                    </li>
+                </ul>
+                <canvas class="pageCanvas border" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
+                    {% comment %} Fallback for non-canvas supporting devices {% endcomment %}
+                    <img id="page{{ page.number}}" src="{{ page.image.url }}">
+                </canvas>
             </section>
 
-
             <section id="content2" class="tab-content">
-                <div class="note"> Note: This is an Optical Character Recognition (OCR) programs “read” these images and convert them to text documents which can be easily searched, copied, edited, or used for computational text analysis methods.
+                <div class="callout secondary note" data-closable>
+                    <p>
+                        <strong>Note:</strong> This is an Optical Character Recognition (OCR) programs "read" these images and convert them to text documents which can be easily searched, copied, edited, or used for computational text analysis methods.
+                    </p>
+                    <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+                        <i aria-hidden="true" class="fa fa-times"></i>
+                    </button>
                 </div>
 
                 {% for article in page.articles_in_page.all %}
@@ -152,9 +179,9 @@
                         </div>
                     </section>
 
-                <section class="tabs-panel" id="grid">
-                    <div class="row medium-up-2 large-up-3 container" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium">
-                         {% for page in page.issue.pages.all %}
+                    <section class="tabs-panel" id="grid">
+                        <div class="row medium-up-2 large-up-3 container" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium">
+                             {% for page in page.issue.pages.all %}
                             <div class="column column-block" data-equalizer-watch="cards">
                                 <div class="card">
                                     <a href="{{ page.url }}">
@@ -180,54 +207,46 @@
                                 </div>
                             </div>
                             {% endfor %}
-                    </div>
-                </section>
+                        </div>
+                    </section>
+                </div>
             </section>
 
-
-
             <section id="content4" class="tab-content">
-
-             <div class="row large-up-2">
-                <div class="column column-block" >
-                       
-                            <div class="row">
-                                <div class="small-12 columns">
-                                    <canvas class="pageCanvas border" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
-                                        {% comment %} Fallback for non-canvas supporting devices {% endcomment %}
-                                        <img id="page{{ page.number}}" src="{{ page.image.url }}">
-                                    </canvas>
-                                </div>
+                <div class="row large-up-2">
+                    <div class="column column-block" > 
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <canvas class="pageCanvas border" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
+                                    {% comment %} Fallback for non-canvas supporting devices {% endcomment %}
+                                    <img id="page{{ page.number}}" src="{{ page.image.url }}">
+                                </canvas>
                             </div>
-                      
+                        </div>
                     </div>
 
                     <div class="column column-block">
-                        
-                            <div class="note"> Note: This is an Optical Character Recognition (OCR) programs “read” these images and convert them to text documents which can be easily searched, copied, edited, or used for computational text analysis methods.
-                            </div>
+                        <div class="callout secondary note" data-closable>
+                            <p>
+                                <strong>Note:</strong> This is an Optical Character Recognition (OCR) programs "read" these images and convert them to text documents which can be easily searched, copied, edited, or used for computational text analysis methods.
+                            </p>
+                            <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+                                <i aria-hidden="true" class="fa fa-times"></i>
+                            </button>
+                        </div>
 
-                            {% for article in page.articles_in_page.all %}
-                            <div id="{{ article.aid }}">
-                                <h3 class="subtitle">{{ article|title }}</h3>
-                                {{ article.content_html|safe }}
-                            </div>
-                            {% endfor %}
-                        
+                        {% for article in page.articles_in_page.all %}
+                        <div id="{{ article.aid }}">
+                            <h3 class="subtitle">{{ article|title }}</h3>
+                            {{ article.content_html|safe }}
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
-
             </section>
-
         </div>
     </div>
 </div>
-
-
-
-
-
-
 
 <div class="row">
     <div class="small-12 columns">

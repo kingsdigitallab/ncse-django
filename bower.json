@@ -5,6 +5,7 @@
         "jquery": null,
         "foundation-sites": null,
         "font-awesome": null,
+        "js-cookie": null,
         "motion-ui": null
     },
     "main": "assets/js/main.js",

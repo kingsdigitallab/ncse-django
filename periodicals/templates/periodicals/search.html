@@ -19,34 +19,40 @@
                     <div class="row medium-up-3 large-up-3">
                         <div class="column column-block">
                             {% with field=form.q %} {{ field.errors }} {{ field.label_tag }} {{ field }}
-                                {% if field.help_text %}
-                                    <p class="help">{{ field.help_text|safe }}</p>
-                                {% endif %} {% endwith %} {% with field=form.mode %} {{ field.errors }} 
+                            {% if field.help_text %}
+                            <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %}
+                            {% endwith %}
+                            {% with field=form.mode %} {{ field.errors }} {{ field.label_tag }}
                             {{ field }} {% if field.help_text %}
-                                <p class="help">{{ field.help_text|safe }}</p>
-                            {% endif %} {% endwith %}
+                            <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %}
+                            {% endwith %}
                         </div>
                         <div class="column column-block">
-                            <div class="grid-x  grid-padding-y medium-up-full large-up-2">
-                                <div class="cell">
+                            <div class="row large-up-2">
+                                <div class="column column-block">
                                     {% with field=form.start_year %} {{ field.errors }} {{ field.label_tag }} {{ field }}
-                                        {% if field.help_text %}
-                                            <p class="help">{{ field.help_text|safe }}</p>
-                                        {% endif %} {% endwith %}
+                                    {% if field.help_text %}
+                                    <p class="help">{{ field.help_text|safe }}</p>
+                                    {% endif %}
+                                    {% endwith %}
                                 </div>
-                                <div class="cell">
+                                <div class="column column-block">
                                     {% with field=form.end_year %} {{ field.errors }} {{ field.label_tag }} {{ field }}
-                                        {% if field.help_text %}
-                                            <p class="help">{{ field.help_text|safe }}</p>
-                                        {% endif %} {% endwith %}
+                                    {% if field.help_text %}
+                                        <p class="help">{{ field.help_text|safe }}</p>
+                                    {% endif %}
+                                    {% endwith %}
                                 </div>
                             </div>
                         </div>
                         <div class="column column-block">
                             {% with field=form.order_by %} {{ field.errors }} {{ field.label_tag }} {{ field }}
-                                {% if field.help_text %}
-                                    <p class="help">{{ field.help_text|safe }}</p>
-                                {% endif %} {% endwith %}
+                            {% if field.help_text %}
+                            <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %}
+                            {% endwith %}
                             <input class="button" type="submit" value="Search">
                         </div>  
                     </div>
@@ -57,7 +63,7 @@
 </section>
 
 <!-- <section class="grid-container"> -->
-<section {% if jumptoresults %}id="jump-to-results-section"{% endif %}>
+<section{% if jumptoresults %} id="jump-to-results-section"{% endif %}>
     <div class="row">
         <div class="small-12 columns">
             <h1 class="underline">
@@ -75,28 +81,24 @@
                     <div class="accordion-content" data-tab-content>
                         <div class="row">
                             {% for key, values in facets.fields.items %}
-
-
-                                <div class="small-12 columns">
-                                    <h2>{{ key|capfirst }}</h2>
-                                    <ul>
-                                        {% for item in values %}
+                            <div class="small-12 columns">
+                                <h2>{{ key|capfirst }}</h2>
+                                <ul>
+                                    {% for item in values %}
                                     {% with key|add:":"|add:item.0 as  selected_key %}
-                                            <li {% if selected_key in selected_facets %}class="is-active"{% endif %}>
-
-                                                    {% if selected_key in selected_facets %}
-                                                        {% get_request_parameters exclude="selected_facets" as facet_params %}
-                                                        <a href="{% url 'search' %}?{{ facet_params }}&selected_facets={{ selected_facets|cut:selected_key }}">{{ item.0 }}<span>({{ item.1 }})</span>
-                                                            <i class="fa fa-times" aria-hidden="true"></i></a>
-                                                    {% else %}
-                                                        <a href="?{{ form.data.urlencode }}&amp;selected_facets={{ key }}:{{ item.0|urlencode }}">{{ item.0 }}
-                                                            <span>({{ item.1 }})</span></a>
-                                                    {% endif %}
-                                                {% endwith %}
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
+                                    <li{% if selected_key in selected_facets %} class="is-active"{% endif %}>
+                                        {% if selected_key in selected_facets %}
+                                        {% get_request_parameters exclude="selected_facets" as facet_params %}
+                                        <a href="{% url 'search' %}?{{ facet_params }}&selected_facets={{ selected_facets|cut:selected_key }}">{{ item.0 }}<span>({{ item.1 }})</span>
+                                        <i class="fa fa-times" aria-hidden="true"></i></a>
+                                        {% else %}
+                                        <a href="?{{ form.data.urlencode }}&amp;selected_facets={{ key }}:{{ item.0|urlencode }}">{{ item.0 }} <span>({{ item.1 }})</span></a>
+                                        {% endif %}
+                                        {% endwith %}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
                             {% endfor %}
                         </div>
                     </div>
@@ -104,8 +106,7 @@
             </ul>
         </div>
     </div>
-</section>    
-
+</section> 
  <div class="row">
     <div class="small-12 columns">
         <div class="tab_container">
@@ -164,7 +165,6 @@
                                 {% endif %}
                             </a>
                         </td>
-
                         {% if query %}
                             <td class="paragraph">
                                 <a href="{{ result.url }}?highlight={{ query }}">
@@ -205,63 +205,53 @@
                                     </h3>
                                     {% if query %}
                                     <div class="card-highlight">
-                                        {% highlight result.text with query html_tag "strong" %}
-                                    </div>
+                                        {% highlight result.text with query html_tag "strong" %}</div>
                                     {% endif %}
                                     <div class="card-footer">
                                         {{ result.category }}, p. {{ result.page_number }}
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
-                        </a>
+                    </div>
                     {% empty %}
-                        <div class="column">
-                            <p>No results found.</p>
-                        </div>
+                    <div class="column">
+                        <p>No results found.</p>
+                    </div>
                     {% endfor %}
-                </div>
-                <!-- *** Card End *** -->
-            </section>
-    </div>
-     </div>
-      </div>
-    <!-- <div class="grid-container"> -->
-    {% if page_obj.has_previous or page_obj.has_next %}
-        <div class="row">
-            <div class="small-12 columns">
-                <ul class="pagination text-center" role="navigation" aria-label="Pagination">
-                    <li class="{% if page_obj.has_previous %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
-                        {% if page_obj.has_previous %}
-                            <a href="?page={{ page_obj.previous_page_number }}{% if params %}{{ params }}{% endif %}"
-                               aria-label="Previous page">
-                        {% endif %}
-                        Prev <span class="show-for-sr">page</span>
-                        {% if page_obj.has_previous %}
-                            </a>
-                        {% endif %}
-                    </li>
-                    <li>
-                        Page {{ page_obj.number }} of {{ paginator.num_pages }}
-                    </li>
-                    <li class="{% if page_obj.has_next %}pagination-next{% else %}pagination-next disabled{% endif %}">
-                        {% if page_obj.has_next %}
-                            <a href="?page={{ page_obj.next_page_number }}{% if params %}{{ params }}{% endif %}"
-                               aria-label="Next page">
-
-
-                        {% endif %}
-                        Next <span class="show-for-sr">page</span>
-                        {% if page_obj.has_next %}
-                            </a>
-                        {% endif %}
-                    </li>
-                </ul>
+                </section>
             </div>
         </div>
-    {% endif %}
-    <!-- </div> -->
+    </div>
+</div>
 
-
+{% if page_obj.has_previous or page_obj.has_next %}
+<div class="row">
+    <div class="small-12 columns">
+        <ul class="pagination text-center" role="navigation" aria-label="Pagination">
+            <li class="{% if page_obj.has_previous %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}{% if params %}{{ params }}{% endif %}" aria-label="Previous page">
+                {% endif %}
+                Prev <span class="show-for-sr">page</span>
+                {% if page_obj.has_previous %}
+                </a>
+                {% endif %}
+            </li>
+            <li>
+                Page {{ page_obj.number }} of {{ paginator.num_pages }}
+            </li>
+            <li class="{% if page_obj.has_next %}pagination-next{% else %}pagination-next disabled{% endif %}">
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if params %}{{ params }}{% endif %}" aria-label="Next page">
+                {% endif %}
+                Next <span class="show-for-sr">page</span>
+                {% if page_obj.has_next %}
+                </a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
-
