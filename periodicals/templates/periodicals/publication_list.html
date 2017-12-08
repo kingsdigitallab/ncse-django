@@ -26,7 +26,7 @@
                             <h3>{{ year_span.0 }} to {{ year_span.1 }}</h3>
                         {% endwith %}
                         {% with number_of_years=publication.get_number_of_years %}
-                            <h3><strong>{{ number_of_years }}</strong> Year{{ number_of_years|pluralize }}</h3>
+                            <p><strong>{{ number_of_years }}</strong> Year{{ number_of_years|pluralize }}</p>
                         {% endwith %}
                         <div class="card-footer">
                             {{ publication.issues.count }} Issues spanning {{ publication.get_total_number_of_pages }} pages
