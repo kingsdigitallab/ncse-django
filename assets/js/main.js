@@ -127,4 +127,15 @@ $(document).ready(function() {
         $('#cookie-disclaimer').addClass("hide");
         return false;
     });
+
+    //Preloader
+    $(window).load(function() {
+        preloaderFadeOutTime = 200;
+        function hidePreloader() {
+            var preloader = $('.spinner-wrapper');
+            preloader.fadeOut(preloaderFadeOutTime);
+        }
+
+        hidePreloader();
+    });
 });
