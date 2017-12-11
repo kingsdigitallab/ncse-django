@@ -132,4 +132,6 @@ $(document).ready(function() {
         $('#cookie-disclaimer').addClass("hide");
         return false;
     });
+
+    $(document).foundation();
 });
