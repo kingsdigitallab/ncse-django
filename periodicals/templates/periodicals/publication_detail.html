@@ -16,7 +16,7 @@
             <ul class="menu align-right">
                 {% get_request_parameters as search_params %}
                 {% if search_params %}
-                <li><a href="{% url 'search' %}?{{ search_params }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to results</a> </li>
+                <li><a href="{% url 'search' %}?{{ search_params }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to results</a></li>
                 {% endif %}
             </ul>
         </div>
@@ -53,9 +53,16 @@
                     <div class="sticky" data-sticky-on="small" data-sticky data-margin-top="0" data-anchor="sticky">
                         <nav data-magellan>
                             <ul class="menu subnav" id="publication-year-switcher">
-                                <li><h2>Years</h2></li>
+                                <li>
+                                    <h2>Years</h2>
+                                </li>
+
                                 {% for year, issues_in_year in year_list %}
-                                <li><a {% if forloop.first %}class='is-active' {% endif %}href="{% url 'publication-issue-ajax' slug=publication.slug year=year %}">{{ year }} ({{ issues_in_year|length }})</a></li>
+                                <li>
+                                    <a {% if forloop.first %}class='is-active' {% endif %}href="{% url 'publication-issue-ajax' slug=publication.slug year=year %}">
+                                        {{ year }} <span>({{ issues_in_year|length }})</span>
+                                    </a>
+                                </li>
                                 {% endfor %}
                             </ul>
                         </nav>
@@ -66,9 +73,8 @@
                         <div class="small-12 columns">
                             <h3>
                                 {{ selected_year }} 
-                                <span>({{ selected_issues|length }} issues)
+                                <span>({{ selected_issues|length }} issues)</span>
                                 {% if not forloop.last %} {% endif %}
-                                <span>
                             </h3>
                         </div>
                     </div>
