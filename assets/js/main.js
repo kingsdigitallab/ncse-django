@@ -86,6 +86,11 @@ function enablePublicationSwitcher()
             {
                 $('#issues-ajax').html( data );
 
+                window.setTimeout(function() {
+                    // Re-initialise Equalizer
+                    new Foundation.Equalizer($('.equalize-me-again'));
+                }, 0);
+
                 // Re-initialise Equalizer
                 new Foundation.Equalizer($('.equalize-me-again'));
             });
@@ -126,16 +131,5 @@ $(document).ready(function() {
     $('.closeme').bind("click", function () {
         $('#cookie-disclaimer').addClass("hide");
         return false;
-    });
-
-    //Preloader
-    $(window).load(function() {
-        preloaderFadeOutTime = 200;
-        function hidePreloader() {
-            var preloader = $('.spinner-wrapper');
-            preloader.fadeOut(preloaderFadeOutTime);
-        }
-
-        hidePreloader();
     });
 });
