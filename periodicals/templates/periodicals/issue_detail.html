@@ -62,7 +62,7 @@
                                     <a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{{ article.article_type }}</a>
                                 </td>                                                         
                                 <td class="fixed">
-                                    <a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{% if forloop.first%}{{ page.grouper.number }}{% endif %}</a>
+                                    <a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{{ page.grouper.number }}</a>
                                 </td>
                             </tr>
                             {% endfor %}
