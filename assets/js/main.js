@@ -61,7 +61,6 @@ function enableCanvas() {
     }
 }
 
-
 function enableReadMore()
 {
     $('body').on('click', '.read-more', function(event)
@@ -73,6 +72,7 @@ function enableReadMore()
         $($(this).attr('data-target')).slideDown();
     });
 }
+
 function enablePublicationSwitcher()
 {
     if ($('#publication-year-switcher').length)
@@ -104,6 +104,7 @@ $(function() {
     if ($("canvas")) {
         enableCanvas();
     }
+
     enablePublicationSwitcher();
     if ($("#jump-to-results-section").size > 0){
         // Jump to results if search has been run
@@ -114,9 +115,8 @@ $(function() {
 });
 
 
-// Cookie policy banner
-
 $(document).ready(function() {
+    // Cookie policy banner
     if (!Cookies.get('mpol-cookie')) {
       $("#cookie-disclaimer").removeClass('hide');
     }
@@ -133,5 +133,8 @@ $(document).ready(function() {
         return false;
     });
 
+    $('#equal-again').foundation();
+
+    // Initialize Foundation
     $(document).foundation();
 });

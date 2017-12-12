@@ -53,26 +53,26 @@
                         {% regroup issue.articles_and_ads by page as page_list %}
 
                         {% for page in page_list %}
-                            {% for article in page.list %}
-                            <tr>
-                                <td>
-                                    <a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{% if article.title %}{{ article.title }}{% else %}Untitled Article{% endif %}</a>
-                                </td>    
-                                <td class="fixed">
-                                    <a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{{ article.article_type }}</a>
-                                </td>                                                         
-                                <td class="fixed">
-                                    <a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{{ page.grouper.number }}</a>
-                                </td>
-                            </tr>
-                            {% endfor %}
+                        {% for article in page.list %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{% if article.title %}{{ article.title }}{% else %}Untitled Article{% endif %}</a>
+                            </td>    
+                            <td class="fixed">
+                                <a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{{ article.article_type }}</a>
+                            </td>                                                         
+                            <td class="fixed">
+                                <a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{{ page.grouper.number }}</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
                         {% endfor %}
                     </tbody>
                 </table>
             </section>
 
             <section id="content2" class="tab-content">
-                <div class="row medium-up-2 large-up-4 container" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium">
+                <div class="row medium-up-2 large-up-4 container" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium" id="equal-again">
                     {% for page in issue.pages.all %}
                     <div class="column column-block" data-equalizer-watch="cards">
                         <div class="card">
