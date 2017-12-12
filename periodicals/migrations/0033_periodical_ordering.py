@@ -9,6 +9,7 @@ from periodicals.models import Publication
 the ordering'''
 def save_all_publications(apps, schema_editor):
     publications = Publication.objects.all()
+    import pdb; pdb.set_trace()
     for p in publications:
         p.save()
 
