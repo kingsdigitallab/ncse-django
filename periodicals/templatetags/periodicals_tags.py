@@ -34,6 +34,19 @@ def thumbnail(url):
         return url
 
 
+@register.assignment_tag(takes_context=True)
+def get_selected_facets(context, exclude=None):
+    """ Return any selected facets excluding exclude"""
+    if 'selected_facets' in context:
+        facets = context['selected_facets']
+        if exclude:
+            facets.remove(exclude)
+        if len(facets) == 0:
+            return None
+        return facets
+    return None
+
+
 # Borrowed from wagtailbase
 @register.assignment_tag(takes_context=True)
 def get_request_parameters(context, exclude=None):
