@@ -61,7 +61,6 @@ function enableCanvas() {
     }
 }
 
-
 function enableReadMore()
 {
     $('body').on('click', '.read-more', function(event)
@@ -73,6 +72,7 @@ function enableReadMore()
         $($(this).attr('data-target')).slideDown();
     });
 }
+
 function enablePublicationSwitcher()
 {
     if ($('#publication-year-switcher').length)
