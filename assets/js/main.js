@@ -33,6 +33,7 @@ function enableCanvas() {
                     });
                 }
 
+// IE Issues Start Here
                 if (typeof article_bounding_box !== "undefined") {
                     ctx.lineWidth = "4";
                     ctx.fillStyle = "rgba(0,0,0,0)";
@@ -41,7 +42,7 @@ function enableCanvas() {
                     ctx.beginPath();
                     ctx.moveTo(
                         parseInt(article_bounding_box[0]["x"]),
-                        parseInt(article_bounding_box[0]["y"]),
+                        parseInt(article_bounding_box[0]["y"])
                     );
 
                     count = article_bounding_box.length;
@@ -49,7 +50,7 @@ function enableCanvas() {
                     for (var i = 1; i <= count; i++) {
                         ctx.lineTo(
                             parseInt(article_bounding_box[i % count]["x"]),
-                            parseInt(article_bounding_box[i % count]["y"]),
+                            parseInt(article_bounding_box[i % count]["y"])
                         );
                     }
 
@@ -58,6 +59,8 @@ function enableCanvas() {
             };
             img.src = $("#" + $(this).attr("data-image-id")).attr("src");
         });
+
+// IE Issues End Here
     }
 }
 
