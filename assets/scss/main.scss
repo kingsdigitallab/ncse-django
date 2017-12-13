@@ -310,6 +310,10 @@ nav {
         }
     }
 
+    .card-image {
+        min-height: 1px;
+    }
+
     .card-section {
         h3 {
             color: $primary-color;
