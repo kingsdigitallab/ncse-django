@@ -27,7 +27,7 @@
     <body>
         {% for p in pages %}
         <div class="page">
-            <img src="{{ p.image.url }}">
+            <img src="{{ p.image.url }}" alt="{{article.issue}} - {{ article|title }}">
         </div>
         {% endfor %}
         <script>
