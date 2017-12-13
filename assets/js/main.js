@@ -136,7 +136,10 @@ $(document).ready(function() {
         return false;
     });
 
-    $('#equal-again').foundation();
+    // ReInit Equalizer on issue-detail page
+    $('#tab2').on('click', function() {
+        Foundation.reInit($('#equal-again'));
+    });
 
     // Initialize Foundation
     $(document).foundation();
