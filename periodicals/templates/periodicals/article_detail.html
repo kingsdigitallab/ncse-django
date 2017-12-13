@@ -74,7 +74,7 @@
         <div class="small-12 columns">
             <canvas class="pageCanvas border" data-image-id="page{{ article.page.number }}" width="{{ article.page.width }}" height="{{ article.page.height }}">
                 <!-- Fallback for non-canvas supporting devices -->
-                <img id="page{{ article.page.number}}" src="{{ article.page.image.url }}">
+                <img id="page{{ article.page.number}}" src="{{ article.page.image.url }}" alt="Page {{ article.page.number}}">
             </canvas>
         </div>
     </section>
