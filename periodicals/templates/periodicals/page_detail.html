@@ -186,8 +186,8 @@
                     <section class="tabs-panel" id="grid">
                         <div class="row medium-up-2 large-up-3 container equalize-me-again" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium">
                             {% for page in page.issue.pages.all %}
-                            <div class="column column-block" data-equalizer-watch="cards">
-                                <div class="card">
+                            <div class="column column-block">
+                                <div class="card" data-equalizer-watch="cards">
                                     <a href="{{ page.url }}">
                                         <div class="card-image">
                                             <img src="{% thumbnail page.image.url %}" alt="Page {{ page.number }}">
