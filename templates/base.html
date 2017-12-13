@@ -1,6 +1,6 @@
-{% load staticfiles compress periodicals_tags  %}
-<!DOCTYPE html>
-<html>
+{% load staticfiles compress periodicals_tags wagtailcore_tags %}
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,10 +13,27 @@
   {% endcompress %}
 </head>
 <body>
+  <!--CSS Spinner-->
+  <div class="spinner-wrapper">
+    <div class="sk-circle">
+      <div class="sk-circle1 sk-child"></div>
+      <div class="sk-circle2 sk-child"></div>
+      <div class="sk-circle3 sk-child"></div>
+      <div class="sk-circle4 sk-child"></div>
+      <div class="sk-circle5 sk-child"></div>
+      <div class="sk-circle6 sk-child"></div>
+      <div class="sk-circle7 sk-child"></div>
+      <div class="sk-circle8 sk-child"></div>
+      <div class="sk-circle9 sk-child"></div>
+      <div class="sk-circle10 sk-child"></div>
+      <div class="sk-circle11 sk-child"></div>
+      <div class="sk-circle12 sk-child"></div>
+    </div>
+  </div>
   <nav>
     <div class="grid-container">
-      <div class="grid-x">
-        <div class="cell">
+      <div class="row">
+        <div class="small-12 columns">
         {% block navigation %}
           {% include 'includes/navigation.html' %}
         {% endblock %}
@@ -28,13 +45,21 @@
   {% block header %}
   {% comment %} This is here because of overriding the title {% endcomment %}
   <section>
-    <div class="grid-container">
-      <div class="grid-x">
-        <div class="cell">
-          <h1 class="title">
-            {% block title %}{% endblock %}<br>
-          </h1>
+    <div class="row">
+      <div class="small-12 columns">
+        <div aria-label="You are here:" role="navigation">
+
+          <ul class="breadcrumbs">
+          {% block breadcrumbs %}
+          {% endblock %}
+          </ul>
+
+          <span class="show-for-sr">Current: </span> 
+           <h1 class="underline">
+          {% block title %}{% endblock %}<br>
+        </h1>
         </div>
+        
       </div>
     </div>
   </section>
@@ -46,14 +71,20 @@
   </main>
 
   <footer>
-    <div class="grid-container">
-      <div class="grid-x">
-        <div class="cell">
-        {% block footer %}
-          {% include 'includes/footer.html' %}
-        {% endblock %}
-        </div>
+    <div class="row">
+      <div class="small-12 columns">
+      {% block footer %}
+        {% include 'includes/footer.html' %}
+      {% endblock %}
       </div>
+    </div>
+
+    <!-- Cookie disclaimer -->
+
+    <div class="callout cookies-box hide" id="cookie-disclaimer">
+      <p>We use cookies to track usage and preferences.</p>
+      <p><button class="button reverse closeme" aria-label="Dismiss alert" type="button">Accept</button></p>
+      <p><a href="/privacy-policy/" class="small">Privacy &amp; cookie policy</a></p>
     </div>
   </footer>
 
@@ -61,11 +92,10 @@
   <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
   <script src="{% static 'js/babel.min.js' %}"></script>
   <script src="{% static 'vendor/what-input/dist/what-input.min.js' %}"></script>
+  <script src="{% static 'vendor/js-cookie/src/js.cookie.js' %}"></script>
+  <script src="{% static 'vendor/motion-ui/motion-ui.js' %}"></script>
   <script src="{% static 'js/foundation.min.js' %}"></script>
   <script src="{% static 'js/main.js' %}"></script>
-  <script>
-    $(document).foundation();
-  </script>
   {% endcompress %}
 
   {% block footer_scripts %}{% endblock %}

@@ -10,9 +10,11 @@ class Publication(models.Model):
     slug = models.SlugField(max_length=3, unique=True)
     title = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    ordering = models.PositiveIntegerField(blank=True, null=True)
+    title_image = models.ImageField(null=True)
 
     class Meta:
-        ordering = ['abbreviation']
+        ordering = ['ordering']
 
     def __str__(self):
         return '{}'.format(self.title if self.title else self.abbreviation)
@@ -49,6 +51,8 @@ class Publication(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.abbreviation)
+        if self.issues.all().count():
+            self.ordering = self.issues.first().issue_date.year
         super(Publication, self).save(*args, **kwargs)
 
 
@@ -68,7 +72,19 @@ class Issue(models.Model):
 
     @property
     def articles(self):
-        return self.articles_in_issue.filter(continuation_from=None)
+        article = ArticleType.objects.get_or_create(title='Article')[0]
+        return self.articles_in_issue.filter(continuation_from=None,
+                                             article_type=article)
+
+    @property
+    def ads(self):
+        ad = ArticleType.objects.get_or_create(title='Ad')[0]
+        return self.articles_in_issue.filter(continuation_from=None,
+                                             article_type=ad)
+
+    @property
+    def articles_and_ads(self):
+        return (self.articles | self.ads).order_by('position_in_page')
 
     @property
     def url(self):
@@ -206,6 +222,22 @@ class Article(models.Model):
                 pages.append(current_article.page)
 
         return pages
+
+    # Get total number of pages in article:
+    def get_number_of_pages(self):
+        return len(self.get_all_pages())
+
+    # Gets the position of this page in a multi-page article
+    # e.g. *1* of 5 (returns 1).
+    def get_position_in_article(self):
+        count = 1
+        current_article = self
+
+        while current_article.continuation_from:
+            current_article = current_article.continuation_from
+            count = count + 1
+
+        return count
 
     def get_text(self):
         if self.continuation_to:

@@ -1,36 +1,22 @@
-{% load periodicals_tags %}
+{% load periodicals_tags cms_tags %}
 
 {% block main_menu %}
 
-<div class="logo">
-  <h1><a href="/">The Masonic Periodicals</a></h1>
-</div>
-
-
-<div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
-  <div class="title-bar-right">
-  <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
-  <div class="title-bar-title">Menu</div>
-</div>
-</div>
-
-<div class="top-bar" id="responsive-menu">
-
-  <div class="top-bar-right">
-    <ul class=" medium-horizontal vertical dropdown menu">
-      
-      <li><a href="{% url 'publication-list' %}">Explore</a></li>
-      <li><a href="{% url 'search' %}?{% initial_search_parameters %}">Search</a></li>
-      <li><a href="/">About</a></li>
-      {% if request.user.is_authenticated %}
-      {% if request.user.is_staff %}
-      <li><a href="/admin/">Admin Panel</a></li>
-      {% endif %}
-      <li><a href="/admin/logout/">Logout {{ request.user.first_name }}</a></li>
-      {% else %}
-      <li><a href="/admin/login/">Login</a></li>
-      {% endif %}
-    </ul>
+<div class="navwrapper">
+  <div class="logo">
+    <h1><a href="/">Masonic Periodicals Online</a></h1>
   </div>
- </div>
+
+  <input type="checkbox" id="menu-toggle">
+
+  <label for="menu-toggle" class="label-toggle">  
+    <span class="menu-text">Menu</span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </label> 
+    
+  {% get_site_root as site_root %}
+  {% main_menu root=site_root current_page=self %}
+</div>
 {% endblock %}

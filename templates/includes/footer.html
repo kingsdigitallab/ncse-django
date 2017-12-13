@@ -1,12 +1,24 @@
-<p>
-  LIBRARY AND MUSEUM CHARITABLE TRUST OF THE UNITED GRAND LODGE OF ENGLAND
-  REGISTERED CHARITY NUMBER 1058497 / ALL RIGHTS RESERVED © 2017
-</p>
-<p>
-  <img src="http://freemasonry.london.museum/it/wp-content/media/acc_mus.png"> 
-  <img src="http://freemasonry.london.museum/it/wp-content/media/doc.png">
-</p>
-<p>
-  Designed and developed by <a href="//kdl.kcl.ac.uk" title="King's Digital Lab">King's Digital Lab</a>.
-</p>
-
+{% load staticfiles %}
+<ul>
+    <li>
+        <div class="logo">
+            <a href="#">
+                <img src="{% static 'images/acc_mus.png' %}" alt="Accredited Museum"> 
+            </a>
+            <a href="#">
+                <img src="{% static 'images/doc.png' %}" alt="Designated Outstanding Collection">
+            </a>
+        </div>
+    </li>
+    <li>
+        <p>
+          LIBRARY AND MUSEUM CHARITABLE TRUST OF THE UNITED GRAND LODGE OF ENGLAND
+          REGISTERED CHARITY NUMBER 1058497 / ALL RIGHTS RESERVED © 2017
+        </p>
+    </li>
+    <li>
+        <p>
+            Designed and developed by <a href="//www.kdl.kcl.ac.uk/" title="King's Digital Lab"><strong>King's Digital Lab</strong></a>
+        </p>
+    </li>
+</ul>

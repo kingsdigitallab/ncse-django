@@ -1,0 +1,15 @@
+<section class="callout">
+    <form method="get" action="{% url 'search' %}" class="simple">
+        <div class="row">
+            <div class="small-12 columns">
+                <label>Keyword:</label>
+                {{ form.q }} {{ form.order_by.as_hidden }}
+
+                {{ form.mode }}
+
+                <input class="button" type="submit" value="Search">
+                <a href="#" class="text-center">Advanced search</a>
+            </div>
+        </div>
+    </form>
+</section>

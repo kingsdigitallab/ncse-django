@@ -1,0 +1,38 @@
+{% load periodicals_tags %}
+
+<div class="row">
+    <div class="small-12 columns">
+        <h3>
+            {{ selected_year }} 
+            <span>({{ selected_issues|length }} issues)
+            {% if not forloop.last %} {% endif %}
+            <span>
+        </h3>
+    </div>
+</div>
+
+<div class="row small-up-2 medium-up-3 large-up-5 equalize-me-again" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium">
+    {% for issue in selected_issues %}
+    <div class="column" data-equalizer-watch="cards">
+        <div class="card">
+            <a href="{{ issue.url }}">
+                <div class="card-image">
+                    <img src="{% thumbnail issue.pages.all.0.image.url %}">
+                </div>
+                <div class="card-section overlay">
+                    <h3 class="small-caps">{{ publication }}</h3>
+                    <h3 class="small-caps">{{ issue.issue_date }}</h3>
+                    <div class="card-footer">
+                        {{ issue.articles.count }} Articles spanning {{ issue.pages.count }} Pages
+                    </div>
+                </div>
+            </a>
+            {% if request.user.is_staff %}
+            <div class="card-divider">
+                <a href="/admin/periodicals/issue/{{ issue.id }}/change/" class="card-footer-item">Edit</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>

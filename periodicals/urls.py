@@ -2,8 +2,8 @@ from django.conf.urls import url
 
 from .views import (ArticleDetailView, ArticlePrintView, IssueDetailView,
                     PageDetailView, PagePrintView,
-                    PeriodicalsSearchView, PublicationDetailView,
-                    PublicationListView)
+                    PeriodicalsSearchView, PublicationIssueAjax,
+                    PublicationDetailView, PublicationListView)
 
 urlpatterns = [
     url(r'^search/', PeriodicalsSearchView.as_view(), name='search'),
@@ -29,5 +29,7 @@ urlpatterns = [
         IssueDetailView.as_view(), name='issue-detail'),
     url(r'^(?P<slug>[-\w]+)/$',
         PublicationDetailView.as_view(), name='publication-detail'),
+    url(r'^(?P<slug>[-\w]+)/(?P<year>[-\w]+)/$',
+        PublicationIssueAjax.as_view(), name='publication-issue-ajax'),
     url(r'^$', PublicationListView.as_view(), name='publication-list')
 ]

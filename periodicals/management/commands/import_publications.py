@@ -27,6 +27,11 @@ class Command(BaseCommand):
         if os.path.isdir(self.extract_to):
             shutil.rmtree(self.extract_to)
 
+        # Re-save to generate the ordering
+        publications = Publication.objects.all()
+        for p in publications:
+            p.save()
+
     # Helper object:
     def _str_to_box(self, input):
         coords = input.split(' ')

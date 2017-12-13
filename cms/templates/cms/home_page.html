@@ -1,1 +1,37 @@
-{% extends "cms/base.html" %} 
+{% extends "cms/base.html" %}
+{% load periodicals_tags %}
+
+{% block main %}
+
+
+<section>
+     <div class="row">
+        <div class="small-12 columns">
+            <header><h1>Masonic Periodicals Online</h1></header>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 columns">
+        	{% include "cms/includes/streamfield.html" with blocks=self.body %}
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="row">
+        <div class="large-3 columns">
+            <h2 class="underline margin-bottom">Search</h2>
+        	{% quick_periodical_search_form %}
+        </div>
+
+        <div class="large-1 columns">
+        </div>
+
+        <div class="large-8 columns">
+            <h2 class="underline margin-bottom">This Month in History</h2>
+			{% get_issues_published_this_month %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}
