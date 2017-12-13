@@ -970,9 +970,11 @@ footer {
                 width: rem-calc(35);
 
                 .menu-text {
+                    border: none;
                     float: left;
                     margin-left: rem-calc(-60);
                 }
+                
                 span {
                     display: block;
                     width: rem-calc(25);
