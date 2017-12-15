@@ -10,326 +10,254 @@
 {% endblock %}
 
 {% block main %}
-{% get_request_parameters exclude="page" as params %}
-<section>
-    <div class="row">
-        <div class="column">
-            <section class="callout">
-                <form method="get" action="." class="advanced">
-                    <div class="row medium-up-3 large-up-3">
-                        <div class="column column-block">
-                            {% with field=form.q %} {{ field.errors }} {{ field.label_tag }} {{ field }}
-                            {% if field.help_text %}
-                            <p class="help">{{ field.help_text|safe }}</p>
-                            {% endif %}
-                            {% endwith %}
-                            {% with field=form.mode %} {{ field.errors }} {{ field.label_tag }}
-                            {{ field }} {% if field.help_text %}
-                            <p class="help">{{ field.help_text|safe }}</p>
-                            {% endif %}
-                            {% endwith %}
-                        </div>
-                        <div class="column column-block">
-                            <div class="row large-up-2">
-                                <div class="column column-block">
-                                    {% with field=form.start_year %} {{ field.errors }} {{ field.label_tag }} {{ field }}
-                                    {% if field.help_text %}
-                                    <p class="help">{{ field.help_text|safe }}</p>
-                                    {% endif %}
-                                    {% endwith %}
-                                </div>
-                                <div class="column column-block">
-                                    {% with field=form.end_year %} {{ field.errors }} {{ field.label_tag }} {{ field }}
+    {% get_request_parameters exclude="page" as params %}
+    <section>
+        <div class="row">
+            <div class="column">
+                <section class="callout">
+                    <form method="get" action="." class="advanced">
+                        <div class="row medium-up-3 large-up-3">
+                            <div class="column column-block">
+                                {% with field=form.q %} {{ field.errors }} {{ field.label_tag }} {{ field }}
                                     {% if field.help_text %}
                                         <p class="help">{{ field.help_text|safe }}</p>
                                     {% endif %}
-                                    {% endwith %}
+                                {% endwith %}
+                                {% with field=form.mode %} {{ field.errors }} {{ field.label_tag }}
+                                    {{ field }} {% if field.help_text %}
+                                    <p class="help">{{ field.help_text|safe }}</p>
+                                {% endif %}
+                                {% endwith %}
+                            </div>
+                            <div class="column column-block">
+                                <div class="row large-up-2">
+                                    <div class="column column-block">
+                                        {% with field=form.start_year %} {{ field.errors }} {{ field.label_tag }}
+                                            {{ field }}
+                                            {% if field.help_text %}
+                                                <p class="help">{{ field.help_text|safe }}</p>
+                                            {% endif %}
+                                        {% endwith %}
+                                    </div>
+                                    <div class="column column-block">
+                                        {% with field=form.end_year %} {{ field.errors }} {{ field.label_tag }}
+                                            {{ field }}
+                                            {% if field.help_text %}
+                                                <p class="help">{{ field.help_text|safe }}</p>
+                                            {% endif %}
+                                        {% endwith %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="column column-block">
+                                {% with field=form.order_by %} {{ field.errors }} {{ field.label_tag }} {{ field }}
+                                    {% if field.help_text %}
+                                        <p class="help">{{ field.help_text|safe }}</p>
+                                    {% endif %}
+                                {% endwith %}
+                                <input class="button" type="submit" value="Search">
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+            <div>
+    </section>
+
+    <!-- <section class="grid-container"> -->
+    <section{% if jumptoresults %} id="jump-to-results-section"{% endif %}>
+        <div class="row">
+            <div class="small-12 columns">
+                <h1 class="underline">
+                    Results
+                </h1>
+
+                <p>Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ paginator.count }} matches</p>
+            </div>
+
+
+            <div class="small-12 columns">
+                <ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">
+                    <li class="accordion-item is-active" data-accordion-item>
+                        <a href="#" class="accordion-title filters">Filter by Year</a>
+                        <div class="accordion-content" data-tab-content>
+                            <div class="row">
+                                <div class="small-12 columns">
+                                    {% include 'periodicals/includes/facet_filter.html' with key="year" facet_values=facets.fields.year %}
                                 </div>
                             </div>
                         </div>
-                        <div class="column column-block">
-                            {% with field=form.order_by %} {{ field.errors }} {{ field.label_tag }} {{ field }}
-                            {% if field.help_text %}
-                            <p class="help">{{ field.help_text|safe }}</p>
-                            {% endif %}
-                            {% endwith %}
-                            <input class="button" type="submit" value="Search">
-                        </div>  
-                    </div>
-                </form>
-            </section>
+                    </li>
+                    <li class="accordion-item is-active" data-accordion-item>
+                        <a href="#" class="accordion-title filters">Filter by Category</a>
+                        <div class="accordion-content" data-tab-content>
+                            <div class="row">
+                                <div class="small-12 columns">
+                                    {% include 'periodicals/includes/facet_filter.html' with key="category" facet_values=facets.fields.category %}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="accordion-item is-active" data-accordion-item>
+                        <a href="#" class="accordion-title filters">Filter by Publication</a>
+                        <div class="accordion-content" data-tab-content>
+                            <div class="row">
+                                <div class="small-12 columns">
+                                    {% include 'periodicals/includes/facet_filter.html' with key="publication" facet_values=facets.fields.publication %}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-    <div>
-</section>
-
-<!-- <section class="grid-container"> -->
-<section{% if jumptoresults %} id="jump-to-results-section"{% endif %}>
+    </section>
     <div class="row">
         <div class="small-12 columns">
-            <h1 class="underline">
-                Results
-            </h1>
+            <div class="tab_container">
+                <input id="tab2" type="radio" name="tabs">
+                <label for="tab2" class="float-right">
+                    <i class="fa fa-th"></i>
+                    Grid
+                </label>
+                <input id="tab1" type="radio" name="tabs" checked>
+                <label for="tab1" class="float-right">
+                    <i class="fa fa-list-ul"></i>
+                    List
+                </label>
+                <section id="content1" class="tab-content">
+                    <table class="stack unstriped">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Category</th>
+                            <th>Publication, Date, Page</th>
+                            <th>Title</th>
+                            <th>
+                                <!-- *** Not sure how to add heading here *** -->
+                                {% if result.title %}Extract{% endif %}
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
 
-            <p>Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ paginator.count }} matches</p>
-        </div>
+                        {% for result in page_obj.object_list %}
+                            <tr>
+                                <td>
+                                    <a href="{{ result.url }}?highlight={{ query }}">
+                                        {{ forloop.counter0|add:page_obj.start_index }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ result.url }}?highlight={{ query }}">
+                                        {{ result.category }}
+                                    </a>
+                                </td>
 
-        <!-- Previous Filter style 
-        <div class="small-12 columns">
-            <ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">
-                <li class="accordion-item is-active" data-accordion-item>
-                    <a href="#" class="accordion-title">Filters</a>
+                                <td class="publication">
+                                    <a href="{{ result.url }}?highlight={{ query }}">
+                                        {{ result.publication_abbreviation }}, {{ result.issue_date }},
+                                        page {{ result.page_number }}
+                                    </a>
+                                </td>
 
-                    <div class="accordion-content" data-tab-content>
-                        <div class="row">
-                            {% for key, values in facets.fields.items %}
-                            <div class="small-12 columns">
-                                <h2>{{ key|capfirst }}</h2>
-                                <ul>
-                                    {% for item in values %}
-                                    {% with key|add:":"|add:item.0 as  selected_key %}
-                                    <li{% if selected_key in selected_facets %} class="is-active"{% endif %}>
-                                        {% if selected_key in selected_facets %}
-                                        {% get_request_parameters exclude="selected_facets" as facet_params %}
-                                            {%  get_selected_facets exclude=selected_key as facets_excluded%}
-                                        <a href="{% url 'search' %}?{{ facet_params }}{% if facets_excluded %}{% for facet in facets_excluded %}&selected_facets={{ facet }}{% endfor %}{% endif %}">{{ item.0 }}<span>({{ item.1 }})</span>
-                                        <i class="fa fa-times-circle" aria-hidden="true"></i></a>
-                                        {% else %}
-                                        <a href="?{{ form.data.urlencode }}&amp;selected_facets={{ key }}:{{ item.0|urlencode }}">{{ item.0 }} <span>({{ item.1 }})</span></a>
-                                        {% endif %}
-                                        {% endwith %}
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>-->
-        <div class="small-12 columns">
-            <ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">
-                <li class="accordion-item is-active" data-accordion-item>
-                    <a href="#" class="accordion-title filters">Filter by Year</a>
-                    <div class="accordion-content" data-tab-content>
-                        <div class="row">   
-                            <div class="small-12 columns">
-                                <ul class="">
-                                    <li class="">
-                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=year:1856">1856 <span>(58)</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=year:1857">1857 <span>(159)</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=year:1858">1858 <span>(166)</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=year:1859">1859 <span>(144)</span></a>
-                                    </li>
-                                    <li>
-                                        
-                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=year:1866">1866 <span>(236)</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=year:1882">1882 <span>(445)</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=year:1889">1889 <span>(212)</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=year:1890">1890 <span>(160)</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="accordion-item is-active" data-accordion-item>
-                    <a href="#" class="accordion-title filters">Filter by Category</a>
-                    <div class="accordion-content" data-tab-content>
-                        <div class="row">   
-                            <div class="small-12 columns">
-                                <ul>
-                                    <li>
-                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=category:Article">Article <span>(1580)</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>    
-                    </div>
-                </li>
-                <li class="accordion-item is-active" data-accordion-item>
-                    <a href="#" class="accordion-title filters">Filter by Publication</a>
-                    <div class="accordion-content" data-tab-content>
-                        <div class="row">   
-                            <div class="small-12 columns">
-                                <ul>
-                                    <li>
-                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=publication:The%20Masonic%20Monthly">The Masonic Monthly <span>(445)</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=publication:The%20Masonic%20Observer">The Masonic Observer <span>(527)</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=publication:The%20Masonic%20Press">The Masonic Press <span>(236)</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=publication:The%20Masonic%20Review">The Masonic Review <span>(372)</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>    
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</section> 
- <div class="row">
-    <div class="small-12 columns">
-        <div class="tab_container">
-            <input id="tab2" type="radio" name="tabs">
-            <label for="tab2" class="float-right">
-                <i class="fa fa-th"></i>
-                Grid
-            </label>   
-            <input id="tab1" type="radio" name="tabs" checked>
-            <label for="tab1" class="float-right">
-                <i class="fa fa-list-ul"></i>
-                List
-            </label>
-            <section id="content1" class="tab-content">
-                <table class="stack unstriped">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th>Category</th>
-                        <th>Publication, Date, Page</th>
-                        <th>Title</th>
-                        <th>
-                            <!-- *** Not sure how to add heading here *** -->
-                            {% if result.title %}Extract{% endif %}
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    {% for result in page_obj.object_list %}
-                    <tr>
-                        <td>
-                            <a href="{{ result.url }}?highlight={{ query }}">
-                            {{ forloop.counter0|add:page_obj.start_index }}
-                            </a>
-                        </td>
-                        <td>
-                            <a href="{{ result.url }}?highlight={{ query }}">
-                            {{ result.category }}
-                            </a>
-                        </td>
-
-                        <td class="publication">
-                            <a href="{{ result.url }}?highlight={{ query }}">
-                            {{ result.publication_abbreviation }}, {{ result.issue_date }},
-                            page {{ result.page_number }}
-                            </a>
-                        </td>
-
-                        <td>
-                            <a href="{{ result.url }}?highlight={{ query }}">
-                                {% if result.title %}
-                                    {{ result.title }}
-                                {% else %}
-                                    {{ result.aid }}
-                                {% endif %}
-                            </a>
-                        </td>
-                        {% if query %}
-                            <td class="paragraph">
-                                <a href="{{ result.url }}?highlight={{ query }}">
-                                {% highlight result.text with query html_tag "strong" %}
-                                </a>
-                            </td>
-                        {% endif %}
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="4">No results found.</p>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </section>
-
-            <section id="content2" class="tab-content">
-                <!-- *** Card *** -->
-                <div class="row small-up-2 large-up-4" data-equalizer="cards" data-equalize-by-row="true"
-                     data-equalize-on="medium">
-                    {% for result in page_obj.object_list %}
-                        <div class="column">
-                        <a href="{{ result.url }}?highlight={{ query }}">
-                            <div class="card search-results" data-equalizer-watch="cards">
-                                <div class="card-divider">
-                                    <h2>{{ result.publication_abbreviation }}</h2>
-                                    <p>{{ result.issue_date }}</p>
-                                </div>
-                                <div class="card-section">
-                                    <h3>
+                                <td>
+                                    <a href="{{ result.url }}?highlight={{ query }}">
                                         {% if result.title %}
                                             {{ result.title }}
                                         {% else %}
                                             {{ result.aid }}
                                         {% endif %}
-                                    </h3>
-                                    {% if query %}
-                                    <div class="card-highlight">
-                                        {% highlight result.text with query html_tag "strong" %}</div>
-                                    {% endif %}
-                                    <div class="card-footer">
-                                        {{ result.category }}, p. {{ result.page_number }}
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <div class="column">
-                        <p>No results found.</p>
-                    </div>
-                    {% endfor %}
+                                    </a>
+                                </td>
+                                {% if query %}
+                                    <td class="paragraph">
+                                        <a href="{{ result.url }}?highlight={{ query }}">
+                                            {% highlight result.text with query html_tag "strong" %}
+                                        </a>
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="4">No results found.</p>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="content2" class="tab-content">
+                    <!-- *** Card *** -->
+                    <div class="row small-up-2 large-up-4" data-equalizer="cards" data-equalize-by-row="true"
+                         data-equalize-on="medium">
+                        {% for result in page_obj.object_list %}
+                            <div class="column">
+                                <a href="{{ result.url }}?highlight={{ query }}">
+                                    <div class="card search-results" data-equalizer-watch="cards">
+                                        <div class="card-divider">
+                                            <h2>{{ result.publication_abbreviation }}</h2>
+                                            <p>{{ result.issue_date }}</p>
+                                        </div>
+                                        <div class="card-section">
+                                            <h3>
+                                                {% if result.title %}
+                                                    {{ result.title }}
+                                                {% else %}
+                                                    {{ result.aid }}
+                                                {% endif %}
+                                            </h3>
+                                            {% if query %}
+                                                <div class="card-highlight">
+                                                    {% highlight result.text with query html_tag "strong" %}</div>
+                                            {% endif %}
+                                            <div class="card-footer">
+                                                {{ result.category }}, p. {{ result.page_number }}
+                                            </div>
+                                        </div>
+                                </a>
+                            </div>
+                            </div>
+                        {% empty %}
+                            <div class="column">
+                                <p>No results found.</p>
+                            </div>
+                        {% endfor %}
                 </section>
             </div>
         </div>
     </div>
-</div>
-
-{% if page_obj.has_previous or page_obj.has_next %}
-<div class="row">
-    <div class="small-12 columns">
-        <ul class="pagination text-center" role="navigation" aria-label="Pagination">
-            <li class="{% if page_obj.has_previous %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
-                {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}{% if params %}{{ params }}{% endif %}" aria-label="Previous page">
-                {% endif %}
-                Prev <span class="show-for-sr">page</span>
-                {% if page_obj.has_previous %}
-                </a>
-                {% endif %}
-            </li>
-            <li>
-                Page {{ page_obj.number }} of {{ paginator.num_pages }}
-            </li>
-            <li class="{% if page_obj.has_next %}pagination-next{% else %}pagination-next disabled{% endif %}">
-                {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}{% if params %}{{ params }}{% endif %}" aria-label="Next page">
-                {% endif %}
-                Next <span class="show-for-sr">page</span>
-                {% if page_obj.has_next %}
-                </a>
-                {% endif %}
-            </li>
-        </ul>
     </div>
-</div>
-{% endif %}
+
+    {% if page_obj.has_previous or page_obj.has_next %}
+        <div class="row">
+            <div class="small-12 columns">
+                <ul class="pagination text-center" role="navigation" aria-label="Pagination">
+                    <li class="{% if page_obj.has_previous %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}{% if params %}{{ params }}{% endif %}"
+                               aria-label="Previous page">
+                        {% endif %}
+                        Prev <span class="show-for-sr">page</span>
+                        {% if page_obj.has_previous %}
+                            </a>
+                        {% endif %}
+                    </li>
+                    <li>
+                        Page {{ page_obj.number }} of {{ paginator.num_pages }}
+                    </li>
+                    <li class="{% if page_obj.has_next %}pagination-next{% else %}pagination-next disabled{% endif %}">
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}{% if params %}{{ params }}{% endif %}"
+                               aria-label="Next page">
+                        {% endif %}
+                        Next <span class="show-for-sr">page</span>
+                        {% if page_obj.has_next %}
+                            </a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
