@@ -179,7 +179,7 @@ nav {
     }
 
     &.subnav {
-        border-bottom: 1px solid gray;
+        border-bottom: 1px solid $medium-gray;
 
         li {
             margin:0 1rem;
@@ -192,7 +192,7 @@ nav {
             }
             span{
                 font-size:0.75rem;
-                color:gray;
+                color:$medium-gray;
             }
         }
     }
@@ -241,7 +241,7 @@ nav {
 }
 
 .description-trunk {
-    color: gray;
+    color: $medium-gray;
 
     .read-more {
         display: block;
@@ -261,7 +261,7 @@ nav {
 
     &:hover {
         border: 1px solid lighten($primary-color, 20%);
-        background: darken($white, 2%);
+        background: lighten($light-gray, 2%);
         .card-section {
             &.overlay {
                 background: $primary-color;
@@ -299,14 +299,14 @@ nav {
         }
 
         .card-footer {
-            border-top: 1px solid gray;
-            color: gray;
+            border-top: 1px solid $medium-gray;
+            color: $medium-gray;
             margin-top: rem-calc(16);
             padding-top: rem-calc(16);
         }
 
         .card-highlight {
-            border-top: 1px solid gray;
+            border-top: 1px solid $medium-gray;
             color: $black;
             margin-top: rem-calc(16);
             text-align: justify;
@@ -397,7 +397,7 @@ nav {
         }
 
         section {
-            border-top: 1px solid black;
+            border-top: 1px solid $black;
             padding-top: rem-calc(32);
         }
     }
@@ -419,23 +419,23 @@ section#list.tabs-panel.is-active{
 .tabs-title>a:focus, .tabs-title{
     padding-left: 2rem;
     >a[aria-selected='true']{
-    color: $black;
-    background: none;
+        color: $black;
+        background: none;
 
-    &is.active{
-        color: $primary-color;
-    }
-    .menu a{
-        font-size:2rem;
-    }
+        &is.active{
+            color: $primary-color;
+        }
+        .menu a{
+            font-size:2rem;
+        }
 
-}
+    }
 }
 
 .tabs-title{
     a{
         font-size:1rem;
-}
+    }
 }
 
 section#list.tabs-panel.is-active{
@@ -458,20 +458,23 @@ section#list.tabs-panel.is-active{
     margin-bottom: rem-calc(8);
     float: left;
     &.filters{
-    width: 80%;
+        width: 80%;
     }
     &::before {
         color: $white;
     }
     &:hover {
-    background: darken($primary-color, 10%);
-    color: $white;
+        background: darken($primary-color, 10%);
+        color: $white;
     }
 }
 
 li.accordion-item{
     float: left;
     width: 33.3%;
+    &:last-child>.accordion-content:last-child{
+        border-bottom:0;
+    }
 }
 .accordion-content {
     border: none;
@@ -481,12 +484,13 @@ li.accordion-item{
     ul {
         float: left;
         list-style-type: none;
-        margin-left: 0;        
+        margin-left: 0;   
         li {
             float: left;
             margin: rem-calc(0 8 8 0);
             text-align: left;
-            width: 100%;
+            border:1px solid $light-gray;
+            background: $light-gray;
             &.is-active {
                 background-color: $primary-color;
                 
@@ -500,23 +504,19 @@ li.accordion-item{
             }
 
             a {
-                background: #f8f8f8;
+
                 display: block;
                 padding: rem-calc(3 16);
 
                 span {
-                    color: gray;
+                    color: $medium-gray;
                     font-size: rem-calc(12);
                 }
 
-                &:hover {
-                    background: $primary-color;
-                    color: $white;
 
-                    span {
-                        color: $light-gray;
-                    }
-                }
+            }
+            &:hover {
+                border:1px solid $primary-color;
             }
         }
         
@@ -529,8 +529,6 @@ li.accordion-item{
 section {
 
     .callout {
-        border: none;
-        background: $light-gray;
         p{
             padding:1rem 2.5rem 0 2rem;
             text-align: justify;
@@ -647,8 +645,8 @@ table {
     right: 0;
     top: 0;
     z-index: 999999;
-       -webkit-animation-delay: 2s;
-               animation-delay: 2s;
+    -webkit-animation-delay: 2s;
+    animation-delay: 2s;
 }
 
 .sk-circle {
@@ -674,149 +672,149 @@ table {
             width: 15%;
 
             -webkit-animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
-                 animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
+            animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
         }
     }
 
     .sk-circle2 {
-     -webkit-transform: rotate(30deg);
-         -ms-transform: rotate(30deg);
-             transform: rotate(30deg);
+       -webkit-transform: rotate(30deg);
+       -ms-transform: rotate(30deg);
+       transform: rotate(30deg);
 
-        &:before {
-         -webkit-animation-delay: -1.1s;
-                animation-delay: -1.1s;
-        }
-    }
+       &:before {
+           -webkit-animation-delay: -1.1s;
+           animation-delay: -1.1s;
+       }
+   }
 
-    .sk-circle3 {
-     -webkit-transform: rotate(60deg);
-         -ms-transform: rotate(60deg);
-             transform: rotate(60deg);
+   .sk-circle3 {
+       -webkit-transform: rotate(60deg);
+       -ms-transform: rotate(60deg);
+       transform: rotate(60deg);
 
-        &:before {
-         -webkit-animation-delay: -1s;
-                 animation-delay: -1s;
-        }
-    }
+       &:before {
+           -webkit-animation-delay: -1s;
+           animation-delay: -1s;
+       }
+   }
 
-    .sk-circle4 {
-     -webkit-transform: rotate(90deg);
-         -ms-transform: rotate(90deg);
-             transform: rotate(90deg);
+   .sk-circle4 {
+       -webkit-transform: rotate(90deg);
+       -ms-transform: rotate(90deg);
+       transform: rotate(90deg);
 
-        &:before {
-         -webkit-animation-delay: -0.9s;
-                 animation-delay: -0.9s;
-        }
-    }
+       &:before {
+           -webkit-animation-delay: -0.9s;
+           animation-delay: -0.9s;
+       }
+   }
 
-    .sk-circle5 {
-     -webkit-transform: rotate(120deg);
-         -ms-transform: rotate(120deg);
-             transform: rotate(120deg);
+   .sk-circle5 {
+       -webkit-transform: rotate(120deg);
+       -ms-transform: rotate(120deg);
+       transform: rotate(120deg);
 
-        &:before {
-         -webkit-animation-delay: -0.8s;
-                 animation-delay: -0.8s;
-        }
-    }
+       &:before {
+           -webkit-animation-delay: -0.8s;
+           animation-delay: -0.8s;
+       }
+   }
 
-    .sk-circle6 {
-     -webkit-transform: rotate(150deg);
-         -ms-transform: rotate(150deg);
-             transform: rotate(150deg);
+   .sk-circle6 {
+       -webkit-transform: rotate(150deg);
+       -ms-transform: rotate(150deg);
+       transform: rotate(150deg);
 
-        &:before {
-         -webkit-animation-delay: -0.7s;
-                 animation-delay: -0.7s;
-        }
-    }
+       &:before {
+           -webkit-animation-delay: -0.7s;
+           animation-delay: -0.7s;
+       }
+   }
 
-    .sk-circle7 {
-     -webkit-transform: rotate(180deg);
-         -ms-transform: rotate(180deg);
-             transform: rotate(180deg);
+   .sk-circle7 {
+       -webkit-transform: rotate(180deg);
+       -ms-transform: rotate(180deg);
+       transform: rotate(180deg);
 
-        &:before {
-         -webkit-animation-delay: -0.6s;
-                 animation-delay: -0.6s;
-        }
-    }
+       &:before {
+           -webkit-animation-delay: -0.6s;
+           animation-delay: -0.6s;
+       }
+   }
 
-    .sk-circle8 {
-     -webkit-transform: rotate(210deg);
-         -ms-transform: rotate(210deg);
-             transform: rotate(210deg);
+   .sk-circle8 {
+       -webkit-transform: rotate(210deg);
+       -ms-transform: rotate(210deg);
+       transform: rotate(210deg);
 
-        &:before {
-         -webkit-animation-delay: -0.5s;
-                 animation-delay: -0.5s;
-        }
-    }
+       &:before {
+           -webkit-animation-delay: -0.5s;
+           animation-delay: -0.5s;
+       }
+   }
 
-    .sk-circle9 {
-     -webkit-transform: rotate(240deg);
-         -ms-transform: rotate(240deg);
-             transform: rotate(240deg);
+   .sk-circle9 {
+       -webkit-transform: rotate(240deg);
+       -ms-transform: rotate(240deg);
+       transform: rotate(240deg);
 
-        &:before {
-         -webkit-animation-delay: -0.4s;
-                 animation-delay: -0.4s;
-        }
-    }
+       &:before {
+           -webkit-animation-delay: -0.4s;
+           animation-delay: -0.4s;
+       }
+   }
 
-    .sk-circle10 {
-     -webkit-transform: rotate(270deg);
-         -ms-transform: rotate(270deg);
-             transform: rotate(270deg);
+   .sk-circle10 {
+       -webkit-transform: rotate(270deg);
+       -ms-transform: rotate(270deg);
+       transform: rotate(270deg);
 
-        &:before {
-         -webkit-animation-delay: -0.3s;
-                 animation-delay: -0.3s;
-        }
-    }
+       &:before {
+           -webkit-animation-delay: -0.3s;
+           animation-delay: -0.3s;
+       }
+   }
 
-    .sk-circle11 {
-     -webkit-transform: rotate(300deg);
-         -ms-transform: rotate(300deg);
-             transform: rotate(300deg);
+   .sk-circle11 {
+       -webkit-transform: rotate(300deg);
+       -ms-transform: rotate(300deg);
+       transform: rotate(300deg);
 
-        &:before {
-         -webkit-animation-delay: -0.2s;
-                 animation-delay: -0.2s;
-        }
-    }
+       &:before {
+           -webkit-animation-delay: -0.2s;
+           animation-delay: -0.2s;
+       }
+   }
 
-    .sk-circle12 {
-     -webkit-transform: rotate(330deg);
-         -ms-transform: rotate(330deg);
-             transform: rotate(330deg);
+   .sk-circle12 {
+       -webkit-transform: rotate(330deg);
+       -ms-transform: rotate(330deg);
+       transform: rotate(330deg);
 
-        &:before {
-         -webkit-animation-delay: -0.1s;
-                 animation-delay: -0.1s;
-        }
-    }
+       &:before {
+           -webkit-animation-delay: -0.1s;
+           animation-delay: -0.1s;
+       }
+   }
 }
 
 @-webkit-keyframes sk-circleBounceDelay {
- 0%, 80%, 100% {
-   -webkit-transform: scale(0);
-           transform: scale(0);
+   0%, 80%, 100% {
+     -webkit-transform: scale(0);
+     transform: scale(0);
  } 40% {
-   -webkit-transform: scale(1);
-           transform: scale(1);
+     -webkit-transform: scale(1);
+     transform: scale(1);
  }
 }
 
 @keyframes sk-circleBounceDelay {
- 0%, 80%, 100% {
-   -webkit-transform: scale(0);
-           transform: scale(0);
+   0%, 80%, 100% {
+     -webkit-transform: scale(0);
+     transform: scale(0);
  } 40% {
-   -webkit-transform: scale(1);
-           transform: scale(1);
+     -webkit-transform: scale(1);
+     transform: scale(1);
  }
 }
 
@@ -850,7 +848,7 @@ footer {
 .cookies-box {
     background: rgba(0, 0, 0, 0.8);
     bottom: 0;
-    color: white;
+    color: $white;
     position: fixed;
     text-align: center;
     width: 100%;
@@ -865,12 +863,12 @@ footer {
     .button {
         background: $primary-color;
         border: 0;
-        color: #000;
+        color: $black;
         max-width: rem-calc(200px);
 
         &:hover {
             background: scale-color($primary-color, $lightness: -30%);
-            color: white;
+            color: $white;
         }
     }
 
