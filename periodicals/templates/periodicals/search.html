@@ -73,6 +73,7 @@
             <p>Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ paginator.count }} matches</p>
         </div>
 
+        <!-- Previous Filter style 
         <div class="small-12 columns">
             <ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">
                 <li class="accordion-item is-active" data-accordion-item>
@@ -91,7 +92,7 @@
                                         {% get_request_parameters exclude="selected_facets" as facet_params %}
                                             {%  get_selected_facets exclude=selected_key as facets_excluded%}
                                         <a href="{% url 'search' %}?{{ facet_params }}{% if facets_excluded %}{% for facet in facets_excluded %}&selected_facets={{ facet }}{% endfor %}{% endif %}">{{ item.0 }}<span>({{ item.1 }})</span>
-                                        <i class="fa fa-times" aria-hidden="true"></i></a>
+                                        <i class="fa fa-times-circle" aria-hidden="true"></i></a>
                                         {% else %}
                                         <a href="?{{ form.data.urlencode }}&amp;selected_facets={{ key }}:{{ item.0|urlencode }}">{{ item.0 }} <span>({{ item.1 }})</span></a>
                                         {% endif %}
@@ -102,6 +103,83 @@
                             </div>
                             {% endfor %}
                         </div>
+                    </div>
+                </li>
+            </ul>
+        </div>-->
+        <div class="small-12 columns">
+            <ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">
+                <li class="accordion-item is-active" data-accordion-item>
+                    <a href="#" class="accordion-title filters">Filter by Year</a>
+                    <div class="accordion-content" data-tab-content>
+                        <div class="row">   
+                            <div class="small-12 columns">
+                                <ul class="">
+                                    <li class="">
+                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=year:1856">1856 <span>(58)</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=year:1857">1857 <span>(159)</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=year:1858">1858 <span>(166)</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=year:1859">1859 <span>(144)</span></a>
+                                    </li>
+                                    <li>
+                                        
+                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=year:1866">1866 <span>(236)</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=year:1882">1882 <span>(445)</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=year:1889">1889 <span>(212)</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=year:1890">1890 <span>(160)</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="accordion-item is-active" data-accordion-item>
+                    <a href="#" class="accordion-title filters">Filter by Category</a>
+                    <div class="accordion-content" data-tab-content>
+                        <div class="row">   
+                            <div class="small-12 columns">
+                                <ul>
+                                    <li>
+                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=category:Article">Article <span>(1580)</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>    
+                    </div>
+                </li>
+                <li class="accordion-item is-active" data-accordion-item>
+                    <a href="#" class="accordion-title filters">Filter by Publication</a>
+                    <div class="accordion-content" data-tab-content>
+                        <div class="row">   
+                            <div class="small-12 columns">
+                                <ul>
+                                    <li>
+                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=publication:The%20Masonic%20Monthly">The Masonic Monthly <span>(445)</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=publication:The%20Masonic%20Observer">The Masonic Observer <span>(527)</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=publication:The%20Masonic%20Press">The Masonic Press <span>(236)</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="?start_year=1854&amp;mode=or&amp;order_by=issue_date&amp;end_year=1906&amp;selected_facets=publication:The%20Masonic%20Review">The Masonic Review <span>(372)</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>    
                     </div>
                 </li>
             </ul>

@@ -128,7 +128,6 @@ nav {
     .navwrapper {
         display: block;
         margin: 0 auto;
-        padding: 0 2%;
 
         .logo {
             color: $white;
@@ -183,11 +182,17 @@ nav {
         border-bottom: 1px solid gray;
 
         li {
+            margin:0 1rem;
+            float:left;
             &.is-active > a,
             a.is-active {
                 background: none;
                 border-bottom: 3px solid $primary-color;
                 color: darken($primary-color, 10%);
+            }
+            span{
+                font-size:0.75rem;
+                color:gray;
             }
         }
     }
@@ -255,40 +260,12 @@ nav {
     text-align: center;
 
     &:hover {
-        background: $primary-color;
-        border: 1px solid $primary-color;
-
-        h2 {
-            color: $white;
-        }
-
-        p {
-            color: $white;
-        }
-
+        border: 1px solid lighten($primary-color, 20%);
+        background: darken($white, 2%);
         .card-section {
-            h3 {
-                color: $black;
-            }
-
-            .card-footer {
-                border-top: 1px solid $light-gray;
-                color: $light-gray;
-            }
-
             &.overlay {
                 background: $primary-color;
             }
-
-            .card-highlight {
-                border-top: 1px solid $light-gray;
-                color: $white;
-            }
-
-            p {
-                color: $white;
-            }
-
         }
     }
 
@@ -426,56 +403,90 @@ nav {
     }
 }
 
+/* Foundation tabs */
+.tabs{
+    border:none;
+
+}
+section#list.tabs-panel.is-active{
+    border:0;
+}
+.tabs-content{
+    border:0;
+}
+
+
+.tabs-title>a:focus, .tabs-title{
+    padding-left: 2rem;
+    >a[aria-selected='true']{
+    color: $black;
+    background: none;
+
+    &is.active{
+        color: $primary-color;
+    }
+    .menu a{
+        font-size:2rem;
+    }
+
+}
+}
+
+.tabs-title{
+    a{
+        font-size:1rem;
+}
+}
+
+section#list.tabs-panel.is-active{
+    padding:0
+}
+
+
 
 /* Accordion */
 
-.accordion-item:first-child > :first-child {
+
+
+.accordion-title {
     background: $primary-color;
     border: none;
     color: $white;
+    font-size: rem-calc(16);
     padding: rem-calc(16);
     width: rem-calc(150);
-
-    &:hover {
-        background: darken($primary-color, 10%);
-        color: $white;
+    margin-bottom: rem-calc(8);
+    float: left;
+    &.filters{
+    width: 80%;
     }
-}
-
-.accordion-title {
-    border: none;
-    color: $black;
-    font-size: rem-calc(16);
-    padding: 0;
-    padding-top: rem-calc(20);
-}
-
-.is-active > .accordion-title {
-
     &::before {
         color: $white;
     }
-
     &:hover {
-        background: none;
-        color: $black;
+    background: darken($primary-color, 10%);
+    color: $white;
     }
 }
 
+li.accordion-item{
+    float: left;
+    width: 33.3%;
+}
 .accordion-content {
     border: none;
-    padding-left: 0;
-
+    padding: 0 0 1rem 0;
+    width:80%;
+    float: left;
     ul {
         float: left;
         list-style-type: none;
-        margin-left: 0;
-
+        margin-left: 0;        
         li {
             float: left;
             margin: rem-calc(0 8 8 0);
-            text-align: center;
-
+            text-align: left;
+            width: 100%;
             &.is-active {
                 background-color: $primary-color;
                 
@@ -489,9 +500,9 @@ nav {
             }
 
             a {
-                border: 1px solid $primary-color;
+                background: #f8f8f8;
                 display: block;
-                padding: rem-calc(3 32);
+                padding: rem-calc(3 16);
 
                 span {
                     color: gray;
@@ -508,6 +519,7 @@ nav {
                 }
             }
         }
+        
     }
 }
 
@@ -519,7 +531,10 @@ section {
     .callout {
         border: none;
         background: $light-gray;
-
+        p{
+            padding:1rem 2.5rem 0 2rem;
+            text-align: justify;
+        }
         i {
             font-size: rem-calc(18);
         }
@@ -566,8 +581,8 @@ table {
     }
 
     td {
-        a.black {
-            color:black;
+        a{
+            color: $black;
         }
 
         &.fixed {
