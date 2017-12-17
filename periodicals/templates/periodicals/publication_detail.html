@@ -10,18 +10,16 @@
 {% endblock %}
 
 {% block main %}
-<section>
-    <div class="row">
-        <div class="small-12 columns minus-margin-top">
-            <ul class="menu align-right">
-                {% get_request_parameters as search_params %}
-                {% if search_params %}
-                <li><a href="{% url 'search' %}?{{ search_params }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to results</a></li>
-                {% endif %}
-            </ul>
-        </div>
+
+<div class="row">
+    <div class="small-12 columns minus-margin-top">
+         <ul class="menu float-left">
+            <li>
+                <a href="#" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to Periodicals</a>
+            </li>
+        </ul>
     </div>
-</section>
+</div>
 
 {% if publication.description %}
 <section>
@@ -42,6 +40,8 @@
     </div>
 </section>
 {% endif %}
+
+
 
 {% regroup publication.issues.all by issue_date.year as year_list %}
 
