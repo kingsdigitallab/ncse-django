@@ -103,7 +103,7 @@
             <section id="content2" class="tab-content">
                 <div class="callout secondary note" data-closable>
                     <p>
-                        <strong>Note:</strong> This is an Optical Character Recognition (OCR) programs "read" these images and convert them to text documents which can be easily searched, copied, edited, or used for computational text analysis methods.
+                        <strong>Note:</strong> This text has been automatically extracted via Optical Character Recognition (OCR) software. OCR software "read" these images and convert them to plain text, which can be easily searched, copied, edited, or used for computational text analysis.
                     </p>
                     <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
                         <i aria-hidden="true" class="fa fa-times-circle"></i>
@@ -176,19 +176,11 @@
                                         <div class="card-section overlay">
                                             <h3>Page {{ page.number }}</h3>
                                             <div class="card-footer">
-                                                {% if page.number_of_articles == 1 %}
-                                                {{ page.articles.0.title }}
-                                                {% else %}
                                                 {{ page.number_of_articles }} Articles
-                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
                                 </a>
-
-                                {% if request.user.is_staff %}
-                                <a href="/admin/periodicals/page/{{ page.id }}/change/" class="card-footer-item">Edit</a>
-                                {% endif %}
                             </div>
                             {% endfor %}
                         </div>
@@ -211,8 +203,7 @@
 
                     <div class="column column-block">
                         <div class="callout secondary note" data-closable>
-                            <p>
-                                <strong>Note:</strong> This is an Optical Character Recognition (OCR) programs "read" these images and convert them to text documents which can be easily searched, copied, edited, or used for computational text analysis methods.
+                            <p> <strong>Note:</strong> This text has been automatically extracted via Optical Character Recognition (OCR) software. OCR software "read" these images and convert them to plain text, which can be easily searched, copied, edited, or used for computational text analysis.
                             </p>
                             <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
                                 <i aria-hidden="true" class="fa fa-times-circle"></i>
