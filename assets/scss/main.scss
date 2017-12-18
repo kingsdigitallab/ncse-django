@@ -146,6 +146,9 @@ nav {
 
                 a {
                     color: $white;
+                    &:hover{
+                        color:$black;
+                    }
                 }
             }
         }
@@ -541,6 +544,7 @@ li.accordion-item{
             }
             &:hover {
                 border:1px solid $primary-color;
+                background: lighten($light-gray, 5%);
             }
         }
         
@@ -605,6 +609,9 @@ table {
     td {
         a{
             color: $black;
+            span{
+                width:15rem;
+            }
         }
 
         &.fixed {
@@ -622,6 +629,16 @@ table {
         &.publication {
             width: 20%;
         }
+        &.article-pagination{
+            a.pull-left{
+                position:absolute;
+                margin-left:-35px;
+            }
+            a.pull-right{
+                position:absolute;
+                margin-left:20px;
+            }
+        }
     }
 
     &.unstriped {
@@ -631,10 +648,10 @@ table {
             tr {
 
                 &.is-active {
-                    background: $primary-color;
+                    border:3px solid $primary-color;
 
                     a {
-                        color: $white;
+                        color: darken($primary-color,10%);
                     }
                 }    
 
@@ -643,6 +660,10 @@ table {
 
                     a {
                         color: $white;
+                        cursor:pointer;
+                        &:hover{
+                            color:darken($white,10%);
+                        } 
                     }
                 }
             }

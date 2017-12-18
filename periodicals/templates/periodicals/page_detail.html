@@ -66,20 +66,20 @@
                                     <tbody>
                                         {% for a in page.articles %}
                                         <tr {% if a == article %}class="is-active" {% endif %}>
-                                            <td class="fixed">{{ a.article_type }}</td>
+                                            <td class="fixed"><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=a.slug%}">{{ a.article_type }}</a></td>
                                             
                                             <td ><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=a.slug%}">{% if a.title %}{{ a.title }}{% else %}Untitled Article{% endif %}</a>
                                             </td>
 
-                                            <td>
+                                            <td class="article-pagination">
                                                 {% if a.continuation_from %}
-                                                <a href="{{ a.continuation_from.url }}">&larr;</a>
+                                                <a href="{{ a.continuation_from.url }}" class="pull-left">&larr;</a>
                                                 {% endif %}
-                                            
-                                                Page <strong>{{ a.get_position_in_article }}</strong> of {{ a.get_number_of_pages }}
+                                                <span>
+                                                Page <strong>{{ a.get_position_in_article }}</strong> of {{ a.get_number_of_pages }}</span>
                                             
                                                 {% if a.continuation_to %}
-                                                <a href="{{ a.continuation_to.url }}">&rarr;</a>
+                                                <a href="{{ a.continuation_to.url }}" class="pull-right">&rarr;</a>
                                                 {% endif %}
                                             </td>
                                             <td class="fixed">
@@ -101,9 +101,9 @@
             </section>
 
             <section id="content2" class="tab-content">
-                <div class="callout secondary note" data-closable>
+                <div class="callout" data-closable>
                     <p>
-                        <strong>Note:</strong> This text has been automatically extracted via Optical Character Recognition (OCR) software. OCR software "read" these images and convert them to plain text, which can be easily searched, copied, edited, or used for computational text analysis.
+                        <strong>Note:</strong> This text has been automatically extracted via Optical Character Recognition (OCR) software.
                     </p>
                     <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
                         <i aria-hidden="true" class="fa fa-times-circle"></i>
@@ -206,8 +206,8 @@
                     </div>
 
                     <div class="column column-block">
-                        <div class="callout secondary note" data-closable>
-                            <p> <strong>Note:</strong> This text has been automatically extracted via Optical Character Recognition (OCR) software. OCR software "read" these images and convert them to plain text, which can be easily searched, copied, edited, or used for computational text analysis.
+                        <div class="callout" data-closable>
+                            <p> <strong>Note:</strong> This text has been automatically extracted via Optical Character Recognition (OCR) software.
                             </p>
                             <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
                                 <i aria-hidden="true" class="fa fa-times-circle"></i>
