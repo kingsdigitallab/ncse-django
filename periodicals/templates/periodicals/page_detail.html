@@ -2,11 +2,11 @@
 {% load periodicals_tags %}
 
 {% block title %}
-{{ page.publication }} {{ page.issue }}, Page {{ page.number }}
+{{ page.issue.publication}}, {{ page.issue.issue_date }}: Page {{ page.number }}
 {% endblock %}
 
 {% block meta_title %}
-{{ page.publication }} {{ page.issue }}, Page {{ page.number }}
+{{ page.issue.publication}}, {{ page.issue.issue_date }}: Page {{ page.number }}
 {% endblock %}
 
 {% block main %}
@@ -15,7 +15,7 @@
     <div class="small-12 columns minus-margin-top">
          <ul class="menu float-left">
             <li>
-                <a href="{{ page.issue.url }}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to Issue</a>
+                <a href="{{ page.issue.url }}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to {{ page.issue.publication}}, {{ page.issue.issue_date }}</a>
             </li>
         </ul>
     </div>
@@ -35,19 +35,20 @@
                 Transcript
             </label>
 
-            <input id="tab5" type="radio" name="tabs">
-            <label for="tab5">
-                Citation
+            <input id="tab4" type="radio" name="tabs">
+            <label for="tab4">
+                Split view
             </label>
 
             <input id="tab3" type="radio" name="tabs">
             <label for="tab3">
-                Contents
+                Issue Contents
             </label>
-            
-            <input id="tab4" type="radio" name="tabs">
-            <label for="tab4">
-                Split view
+
+
+            <input id="tab5" type="radio" name="tabs">
+            <label for="tab5">
+                Citation
             </label>
 
             <section id="content1" class="tab-content">
@@ -56,53 +57,33 @@
                         <a href="{{ page.print_url }}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print image</a>
                     </li>
                 </ul>
-                <ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">
-                    <li class="accordion-item" data-accordion-item>
+                <ul class="accordion " data-accordion data-multi-expand="true" data-allow-all-closed="true">
+                    <li class="accordion-item {% if article %}is-active{% endif %}" data-accordion-item>
                         <a href="#" class="accordion-title">Articles/Ads</a>
                         <div class="accordion-content" data-tab-content>
-                            
+                                
                                 <table class="stack unstriped">
                                     <tbody>
-                                        <tr class="is-active">
-                                            <td>
-                                                <a href="/periodicals/mob/issues/mob_01121856/page/2/articles/ar00202/">Article</a>
-                                            </td>
-                                            <td>
-                                                <a href="/periodicals/mob/issues/mob_01121856/page/2/articles/ar00202/">CRAFT FREEMASONRY.</a>
-                                            </td>
-                                            <td>
-                                                <a href="#">
-                                                <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
-                                                Page 2 of 3
-                                                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="#" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print Article</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="/periodicals/mob/issues/mob_01121856/page/2/articles/ar00202/">Article</a>
-                                            </td>
-                                            <td>
-                                                <a href="/periodicals/mob/issues/mob_01121856/page/2/articles/ar00202/">NOTICES TO CORRESPONDENTS.</a>
-                                            </td>
-                                            <td>
-                                                <a href="#">
-                                                5 pages
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="#" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print Article</a>
-                                            </td>
-                                        </tr>
-
-                                        {% for article in page.articles %}
-                                        <tr>
-                                            <td>{{ article.article_type }}</td>
+                                        {% for a in page.articles %}
+                                        <tr {% if a == article %}class="is-active" {% endif %}>
+                                            <td class="fixed">{{ a.article_type }}</td>
                                             
-                                            <td><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=article.slug%}">{% if article.title %}{{ article.title }}{% else %}Untitled Article{% endif %}</a>
+                                            <td ><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=a.slug%}">{% if a.title %}{{ a.title }}{% else %}Untitled Article{% endif %}</a>
+                                            </td>
+
+                                            <td>
+                                                {% if a.continuation_from %}
+                                                <a href="{{ a.continuation_from.url }}">&larr;</a>
+                                                {% endif %}
+                                            
+                                                Page <strong>{{ a.get_position_in_article }}</strong> of {{ a.get_number_of_pages }}
+                                            
+                                                {% if a.continuation_to %}
+                                                <a href="{{ a.continuation_to.url }}">&rarr;</a>
+                                                {% endif %}
+                                            </td>
+                                            <td class="fixed">
+                                               <a href="{{ article.print_url }}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -169,11 +150,11 @@
                                         {% regroup page.issue.articles_and_ads by page as page_list %}
 
                                         {% for page in page_list %}
-                                            {% for article in page.list %}
+                                            {% for a in page.list %}
                                             <tr>
-                                                <td><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{% if article.title %}{{ article.title }}{% else %}Untitled Article{% endif %}</a></td>
-                                                <td class="fixed"><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{{ article.article_type }}</a></td>
-                                                <td class="fixed"><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=article.slug%}">{{ page.grouper.number }}</a></td>
+                                                <td><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=a.slug%}">{% if a.title %}{{ a.title }}{% else %}Untitled Article{% endif %}</a></td>
+                                                <td class="fixed"><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=a.slug%}">{{ a.article_type }}</a></td>
+                                                <td class="fixed"><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=a.slug%}">{{ page.grouper.number }}</a></td>
                                             </tr>
                                             {% endfor %}
                                         {% endfor %}
@@ -262,9 +243,14 @@
 {% endblock %}
 
 {% block footer_scripts %}
-{% if highlight_words %}
-<script>
-    var highlight_words = {{ highlight_words | safe }};
-</script>
-{% endif %}
+    {% if highlight_words %}
+    <script>
+        var highlight_words = {{ highlight_words | safe }};
+    </script>
+    {% endif %} {% if article %}
+    <script>
+        var article_bounding_box = {{ article.get_real_bounding_box | safe }};
+    </script>
+    {% endif %}
 {% endblock %}
+

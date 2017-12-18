@@ -47,6 +47,11 @@ h3 {
     font-family: 'Petrona', serif;
 }
 
+body
+{
+    background: $primary-color;
+}
+
 canvas {
     width: 100%;
 }
@@ -73,7 +78,8 @@ h3 {
 }
 
 main {
-    margin: rem-calc(20 0);
+    padding: rem-calc(20 0);
+    background: #fff;
 }
 
 .border {
@@ -203,6 +209,10 @@ nav {
 
 
 /* Breadcrumbs */
+.breadcrumb-container
+{
+    background: #fff;
+}
 
 .breadcrumbs {
 
@@ -468,19 +478,33 @@ section#list.tabs-panel.is-active{
     }
 }
 
-li.accordion-item{
-    float: left;
-    width: 33.3%;
-    &:last-child>.accordion-content:last-child{
-        border-bottom:0;
+ul.filters
+{
+    li.accordion-item{
+        float: left;
+        width: 33.3%;
+        &:last-child>.accordion-content:last-child{
+            border-bottom:0;
+        }
+    }
+
+    .accordion-content
+    {
+            width:80%;
+            float: left;
     }
 }
+
+li.accordion-item{
+        &:last-child>.accordion-content:last-child{
+            border-bottom:0;
+        }
+    }
 
 .accordion-content {
     border: none;
     padding: 0 0 1rem 0;
-    width:80%;
-    float: left;
+    width: 100%;
     ul {
         float: left;
         list-style-type: none;
@@ -632,9 +656,7 @@ footer {
     background: $primary-color;
     color: $white;
     font-size: rem-calc(14);
-    position: absolute;
-    width: 100%;
-    bottom: 0;
+
     a {
         color: $white;
         font-weight: 700;
@@ -809,8 +831,11 @@ footer {
     .accordion-title.filters {
     width: 100%;
     }
-    li.accordion-item{
-    width: 100%;
+    ul.filters 
+    {
+        li.accordion-item{
+        width: 100%;
+        } 
     }
 }
 

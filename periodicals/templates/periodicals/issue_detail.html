@@ -15,7 +15,7 @@
     <div class="small-12 columns minus-margin-top">
          <ul class="menu float-left">
             <li>
-                <a href="{% url 'search' %}?{{ search_params }}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to Publication</a>
+                <a href="{% url 'publication-detail' slug=issue.publication.slug %}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to {{ issue.publication }}</a>
             </li>
         </ul>
         <ul class="menu float-right">

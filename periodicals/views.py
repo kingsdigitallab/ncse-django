@@ -28,6 +28,7 @@ def _get_highlighted_words(request, page):
 
 
 class ArticleDetailView(DetailView):
+    template_name = 'periodicals/page_detail.html'
     context_object_name = 'article'
     queryset = Article.objects.all()
 
@@ -38,6 +39,8 @@ class ArticleDetailView(DetailView):
         highlight_words = _get_highlighted_words(self.request, page)
         if highlight_words:
             context['highlight_words'] = highlight_words
+
+        context['page'] = page
 
         return context
 
