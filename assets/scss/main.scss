@@ -632,7 +632,9 @@ footer {
     background: $primary-color;
     color: $white;
     font-size: rem-calc(14);
-
+    position: absolute;
+    width: 100%;
+    bottom: 0;
     a {
         color: $white;
         font-weight: 700;
