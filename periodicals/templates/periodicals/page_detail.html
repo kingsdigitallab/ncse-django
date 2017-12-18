@@ -68,7 +68,7 @@
                                         <tr {% if a == article %}class="is-active" {% endif %}>
                                             <td class="fixed">{{ a.article_type }}</td>
                                             
-                                            <td ><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=a.slug%}">{% if a.title %}{{ a.title }}{% else %}Untitled Article{% endif %}</a>
+                                            <td ><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=a.slug%}">{% if a.title %}{{ a.title }}{% else %}Untitled{% endif %}</a>
                                             </td>
 
                                             <td>
@@ -152,7 +152,7 @@
                                         {% for page in page_list %}
                                             {% for a in page.list %}
                                             <tr>
-                                                <td><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=a.slug%}">{% if a.title %}{{ a.title }}{% else %}Untitled Article{% endif %}</a></td>
+                                                <td><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=a.slug%}">{% if a.title %}{{ a.title }}{% else %}Untitled{% endif %}</a></td>
                                                 <td class="fixed"><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=a.slug%}">{{ a.article_type }}</a></td>
                                                 <td class="fixed"><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=a.slug%}">{{ page.grouper.number }}</a></td>
                                             </tr>
