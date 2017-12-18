@@ -176,7 +176,11 @@
                                         <div class="card-section overlay">
                                             <h3>Page {{ page.number }}</h3>
                                             <div class="card-footer">
-                                                {{ page.number_of_articles }} Articles
+                                                 {% if page.number_of_articles == 1 %}
+                                            1 Article
+                                            {% else %}
+                                            {{ page.number_of_articles }} Articles
+                                            {% endif %}
                                             </div>
                                         </div>
                                     </div>
