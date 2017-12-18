@@ -11,7 +11,7 @@ class Publication(models.Model):
     title = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     ordering = models.PositiveIntegerField(blank=True, null=True)
-    title_image = models.ImageField(null=True)
+    title_image = models.ImageField(null=True, blank=True)
 
     class Meta:
         ordering = ['ordering']

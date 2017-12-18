@@ -19,14 +19,14 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterModelOptions(
-            name='publication',
-            options={'ordering': ['ordering']},
-        ),
         migrations.AddField(
             model_name='publication',
             name='ordering',
             field=models.PositiveIntegerField(blank=True, null=True),
+        ),
+                migrations.AlterModelOptions(
+            name='publication',
+            options={'ordering': ['ordering']},
         ),
         # Reverse does nothing here.
         migrations.RunPython(save_all_publications, save_all_publications),
