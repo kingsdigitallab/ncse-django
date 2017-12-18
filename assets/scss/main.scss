@@ -423,30 +423,22 @@ nav {
 section#list.tabs-panel.is-active{
     border:0;
 }
-.tabs-content{
-    border:0;
-}
-
-
 .tabs-title>a:focus, .tabs-title{
-    padding-left: 2rem;
     >a[aria-selected='true']{
         color: $black;
-        background: none;
-
         &is.active{
             color: $primary-color;
         }
         .menu a{
             font-size:2rem;
         }
-
     }
 }
-
-.tabs-title{
+li.tabs-title{
     a{
         font-size:1rem;
+        outline: 0;
+        padding:1rem;
     }
 }
 
@@ -457,8 +449,6 @@ section#list.tabs-panel.is-active{
 
 
 /* Accordion */
-
-
 
 .accordion-title {
     background: $primary-color;
