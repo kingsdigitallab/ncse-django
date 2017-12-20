@@ -6,14 +6,10 @@
 {% block meta_title %}Publications | Explore{% endblock %}
 
 {% block breadcrumbs %}
-    <li><a href="/">Home</a></li>
-    <li>Explore</li>
+<li><a href="/">Home</a></li>
+<li>Explore</li>
 {% endblock %}
 
 {% block main %}
-<div data-equalizer>
-    <div class="row small-up-2 medium-up-3 large-up-5" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium">
-        {% include 'periodicals/includes/publications.html' %}
-    </div>
-</div>
+{% include 'periodicals/includes/publications.html' %}
 {% endblock %}
