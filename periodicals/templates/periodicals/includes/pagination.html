@@ -1,5 +1,5 @@
 <ul class="pagination text-center" role="navigation" aria-label="Pagination">
-    <li class="{% if page.previous_page %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
+    <li class="show-for-small-only {% if page.previous_page %}pagination-previous{% else %}pagination-previous disabled{% endif %}">
         {% if page.previous_page %}
         <a href="{{ page.previous_page.url }}" aria-label="Previous page">
         {% endif %}
@@ -8,17 +8,59 @@
         </a>
         {% endif %}
     </li>
-    {% for issue_page in page.issue.pages.all %}
-        {% if page.id == issue_page.id %}
-            <li class="current"><span class="show-for-sr">You're on page</span> {{ page.number }}</li>
+    {% with total=page.issue.number_of_pages curr=page.number %}
+
+        {% if curr == 1 %}
+            <li class="current"><span class="show-for-sr">You're on page</span>1</li>
         {% else %}
-            <li><a href="{% url 'page-detail' publication_slug=publication.slug issue_slug=issue.slug number=issue_page.number%}" aria-label="Page {{ issue_page.number }}">{{ issue_page.number }}</a></li>
+            <li><a href="{% url 'page-detail' publication_slug=publication.slug issue_slug=issue.slug number=1%}" aria-label="Page 1">1</a></li>
         {% endif %}
-    {% endfor %}
 
-    <li class="ellipsis"></li>
 
-    <li class="{% if page.next_page %}pagination-next{% else %}pagination-next disabled{% endif %}">
+        {% if curr == 1 %}
+
+            {% if curr|add:1 != total %}
+            <li><a href="{% url 'page-detail' publication_slug=publication.slug issue_slug=issue.slug number=curr|add:1%}" aria-label="Page {{ curr|add:1 }}">{{ curr|add:1 }}</a></li>
+
+            <li class="ellipsis"></li>
+            {% endif %}
+
+        {% elif curr == total %}
+
+
+            {% if curr|add:-1 != 1 %}
+            <li class="ellipsis"></li>
+            
+            <li><a href="{% url 'page-detail' publication_slug=publication.slug issue_slug=issue.slug number=curr|add:-1%}" aria-label="Page {{ curr|add:-1 }}">{{ curr|add:-1 }}</a></li>
+            {% endif %}
+
+
+        {% else %}
+
+            {% if curr|add:-1 != 1 %}
+            <li class="ellipsis"></li>
+            
+            <li><a href="{% url 'page-detail' publication_slug=publication.slug issue_slug=issue.slug number=curr|add:-1%}" aria-label="Page {{ curr|add:-1 }}">{{ curr|add:-1 }}</a></li>
+            {% endif %}
+
+            <li class="current"><span class="show-for-sr">You're on page</span>{{ curr }}</li>
+            
+            {% if curr|add:1 != total %}
+            <li><a href="{% url 'page-detail' publication_slug=publication.slug issue_slug=issue.slug number=curr|add:1%}" aria-label="Page {{ curr|add:1 }}">{{ curr|add:1 }}</a></li>
+
+            <li class="ellipsis"></li>
+            {% endif %}
+        {% endif %}
+
+
+        {% if curr == total %}
+            <li class="current"><span class="show-for-sr">You're on page</span>{{ total }}</li>
+        {% else %}
+            <li><a href="{% url 'page-detail' publication_slug=publication.slug issue_slug=issue.slug number=total%}" aria-label="Page {{ total }}">{{ total }}</a></li>
+        {% endif %}
+
+    {% endwith %}
+    <li class="show-for-small-only {% if page.next_page %}pagination-next{% else %}pagination-next disabled{% endif %}">
         {% if page.next_page %}
         <a href="{{ page.next_page.url }}" aria-label="Next page">
         {% endif %}
