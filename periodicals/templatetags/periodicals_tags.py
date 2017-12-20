@@ -3,7 +3,7 @@ import datetime
 from django import template
 from django.conf import settings
 
-from periodicals.models import Issue
+from periodicals.models import Issue, Publication
 from ..forms import PeriodicalsSearchForm
 
 register = template.Library()
@@ -87,3 +87,8 @@ def quick_periodical_search_form():
                                        'mode': 'or'
                                        })
     return {'form': form}
+
+
+@register.inclusion_tag('periodicals/includes/publications.html')
+def get_publications():
+    return {'publications': Publication.objects.all()}

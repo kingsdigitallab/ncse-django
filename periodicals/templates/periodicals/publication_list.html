@@ -13,33 +13,7 @@
 {% block main %}
 <div data-equalizer>
     <div class="row small-up-2 medium-up-3 large-up-5" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium">
-        {% for publication in publications %}
-        <div class="column column-block">
-            <div class="card" data-equalizer-watch="cards">
-                <a href="{{ publication.url }}">
-                    <div class="card-divider">
-                        <h2>{{ publication }}</h2>
-                    </div>
-                    <div class="card-section">
-                        {% with year_span=publication.get_year_span %}
-                            <h3>{{ year_span.0 }} to {{ year_span.1 }}</h3>
-                        {% endwith %}
-                        {% with number_of_years=publication.get_number_of_years %}
-                            <p><strong>{{ number_of_years }}</strong> Year{{ number_of_years|pluralize }}</p>
-                        {% endwith %}
-                        <div class="card-footer">
-                            {{ publication.issues.count }} Issues spanning {{ publication.get_total_number_of_pages }} pages
-                        </div>
-                    </div>
-                </a>
-                {% if request.user.is_staff %}
-                <div class="card-divider">
-                    <a href="/admin/periodicals/publication/{{ publication.id }}/change/" class="card-footer-item">Edit</a>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-        {% endfor %}
+        {% include 'periodicals/includes/publications.html' %}
     </div>
 </div>
 {% endblock %}
