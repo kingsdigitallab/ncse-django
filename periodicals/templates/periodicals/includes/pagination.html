@@ -38,7 +38,10 @@
         {% else %}
 
             {% if curr|add:-1 != 1 %}
-            <li class="ellipsis"></li>
+
+                {% if curr|add:-2 != 1 %}
+                <li class="ellipsis"></li>
+                {% endif %}
             
             <li><a href="{% url 'page-detail' publication_slug=publication.slug issue_slug=issue.slug number=curr|add:-1%}" aria-label="Page {{ curr|add:-1 }}">{{ curr|add:-1 }}</a></li>
             {% endif %}
@@ -48,7 +51,9 @@
             {% if curr|add:1 != total %}
             <li><a href="{% url 'page-detail' publication_slug=publication.slug issue_slug=issue.slug number=curr|add:1%}" aria-label="Page {{ curr|add:1 }}">{{ curr|add:1 }}</a></li>
 
-            <li class="ellipsis"></li>
+                {% if curr|add:2 != total %}
+                <li class="ellipsis"></li>
+                {% endif %}
             {% endif %}
         {% endif %}
 
