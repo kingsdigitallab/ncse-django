@@ -149,7 +149,7 @@
                                         {{ forloop.counter0|add:page_obj.start_index }}
                                     </a>
                                 </td>
-                                <td>
+                                <td class="add-comma">
                                     <a href="{{ result.url }}?highlight={{ query }}">
                                         {{ result.category }}
                                     </a>
@@ -158,11 +158,11 @@
                                 <td class="publication">
                                     <a href="{{ result.url }}?highlight={{ query }}">
                                         {{ result.publication_abbreviation }}, {{ result.issue_date }},
-                                        page {{ result.page_number }}
+                                        Page {{ result.page_number }}
                                     </a>
                                 </td>
 
-                                <td>
+                                <td class="title">
                                     <a href="{{ result.url }}?highlight={{ query }}">
                                         {% if result.title %}
                                             {{ result.title }}

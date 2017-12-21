@@ -152,9 +152,9 @@
                                         {% for page in page_list %}
                                             {% for a in page.list %}
                                             <tr>
-                                                <td><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=a.slug%}">{% if a.title %}{{ a.title }}{% else %}Untitled{% endif %}</a></td>
-                                                <td class="fixed"><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=a.slug%}">{{ a.article_type }}</a></td>
-                                                <td class="fixed"><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=a.slug%}">{{ page.grouper.number }}</a></td>
+                                                <td class="title"><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=a.slug%}">{% if a.title %}{{ a.title }}{% else %}Untitled{% endif %}</a></td>
+                                                <td class="fixed add-comma"><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=a.slug%}">{{ a.article_type }}</a></td>
+                                                <td class="fixed add-page"><a href="{% url 'article-detail' publication_slug=page.grouper.issue.publication.slug issue_slug=page.grouper.issue.slug number=page.grouper.number article_slug=a.slug%}">{{ page.grouper.number }}</a></td>
                                             </tr>
                                             {% endfor %}
                                         {% endfor %}

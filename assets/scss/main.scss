@@ -548,8 +548,10 @@ li.accordion-item{
 section {
 
     .callout {
+        padding-bottom: 0;
         p{
-            padding:1rem 2.5rem 0 2rem;
+            font-size: rem-calc(14);
+            padding:0 2.5rem 0 1rem;
             text-align: justify;
         }
         i {
@@ -571,7 +573,7 @@ section {
             }
 
             .column-block {
-                margin-bottom: 0;
+                margin-bottom: 1rem;
             }
         }
 
@@ -662,6 +664,32 @@ table {
     }
 }
 
+//this disables the table stack medium breakpoint.
+body table.stack {
+  @include breakpoint(medium down) {
+    thead {
+      display: table-header-group;
+    }
+    tfoot {
+      display: table-footer-group;
+    }
+    tr {
+      display: table-row;
+    }
+    th, td {
+      display: table-cell;
+      border-top: initial; //if you have set a border style for your table, you might have to add it back here (I don't have one so it doesn't matter for my use case)
+    }
+  }
+}
+
+//this creates a breakpoint at small
+body table.stack {
+  @include breakpoint(small down) {
+    @include table-stack;
+}
+}
+
 /* Footer */
 
 footer {
@@ -732,55 +760,26 @@ footer {
 }
 
 
+
 /* Media queries */
 
 @media screen and (max-width: 1024px) {
-
-    td {
-        &.float-left {
-            float: left !important;
-
-            &:before {
-                content: "Page ";
-            }
-
-            &:after {
-                content: ", ";
-            }
-        }
-
-        &.paragraph {
+    section{ 
+        form{
+        &.advanced ul li {
             width: 100%;
-        }
-    }
-
-    tbody th,
-    tbody td {
-        padding: rem-calc(0 7);
-    }
-
-    tr {
-        padding: rem-calc(7 0);
-    }
-
-    form {
-        &.advanced {
-            ul {
-                li {
-                    width: 100%;
-                }
             }
+        &.simple ul li {
+            width: 33.33%;
+        }    
         }
-
-        &.simple {
-            ul {
-                li {
-                    width: 33.33%;
-                }
-            }
-        }
+        
+    }
+    .tab_container.subnav #tab4 + label{
+        display: none;
     }
 }
+
 
 @media screen and (max-width: 768px) {
     nav {
@@ -849,17 +848,119 @@ footer {
         width: 100%;
         } 
     }
+    ul.menu.float-left{
+        display: none;
+    }
+    table.unstriped tbody tr{
+        float: left;
+        width: 100%;
+    }
+    td {
+        float: left;
+        &.fixed {
+            width: initial!important;
+        }
+        &.add-comma {
+            &:after {
+                content: ", ";
+            }
+        }
+        &.add-page{
+            &:before {
+                content: "Page ";
+            }
+        }
+        &.title{
+            width:100%;
+            a{
+                    color: #427ebf;
+            }
+        }
+        &.publication{
+            width: initial!important;
+        }
+        &.paragraph {
+            width: 100%!important;
+        }
+    }
+
+    tbody th,
+    tbody td {
+        padding: rem-calc(0 7);
+    }
+
+    tr {
+        padding: rem-calc(7 0);
+    }    
+     section{ 
+        form{
+        &.advanced{
+            ul li {
+            width: 33.3%;
+            }
+            .column-block{
+                margin-bottom: 1.25rem;  
+            }
+        }
+        &.simple ul li {
+            width: 33.33%;
+        }    
+        }   
+    }
+    section .callout{
+        padding-bottom: 0;
+    p{
+        padding: 0 3rem 0 0rem;
+    }
+}
+
+
+}
+
+@media screen and (max-width: 450px) {
+    .tab_container.subnav [type='radio'] + label{
+        padding: 0 1rem;
+    }
 }
 
 
 @media screen and (max-width: 400px) {
-    form {
-        &.simple {
-            ul {
-                li {
-                    width: 100%;
-                }
-            }
+     section{ 
+        form{
+        &.advanced ul li {
+            width: 100%;
         }
+        &.simple ul li {
+            width: 100%;
+        }    
+        }   
+    }
+    nav .navwrapper .logo{
+    width: 50%;
+    margin: -0.125rem 0 0 0;
+        h1{
+        line-height: 1.25rem;
+        }
+    }
+    .tab_container.subnav [type='radio'] + label{
+        padding: 0 0.675rem;
+    }
+}
+
+
+@media screen and (max-width: 350px) {
+.column, .columns {
+    padding-right: 0.625rem;
+    padding-left: 0.625rem;
+    .column, .columns {
+        padding-right: 0;
+        padding-left: 0;
+    }    
+}
+    .tab_container.subnav [type='radio'] + label{
+        padding: 0 1rem;
+    }
+    .tab_container.subnav #tab3 + label{
+        display: none;
     }
 }
