@@ -15,9 +15,15 @@
 
 <section>
     <div class="row">
+        <div class="large-12 columns">
+            <h2 class="underline margin-bottom">Explore</h2>
+            {% get_publications %}
+        </div>
+    </div>
+     <div class="row">
         <div class="large-3 columns">
             <h2 class="underline margin-bottom">Search</h2>
-        	{% quick_periodical_search_form %}
+            {% quick_periodical_search_form %}
         </div>
 
         <div class="large-1 columns">
@@ -25,13 +31,7 @@
 
         <div class="large-8 columns">
             <h2 class="underline margin-bottom">This Month in History</h2>
-			{% get_issues_published_this_month %}
-        </div>
-    </div>
-    <div class="row">
-        <div class="large-12 columns">
-            <h2 class="underline margin-bottom">Explore</h2>
-            {% get_publications %}
+            {% get_issues_published_this_month %}
         </div>
     </div>
 </section>
