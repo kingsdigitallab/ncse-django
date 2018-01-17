@@ -12,7 +12,7 @@ class PeriodicalsSearchForm(FacetedSearchForm):
     mode = forms.ChoiceField(
         choices=MODE_CHOICES, initial=MODE_DEFAULT[0], widget=RadioSelect)
 
-    start_year = forms.IntegerField(required=False, initial=1854)
+    start_year = forms.IntegerField(required=False, initial=1793)
     end_year = forms.IntegerField(required=False, initial=1906)
 
     ORDER_BY_DEFAULT = ('issue_date', 'Date')
