@@ -531,13 +531,15 @@ li.accordion-item{
             background: $light-gray;
             &.is-active {
                 background-color: $primary-color;
-                
                 a {
                     color: $white;
 
                     span {
                         color: $white;
                     }
+                }
+                &:hover {
+                    background: darken($primary-color, 10%);
                 }
             }
 
