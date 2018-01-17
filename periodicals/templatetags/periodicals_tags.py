@@ -67,16 +67,22 @@ def get_request_parameters(context, exclude=None):
 def get_issues_published_today():
     """ Get all issues published on same day as current day"""
     now = datetime.datetime.now()
-    issues = Issue.objects.filter(issue_date__day=now.day)
+    issues = Issue.objects.filter(
+        issue_date__day=now.day,
+        issue_date__month=now.month).order_by('?')[:3]
     return {'issues': issues}
 
 
 @register.inclusion_tag('periodicals/includes/issue_gallery.html')
 def get_issues_published_this_month():
     """  Get all issues published on same day as current month """
+    issues = get_issues_published_today()
+    if issues['issues'].count() == 3:
+        return issues
+
     now = datetime.datetime.now()
     issues = Issue.objects.filter(
-        issue_date__month=now.month).order_by('issue_date')[:3]
+        issue_date__month=now.month).order_by('?')[:3]
     return {'issues': issues}
 
 
