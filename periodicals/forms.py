@@ -34,9 +34,16 @@ class PeriodicalsSearchForm(FacetedSearchForm):
 
         if self.cleaned_data['mode'] and self.cleaned_data['q']:
             mode = self.cleaned_data['mode']
+            query = self.cleaned_data['q']
 
-            if mode == self.MODE_AND[0]:
-                sqs = sqs.filter_and(content=self.cleaned_data['q'])
+            if mode == self.MODE_DEFAULT[0]:
+                words = query.split()
+                for word in words:
+                    sqs = sqs.filter_or(content=word)
+            elif mode == self.MODE_AND[0]:
+                words = query.split()
+                for word in words:
+                    sqs = sqs.filter(content=word)
             elif mode == self.MODE_PHRASE[0]:
                 sqs = sqs.filter(content__exact=self.cleaned_data['q'])
 
