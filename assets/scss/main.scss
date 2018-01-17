@@ -144,12 +144,21 @@ nav {
                 font-size: rem-calc(16);
                 margin: 0;
                 text-transform: uppercase;
+                font-weight: bold;
 
                 a {
                     color: $white;
                     &:hover{
-                        color:$black;
+                        opacity:0.8;
                     }
+                }
+            }
+            img{
+                width:7rem;
+                margin-top: 0.5rem;
+                opacity:0.7;
+                &:hover{
+                    opacity:0.5;
                 }
             }
         }
@@ -171,7 +180,7 @@ nav {
                     transition: all .5s ease;
 
                     &:hover {
-                        color: $black;
+                        opacity:0.8;
                     }
                 }
             }
@@ -210,6 +219,15 @@ nav {
 .sticky nav {
     background: $white;
 }
+
+
+/* Subnav Tabs to accordion */
+section.tab-to-accordion {
+    li.tabs-title a{
+        padding:0 0 1rem 0;
+        margin-top: 0.5rem;
+    }
+} 
 
 
 /* Breadcrumbs */
@@ -484,16 +502,16 @@ ul.filters
 
     .accordion-content
     {
-            width:80%;
-            float: left;
+        width:80%;
+        float: left;
     }
 }
 
 li.accordion-item{
-        &:last-child>.accordion-content:last-child{
-            border-bottom:0;
-        }
+    &:last-child>.accordion-content:last-child{
+        border-bottom:0;
     }
+}
 
 .accordion-content {
     border: none;
@@ -669,18 +687,18 @@ body table.stack {
   @include breakpoint(medium down) {
     thead {
       display: table-header-group;
-    }
-    tfoot {
+  }
+  tfoot {
       display: table-footer-group;
-    }
-    tr {
+  }
+  tr {
       display: table-row;
-    }
-    th, td {
+  }
+  th, td {
       display: table-cell;
       border-top: initial; //if you have set a border style for your table, you might have to add it back here (I don't have one so it doesn't matter for my use case)
-    }
   }
+}
 }
 
 //this creates a breakpoint at small
@@ -766,12 +784,12 @@ footer {
 @media screen and (max-width: 1024px) {
     section{ 
         form{
-        &.advanced ul li {
-            width: 100%;
+            &.advanced ul li {
+                width: 100%;
             }
-        &.simple ul li {
-            width: 33.33%;
-        }    
+            &.simple ul li {
+                width: 33.33%;
+            }    
         }
         
     }
@@ -840,12 +858,12 @@ footer {
         }
     }
     .accordion-title.filters {
-    width: 100%;
+        width: 100%;
     }
     ul.filters 
     {
         li.accordion-item{
-        width: 100%;
+            width: 100%;
         } 
     }
     ul.menu.float-left{
@@ -873,7 +891,7 @@ footer {
         &.title{
             width:100%;
             a{
-                    color: #427ebf;
+                color: #427ebf;
             }
         }
         &.publication{
@@ -892,27 +910,27 @@ footer {
     tr {
         padding: rem-calc(7 0);
     }    
-     section{ 
+    section{ 
         form{
-        &.advanced{
-            ul li {
-            width: 33.3%;
+            &.advanced{
+                ul li {
+                    width: 33.3%;
+                }
+                .column-block{
+                    margin-bottom: 1.25rem;  
+                }
             }
-            .column-block{
-                margin-bottom: 1.25rem;  
-            }
-        }
-        &.simple ul li {
-            width: 33.33%;
-        }    
+            &.simple ul li {
+                width: 33.33%;
+            }    
         }   
     }
     section .callout{
         padding-bottom: 0;
-    p{
-        padding: 0 3rem 0 0rem;
+        p{
+            padding: 0 3rem 0 0rem;
+        }
     }
-}
 
 
 }
@@ -925,38 +943,45 @@ footer {
 
 
 @media screen and (max-width: 400px) {
-     section{ 
-        form{
+ section{ 
+    form{
         &.advanced ul li {
             width: 100%;
         }
         &.simple ul li {
             width: 100%;
         }    
-        }   
-    }
-    nav .navwrapper .logo{
-    width: 50%;
+    }   
+}
+nav .navwrapper .logo{
+    width: 80%;
     margin: -0.125rem 0 0 0;
-        h1{
+    h1{
         line-height: 1.25rem;
+    }
+}
+.tab_container.subnav [type='radio'] + label{
+    padding: 0 0.675rem;
+}
+nav {
+    .navwrapper {
+        .label-toggle {
+            margin-top: rem-calc(32);
         }
     }
-    .tab_container.subnav [type='radio'] + label{
-        padding: 0 0.675rem;
-    }
+}
 }
 
 
 @media screen and (max-width: 350px) {
-.column, .columns {
-    padding-right: 0.625rem;
-    padding-left: 0.625rem;
     .column, .columns {
-        padding-right: 0;
-        padding-left: 0;
-    }    
-}
+        padding-right: 0.625rem;
+        padding-left: 0.625rem;
+        .column, .columns {
+            padding-right: 0;
+            padding-left: 0;
+        }    
+    }
     .tab_container.subnav [type='radio'] + label{
         padding: 0 1rem;
     }
@@ -964,3 +989,80 @@ footer {
         display: none;
     }
 }
+
+
+
+.pen-title {
+  text-align: center;
+  margin-bottom: 80px ;
+  h3 { 
+
+    font-size: 33px ;
+    @media only screen and (min-width: 640px) {
+        font-size: 63px ;
+    }
+    color: silver ;
+    font-weight: bold ;
+    .head {
+      display: block ;
+      width: 100% ;
+  }
+  .subtitle {
+      width: 100% ;
+      display: block ;
+      font-size: 18px ;
+      clear: both ;
+      width: 100% ;
+  }
+}
+}
+
+
+
+@media screen and (max-width: 768px) {
+    section.tab-to-accordion {
+        .menu a{
+            padding: 0;
+        }
+        .menu.subnav li{
+            margin:0.1rem 0;
+        }
+        li.accordion-item{
+            width: 100%;
+            &.is-active{
+                a.accordion-title{
+                    background: $primary-color;
+                    color: $white;
+                    border:1px solid $primary-color;
+                    span{
+                        color: lighten($light-gray,3%);
+                    }
+                    &:before{
+                        color: $white;
+                    }
+                }
+            }
+            a.accordion-title{
+                width:100%;
+                background: $light-gray;
+                border:1px solid $light-gray;
+                color: $black;
+                padding: 1rem;
+                &:before{
+                    color: $black;
+                }
+                &:hover{
+                    border:1px solid $primary-color;
+                }
+            }
+
+        } 
+        .accordion-content{
+            .column{
+                margin:1rem 0 0 0;
+            }
+        }
+
+    }
+}    
+
