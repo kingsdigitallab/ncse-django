@@ -1052,8 +1052,11 @@ footer {
         .menu a{
             padding: 0;
         }
-        .menu.subnav li{
+        .menu.subnav {
+            border-bottom: none;
+            li{
             margin:0.1rem 0;
+            }
         }
         li.accordion-item{
             width: 100%;
