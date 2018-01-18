@@ -156,11 +156,10 @@ nav {
             }
             img{
                 width:7rem;
-                opacity:0.7;
                 float:left;
                 margin-right: rem-calc(32);
                 &:hover{
-                    opacity:0.5;
+                    opacity:0.8;
                 }
             }
         }
@@ -809,7 +808,7 @@ footer {
             display: block;
 
             ul {
-                background-color: #6898cc;
+                background-color: darken($primary-color,10%);
                 display: block;
                 height: 0;
                 list-style-type: none;
@@ -825,15 +824,15 @@ footer {
                     padding: 0;
                     width: 100%;
                     margin: rem-calc(8 0);
+                    transition: all 0.5s ease;
                 }
             }
 
             #menu-toggle:checked ~ ul {
-                height: 100%;
+                height: auto;
                 opacity: 1;
-
+                transition: all 0.5s ease;
                 /* fallback */
-                height: 100vh;
                 visibility: visible;
             }
 
@@ -841,11 +840,11 @@ footer {
                 color: $white;
                 cursor: pointer;
                 display: block;
-                float: right;
                 height: rem-calc(35);
-                margin-top: rem-calc(16);
                 width: rem-calc(35);
-
+                position: absolute;
+                right: 0;
+                top: rem-calc(24);
                 .menu-text {
                     border: none;
                     float: left;
@@ -859,7 +858,19 @@ footer {
                     border-top: 2px solid #eee;
                 }
             }
+            .logo {
+            margin:0;
+            width: 100%;
+            h1 {
+                text-align: center;
+                width: 100%;
+                border-top: 1px solid rgba(255,255,255,0.5);
+                padding-top: rem-calc(8);
+                margin-top: rem-calc(8);
+            }
         }
+        }
+          
     }
     .accordion-title.filters {
         width: 100%;
@@ -943,6 +954,32 @@ footer {
     .tab_container.subnav [type='radio'] + label{
         padding: 0 1rem;
     }
+/*    nav {
+        .logo {
+            color: $white;
+            display: inline-block;
+            margin: 0;
+            width: 60%;
+
+            h1 {
+                font-size: rem-calc(16);
+                text-transform: uppercase;
+                font-weight: bold;
+                float:left;
+                margin-top: rem-calc(8);
+            }
+            img{
+                width:7rem;
+                opacity:0.7;
+                float:left;
+                margin-right: rem-calc(32);
+                &:hover{
+                    opacity:0.5;
+                }
+            }
+        }
+    }*/
+
 }
 
 
