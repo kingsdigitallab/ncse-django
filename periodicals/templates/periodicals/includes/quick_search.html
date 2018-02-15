@@ -1,3 +1,5 @@
+{% load wagtailcore_tags periodicals_tags cms_tags %}
+
 <section class="callout">
     <form method="get" action="{% url 'search' %}" class="simple">
         <div class="row">
@@ -8,7 +10,7 @@
                 {{ form.mode }}
 
                 <input class="button" type="submit" value="Search">
-                <a href="#" class="text-center">Advanced search</a>
+                <a href="{% url 'search' %}?{% initial_search_parameters %}" class="text-center">Advanced search</a>
             </div>
         </div>
     </form>
