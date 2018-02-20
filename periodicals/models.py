@@ -230,14 +230,18 @@ class Article(models.Model):
     # Gets the position of this page in a multi-page article
     # e.g. *1* of 5 (returns 1).
     def get_position_in_article(self):
-        count = 1
         current_article = self
+        pages = []
 
         while current_article.continuation_from:
+            if current_article.page not in pages:
+                pages.append(current_article.page)
             current_article = current_article.continuation_from
-            count = count + 1
 
-        return count
+        # Sanity check, for when current_article is a lone child
+        pages.append(current_article.page)
+
+        return len(pages)
 
     def get_text(self):
         if self.continuation_to:

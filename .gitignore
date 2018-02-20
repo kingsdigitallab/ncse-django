@@ -107,3 +107,4 @@ playbook.retry
 local.py
 
 .DS_Store
+nohup.out
