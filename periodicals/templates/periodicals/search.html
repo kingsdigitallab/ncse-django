@@ -67,18 +67,32 @@
     <!-- <section class="grid-container"> -->
     <section{% if jumptoresults %} id="jump-to-results-section"{% endif %}>
         <div class="row">
+            {% with selected_facets=request.GET|get_list:'selected_facets' active_facets=selected_facets|get_keys %}
+
             <div class="small-12 columns">
                 <h1 class="underline">
                     Results
                 </h1>
 
-                <p>Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ paginator.count }} matches</p>
+                <p class="search-meta">Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ paginator.count }} matches. 
+
+                    {% if request.GET.q %}
+                    <span class="tag">{{request.GET.q}} <a href="?&mode={{request.GET.mode}}&start_year=1793&end_year=1906&order_by={{request.GET.order_by}}{% for facet in selected_facets %}&selected_facets={{ facet }}{% endfor %}"" class="delete">x</a></span>
+                    {% endif %}
+
+                    <span class="tag">{{ request.GET.start_year }} - {{ request.GET.end_year}} <a href="?&mode={{request.GET.mode}}&start_year=1793&end_year=1906&order_by={{request.GET.order_by}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}{% for facet in selected_facets %}&selected_facets={{ facet }}{% endfor %}" class="delete">x</a></span>
+
+                    
+                    <a href="{% url 'search' %}?{% initial_search_parameters %}">Reset all filters</a>
+
+
+                </p>
             </div>
 
 
             <div class="small-12 columns">
                 <ul class="accordion filters" data-accordion data-multi-expand="true" data-allow-all-closed="true">
-                    <li class="accordion-item" data-accordion-item>
+                    <li class="accordion-item {% if 'year' in active_facets %}is-active{% endif %}" data-accordion-item>
                         <a href="#" class="accordion-title filters">Filter by Year</a>
                         <div class="accordion-content" data-tab-content>
                             <div class="row">
@@ -89,7 +103,7 @@
                             </div>
                         </div>
                     </li>
-                    <li class="accordion-item" data-accordion-item>
+                    <li class="accordion-item {% if 'category' in active_facets %}is-active{% endif %}" data-accordion-item>
                         <a href="#" class="accordion-title filters">Filter by Category</a>
                         <div class="accordion-content" data-tab-content>
                             <div class="row">
@@ -99,7 +113,7 @@
                             </div>
                         </div>
                     </li>
-                    <li class="accordion-item" data-accordion-item>
+                    <li class="accordion-item {% if 'publication' in active_facets %}is-active{% endif %}" data-accordion-item>
                         <a href="#" class="accordion-title filters">Filter by Publication</a>
                         <div class="accordion-content" data-tab-content>
                             <div class="row">
@@ -111,6 +125,8 @@
                     </li>
                 </ul>
             </div>
+            {% endwith %}
+
         </div>
     </section>
     <div class="row">
@@ -145,25 +161,25 @@
                         {% for result in page_obj.object_list %}
                             <tr>
                                 <td>
-                                    <a href="{{ result.url }}?highlight={{ query }}">
+                                    <a href="{{ result.url }}?highlight={{ query }}&from=search">
                                         {{ forloop.counter0|add:page_obj.start_index }}
                                     </a>
                                 </td>
                                 <td class="add-comma">
-                                    <a href="{{ result.url }}?highlight={{ query }}">
+                                    <a href="{{ result.url }}?highlight={{ query }}&from=search">
                                         {{ result.category }}
                                     </a>
                                 </td>
 
                                 <td class="publication">
-                                    <a href="{{ result.url }}?highlight={{ query }}">
+                                    <a href="{{ result.url }}?highlight={{ query }}&from=search">
                                         {{ result.publication_abbreviation }}, {{ result.issue_date }},
                                         Page {{ result.page_number }}
                                     </a>
                                 </td>
 
                                 <td class="title">
-                                    <a href="{{ result.url }}?highlight={{ query }}">
+                                    <a href="{{ result.url }}?highlight={{ query }}&from=search">
                                         {% if result.title %}
                                             {{ result.title }}
                                         {% else %}
@@ -173,7 +189,7 @@
                                 </td>
                                 {% if query %}
                                     <td class="paragraph">
-                                        <a href="{{ result.url }}?highlight={{ query }}">
+                                        <a href="{{ result.url }}?highlight={{ query }}&from=search">
                                             {% highlight result.text with query html_tag "strong" %}
                                         </a>
                                     </td>

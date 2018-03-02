@@ -36,6 +36,8 @@ class ArticleDetailView(DetailView):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
         page = context['article'].page
 
+        context['search_path'] = self.request.session.get('search_path')
+
         highlight_words = _get_highlighted_words(self.request, page)
         if highlight_words:
             context['highlight_words'] = highlight_words
@@ -172,6 +174,10 @@ class PeriodicalsSearchView(FacetedSearchView):
         first_year = initial['start_year']
         last_year = initial['end_year']
         form = context['form']
+
+        # Here we save the url for use in going back to the search form
+        request.session['search_path'] = request.get_full_path()
+
         if 'selected_facets' in request.GET:
             context['selected_facets'] = request.GET.getlist('selected_facets')
             context['jumptoresults'] = True

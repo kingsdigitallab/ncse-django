@@ -9,6 +9,21 @@ from ..forms import PeriodicalsSearchForm
 register = template.Library()
 
 
+@register.filter
+def get_list(dictionary, key):
+    return dictionary.getlist(key)
+
+
+@register.filter
+def get_keys(value):
+    return ','.join([key.split(':')[0] for key in value])
+
+
+@register.filter
+def split(value, arg):
+    return value.split(arg)
+
+
 @register.simple_tag
 def initial_search_parameters():
     form = PeriodicalsSearchForm()

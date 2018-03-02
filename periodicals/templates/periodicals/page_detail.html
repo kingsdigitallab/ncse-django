@@ -14,9 +14,15 @@
 <div class="row">
     <div class="small-12 columns minus-margin-top">
          <ul class="menu float-left">
+            {% if request.GET.from == 'search'%}
+            <li>
+                <a href="{{ search_path}}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to search results</a>
+            </li>
+            {% else %}
             <li>
                 <a href="{{ page.issue.url }}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to {{ page.issue.publication}}, {{ page.issue.issue_date }}</a>
             </li>
+            {% endif %}
         </ul>
     </div>
 </div>
