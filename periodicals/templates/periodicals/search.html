@@ -15,7 +15,7 @@
         <div class="row">
             <div class="column">
                 <section class="callout">
-                    <form method="get" action="." class="advanced">
+                    <form method="get" action="#jumptoresults" class="advanced">
                         <div class="row medium-up-3 large-up-3">
                             <div class="column column-block">
                                 {% with field=form.q %} {{ field.errors }} {{ field.label_tag }} {{ field }}
@@ -65,7 +65,7 @@
     </section>
 
     <!-- <section class="grid-container"> -->
-    <section{% if jumptoresults %} id="jump-to-results-section"{% endif %}>
+    <section id="jumptoresults">
         <div class="row">
             {% with selected_facets=request.GET|get_list:'selected_facets' active_facets=selected_facets|get_keys %}
 
@@ -77,7 +77,15 @@
                 <p class="search-meta">Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ paginator.count }} matches. 
 
                     {% if request.GET.q %}
-                    <span class="tag">{{request.GET.q}} <a href="?&mode={{request.GET.mode}}&start_year=1793&end_year=1906&order_by={{request.GET.order_by}}{% for facet in selected_facets %}&selected_facets={{ facet }}{% endfor %}"" class="delete">x</a></span>
+                    <span class="tag">
+                    {% if request.GET.mode == 'phrase' %}
+                        "{{request.GET.q}}"
+                    {% elif request.GET.mode == 'and' %}
+                        All words from: "{{ request.GET.q }}"
+                    {% else %}
+                        Any word from: "{{ request.GET.q }}"
+                    {% endif %}
+                    <a href="?&mode={{request.GET.mode}}&start_year=1793&end_year=1906&order_by={{request.GET.order_by}}{% for facet in selected_facets %}&selected_facets={{ facet }}{% endfor %}"" class="delete">x</a></span>
                     {% endif %}
 
                     {% if request.GET.start_year != '1793' or request.GET.end_year != '1906' %}
