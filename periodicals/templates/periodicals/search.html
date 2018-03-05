@@ -80,7 +80,9 @@
                     <span class="tag">{{request.GET.q}} <a href="?&mode={{request.GET.mode}}&start_year=1793&end_year=1906&order_by={{request.GET.order_by}}{% for facet in selected_facets %}&selected_facets={{ facet }}{% endfor %}"" class="delete">x</a></span>
                     {% endif %}
 
+                    {% if request.GET.start_year != '1793' or request.GET.end_year != '1906' %}
                     <span class="tag">{{ request.GET.start_year }} - {{ request.GET.end_year}} <a href="?&mode={{request.GET.mode}}&start_year=1793&end_year=1906&order_by={{request.GET.order_by}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}{% for facet in selected_facets %}&selected_facets={{ facet }}{% endfor %}" class="delete">x</a></span>
+                    {% endif %}
 
                     
                     <a href="{% url 'search' %}?{% initial_search_parameters %}">Reset all filters</a>
