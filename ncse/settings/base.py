@@ -172,12 +172,11 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'wagtail.wagtail.core.middleware.SiteMiddleware',
+    'wagtail.core.middleware.SiteMiddleware',
 ]
 
 ROOT_URLCONF = PROJECT_NAME + '.urls'
@@ -212,7 +211,7 @@ WSGI_APPLICATION = PROJECT_NAME + '.wsgi.application'
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth
 # -----------------------------------------------------------------------------
 
-if 'wagtail.wagtailcore' in INSTALLED_APPS:
+if 'wagtail.core' in INSTALLED_APPS:
     LOGIN_URL = '/wagtail/login/'
 else:
     LOGIN_URL = '/admin/login/'
