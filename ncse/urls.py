@@ -14,13 +14,13 @@ try:
     if settings.DEBUG:
         import debug_toolbar
         urlpatterns += [
-            path(r'^__debug__/', include(debug_toolbar.urls)),
+            path('__debug__/', include(debug_toolbar.urls)),
         ]
 except ImportError:
     pass
 
 urlpatterns += [
-    path('admin/', include(admin.site.urls)),
+    path('admin/', admin.site.urls),
     path('digger/', include('activecollab_digger.urls')),
     path('periodicals/', include('periodicals.urls')),
 
@@ -38,6 +38,6 @@ if settings.DEBUG:
     import os.path
 
     urlpatterns += staticfiles_urlpatterns()
-    urlpatterns += static(settings.MEDIA_URL + 'images/',
-                          document_root=os.path.join(settings.MEDIA_ROOT,
-                                                     'images'))
+    urlpatterns += static(
+        settings.MEDIA_URL + 'images/',
+        document_root=os.path.join(settings.MEDIA_ROOT, 'images'))

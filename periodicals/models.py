@@ -57,7 +57,8 @@ class Publication(models.Model):
 
 
 class Issue(models.Model):
-    publication = models.ForeignKey(Publication, related_name='issues')
+    publication = models.ForeignKey(Publication, related_name='issues',
+                                    on_delete=models.CASCADE)
     uid = models.CharField(max_length=32, unique=True)
     slug = models.CharField(max_length=32, unique=True)
     issue_date = models.DateField()
@@ -101,7 +102,8 @@ class Issue(models.Model):
 
 class Page(models.Model):
     height = models.PositiveIntegerField(null=True)
-    issue = models.ForeignKey(Issue, related_name='pages')
+    issue = models.ForeignKey(Issue, related_name='pages',
+                              on_delete=models.CASCADE)
     number = models.PositiveIntegerField()
     image = models.ImageField(upload_to='periodicals/')
     width = models.PositiveIntegerField(null=True)
@@ -161,9 +163,11 @@ class ArticleType(models.Model):
 
 
 class Article(models.Model):
-    issue = models.ForeignKey(Issue, related_name='articles_in_issue')
+    issue = models.ForeignKey(Issue, related_name='articles_in_issue',
+                              on_delete=models.CASCADE)
     page = models.ForeignKey(Page, blank=True, null=True,
-                             related_name='articles_in_page')
+                             related_name='articles_in_page',
+                             on_delete=models.CASCADE)
     aid = models.CharField(max_length=32)
     slug = models.SlugField(max_length=32, null=True)
     position_in_page = models.PositiveIntegerField(blank=True, null=True)
@@ -172,13 +176,16 @@ class Article(models.Model):
     content = models.TextField(blank=True, null=True)
     content_html = models.TextField(blank=True, null=True)
     continuation_from = models.ForeignKey(
-        'self', blank=True, null=True, related_name='continued_from')
+        'self', blank=True, null=True, related_name='continued_from',
+        on_delete=models.CASCADE)
     continuation_to = models.ForeignKey(
-        'self', blank=True, null=True, related_name='continues_in')
+        'self', blank=True, null=True, related_name='continues_in',
+        on_delete=models.CASCADE)
     bounding_box = JSONField(default='{}')
     title_image = models.ImageField(upload_to='periodicals/',
                                     blank=True, null=True)
-    article_type = models.ForeignKey(ArticleType, blank=True, null=True)
+    article_type = models.ForeignKey(ArticleType, blank=True, null=True,
+                                     on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['page__number', 'position_in_page', 'aid']
