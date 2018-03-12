@@ -12,9 +12,7 @@ import getpass
 import logging
 import os
 
-
 from kdl_ldap.settings import *  # noqa
-
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
@@ -71,7 +69,6 @@ EMAIL_USE_TLS = False
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 INSTALLED_APPS = [
-    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -82,27 +79,26 @@ INSTALLED_APPS = [
     'compressor',
 ]
 
-INSTALLED_APPS += [    # your project apps here
-    'kdl_ldap',
+# your project apps here
+INSTALLED_APPS += [
     'activecollab_digger',
-    'rest_framework',
-    'wagtail.wagtailcore',
-    'wagtail.wagtailadmin',
-    'wagtail.wagtaildocs',
-    'wagtail.wagtailsnippets',
-    'wagtail.wagtailusers',
-    'wagtail.wagtailimages',
-    'wagtail.wagtailembeds',
-    'wagtail.wagtailredirects',
-    'wagtail.wagtailforms',
-    'wagtail.wagtailsites',
-    'wagtail.contrib.wagtailapi',
-    'wagtail.contrib.wagtailroutablepage',
-    'wagtail.contrib.table_block',
-    'taggit',
-    'modelcluster',
     'haystack',
-    'wagtail.wagtailsearch',
+    'kdl_ldap',
+    'modelcluster',
+    'rest_framework',
+    'taggit',
+    'wagtail.core',
+    'wagtail.admin',
+    'wagtail.documents',
+    'wagtail.snippets',
+    'wagtail.users',
+    'wagtail.images',
+    'wagtail.embeds',
+    'wagtail.contrib.redirects',
+    'wagtail.contrib.forms',
+    'wagtail.sites',
+    'wagtail.contrib.routable_page',
+    'wagtail.contrib.table_block',
     'ncse',
     'cms',
     'periodicals'
@@ -168,11 +164,6 @@ LOGGING = {
             'level': LOGGING_LEVEL,
             'propagate': True
         },
-        'elasticsearch': {
-            'handlers': ['file'],
-            'level': LOGGING_LEVEL,
-            'propagate': True
-        },
     }
 }
 
@@ -186,8 +177,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'wagtail.wagtailcore.middleware.SiteMiddleware',
-    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+    'wagtail.wagtail.core.middleware.SiteMiddleware',
 ]
 
 ROOT_URLCONF = PROJECT_NAME + '.urls'
@@ -208,6 +198,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.template.context_processors.static',
                 'django.contrib.messages.context_processors.messages',
+                'activecollab_digger.context_processors.activecollab_digger',
                 'ncse.context_processors.settings'
             ],
         },
@@ -280,13 +271,6 @@ COMPRESS_PRECOMPILERS = (
 )
 
 # -----------------------------------------------------------------------------
-# Django Grappelli
-# http://django-grappelli.readthedocs.org/en/latest/
-# -----------------------------------------------------------------------------
-
-GRAPPELLI_ADMIN_TITLE = PROJECT_TITLE
-
-# -----------------------------------------------------------------------------
 # FABRIC
 # -----------------------------------------------------------------------------
 
@@ -314,15 +298,6 @@ AUTH_LDAP_REQUIRE_GROUP = 'cn=ncse,' + LDAP_BASE_OU
 ITEMS_PER_PAGE = 10
 
 WAGTAIL_SITE_NAME = PROJECT_TITLE
-WAGTAILSEARCH_BACKENDS = {
-    'default': {
-        'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch5',
-        'AUTO_UPDATE': False,
-        'URLS': ['http://127.0.0.1:9200'],
-        'INDEX': 'ncse_wagtail',
-        'TIMEOUT': 5,
-    }
-}
 
 # Change as required
 HAYSTACK_CONNECTIONS = {
@@ -342,6 +317,6 @@ AC_API_URL = AC_BASE_URL + '/api/v1/'
 # ActiveCollab API token
 AC_TOKEN = ''
 # ActiveCollab project ID
-AC_PROJECT_ID = 674
+AC_PROJECT_ID = 850
 # ActiveCollab user ID to create the issues
 AC_USER = 36

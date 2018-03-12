@@ -1,13 +1,8 @@
 from django.conf import settings
-from django.conf.urls import include, url
 from django.contrib import admin
+from django.urls import include, path
 from kdl_ldap.signal_handlers import \
     register_signal_handlers as kdl_ldap_register_signal_hadlers
-from periodicals import urls as periodicals_urls
-from wagtail.wagtailadmin import urls as wagtailadmin_urls
-from wagtail.wagtailcore import urls as wagtail_urls
-from wagtail.wagtaildocs import urls as wagtaildocs_urls
-from wagtail.wagtailsearch.urls import frontend as wagtailsearch_frontend_urls
 
 kdl_ldap_register_signal_hadlers()
 
@@ -19,21 +14,19 @@ try:
     if settings.DEBUG:
         import debug_toolbar
         urlpatterns += [
-            url(r'^__debug__/', include(debug_toolbar.urls)),
+            path(r'^__debug__/', include(debug_toolbar.urls)),
         ]
 except ImportError:
     pass
 
 urlpatterns += [
-    url(r'^grappelli/', include('grappelli.urls')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^digger/', include('activecollab_digger.urls')),
-    url(r'^periodicals/', include(periodicals_urls)),
+    path('admin/', include(admin.site.urls)),
+    path('digger/', include('activecollab_digger.urls')),
+    path('periodicals/', include('periodicals.urls')),
 
-    url(r'^wagtail/', include(wagtailadmin_urls)),
-    url(r'^documents/', include(wagtaildocs_urls)),
-    url(r'^search/', include(wagtailsearch_frontend_urls)),
-    url(r'', include(wagtail_urls)),
+    path('wagtail/', include('wagtail.admin.urls')),
+    path('documents/', include('wagtail.documents.urls')),
+    path('', include('wagtail.core.urls')),
 ]
 
 # -----------------------------------------------------------------------------
