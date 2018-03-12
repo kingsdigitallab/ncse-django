@@ -49,7 +49,7 @@ def thumbnail(url):
         return url
 
 
-@register.assignment_tag(takes_context=True)
+@register.simple_tag(takes_context=True)
 def get_selected_facets(context, exclude=None):
     """ Return any selected facets excluding exclude"""
     if 'selected_facets' in context:
@@ -63,7 +63,7 @@ def get_selected_facets(context, exclude=None):
 
 
 # Borrowed from wagtailbase
-@register.assignment_tag(takes_context=True)
+@register.simple_tag(takes_context=True)
 def get_request_parameters(context, exclude=None):
     """Returns a string with all the request parameters except the exclude
     parameter."""
