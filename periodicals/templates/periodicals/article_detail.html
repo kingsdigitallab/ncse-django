@@ -109,11 +109,13 @@
 {% endblock %}
 
 {% block footer_scripts %}
+{{ highlight_words }}
 {% if highlight_words %}
 <script>
 var highlight_words = {{ highlight_words | safe }};
 </script>
-{% endif %} {% if article.page.number_of_articles > 1 %}
+{% endif %}
+{% if article.page.number_of_articles > 1 and article.get_real_bounding_box %}
 <script>
 var article_bounding_box = {{ article.get_real_bounding_box | safe }};
 </script>

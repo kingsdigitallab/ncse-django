@@ -248,7 +248,8 @@
 <script>
 var highlight_words = {{ highlight_words | safe }};
 </script>
-{% endif %} {% if article %}
+{% endif %}
+{% if article and article.get_real_bounding_box %}
 <script>
 var article_bounding_box = {{ article.get_real_bounding_box | safe }};
 </script>
