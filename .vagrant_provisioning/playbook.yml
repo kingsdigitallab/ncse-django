@@ -139,7 +139,9 @@
 
   - name: motd | permissions
     become: yes
-    shell: 'chmod +x /etc/update-motd.d/*'
+    file:
+      path: /etc/update-motd.d
+      mode: u+x
     tags:
       - system
 
@@ -352,11 +354,11 @@
     tags:
       - django
 
-
   - name: django | media download
     get_url:
       url: '{{ media.url }}'
       dest: /tmp
+    ignore_errors: yes
     tags:
       - django
 
@@ -365,6 +367,7 @@
       src: /tmp/{{ media.filename }}
       dest: '{{ media.dest }}'
       remote_src: yes
+    ignore_errors: yes
     tags:
       - django
 
