@@ -2,21 +2,21 @@
 {% load highlight periodicals_tags %}
 
 {% block title %}
-    {% if article.title %}
-    {{ article|title }}
-    {% else %}
-    {{ article.aid }}
-    {% endif %}
-    {{ article.issue }}
+{% if article.title %}
+{{ article|title }}
+{% else %}
+{{ article.aid }}
+{% endif %}
+{{ article.issue }}
 {% endblock %}
 
 {% block meta_title %}
-    {% if article.title %}
-    {{ article|title }}
-    {% else %}
-    {{ article.aid }}
-    {% endif %}
-    {{ article.issue }}
+{% if article.title %}
+{{ article|title }}
+{% else %}
+{{ article.aid }}
+{% endif %}
+{{ article.issue }}
 {% endblock %}
 
 {% block main %}
@@ -94,7 +94,7 @@
             {{ article|title }}
             {% else %}
             {{ article.aid }}
-            {% endif %}” <i>Masonic Periodicals Online</i>, Library and Museum Charitable Trust of the United Grand Lodge of England, {% now "j N Y" %}, {{ request.META.HTTP_HOST }}{{ article.url }}.
+            {% endif %}” <i>{{ PROJECT_TITLE }}</i>, #TODO: CITATION_INFO, {% now "j N Y" %}, {{ request.META.HTTP_HOST }}{{ article.url }}.
         </div>
     </section>
 </div>
@@ -109,13 +109,13 @@
 {% endblock %}
 
 {% block footer_scripts %}
-    {% if highlight_words %}
-    <script>
-        var highlight_words = {{ highlight_words | safe }};
-    </script>
-    {% endif %} {% if article.page.number_of_articles > 1 %}
-    <script>
-        var article_bounding_box = {{ article.get_real_bounding_box | safe }};
-    </script>
-    {% endif %}
+{% if highlight_words %}
+<script>
+var highlight_words = {{ highlight_words | safe }};
+</script>
+{% endif %} {% if article.page.number_of_articles > 1 %}
+<script>
+var article_bounding_box = {{ article.get_real_bounding_box | safe }};
+</script>
+{% endif %}
 {% endblock %}

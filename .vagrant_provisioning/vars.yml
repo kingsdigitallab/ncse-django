@@ -1,11 +1,11 @@
 ansible_python_interpreter: /usr/bin/python3
-app: {name: mpol}
+app: {name: ncse}
 git: {url: 'https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh'}
-media: {dest: /vagrant/static/media, url: 'https://mpol3.kdl.kcl.ac.uk/vagrant_media.tgz',
+media: {dest: /vagrant/static/media, url: 'https://ncse.kdl.kcl.ac.uk/vagrant_media.tgz',
   filename: vagrant_media.tgz }
 motd: {file: 00-kdl}
 postgresql: {admin_user: postgres, cluster_name: main, cluster_reset: false, default_auth_method: trust,
-  encoding: UTF-8, initial_data_file: data.sql, locale: en_GB.UTF-8, user: mpol}
+  encoding: UTF-8, initial_data_file: data.sql, locale: en_GB.UTF-8, user: ncse}
 project_root: /vagrant
 python: {requirements: requirements-dev.txt, virtualenv_location: /home/vagrant/venv}
 solr: {dist: /opt, url: 'https://archive.apache.org/dist/lucene/solr/6.6.1/solr-6.6.1.tgz',

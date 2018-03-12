@@ -1,5 +1,5 @@
 {
-    "name": "mpol",
+    "name": "ncse",
     "version": "0.1",
     "dependencies": {
         "jquery": null,
@@ -9,11 +9,5 @@
         "motion-ui": null
     },
     "main": "assets/js/main.js",
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "bower_components",
-        "test",
-        "tests"
-    ]
+    "ignore": ["**/.*", "node_modules", "bower_components", "test", "tests"]
 }

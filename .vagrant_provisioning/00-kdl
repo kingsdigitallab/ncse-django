@@ -10,7 +10,7 @@ fi
 echo # blank line
 
 
-echo "Welcome to the KDL Vagrant Virtual Environment for mpol!"
+echo "Welcome to the KDL Vagrant Virtual Environment for ncse!"
 
 echo # blank line
 
@@ -19,7 +19,8 @@ lsb_release -r
 
 echo # blank line
 
-echo "Please report issues here: https://app.activecollab.com/148987/projects/816" # Activecollab
+# Activecollab
+echo "Please report issues here: https://app.activecollab.com/148987/projects/850"
 
 echo # blank line
 

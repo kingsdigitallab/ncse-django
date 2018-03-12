@@ -9,8 +9,8 @@ ALLOWED_HOSTS = ['']
 DATABASES = {
     'default': {
         'ENGINE': db_engine,
-        'NAME': 'app_mpol_stg',
-        'USER': 'app_mpol',
+        'NAME': 'app_ncse_stg',
+        'USER': 'app_ncse',
         'PASSWORD': '',
         'HOST': ''
     },

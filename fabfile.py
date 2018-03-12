@@ -25,7 +25,7 @@ sys.path.append(project_root)
 
 # The name of the Django app for this project
 # Folder that contains wsgi.py
-PROJECT_NAME = 'mpol'
+PROJECT_NAME = 'ncse'
 # Git repository pointer
 REPOSITORY = 'https://github.com/kingsdigitallab/{}-django.git'.format(
     PROJECT_NAME)
@@ -33,11 +33,11 @@ REPOSITORY = 'https://github.com/kingsdigitallab/{}-django.git'.format(
 
 env.gateway = 'ssh.kdl.kcl.ac.uk'
 # Host names used as deployment targets
-env.hosts = ['{}3.kdl.kcl.ac.uk'.format(PROJECT_NAME)]
+env.hosts = ['{}.kdl.kcl.ac.uk'.format(PROJECT_NAME)]
 # Absolute filesystem path to project 'webroot'
-env.root_path = '/vol/mpol3/webroot/'
+env.root_path = '/vol/ncse/webroot/'
 # Absolute filesystem path to project Django root
-env.django_root_path = '/vol/mpol3/webroot/'
+env.django_root_path = '/vol/ncse/webroot/'
 # Absolute filesystem path to Python virtualenv for this project
 env.envs_path = os.path.join(env.root_path, 'envs')
 # -------------------------------

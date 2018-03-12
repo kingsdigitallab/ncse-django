@@ -6,7 +6,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "bento/ubuntu-16.04"
 
-  config.vm.define "mpol" do |mpol|
+  config.vm.define "ncse" do |ncse|
   end
 
   config.vm.network "forwarded_port", guest: 8000, host: 8000
@@ -17,7 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider "virtualbox" do |provider|
     provider.customize ["modifyvm", :id, "--memory", "2048"]
-    provider.name = "mpol"
+    provider.name = "ncse"
   end
 
   config.vm.provision "ansible" do |ansible|

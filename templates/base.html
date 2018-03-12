@@ -4,13 +4,13 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>{% block meta_title %}{% endblock %} | Masonic Periodicals</title>
+  <title>{% block meta_title %}{% endblock %} | {{ PROJECT_TITLE }}</title>
   <meta name="author" content="King's Digital Lab">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {% compress css %}
   <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/main.scss' %}">
-    <!-- favicons -->
+  <!-- favicons -->
   <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
   {% endcompress %}
 </head>
@@ -19,9 +19,9 @@
     <div class="grid-container">
       <div class="row">
         <div class="small-12 columns">
-        {% block navigation %}
+          {% block navigation %}
           {% include 'includes/navigation.html' %}
-        {% endblock %}
+          {% endblock %}
         </div>
       </div>
     </div>
@@ -35,14 +35,14 @@
         <div aria-label="You are here:" role="navigation">
 
           <ul class="breadcrumbs">
-          {% block breadcrumbs %}
-          {% endblock %}
+            {% block breadcrumbs %}
+            {% endblock %}
           </ul>
 
           <span class="show-for-sr">Current: </span>
-           <h1 class="underline">
-          {% block title %}{% endblock %}<br>
-        </h1>
+          <h1 class="underline">
+            {% block title %}{% endblock %}<br>
+          </h1>
         </div>
 
       </div>
@@ -51,16 +51,16 @@
   {% endblock %}
 
   <main>
-  {% block main %}
-  {% endblock %}
+    {% block main %}
+    {% endblock %}
   </main>
 
   <footer>
     <div class="row">
       <div class="small-12 columns">
-      {% block footer %}
+        {% block footer %}
         {% include 'includes/footer.html' %}
-      {% endblock %}
+        {% endblock %}
       </div>
     </div>
 
@@ -88,8 +88,8 @@
   {% compress js %}
   <script src="{% static 'js/google_analytics.js' %}"></script>
   <script>
-    ga('create', '{{ GA_ID }}', 'auto');
-    ga('send', 'pageview');
+  ga('create', '{{ GA_ID }}', 'auto');
+  ga('send', 'pageview');
   </script>
   {% endcompress %}
 </body>

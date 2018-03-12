@@ -10,8 +10,8 @@ INTERNAL_IPS = INTERNAL_IPS + ['']
 DATABASES = {
     'default': {
         'ENGINE': db_engine,
-        'NAME': 'app_mpol_dev',
-        'USER': 'app_mpol',
+        'NAME': 'app_ncse_dev',
+        'USER': 'app_ncse',
         'PASSWORD': '',
         'HOST': ''
     },
@@ -19,7 +19,7 @@ DATABASES = {
 
 LOGGING_LEVEL = logging.DEBUG
 
-LOGGING['loggers']['mpol']['level'] = LOGGING_LEVEL
+LOGGING['loggers']['ncse']['level'] = LOGGING_LEVEL
 
 HAYSTACK_CONNECTIONS['default']['URL'] = 'http://localhost:8983/solr/dev'
 

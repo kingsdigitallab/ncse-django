@@ -1,11 +1,12 @@
-# mpol-django
+# ncse-django
 
-This is the repository for the mpol project at [King's Digital Lab](https://kdl.kcl.ac.uk)
+This is the repository for the Nineteenth-Century Serial Edition project at [King's Digital Lab](https://kdl.kcl.ac.uk)
 
-This project is configured to use [Vagrant](https://www.vagrantup.com/) for local development and [Fabric](http://www.fabfile.org/) for deployment. 
+This project is configured to use [Vagrant](https://www.vagrantup.com/) for local development and [Fabric](http://www.fabfile.org/) for deployment.
 
 ## Getting started
-1. Enter the project directory: `cd mpol-django`
+
+1. Enter the project directory: `cd ncse-django`
 2. Start the virtual machine: `vagrant up`
 3. SSH into the virtual machine: `vagrant ssh`
 4. Run the local development server: `./manage.py runserver 0:8000`
@@ -20,6 +21,7 @@ password: `vagrant`
 Note: This login will only work on a locally deployed virtual machine.
 
 ## Requirements
+
 * Ansible >= 2.3
 * NodeJS
 * Vagrant >= 1.9

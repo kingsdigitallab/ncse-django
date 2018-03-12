@@ -8,9 +8,9 @@ SESSION_COOKIE_SECURE = False
 DATABASES = {
     'default': {
         'ENGINE': db_engine,
-        'NAME': 'mpol',
-        'USER': 'mpol',
-        'PASSWORD': 'mpol',
+        'NAME': 'ncse',
+        'USER': 'ncse',
+        'PASSWORD': 'ncse',
         'ADMINUSER': 'postgres',
         'HOST': 'localhost'
     },

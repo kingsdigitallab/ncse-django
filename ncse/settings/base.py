@@ -1,5 +1,5 @@
 """
-Django settings for mpol project.
+Django settings for ncse project.
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
@@ -19,8 +19,8 @@ from kdl_ldap.settings import *  # noqa
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
-PROJECT_NAME = 'mpol'
-PROJECT_TITLE = 'Masonic Periodicals Online'
+PROJECT_NAME = 'ncse'
+PROJECT_TITLE = 'Nineteenth-Century Serials Edition'
 
 # -----------------------------------------------------------------------------
 # Core Settings
@@ -103,7 +103,7 @@ INSTALLED_APPS += [    # your project apps here
     'modelcluster',
     'haystack',
     'wagtail.wagtailsearch',
-    'mpol',
+    'ncse',
     'cms',
     'periodicals'
 ]
@@ -158,7 +158,7 @@ LOGGING = {
             'level': LOGGING_LEVEL,
             'propagate': True
         },
-        'mpol': {
+        'ncse': {
             'handlers': ['file'],
             'level': LOGGING_LEVEL,
             'propagate': True
@@ -208,7 +208,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.template.context_processors.static',
                 'django.contrib.messages.context_processors.messages',
-                'mpol.context_processors.settings'
+                'ncse.context_processors.settings'
             ],
         },
     },
@@ -297,7 +297,7 @@ FABRIC_USER = getpass.getuser()
 # -----------------------------------------------------------------------------
 
 # Google Analytics ID
-GA_ID = 'UA-67707155-2'
+GA_ID = ''
 
 # -----------------------------------------------------------------------------
 # Automatically generated settings
@@ -309,7 +309,7 @@ if 'django.contrib.gis' in INSTALLED_APPS:
     db_engine = 'django.contrib.gis.db.backends.postgis'
 
 
-AUTH_LDAP_REQUIRE_GROUP = 'cn=mpol,' + LDAP_BASE_OU
+AUTH_LDAP_REQUIRE_GROUP = 'cn=ncse,' + LDAP_BASE_OU
 
 ITEMS_PER_PAGE = 10
 
@@ -319,7 +319,7 @@ WAGTAILSEARCH_BACKENDS = {
         'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch5',
         'AUTO_UPDATE': False,
         'URLS': ['http://127.0.0.1:9200'],
-        'INDEX': 'mpol_wagtail',
+        'INDEX': 'ncse_wagtail',
         'TIMEOUT': 5,
     }
 }
