@@ -82,7 +82,14 @@ class Command(BaseCommand):
         if '_' not in dir:
             filename = link.get('SOURCE')
             pdf_path = os.path.join(dir, filename)
-            pdf = File(open(pdf_path, 'rb'), name=filename)
+            pdf = None
+
+            try:
+                pdf = File(open(pdf_path, 'rb'), name=filename)
+            except FileNotFoundError:
+                self.logger.error(
+                    '** PDF file {} is missing for issue {}'.format(
+                        pdf_path, uid))
 
             try:
                 issue = Issue.objects.get(uid=uid)
@@ -92,7 +99,9 @@ class Command(BaseCommand):
             issue.publication = publication
             issue.issue_date = issue_date
             issue.number_of_pages = number_of_pages
-            issue.pdf = pdf
+
+            if pdf:
+                issue.pdf = pdf
 
             issue.save()
 
