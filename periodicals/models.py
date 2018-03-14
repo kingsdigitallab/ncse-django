@@ -6,7 +6,7 @@ from django.utils.text import slugify
 
 
 class Publication(models.Model):
-    abbreviation = models.CharField(max_length=3, unique=True)
+    abbreviation = models.CharField(max_length=5, unique=True)
     slug = models.SlugField(max_length=3, unique=True)
     title = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
