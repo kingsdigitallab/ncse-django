@@ -199,7 +199,7 @@ class Command(BaseCommand):
         article.page = page
         pip = xmlroot.get('INDEX_IN_DOC')
 
-        if pip.isdigit():
+        if pip and pip.isdigit():
             article.position_in_page = pip
 
         article.title = meta.get('NAME')[:2048]
