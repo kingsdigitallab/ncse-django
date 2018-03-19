@@ -154,11 +154,18 @@ class Command(BaseCommand):
         page.width = width
 
         basename = os.path.splitext(filename)[0]
-
         image_filename = basename + '.png'
+
+        to_path = meta.get('RELEASE_NO')
+
+        # Hack to fix missing release_no in TOC.xml
+        if not to_path:
+            link = xmlroot.xpath('Link')[0]
+            to_path = link.get('SOURCE').split('.')[0]
+
         image = File(
             open(os.path.join(dir, 'Img', image_filename), 'rb'),
-            name='{}/{}'.format(meta.get('RELEASE_NO'), image_filename))
+            name='{}/{}'.format(to_path, image_filename))
         page.image = image
         page.save()
 
@@ -290,9 +297,17 @@ class Command(BaseCommand):
         image_filename = xmlroot.get('SNP')
         # Sanity check
         if image_filename:
+
+            to_path = meta.get('RELEASE_NO')
+
+            # Hack to fix missing release_no in TOC.xml
+            if not to_path:
+                link = xmlroot.xpath('Link')[0]
+                to_path = link.get('SOURCE').split('.')[0]
+
             image = File(
                 open(os.path.join(dir, 'Img', image_filename), 'rb'),
-                name='{}/{}'.format(meta.get('RELEASE_NO'), image_filename))
+                name='{}/{}'.format(to_path, image_filename))
 
             article.title_image = image
             article.save()
