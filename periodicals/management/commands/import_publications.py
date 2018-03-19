@@ -202,7 +202,7 @@ class Command(BaseCommand):
         if pip.isdigit():
             article.position_in_page = pip
 
-        article.title = meta.get('NAME')
+        article.title = meta.get('NAME')[:2048]
         article.description = meta.get('DESCRIPTION')
 
         header_text = ''
