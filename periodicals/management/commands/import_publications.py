@@ -190,7 +190,11 @@ class Command(BaseCommand):
         meta = xmlroot.xpath('Meta')[0]
 
         article.page = page
-        article.position_in_page = xmlroot.get('INDEX_IN_DOC')
+        pip = xmlroot.get('INDEX_IN_DOC')
+
+        if pip.isdigit():
+            article.position_in_page = pip
+
         article.title = meta.get('NAME')
         article.description = meta.get('DESCRIPTION')
 
