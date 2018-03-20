@@ -263,19 +263,19 @@ class Article(models.Model):
         return self.content
 
     def get_real_bounding_box(self):
-
-        # Global variables
         page = self.page
-        a = self.bounding_box  # Easier to read later on
-        weight = 1.2  # Margin of error for wonky pages
+        # Easier to read later on
+        self_box = self.bounding_box
+        # Margin of error for wonky pages
+        weight = 1.2
 
         # Check if single article on page
-        if page.number_of_articles == 1:
+        if not self.position_in_page or page.number_of_articles == 1:
             return [
-                {'x': a['x0'], 'y': a['y0']},
-                {'x': a['x0'], 'y': a['y1']},
-                {'x': a['x1'], 'y': a['y1']},
-                {'x': a['x1'], 'y': a['y0']},
+                {'x': self_box['x0'], 'y': self_box['y0']},
+                {'x': self_box['x0'], 'y': self_box['y1']},
+                {'x': self_box['x1'], 'y': self_box['y1']},
+                {'x': self_box['x1'], 'y': self_box['y0']},
             ]
         else:
             # Article spans multiple columns
@@ -288,55 +288,53 @@ class Article(models.Model):
                 next_article = page.articles_in_page.get(
                     position_in_page=self.position_in_page + 1)
 
-                # noqa here as single letter variables are nicer
-                # when dealing with this
-                l = next_article.bounding_box  # noqa
+                next_box = next_article.bounding_box
 
-                if int(a['x1']) - int(a['x0']) > \
-                   (int(l['x1']) - int(l['x0'])) * weight:
+                if int(self_box['x1']) - int(self_box['x0']) > \
+                   (int(next_box['x1']) - int(next_box['x0'])) * weight:
                     # Double column
                     return [
-                        {'x': a['x0'], 'y': a['y0']},
-                        {'x': a['x1'], 'y': a['y0']},
-                        {'x': a['x1'], 'y': l['y0']},
-                        {'x': l['x0'], 'y': l['y0']},
-                        {'x': l['x0'], 'y': a['y1']},
-                        {'x': a['x0'], 'y': a['y1']},
+                        {'x': self_box['x0'], 'y': self_box['y0']},
+                        {'x': self_box['x1'], 'y': self_box['y0']},
+                        {'x': self_box['x1'], 'y': next_box['y0']},
+                        {'x': next_box['x0'], 'y': next_box['y0']},
+                        {'x': next_box['x0'], 'y': self_box['y1']},
+                        {'x': self_box['x0'], 'y': self_box['y1']},
                     ]
                 else:
                     # Single column
                     return [
-                        {'x': a['x0'], 'y': a['y0']},
-                        {'x': a['x0'], 'y': a['y1']},
-                        {'x': a['x1'], 'y': a['y1']},
-                        {'x': a['x1'], 'y': a['y0']}
+                        {'x': self_box['x0'], 'y': self_box['y0']},
+                        {'x': self_box['x0'], 'y': self_box['y1']},
+                        {'x': self_box['x1'], 'y': self_box['y1']},
+                        {'x': self_box['x1'], 'y': self_box['y0']}
                     ]
             elif self == last_article:
                 # This is the last article on the page
 
                 previous_article = page.articles_in_page.get(
                     position_in_page=self.position_in_page - 1)
-                f = previous_article.bounding_box
+                prev_box = previous_article.bounding_box
 
-                if int(a['x1']) - int(a['x0']) > \
-                   (int(f['x1']) - int(f['x0'])) * weight:
+                if int(self_box['x1']) - int(self_box['x0']) > \
+                   (int(prev_box['x1']) - int(prev_box['x0'])) * weight:
                     # Double column
                     return [
-                        {'x': a['x0'], 'y': f['y1']},
-                        {'x': f['x1'], 'y': f['y1']},
-                        {'x': f['x1'], 'y': a['y0']},
-                        {'x': a['x1'], 'y': a['y0']},
-                        {'x': a['x1'], 'y': a['y1']},
-                        {'x': a['x0'], 'y': a['y1']},
+                        {'x': self_box['x0'], 'y': prev_box['y1']},
+                        {'x': prev_box['x1'], 'y': prev_box['y1']},
+                        {'x': prev_box['x1'], 'y': self_box['y0']},
+                        {'x': self_box['x1'], 'y': self_box['y0']},
+                        {'x': self_box['x1'], 'y': self_box['y1']},
+                        {'x': self_box['x0'], 'y': self_box['y1']},
 
                     ]
                 else:
                     # Single column
                     return [
-                        {'x': a['x0'], 'y': a['y0']},
-                        {'x': a['x0'], 'y': a['y1']},
-                        {'x': a['x1'], 'y': a['y1']},
-                        {'x': a['x1'], 'y': a['y0']}
+                        {'x': self_box['x0'], 'y': self_box['y0']},
+                        {'x': self_box['x0'], 'y': self_box['y1']},
+                        {'x': self_box['x1'], 'y': self_box['y1']},
+                        {'x': self_box['x1'], 'y': self_box['y0']}
                     ]
             else:
                 previous_article = page.articles_in_page.get(
@@ -344,30 +342,30 @@ class Article(models.Model):
                 next_article = page.articles_in_page.get(
                     position_in_page=self.position_in_page + 1)
 
-                f = previous_article.bounding_box
-                l = next_article.bounding_box  # noqa
+                prev_box = previous_article.bounding_box
+                next_box = next_article.bounding_box  # noqa
 
                 # Check if over single or double column
-                if int(a['x1']) - int(a['x0']) > \
-                   (int(f['x1']) - int(f['x0'])) * weight \
-                   and int(a['x1']) - int(a['x0']) > \
-                   (int(l['x1']) - int(l['x0'])) * weight:
+                if int(self_box['x1']) - int(self_box['x0']) > \
+                   (int(prev_box['x1']) - int(prev_box['x0'])) * weight \
+                   and int(self_box['x1']) - int(self_box['x0']) > \
+                   (int(next_box['x1']) - int(next_box['x0'])) * weight:
                     # Double column
                     return [
-                        {'x': a['x0'], 'y': f['y1']},
-                        {'x': f['x1'], 'y': f['y1']},
-                        {'x': f['x1'], 'y': a['y0']},
-                        {'x': a['x1'], 'y': a['y0']},
-                        {'x': a['x1'], 'y': l['y0']},
-                        {'x': l['x0'], 'y': l['y0']},
-                        {'x': l['x0'], 'y': a['y1']},
-                        {'x': a['x0'], 'y': a['y1']}
+                        {'x': self_box['x0'], 'y': prev_box['y1']},
+                        {'x': prev_box['x1'], 'y': prev_box['y1']},
+                        {'x': prev_box['x1'], 'y': self_box['y0']},
+                        {'x': self_box['x1'], 'y': self_box['y0']},
+                        {'x': self_box['x1'], 'y': next_box['y0']},
+                        {'x': next_box['x0'], 'y': next_box['y0']},
+                        {'x': next_box['x0'], 'y': self_box['y1']},
+                        {'x': self_box['x0'], 'y': self_box['y1']}
                     ]
                 else:
                     # Single column
                     return [
-                        {'x': a['x0'], 'y': a['y0']},
-                        {'x': a['x0'], 'y': a['y1']},
-                        {'x': a['x1'], 'y': a['y1']},
-                        {'x': a['x1'], 'y': a['y0']}
+                        {'x': self_box['x0'], 'y': self_box['y0']},
+                        {'x': self_box['x0'], 'y': self_box['y1']},
+                        {'x': self_box['x1'], 'y': self_box['y1']},
+                        {'x': self_box['x1'], 'y': self_box['y0']}
                     ]
