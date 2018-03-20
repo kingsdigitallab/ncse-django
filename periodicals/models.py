@@ -170,9 +170,13 @@ class Article(models.Model):
                              on_delete=models.CASCADE)
     aid = models.CharField(max_length=32)
     slug = models.SlugField(max_length=32, null=True)
-    position_in_page = models.PositiveIntegerField(blank=True, null=True)
     title = models.CharField(max_length=2048, blank=True, null=True)
+    article_type = models.ForeignKey(ArticleType, blank=True, null=True,
+                                     on_delete=models.CASCADE)
+    title_image = models.ImageField(upload_to='periodicals/',
+                                    blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    position_in_page = models.PositiveIntegerField(blank=True, null=True)
     content = models.TextField(blank=True, null=True)
     content_html = models.TextField(blank=True, null=True)
     continuation_from = models.ForeignKey(
@@ -182,10 +186,6 @@ class Article(models.Model):
         'self', blank=True, null=True, related_name='continues_in',
         on_delete=models.CASCADE)
     bounding_box = JSONField(default='{}')
-    title_image = models.ImageField(upload_to='periodicals/',
-                                    blank=True, null=True)
-    article_type = models.ForeignKey(ArticleType, blank=True, null=True,
-                                     on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['page__number', 'position_in_page', 'aid']
@@ -210,6 +210,10 @@ class Article(models.Model):
                 'issue_slug': self.issue.slug, 'number': self.page.number,
                 'article_slug': self.slug
             })
+
+    @property
+    def publication(self):
+        return self.issue.publication
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.aid)
