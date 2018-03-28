@@ -285,7 +285,7 @@
 
   - name: check if initial data file exists
     stat:
-      path: "{{ project_root }}/.vagrant_provisioning/{{ postgresql.initial_data_file }}.gz"
+      path: "{{ project_root }}/.vagrant_provisioning/{{ postgresql.initial_data_file }}.tgz"
     register: idf
     tags:
       - db
@@ -293,7 +293,7 @@
 
   - name: postgresql | unarchive initial data file
     unarchive:
-      src: "{{ project_root }}/.vagrant_provisioning/{{ postgresql.initial_data_file }}.gz"
+      src: "{{ project_root }}/.vagrant_provisioning/{{ postgresql.initial_data_file }}.tgz"
       dest: "{{ project_root }}/.vagrant_provisioning"
       remote_src: yes
     when: idf.stat.exists
