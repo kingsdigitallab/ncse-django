@@ -56,12 +56,25 @@ class Publication(models.Model):
         super(Publication, self).save(*args, **kwargs)
 
 
+class IssueComponent(models.Model):
+    title = models.CharField(
+        max_length=256, blank=False, null=False, unique=True)
+
+    class Meta:
+        ordering = ['title']
+
+    def __str__(self):
+        return self.title
+
+
 class Issue(models.Model):
     publication = models.ForeignKey(Publication, related_name='issues',
                                     on_delete=models.CASCADE)
     uid = models.CharField(max_length=32, unique=True)
     slug = models.CharField(max_length=32, unique=True)
     issue_date = models.DateField()
+    component = models.ForeignKey(IssueComponent, blank=True, null=True,
+                                  on_delete=models.CASCADE)
     edition = models.PositiveIntegerField(default=1)
     number_of_pages = models.PositiveIntegerField(blank=True, null=True)
     pdf = models.FileField(upload_to='periodicals/', null=True)
@@ -100,7 +113,12 @@ class Issue(models.Model):
                 'slug': self.slug
             })
 
-    def get_other_editions(self):
+    def get_components(self):
+        return self.publication.issues.filter(
+            issue_date=self.issue_date, edition=self.edition).exclude(
+                uid=self.uid)
+
+    def get_editions(self):
         return self.publication.issues.filter(
             issue_date=self.issue_date).exclude(
                 edition=self.edition

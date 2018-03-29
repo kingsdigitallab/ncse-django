@@ -9,7 +9,8 @@ from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.utils.dateparse import parse_date
 from lxml import etree
-from periodicals.models import Article, ArticleType, Issue, Page, Publication
+from periodicals.models import (Article, ArticleType, Issue, IssueComponent,
+                                Page, Publication)
 
 
 class Command(BaseCommand):
@@ -68,7 +69,8 @@ class Command(BaseCommand):
                     if not title:
                         abbreviation = xmlroot.get('PUBLICATION')
 
-                    self.logger.info('Importing {}'.format(abbreviation))
+                    self.logger.info('Importing {}: {}'.format(
+                        abbreviation, title))
 
                     publication, _ = Publication.objects.get_or_create(
                         abbreviation=abbreviation, title=title)
@@ -128,6 +130,15 @@ class Command(BaseCommand):
                 'Application_Info[@AI_TYPE = "kc:edition"]/Ai_Item')
             if ai_item:
                 issue.edition = ai_item[0].get('NAME')
+
+            ai_item = data.xpath(
+                'Application_Info[@AI_TYPE = "kc:number"]/Ai_Item')
+            if ai_item:
+                number = ai_item[0].get('NAME').strip()
+                if number and not number.isdigit():
+                    component, _ = IssueComponent.objects.get_or_create(
+                        title=number)
+                    issue.component = component
 
             if pdf:
                 issue.pdf = pdf

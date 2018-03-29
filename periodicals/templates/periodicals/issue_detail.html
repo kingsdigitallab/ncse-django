@@ -29,22 +29,25 @@
 <div class="row">
     <div class="small-12 columns">
         <div class="tab_container">
-            {% if issue.get_other_editions %}
+            {% if issue.get_components %}
+            <input id="tab4" type="radio" name="tabs">
+            <label for="tab4" class="float-right">
+                <i class="fa fa-th"></i>Components
+            </label>
+            {% endif %}
+            {% if issue.get_editions %}
             <input id="tab3" type="radio" name="tabs">
             <label for="tab3" class="float-right">
-                <i class="fa fa-th"></i>
-                Editions
+                <i class="fa fa-th"></i>Editions
             </label>
             {% endif %}
             <input id="tab2" type="radio" name="tabs">
             <label for="tab2" class="float-right">
-                <i class="fa fa-th"></i>
-                Pages
+                <i class="fa fa-th"></i>Pages
             </label>
             <input id="tab1" type="radio" name="tabs" checked>
             <label for="tab1" class="float-right">
-                <i class="fa fa-list-ul"></i>
-                Table of contents
+                <i class="fa fa-list-ul"></i>Table of contents
             </label>
 
             <section id="content1" class="tab-content">
@@ -104,10 +107,10 @@
                 </div>
             </section>
 
-            {% if issue.get_other_editions %}
+            {% if issue.get_editions %}
             <section id="content3" class="tab-content">
                 <div class="row medium-up-2 large-up-4 container" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium" id="equal-again">
-                    {% for edition in issue.get_other_editions %}
+                    {% for edition in issue.get_editions %}
                     <div class="column column-block">
                         <a href="{{ edition.url }}">
                             <div class="card" data-equalizer-watch="cards">
@@ -116,8 +119,40 @@
                                 </div>
                                 <div class="card-section overlay">
                                     <h3>Edition {{ edition.edition }}</h3>
+                                    {% if edition.component %}
+                                    <h3>{{ edition.component }}</h3>
+                                    {% endif %}
                                     <div class="card-footer">
                                         {{ edtition.articles.count }} Articles, {{ edtition.pages.count }} Pages
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            {% if issue.get_components %}
+            <section id="content4" class="tab-content">
+                <div class="row medium-up-2 large-up-4 container" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium" id="equal-again">
+                    {% for component in issue.get_components %}
+                    <div class="column column-block">
+                        <a href="{{ component.url }}">
+                            <div class="card" data-equalizer-watch="cards">
+                                <div class="card-image">
+                                    <img src="{% thumbnail component.pages.first.image.url %}" alt="{{ component }}">
+                                </div>
+                                <div class="card-section overlay">
+                                    {% if component.edition != 1 %}
+                                    <h3>Edition {{ component.edition }}</h3>
+                                    {% endif %}
+                                    {% if comonent.component %}
+                                    <h3>{{ component.component }}</h3>
+                                    {% endif %}
+                                    <div class="card-footer">
+                                        {{ component.articles.count }} Articles, {{ component.pages.count }} Pages
                                     </div>
                                 </div>
                             </div>

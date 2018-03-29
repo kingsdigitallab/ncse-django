@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import (Article, ArticleType, Issue, Page, Publication)
+from .models import (Article, ArticleType, Issue, IssueComponent, Page,
+                     Publication)
 
 
 class IssueInline(admin.TabularInline):
@@ -29,10 +30,16 @@ class PageInline(admin.TabularInline):
 class IssueAdmin(admin.ModelAdmin):
     inlines = [PageInline]
 
-    list_display = ['uid', 'publication', 'edition', 'issue_date']
-    list_filter = ['publication__abbreviation', 'edition', 'issue_date']
+    list_display = ['uid', 'publication', 'component', 'edition', 'issue_date']
+    list_filter = ['publication__abbreviation',
+                   'component', 'edition', 'issue_date']
 
     raw_id_fields = ['publication']
+
+
+@admin.register(IssueComponent)
+class IssueComponentAdmin(admin.ModelAdmin):
+    list_display = ['title']
 
 
 class ArticleInline(admin.TabularInline):
