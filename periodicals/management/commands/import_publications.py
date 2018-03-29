@@ -1,8 +1,10 @@
-import os
 import json
 import logging
+import os
+import re
 import shutil
 from zipfile import ZipFile
+
 from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.utils.dateparse import parse_date
@@ -49,16 +51,36 @@ class Command(BaseCommand):
                     tree = etree.parse(os.path.join(root, filename))
                     xmlroot = tree.getroot()
 
-                    abbreviation = xmlroot.get('PUBLICATION')
+                    data = xmlroot.xpath('Head_np/Application_Data')[0]
+
+                    abbreviation = None
+                    title = None
+
+                    ai_item = data.xpath(
+                        ('Application_Info[@AI_TYPE = "kc:periodicalTitle"]/'
+                         'Ai_Item')
+                    )
+                    if ai_item:
+                        title = ai_item[0].get('NAME')
+                        abbreviation = self._generate_abbreviation_from_title(
+                            title)
+
+                    if not title:
+                        abbreviation = xmlroot.get('PUBLICATION')
+
                     self.logger.info('Importing {}'.format(abbreviation))
 
                     publication, _ = Publication.objects.get_or_create(
-                        abbreviation=abbreviation)
+                        abbreviation=abbreviation, title=title)
+
                     publication.description = xmlroot.get(
                         'PUBLICATION_DESCRIPTION')
                     publication.save()
 
                     self._import_issue(publication, xmlroot, root)
+
+    def _generate_abbreviation_from_title(self, title):
+        return re.sub('[^A-Z]', '', title)
 
     def _import_issue(self, publication, xmlroot, dir):
         meta = xmlroot.xpath('Head_np/Meta')[0]
@@ -77,6 +99,7 @@ class Command(BaseCommand):
         issue_date_parts = xmlroot.get('ISSUE_DATE').split('/')
         issue_date = parse_date('{}-{}-{}'.format(
             issue_date_parts[2], issue_date_parts[1], issue_date_parts[0]))
+
         number_of_pages = meta.get('PAGES_NUMBER')
 
         if '_' not in dir:
@@ -99,6 +122,12 @@ class Command(BaseCommand):
             issue.publication = publication
             issue.issue_date = issue_date
             issue.number_of_pages = number_of_pages
+
+            data = xmlroot.xpath('Head_np/Application_Data')[0]
+            ai_item = data.xpath(
+                'Application_Info[@AI_TYPE = "kc:edition"]/Ai_Item')
+            if ai_item:
+                issue.edition = ai_item[0].get('NAME')
 
             if pdf:
                 issue.pdf = pdf

@@ -62,13 +62,18 @@ class Issue(models.Model):
     uid = models.CharField(max_length=32, unique=True)
     slug = models.CharField(max_length=32, unique=True)
     issue_date = models.DateField()
+    edition = models.PositiveIntegerField(default=1)
     number_of_pages = models.PositiveIntegerField(blank=True, null=True)
     pdf = models.FileField(upload_to='periodicals/', null=True)
 
     class Meta:
-        ordering = ['publication', 'issue_date']
+        ordering = ['publication', 'issue_date', 'edition']
 
     def __str__(self):
+        if self.edition != 1:
+            return '{} - Edition {}: {}'.format(
+                self.publication, self.edition, self.issue_date)
+
         return '{}: {}'.format(self.publication, self.issue_date)
 
     @property
@@ -94,6 +99,12 @@ class Issue(models.Model):
                 'publication_slug': self.publication.slug,
                 'slug': self.slug
             })
+
+    def get_other_editions(self):
+        return self.publication.issues.filter(
+            issue_date=self.issue_date).exclude(
+                edition=self.edition
+        ).order_by('edition')
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.uid)
