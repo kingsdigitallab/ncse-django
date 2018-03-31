@@ -66,14 +66,16 @@ class Command(BaseCommand):
                         abbreviation = self._generate_abbreviation_from_title(
                             title)
 
-                    if not title:
+                    if title:
+                        publication, _ = Publication.objects.get_or_create(
+                            abbreviation=abbreviation, title=title)
+                    else:
                         abbreviation = xmlroot.get('PUBLICATION')
+                        publication, _ = Publication.objects.get_or_create(
+                            abbreviation=abbreviation)
 
                     self.logger.info('Importing {}: {}'.format(
                         abbreviation, title))
-
-                    publication, _ = Publication.objects.get_or_create(
-                        abbreviation=abbreviation, title=title)
 
                     publication.description = xmlroot.get(
                         'PUBLICATION_DESCRIPTION')
@@ -127,9 +129,9 @@ class Command(BaseCommand):
 
             data = xmlroot.xpath('Head_np/Application_Data')[0]
             ai_item = data.xpath(
-                'Application_Info[@AI_TYPE = "kc:edition"]/Ai_Item')
+                'Application_Info[@AI_TYPE = "kc:NumOfEdition"]/Ai_Item')
             if ai_item:
-                issue.edition = ai_item[0].get('NAME')
+                issue.edition_number = ai_item[0].get('NAME')
 
             ai_item = data.xpath(
                 'Application_Info[@AI_TYPE = "kc:number"]/Ai_Item')

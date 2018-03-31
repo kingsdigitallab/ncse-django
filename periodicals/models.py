@@ -75,17 +75,17 @@ class Issue(models.Model):
     issue_date = models.DateField()
     component = models.ForeignKey(IssueComponent, blank=True, null=True,
                                   on_delete=models.CASCADE)
-    edition = models.PositiveIntegerField(default=1)
+    edition_number = models.PositiveIntegerField(default=1)
     number_of_pages = models.PositiveIntegerField(blank=True, null=True)
     pdf = models.FileField(upload_to='periodicals/', null=True)
 
     class Meta:
-        ordering = ['publication', 'issue_date', 'edition']
+        ordering = ['publication', 'issue_date', 'edition_number']
 
     def __str__(self):
-        if self.edition != 1:
+        if self.edition_number != 1:
             return '{} - Edition {}: {}'.format(
-                self.publication, self.edition, self.issue_date)
+                self.publication, self.edition_number, self.issue_date)
 
         return '{}: {}'.format(self.publication, self.issue_date)
 
@@ -115,14 +115,15 @@ class Issue(models.Model):
 
     def get_components(self):
         return self.publication.issues.filter(
-            issue_date=self.issue_date, edition=self.edition).exclude(
+            issue_date=self.issue_date,
+            edition_number=self.edition_number).exclude(
                 uid=self.uid)
 
     def get_editions(self):
         return self.publication.issues.filter(
             issue_date=self.issue_date).exclude(
-                edition=self.edition
-        ).order_by('edition')
+                edition_number=self.edition_number
+        ).order_by('edition_number')
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.uid)

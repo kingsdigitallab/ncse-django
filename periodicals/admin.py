@@ -30,9 +30,10 @@ class PageInline(admin.TabularInline):
 class IssueAdmin(admin.ModelAdmin):
     inlines = [PageInline]
 
-    list_display = ['uid', 'publication', 'component', 'edition', 'issue_date']
+    list_display = ['uid', 'publication',
+                    'component', 'edition_number', 'issue_date']
     list_filter = ['publication__abbreviation',
-                   'component', 'edition', 'issue_date']
+                   'component', 'edition_number', 'issue_date']
 
     raw_id_fields = ['publication']
 
