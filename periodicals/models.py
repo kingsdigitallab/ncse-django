@@ -67,6 +67,17 @@ class IssueComponent(models.Model):
         return self.title
 
 
+class IssueEdition(models.Model):
+    title = models.CharField(
+        max_length=256, blank=False, null=False, unique=True)
+
+    class Meta:
+        ordering = ['title']
+
+    def __str__(self):
+        return self.title
+
+
 class Issue(models.Model):
     publication = models.ForeignKey(Publication, related_name='issues',
                                     on_delete=models.CASCADE)
@@ -75,6 +86,8 @@ class Issue(models.Model):
     issue_date = models.DateField()
     component = models.ForeignKey(IssueComponent, blank=True, null=True,
                                   on_delete=models.CASCADE)
+    edition = models.ForeignKey(IssueEdition, blank=True, null=True,
+                                on_delete=models.CASCADE)
     edition_number = models.PositiveIntegerField(default=1)
     number_of_pages = models.PositiveIntegerField(blank=True, null=True)
     pdf = models.FileField(upload_to='periodicals/', null=True)
