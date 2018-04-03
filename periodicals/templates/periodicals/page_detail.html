@@ -13,7 +13,7 @@
 
 <div class="row">
     <div class="small-12 columns minus-margin-top">
-     <ul class="menu float-left">
+       <ul class="menu float-left">
         {% if request.GET.from == 'search'%}
         <li>
             <a href="{{ search_path}}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to search results</a>
@@ -30,28 +30,22 @@
 <div class="row">
     <div class="small-12 columns">
         <div class="tab_container subnav">
-
             <input id="tab1" type="radio" name="tabs" checked>
             <label for="tab1">
                 Image
             </label>
-
             <input id="tab2" type="radio" name="tabs">
             <label for="tab2">
                 Transcript
             </label>
-
             <input id="tab4" type="radio" name="tabs">
             <label for="tab4">
                 Split view
             </label>
-
             <input id="tab3" type="radio" name="tabs">
             <label for="tab3">
                 Issue Contents
             </label>
-
-
             <input id="tab5" type="radio" name="tabs">
             <label for="tab5">
                 Citation
@@ -65,42 +59,13 @@
                 </ul>
                 <ul class="accordion " data-accordion data-multi-expand="true" data-allow-all-closed="true">
                     <li class="accordion-item {% if article %}is-active{% endif %}" data-accordion-item>
-                        <a href="#" class="accordion-title">Articles/Ads</a>
+                        <a href="#" class="accordion-title">Items</a>
                         <div class="accordion-content" data-tab-content>
-
-                            <table class="stack unstriped">
-                                <tbody>
-                                    {% for a in page.articles %}
-                                    <tr {% if a == article %}class="is-active" {% endif %}>
-                                        <td class="fixed"><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=a.slug%}">{{ a.article_type }}</a></td>
-
-                                        <td ><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=a.slug%}">{% if a.title %}{{ a.title }}{% else %}Untitled{% endif %}</a>
-                                        </td>
-
-                                        <td class="article-pagination">
-                                            {% if a.continuation_from %}
-                                            <a href="{{ a.continuation_from.url }}" class="pull-left">&larr;</a>
-                                            {% endif %}
-                                            <span>
-                                                Page <strong>{{ a.get_position_in_article }}</strong> of {{ a.get_number_of_pages }}</span>
-
-                                                {% if a.continuation_to %}
-                                                <a href="{{ a.continuation_to.url }}" class="pull-right">&rarr;</a>
-                                                {% endif %}
-                                            </td>
-                                            <td class="fixed">
-                                               <a href="{{ article.print_url }}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i></a>
-                                           </td>
-                                       </tr>
-                                       {% endfor %}
-
-                                   </tbody>
-                               </table>
-
-                           </div>
-                       </li>
-                   </ul>
-                   <canvas class="pageCanvas border" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
+                            {% include "periodicals/includes/page_toc.html" %}
+                        </div>
+                    </li>
+                </ul>
+                <canvas class="pageCanvas border" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
                     {% comment %} Fallback for non-canvas supporting devices {% endcomment %}
                     <img id="page{{ page.number}}" src="{{ page.image.url }}" alt="Page {{ page.number}}">
                 </canvas>
@@ -109,7 +74,7 @@
             <section id="content2" class="tab-content">
                 <div class="callout" data-closable>
                     <p>
-                        <strong>Note:</strong> This text has been automatically extracted via Optical Character Recognition (OCR) software.
+                        {% include "periodicals/includes/ocr_warning.html" %}
                     </p>
                     <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
                         <i aria-hidden="true" class="fa fa-times-circle"></i>
@@ -161,23 +126,23 @@
                                         <div class="card-section overlay">
                                             <h3>Page {{ page.number }}</h3>
                                             <div class="card-footer">
-                                             {% if page.number_of_articles == 1 %}
-                                             1 Article
-                                             {% else %}
-                                             {{ page.number_of_articles }} Articles
-                                             {% endif %}
-                                         </div>
-                                     </div>
-                                 </div>
-                             </a>
-                         </div>
-                         {% endfor %}
-                     </div>
-                 </section>
-             </div>
-         </section>
+                                               {% if page.number_of_articles == 1 %}
+                                               1 Article
+                                               {% else %}
+                                               {{ page.number_of_articles }} Articles
+                                               {% endif %}
+                                           </div>
+                                       </div>
+                                   </div>
+                               </a>
+                           </div>
+                           {% endfor %}
+                       </div>
+                   </section>
+               </div>
+           </section>
 
-         <section id="content4" class="tab-content">
+           <section id="content4" class="tab-content">
             <div class="row large-up-2">
                 <div class="column column-block" >
                     <div class="row">
@@ -192,7 +157,8 @@
 
                 <div class="column column-block">
                     <div class="callout" data-closable>
-                        <p> <strong>Note:</strong> This text has been automatically extracted via Optical Character Recognition (OCR) software.
+                        <p>
+                            {% include "periodicals/includes/ocr_warning.html" %}
                         </p>
                         <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
                             <i aria-hidden="true" class="fa fa-times-circle"></i>

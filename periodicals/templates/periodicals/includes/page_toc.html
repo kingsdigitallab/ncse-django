@@ -1,0 +1,34 @@
+<table class="stack unstriped">
+  <tbody>
+    {% for a in page.articles %}
+    <tr {% if a == article %}class="is-active" {% endif %}>
+      <td>
+        <a href="{{ a.url }}">{% if a.title %}{{ a.title }}{% else %}Untitled{% endif %}</a>
+      </td>
+      <td class="article-pagination">
+        {% if a.get_number_of_pages > 1 %}
+
+        {% if a.continuation_from %}
+        <a href="{{ a.continuation_from.url }}" class="pull-left">&larr;</a>
+        {% endif %}
+        <span>
+          Page <strong>{{ a.get_position_in_article }}</strong> of {{ a.get_number_of_pages }}
+        </span>
+
+        {% if a.continuation_to %}
+        <a href="{{ a.continuation_to.url }}" class="pull-right">&rarr;</a>
+        {% endif %}
+
+        {% endif %}
+      </td>
+      <td class="fixed">
+        {% if a.article_type.title != 'Article' %}<a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=a.slug%}">{{ a.article_type }}</a>
+        {% endif %}
+      </td>
+      <td class="fixed">
+       <a href="{{ article.print_url }}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i></a>
+     </td>
+   </tr>
+   {% endfor %}
+ </tbody>
+</table>
