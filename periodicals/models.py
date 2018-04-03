@@ -103,8 +103,9 @@ class Issue(models.Model):
                                              article_type=ad)
 
     @property
-    def articles_and_ads(self):
-        return (self.articles | self.ads).order_by('position_in_page')
+    def items(self):
+        return self.articles_in_issue.filter(
+            continuation_from=None).order_by('page', 'position_in_page')
 
     @property
     def url(self):
