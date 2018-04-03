@@ -1,5 +1,5 @@
 {% extends 'periodicals/base.html' %}
-{% load periodicals_tags %}
+{% load humanize periodicals_tags %}
 
 {% block meta_title %}
 {{ publication }}
@@ -69,8 +69,8 @@
                                     <div class="card-section overlay">
                                         <h3 class="small-caps">{{ publication }}</h3>
                                         <h3 class="small-caps">{{ issue.issue_date }}</h3>
-                                        {% if issue.edition_number != 1 %}
-                                        <h3 class="small-caps">Edition {{ issue.edition_number }}</h3>
+                                        {% if issue.edition != '1' %}
+                                        <h3 class="small-caps">{{ issue.edition | ordinal }} edition</h3>
                                         {% endif %}
                                         {% if issue.component %}
                                         <h3 class="small-caps">{{ issue.component }}</h3>

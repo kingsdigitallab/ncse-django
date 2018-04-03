@@ -1,3 +1,4 @@
+from django.contrib.humanize.templatetags.humanize import ordinal
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models import Sum
@@ -67,17 +68,6 @@ class IssueComponent(models.Model):
         return self.title
 
 
-class IssueEdition(models.Model):
-    title = models.CharField(
-        max_length=256, blank=False, null=False, unique=True)
-
-    class Meta:
-        ordering = ['title']
-
-    def __str__(self):
-        return self.title
-
-
 class Issue(models.Model):
     publication = models.ForeignKey(Publication, related_name='issues',
                                     on_delete=models.CASCADE)
@@ -86,19 +76,17 @@ class Issue(models.Model):
     issue_date = models.DateField()
     component = models.ForeignKey(IssueComponent, blank=True, null=True,
                                   on_delete=models.CASCADE)
-    edition = models.ForeignKey(IssueEdition, blank=True, null=True,
-                                on_delete=models.CASCADE)
-    edition_number = models.PositiveIntegerField(default=1)
+    edition = models.CharField(max_length=128, blank=True, null=True,)
     number_of_pages = models.PositiveIntegerField(blank=True, null=True)
     pdf = models.FileField(upload_to='periodicals/', null=True)
 
     class Meta:
-        ordering = ['publication', 'issue_date', 'edition_number']
+        ordering = ['publication', 'issue_date', 'edition']
 
     def __str__(self):
-        if self.edition_number != 1:
-            return '{} - Edition {}: {}'.format(
-                self.publication, self.edition_number, self.issue_date)
+        if self.edition != 1:
+            return '{} - {} edition: {}'.format(
+                self.publication, ordinal(self.edition), self.issue_date)
 
         return '{}: {}'.format(self.publication, self.issue_date)
 
@@ -128,15 +116,13 @@ class Issue(models.Model):
 
     def get_components(self):
         return self.publication.issues.filter(
-            issue_date=self.issue_date,
-            edition_number=self.edition_number).exclude(
+            issue_date=self.issue_date, edition=self.edition).exclude(
                 uid=self.uid)
 
     def get_editions(self):
         return self.publication.issues.filter(
             issue_date=self.issue_date).exclude(
-                edition_number=self.edition_number
-        ).order_by('edition_number')
+            edition=self.edition).order_by('edition')
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.uid)

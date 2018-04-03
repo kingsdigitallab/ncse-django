@@ -1,5 +1,5 @@
 {% extends 'periodicals/base.html' %}
-{% load periodicals_tags %}
+{% load humanize periodicals_tags %}
 
 {% block title %}
 {{ issue }}
@@ -118,7 +118,7 @@
                                     <img src="{% thumbnail edition.pages.first.image.url %}" alt="{{ edition }}">
                                 </div>
                                 <div class="card-section overlay">
-                                    <h3>Edition {{ edition.edition_number }}</h3>
+                                    <h3>{{ edition.edition | ordinal }} edition</h3>
                                     {% if edition.component %}
                                     <h3>{{ edition.component }}</h3>
                                     {% endif %}
@@ -145,8 +145,8 @@
                                     <img src="{% thumbnail component.pages.first.image.url %}" alt="{{ component }}">
                                 </div>
                                 <div class="card-section overlay">
-                                    {% if component.edition_number != 1 %}
-                                    <h3>Edition {{ component.edition_number }}</h3>
+                                    {% if component.edition != 1 %}
+                                    <h3>{{ component.edition | ordinal }} edition</h3>
                                     {% endif %}
                                     {% if comonent.component %}
                                     <h3>{{ component.component }}</h3>

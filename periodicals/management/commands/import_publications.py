@@ -10,7 +10,7 @@ from django.core.management.base import BaseCommand
 from django.utils.dateparse import parse_date
 from lxml import etree
 from periodicals.models import (Article, ArticleType, Issue, IssueComponent,
-                                IssueEdition, Page, Publication)
+                                Page, Publication)
 
 
 class Command(BaseCommand):
@@ -141,16 +141,7 @@ class Command(BaseCommand):
             ai_item = data.xpath(
                 'Application_Info[@AI_TYPE = "kc:edition"]/Ai_Item')
             if ai_item:
-                name = ai_item[0].get('NAME').strip()
-                if name and not name.isdigit():
-                    edition, _ = IssueEdition.objects.get_or_create(
-                        title=name)
-                    issue.edition = edition
-
-            ai_item = data.xpath(
-                'Application_Info[@AI_TYPE = "kc:NumOfEdition"]/Ai_Item')
-            if ai_item:
-                issue.edition_number = ai_item[0].get('NAME')
+                issue.edition = ai_item[0].get('NAME').strip()
 
             if pdf:
                 issue.pdf = pdf
