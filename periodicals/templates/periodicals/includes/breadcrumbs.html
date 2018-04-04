@@ -1,6 +1,6 @@
 <li><a href="/">Home</a></li>
 
-{%  if publication %}
+{% if publication %}
 <li><a href="{% url 'publication-list' %}">Explore</a></li>
 <li>{{ publication }}</li>
 {% endif %}
@@ -8,29 +8,25 @@
 {% if issue %}
 {% with publication=issue.publication%}
 <li><a href="{% url 'publication-list' %}">Explore</a></li>
-<li><a href="{% url 'publication-detail' slug=publication.slug %}">{{ publication }}</a></li>
+<li><a href="{{ publication.url }}">{{ publication }}</a></li>
 <li>{{ issue.issue_date }}</li>
 {% endwith %}
 {% endif %}
 
-
 {% if article %}
-{% with page=article.page publication=article.page.issue.publication issue=article.page.issue%}
+{% with page=article.page publication=article.page.issue.publication issue=article.page.issue %}
 <li><a href="{% url 'publication-list' %}">Explore</a></li>
-<li><a href="{% url 'publication-detail' slug=publication.slug %}">{{ publication }}</a></li>
-<li><a href="{% url 'issue-detail' publication_slug=publication.slug slug=issue.slug %}">{{ issue.issue_date }}</a></li>
-<li><a href="{% url 'page-detail' publication_slug=publication.slug issue_slug=issue.slug number=page.number%}">Page {{ page.number }}</a></li>
+<li><a href="{{ publication.url }}">{{ publication }}</a></li>
+<li><a href="{{ issue.url }}">{{ issue.issue_date }}</a></li>
+<li><a href="{{ page.url }}">Page {{ page.number }}</a></li>
 <li>{{ article }}</li>
 {% endwith %}
 
-{% else %}
-
-	{% if page %}
-	{% with publication=page.issue.publication issue=page.issue%}
-	<li><a href="{% url 'publication-list' %}">Explore</a></li>
-	<li><a href="{% url 'publication-detail' slug=publication.slug %}">{{ publication }}</a></li>
-	<li><a href="{% url 'issue-detail' publication_slug=publication.slug slug=issue.slug %}">{{ issue.issue_date }}</a></li>
-	<li>Page {{ page.number }}</li>
-	{% endwith %}
-	{% endif %}
+{% elif page %}
+{% with publication=page.issue.publication issue=page.issue%}
+<li><a href="{% url 'publication-list' %}">Explore</a></li>
+<li><a href="{{ publication.url }}">{{ publication }}</a></li>
+<li><a href="{{ issue.url }}">{{ issue.issue_date }}</a></li>
+<li>Page {{ page.number }}</li>
+{% endwith %}
 {% endif %}
