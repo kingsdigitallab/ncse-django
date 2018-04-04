@@ -15,7 +15,9 @@
             <h3 class="small-caps">{{ issue.component }}</h3>
             {% endif %}
             <div class="card-footer">
-                {{ issue.articles.count }} Articles, {{ issue.pages.count }} Pages
+                {% with article_count=issue.articles.count %}
+                {{ article_count }} Item{{ article_count|pluralize }}, {{ issue.pages.count }} Pages
+                {% endwith %}
             </div>
         </div>
     </a>
