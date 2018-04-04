@@ -1,38 +1,38 @@
 <html>
-    <head>
-        <title>{{article.issue}} - {{ article|title }}</title>
-      
-        <style type="text/css">
-            @media print {
-                html,
-                body {
-                    margin: 0;
-                    padding: 0;
-                    height: 100%;
-                }
+<head>
+    <title>{{article.issue}} - {{ article|title }}</title>
 
-                .page {   
-                    height: 90%;
-                }
+    <style type="text/css">
+    @media print {
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
 
-                .page img {
-                    display: block;
-                    max-height: 100%;
-                    margin: 0 auto;
-                }
-            }
-        </style>
-    </head>
-    
-    <body>
-        {% for p in pages %}
-        <div class="page">
-            <img src="{{ p.image.url }}" alt="{{article.issue}} - {{ article|title }}">
-        </div>
-        {% endfor %}
-        <script>
-            setTimeout(function () { window.close(); }, 2000);
-            window.print();
-        </script>
-    </body>
+        .page {
+            height: 90%;
+        }
+
+        .page img {
+            display: block;
+            max-height: 100%;
+            margin: 0 auto;
+        }
+    }
+    </style>
+</head>
+
+<body>
+    {% for p in pages %}
+    <div class="page">
+        <img src="{{ p.image.url }}" alt="{{article.issue}} - {{ article|title }}">
+    </div>
+    {% endfor %}
+    <script>
+    setTimeout(function () { window.close(); }, 2000);
+    window.print();
+    </script>
+</body>
 </html>
