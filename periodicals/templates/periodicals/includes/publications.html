@@ -15,7 +15,9 @@
                         <p><strong>{{ number_of_years }}</strong> Year{{ number_of_years|pluralize }}</p>
                         {% endwith %}
                         <div class="card-footer">
-                            {{ publication.issues.count }} Issues spanning {{ publication.get_total_number_of_pages }} pages
+                            {% with issue_count=publication.issues.count %}
+                            {{ issue_count }} Issue{{ issue_count|pluralize }} spanning {{ publication.get_total_number_of_pages }} pages
+                            {% endwith %}
                         </div>
                     </div>
                 </a>
