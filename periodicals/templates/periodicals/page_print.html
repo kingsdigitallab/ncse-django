@@ -1,36 +1,36 @@
 <html>
-    <head>
-        <title>{{ page }}</title>
+<head>
+    <title>{{ page }}</title>
 
-        <style type="text/css">
-            @media print {
-                html, body {
-                    margin: 0;
-                    padding: 0;
-                    height: 100%;
-                }
+    <style type="text/css">
+    @media print {
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
 
-                .page
-                {   
-                    height: 90%;
-                }
+        .page
+        {
+            height: 90%;
+        }
 
-                    .page img
-                    {
-                        display: block;
-                        max-height: 100%;
-                        margin: 0 auto;
-                    }
-            }
-        </style>
-    </head>
-    <body>
-        <div class="page">
-            <img src="{{ page.image.url }}" alt="{{ page }}">
-        </div>
-        <script>
-            setTimeout(function () { window.close(); }, 2000);
-            window.print();
-        </script>
-    </body>
+        .page img
+        {
+            display: block;
+            max-height: 100%;
+            margin: 0 auto;
+        }
+    }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <img src="{{ page.image.url }}" alt="{{ page }}">
+    </div>
+    <script>
+    setTimeout(function () { window.close(); }, 2000);
+    window.print();
+    </script>
+</body>
 </html>
