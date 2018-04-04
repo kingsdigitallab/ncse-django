@@ -1,0 +1,4 @@
+<canvas class="pageCanvas border" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
+    {% comment %} Fallback for non-canvas supporting devices {% endcomment %}
+    <img id="page{{ page.number}}" src="{{ page.image.url }}" alt="Page {{ page.number}}">
+</canvas>

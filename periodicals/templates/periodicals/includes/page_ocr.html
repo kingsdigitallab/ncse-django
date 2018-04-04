@@ -1,0 +1,6 @@
+{% for article in page.articles_in_page.all %}
+<div id="{{ article.aid }}">
+    <h3 class="subtitle">{{ article|title }}</h3>
+    {{ article.content_html|safe }}
+</div>
+{% endfor %}
