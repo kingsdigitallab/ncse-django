@@ -49,9 +49,21 @@
             <label for="tab1" class="float-right">
                 <i class="fa fa-list-ul"></i>Table of contents
             </label>
+            <input id="tab5" type="radio" name="tabs" checked>
+            {% if issue.departments %}
+            <label for="tab5" class="float-right">
+                <i class="fa fa-list-ul"></i>Departments
+            </label>
+            {% endif %}
+
+            <section id="content5" class="tab-content">
+                <div class="row medium-up-2 large-up-4 container" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium" id="equal-again">
+                    {% include "periodicals/includes/issue_departments.html" %}
+                </div>
+            </section>
 
             <section id="content1" class="tab-content">
-                {% include "periodicals/includes/toc.html" with issue=issue %}
+                {% include "periodicals/includes/issue_toc.html" with issue=issue %}
             </section>
 
             <section id="content2" class="tab-content">

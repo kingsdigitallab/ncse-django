@@ -1,0 +1,20 @@
+{% load periodicals_tags %}
+
+{% for department in issue.departments %}
+<div class="column column-block">
+    <a href="{{ department.url }}">
+        <div class="card" data-equalizer-watch="cards">
+            <div class="card-image">
+                <img src="{% thumbnail department.title_image.url %}" alt="{{ department }}">
+            </div>
+            <div class="card-section overlay">
+                <h3>Page {{ department.page.number }}
+                    {% if department.article_type.title != 'Article' %}
+                    | {{ department.article_type }}
+                    {% endif %}
+                </h3>
+            </div>
+        </div>
+    </a>
+</div>
+{% endfor %}

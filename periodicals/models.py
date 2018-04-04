@@ -95,6 +95,12 @@ class Issue(models.Model):
         return issue
 
     @property
+    def departments(self):
+        return self.articles_in_issue.exclude(
+            title_image__isnull=True).exclude(title_image__exact='').order_by(
+                'page', 'position_in_page')
+
+    @property
     def articles(self):
         article = ArticleType.objects.get_or_create(title='Article')[0]
         return self.articles_in_issue.filter(continuation_from=None,

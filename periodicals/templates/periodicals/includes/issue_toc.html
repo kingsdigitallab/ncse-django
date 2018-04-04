@@ -1,0 +1,29 @@
+<table class="stack unstriped">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th colspan="2">Page</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% regroup issue.items by page as page_list %}
+
+        {% for page in page_list %}
+        {% for article in page.list %}
+        <tr>
+            <td class="title">
+                <a href="{{ article.url }}">{% if article.title %}{{ article.title }}{% else %}Untitled{% endif %}</a>
+            </td>
+            <td class="fixed add-page">
+                <a href="{{ article.url }}">{{ page.grouper.number }}</a>
+            </td>
+            <td class="fixed add-comma">
+                {% if article.article_type.title != 'Article' %}
+                <a href="{{ article.url }}">{{ article.article_type }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>
