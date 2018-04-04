@@ -84,11 +84,15 @@ class Issue(models.Model):
         ordering = ['publication', 'issue_date', 'edition']
 
     def __str__(self):
-        if self.edition != 1:
-            return '{} - {} edition: {}'.format(
-                self.publication, ordinal(self.edition), self.issue_date)
+        issue = '{}: {}'.format(self.publication, self.issue_date)
 
-        return '{}: {}'.format(self.publication, self.issue_date)
+        if self.edition != 1:
+            issue = '{}, {} edition'.format(issue, ordinal(self.edition))
+
+        if self.component:
+            issue = '{}, {}'.format(issue, self.component)
+
+        return issue
 
     @property
     def articles(self):
