@@ -1,5 +1,5 @@
 {% extends 'periodicals/base.html' %}
-{% load humanize periodicals_tags %}
+{% load periodicals_tags %}
 
 {% block meta_title %}
 {{ publication }}
@@ -13,12 +13,12 @@
 
 <div class="row">
     <div class="small-12 columns minus-margin-top">
-     <ul class="menu float-left">
-        <li>
-            <a href="{% url 'publication-list' %}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to Explore</a>
-        </li>
-    </ul>
-</div>
+        <ul class="menu float-left">
+            <li>
+                <a href="{% url 'publication-list' %}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to Explore</a>
+            </li>
+        </ul>
+    </div>
 </div>
 
 {% if publication.description %}
@@ -26,13 +26,11 @@
     <div class="row">
         <div class="small-12 columns">
             <h3>Description</h3>
-
             <div class="description-trunk">
-                {{ publication.description|truncatewords_html:40 }}
+                {{ publication.description | truncatewords_html:40 }}
 
                 <a class="read-more" data-target="#description-full">Read more</a>
             </div>
-
             <div class="description-full" id="description-full">
                 {{ publication.description }}
             </div>
@@ -41,10 +39,7 @@
 </section>
 {% endif %}
 
-
-
 {% regroup publication.issues.all by issue_date.year as year_list %}
-
 <section class="tab-to-accordion">
     <div class="row">
         <div class="small-12 columns">
@@ -54,41 +49,17 @@
                 </li>
                 {% for year, issues_in_year in year_list %}
                 <li class="accordion-item {% if forloop.first%} is-active{% endif %}" data-accordion-item>
-                    <a class="accordion-title" href="/periodicals/mob/1856/">
-                     {{year}} <span>({{issues_in_year|length}} issues)</span></a>
-                     <div class="accordion-content" data-tab-content >
-                      <div class="row small-up-2 medium-up-3 large-up-5" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium" data-resize="cards" data-mutate="cards" data-e="8orhbx-e">
-
-                        {% for issue in issues_in_year %}
-                        <div class="column column-block" data-equalizer-watch="cards">
-                            <div class="card">
-                                <a href="{{ issue.url }}">
-                                    <div class="card-image">
-                                        <img src="{% thumbnail issue.pages.all.0.image.url %}" alt="{{ publication }}">
-                                    </div>
-                                    <div class="card-section overlay">
-                                        <h3 class="small-caps">{{ publication }}</h3>
-                                        <h3 class="small-caps">{{ issue.issue_date }}</h3>
-                                        {% if issue.edition != '1' %}
-                                        <h3 class="small-caps">{{ issue.edition | ordinal }} edition</h3>
-                                        {% endif %}
-                                        {% if issue.component %}
-                                        <h3 class="small-caps">{{ issue.component }}</h3>
-                                        {% endif %}
-                                        <div class="card-footer">
-                                            {{ issue.articles.count }} Articles, {{ issue.pages.count }} Pages
-                                        </div>
-                                    </div>
-                                </a>
-                                {% if request.user.is_staff %}
-                                <div class="card-divider">
-                                    <a href="/admin/periodicals/issue/{{ issue.id }}/change/" class="card-footer-item">Edit</a>
-                                </div>
-                                {% endif %}
+                    <a class="accordion-title" href="{{ publication.url }}{{ year }}">
+                        {{year}} <span>({{issues_in_year|length}} issues)</span>
+                    </a>
+                    <div class="accordion-content" data-tab-content>
+                        <div class="row small-up-2 medium-up-3 large-up-5" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium" data-resize="cards" data-mutate="cards" data-e="8orhbx-e">
+                            {% for issue in issues_in_year %}
+                            <div class="column column-block" data-equalizer-watch="cards">
+                                {% include "periodicals/includes/issue_card.html" %}
                             </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
-
                     </div>
                 </li>
                 {% endfor %}
@@ -96,6 +67,5 @@
         </div>
     </div>
 </section>
-
 
 {% endblock %}
