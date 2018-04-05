@@ -7,8 +7,8 @@ from django.utils.text import slugify
 
 
 class Publication(models.Model):
-    abbreviation = models.CharField(max_length=5, unique=True)
-    slug = models.SlugField(max_length=5, unique=True)
+    abbreviation = models.CharField(max_length=5)
+    slug = models.SlugField(max_length=5)
     title = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     ordering = models.PositiveIntegerField(blank=True, null=True)
@@ -16,6 +16,7 @@ class Publication(models.Model):
 
     class Meta:
         ordering = ['ordering']
+        unique_together = ('abbreviation', 'slug', 'title')
 
     def __str__(self):
         return '{}'.format(self.title if self.title else self.abbreviation)
