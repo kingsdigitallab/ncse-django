@@ -52,8 +52,14 @@ class Command(BaseCommand):
                     tree = etree.parse(os.path.join(root, filename))
                     xmlroot = tree.getroot()
 
-                    data = xmlroot.xpath('Head_np/Application_Data')[0]
+                    data = xmlroot.xpath('Head_np/Application_Data')
+                    if not data:
+                        self.logger.critical(
+                            '** Skipping publication {} because metadata is \
+                            missing'.format(publication_path))
+                        continue
 
+                    data = data[0]
                     abbreviation = None
                     title = None
 
