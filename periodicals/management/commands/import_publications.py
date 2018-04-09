@@ -55,8 +55,8 @@ class Command(BaseCommand):
                     data = xmlroot.xpath('Head_np/Application_Data')
                     if not data:
                         self.logger.critical(
-                            '** Skipping publication {} because metadata is \
-                            missing'.format(publication_path))
+                            '** Skipping publication {}/{} because metadata is\
+                            missing'.format(publication_path, root))
                         continue
 
                     data = data[0]
@@ -354,11 +354,17 @@ class Command(BaseCommand):
                 link = xmlroot.xpath('Link')[0]
                 to_path = link.get('SOURCE').split('.')[0]
 
-            image = File(
-                open(os.path.join(dir, 'Img', image_filename), 'rb'),
-                name='{}/{}'.format(to_path, image_filename))
+            try:
+                image = File(
+                    open(os.path.join(dir, 'Img', image_filename), 'rb'),
+                    name='{}/{}'.format(to_path, image_filename))
 
-            article.title_image = image
+                article.title_image = image
+            except FileNotFoundError:
+                self.logger.error(
+                    '** image not found {}'.format(image_filename))
+                pass
+
             article.save()
 
     def _add_article_words_to_page(self, issue, dir, filename, page, article):
