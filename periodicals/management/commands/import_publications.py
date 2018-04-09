@@ -68,7 +68,7 @@ class Command(BaseCommand):
                          'Ai_Item')
                     )
                     if ai_item:
-                        title = ai_item[0].get('NAME')
+                        title = ai_item[0].get('NAME').strip()
                         abbreviation = self._generate_abbreviation_from_title(
                             title)
 
