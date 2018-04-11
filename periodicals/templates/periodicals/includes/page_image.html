@@ -1,4 +1,6 @@
-<canvas class="pageCanvas border" data-image-id="page{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
+<span class="canvas-controls"><a href="#" data-zoom="in"  data-for="canvas-page-{{page.number}}">Zoom In</a> <a href="#" data-zoom="out"  data-for="canvas-page-{{page.number}}">Zoom Out</a></span>
+
+<canvas class="pageCanvas border" data-image-id="page{{ page.number}}" id="canvas-page-{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
     {% comment %} Fallback for non-canvas supporting devices {% endcomment %}
     <img id="page{{ page.number}}" src="{{ page.image.url }}" alt="Page {{ page.number}}">
 </canvas>

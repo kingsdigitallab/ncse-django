@@ -3,14 +3,22 @@ var word_highlight_colour = 'rgba(225,225,0,0.2)'
 // Word highlight colour
 var article_bounding_box_colour = 'rgba(104,152,204,1)'
 
+
 // Article bounding box colour
 // Enables drawing to a canvas
 function enableCanvas() {
-    // Only run if we have a page canvas!
-    if ($('.pageCanvas').length) {
-        $('.pageCanvas').each(function() {
-            var canvas = $(this)[0]
-            var ctx = canvas.getContext('2d')
+
+    var scale_up = 1.25;
+    var scale_down = 0.8;
+    var zoom_level = 1;
+    var min_scale = 1;
+    var max_scale = 4;
+
+
+    // Redraws our canvas
+    function redraw(canvas)
+    {
+        var ctx = canvas.getContext('2d')
             var img = new Image()
             img.onload = function() {
                 ctx.drawImage(this, 0, 0)
@@ -57,11 +65,42 @@ function enableCanvas() {
                     ctx.stroke()
                 }
             }
-            img.src = $('#' + $(this).attr('data-image-id')).attr('src')
-        })
+            img.src = $('#' + $(canvas).attr('data-image-id')).attr('src');
+    }
+
+
+    // Only run if we have a page canvas!
+    if ($('.pageCanvas').length) {
+        $('.pageCanvas').each(function() {
+            var canvas = $(this)[0]
+            redraw(canvas);
+        });
 
         // IE Issues End Here
     }
+
+    $('body').on('click', '.canvas-controls a[data-zoom]', function(event)
+    {
+        event.preventDefault();
+        event.stopPropagation();
+
+        var canvas = $('#' + $(this).attr('data-for'))[0];
+        var ctx = canvas.getContext('2d')
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Adjust our scale
+        if($(this).attr('data-zoom') == 'in')
+        {
+            ctx.scale(scale_up,scale_up);   
+        } else
+        {
+            ctx.scale(scale_down,scale_down);   
+        }
+
+        redraw(canvas);
+
+    });
 }
 
 function enableReadMore() {
