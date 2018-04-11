@@ -162,7 +162,13 @@ class Command(BaseCommand):
 
     def _import_pages(self, issue, dir):
         self.logger.debug('- unzipping Document.zip')
-        document = ZipFile(os.path.join(dir, 'Document.zip'), mode='r')
+
+        try:
+            document = ZipFile(os.path.join(dir, 'Document.zip'), mode='r')
+        except FileNotFoundError:
+            self.logger.critical('** Skipping adding pages to issue {}\
+            because Document.zip does not exist'.format(issue.uid))
+            return
 
         if os.path.isdir(self.extract_to):
             shutil.rmtree(self.extract_to)
