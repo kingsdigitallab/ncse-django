@@ -187,7 +187,9 @@ class Command(BaseCommand):
                 if filename.endswith('.xml') and filename.startswith('Pg'):
                     self._import_page(issue, dir, root, filename)
             for filename in files:
-                if filename.endswith('.xml') and not filename.startswith('P'):
+                if filename.endswith('.xml') and (
+                        filename.startswith('Pc') or
+                        not filename.startswith('P')):
                     self._import_article(issue, root, filename)
 
     def _import_page(self, issue, pdfdir, dir, filename):
