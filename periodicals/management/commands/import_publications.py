@@ -19,10 +19,33 @@ class Command(BaseCommand):
     logger = logging.getLogger(__name__)
     extract_to = '_document'
 
+    # Types to import
+    import_ar = False
+    import_ad = False
+    import_pc = False
+
     def add_arguments(self, parser):
         parser.add_argument('publication_path', nargs='+', type=str)
+        parser.add_argument('type_to_import', nargs='+', type=str)
 
     def handle(self, *args, **options):
+
+        if options['type_to_import'][0] == 'all':
+            self.import_ar = True
+            self.import_ad = True
+            self.import_pc = True
+        elif options['type_to_import'][0] == 'ar':
+            self.import_ar = True
+        elif options['type_to_import'][0] == 'ad':
+            self.import_ad = True
+        elif options['type_to_import'][0] == 'pc':
+            self.import_pc = True
+        else:
+            self.logger.critical('No valid type to import. Please\
+                specify a type to import from all,\
+                ar, ad, pc')
+            exit()
+
         for publication_path in options['publication_path']:
             self._import_publication(publication_path)
 
@@ -227,68 +250,72 @@ class Command(BaseCommand):
         page.save()
 
     def _import_article(self, issue, dir, filename):
-        tree = etree.parse(os.path.join(dir, filename))
-        xmlroot = tree.getroot()
+        if (filename.startswith('Pc') and self.import_pc) or\
+           (filename.startswith('Ar') and self.import_ar) or\
+           (filename.startswith('Ad') and self.import_ad):
+            tree = etree.parse(os.path.join(dir, filename))
+            xmlroot = tree.getroot()
 
-        aid = xmlroot.get('ID')
-        self.logger.debug('- - importing article: {}'.format(aid))
+            aid = xmlroot.get('ID')
+            self.logger.debug('- - importing article: {}'.format(aid))
 
-        try:
-            page_number = xmlroot.get('PAGE_NO')
-            page = Page.objects.get(issue=issue, number=page_number)
-        except Page.DoesNotExist:
-            self.logger.error(
-                '-- page not found for issue {} article {}'.format(
-                    issue, aid))
-            return
-        except Exception as e:
-            self.logger.error('-- failed to get page_number/page')
-            self.logger.error(e.get_message())
-            return
+            try:
+                page_number = xmlroot.get('PAGE_NO')
+                page = Page.objects.get(issue=issue, number=page_number)
+            except Page.DoesNotExist:
+                self.logger.error(
+                    '-- page not found for issue {} article {}'.format(
+                        issue, aid))
+                return
+            except Exception as e:
+                self.logger.error('-- failed to get page_number/page')
+                self.logger.error(e.get_message())
+                return
 
-        try:
-            article = Article.objects.get(issue=issue, aid=aid)
-        except Article.DoesNotExist:
-            article = Article(issue=issue, page=page, aid=aid)
+            try:
+                article = Article.objects.get(issue=issue, aid=aid)
+            except Article.DoesNotExist:
+                article = Article(issue=issue, page=page, aid=aid)
 
-        meta = xmlroot.xpath('Meta')[0]
+            meta = xmlroot.xpath('Meta')[0]
 
-        article.page = page
-        pip = xmlroot.get('INDEX_IN_DOC')
+            article.page = page
+            pip = xmlroot.get('INDEX_IN_DOC')
 
-        if pip and pip.isdigit():
-            article.position_in_page = pip
+            if pip and pip.isdigit():
+                article.position_in_page = pip
 
-        article.title = meta.get('NAME')[:2048]
-        article.description = meta.get('DESCRIPTION')
+            article.title = meta.get('NAME')[:2048]
+            article.description = meta.get('DESCRIPTION')
 
-        header_text = ''
-        header = xmlroot.xpath('HedLine_hl1')
-        if header:
-            header_xpath = (
-                'Primitive/node()/text()[normalize-space() and '
-                'parent::node()[name() != "Q" and name () != "q"]]')
-            header_text = ' '.join(header[0].xpath(header_xpath))
+            header_text = ''
+            header = xmlroot.xpath('HedLine_hl1')
+            if header:
+                header_xpath = (
+                    'Primitive/node()/text()[normalize-space() and '
+                    'parent::node()[name() != "Q" and name () != "q"]]')
+                header_text = ' '.join(header[0].xpath(header_xpath))
 
-        content_text = ''
-        content = xmlroot.xpath('Content')
-        if content:
-            content_xpath = (
-                '//text()[normalize-space() and '
-                'parent::node()[name() != "Q" and name () != "q"]]')
-            content_text = '{}{}'.format(
-                article.content, ' '.join(content[0].xpath(content_xpath)))
+            content_text = ''
+            content = xmlroot.xpath('Content')
+            if content:
+                content_xpath = (
+                    '//text()[normalize-space() and '
+                    'parent::node()[name() != "Q" and name () != "q"]]')
+                content_text = '{}{}'.format(
+                    article.content, ' '.join(content[0].xpath(content_xpath)))
 
-        article.content = '{}{}'.format(header_text, content_text)
+            article.content = '{}{}'.format(header_text, content_text)
 
-        article.bounding_box = self._str_to_box(xmlroot.get('BOX'))
-        article.save()
+            article.bounding_box = self._str_to_box(xmlroot.get('BOX'))
+            article.save()
 
-        self._add_article_continuation(issue, dir, filename, article)
-        self._add_article_entity_type(issue, dir, filename, article)
-        self._add_article_html(issue, dir, filename, article)
-        self._add_article_snippet_image(issue, dir, filename, article)
-        self._add_article_words_to_page(issue, dir, filename, page, article)
+            self._add_article_continuation(issue, dir, filename, article)
+            self._add_article_entity_type(issue, dir, filename, article)
+            self._add_article_html(issue, dir, filename, article)
+            self._add_article_snippet_image(issue, dir, filename, article)
+            self._add_article_words_to_page(issue, dir, filename,
+                                            page, article)
 
     def _add_article_continuation(self, issue, dir, filename, article):
         tree = etree.parse(os.path.join(dir, filename))
