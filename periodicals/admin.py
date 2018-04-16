@@ -60,8 +60,9 @@ class PageAdmin(admin.ModelAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ['aid', 'title', 'page', 'issue', 'publication']
-    list_filter = ['issue']
+    list_display = ['aid', 'title', 'article_type',
+                    'page', 'issue', 'publication']
+    list_filter = ['issue__publication', 'article_type']
 
     raw_id_fields = ['issue', 'page', 'continuation_from', 'continuation_to']
 
