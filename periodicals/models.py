@@ -119,6 +119,12 @@ class Issue(models.Model):
             continuation_from=None).order_by('page', 'position_in_page')
 
     @property
+    def pictures(self):
+        picture = ArticleType.objects.get_or_create(title='Picture')[0]
+        return self.articles_in_issue.filter(continuation_from=None,
+                                             article_type=picture)
+
+    @property
     def url(self):
         return reverse(
             'issue-detail', kwargs={
