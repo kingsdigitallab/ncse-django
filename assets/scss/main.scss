@@ -10,6 +10,7 @@
  *  Globals
  *  Navigation
  *      Sub navigation
+ *      Side Nav
  *  Main content
  *      Cards
  *  Tabs
@@ -191,6 +192,23 @@ nav {
     a {
         padding: rem-calc(12 0);
     }
+    li {
+            margin: 0 1rem;
+            float: left;
+            &.is-active > a,
+            a.is-active {
+                    background: $primary-color;
+                    color: $white;
+                    border: 1px solid $primary-color;
+                    span {
+                        color: lighten($light-gray, 3%);
+                    }
+            }
+            span {
+                font-size: 0.75rem;
+                color: $medium-gray;
+            }
+        }
 
     &.subnav {
         border-bottom: 1px solid $medium-gray;
@@ -200,9 +218,12 @@ nav {
             float: left;
             &.is-active > a,
             a.is-active {
-                background: none;
-                border-bottom: 3px solid $primary-color;
-                color: darken($primary-color, 10%);
+                    background: $primary-color;
+                    color: $white;
+                    border: 1px solid $primary-color;
+                    span {
+                        color: lighten($light-gray, 3%);
+                    }
             }
             span {
                 font-size: 0.75rem;
@@ -215,13 +236,69 @@ nav {
 .sticky nav {
     background: $white;
 }
+/* Side Nav */
+
+.multilevel-accordion-menu {
+    background: #eee;
+    .menu li{
+        margin: 0; 
+    }
+
+    // padding for each list item
+    .menu > li:not(.menu-text) > a {
+        padding: 1.2rem 1rem;
+    }
+
+    li.is-submenu-item.is-accordion-submenu-item ul li{
+        padding-left: 1rem;  
+    }
+}
+
+// style for folder icon on subitem anchors without a submenu
+.multilevel-accordion-menu .is-accordion-submenu-parent[aria-expanded="true"] a.subitem::after {
+  content: "";
+  margin-right: 1rem;  
+   position: absolute; 
+  right:0;
+}
+
+// changes folder icon to open then accordion is open
+.multilevel-accordion-menu .is-accordion-submenu-parent[aria-expanded="true"] a {
+  &::after {
+    content: "-";
+    margin-right: 1rem;
+    position: absolute; 
+    right:0;
+  }
+}
+
+// changes folder icon to closed then accordion is closed
+.multilevel-accordion-menu .is-accordion-submenu-parent[aria-expanded="false"] a {
+  &::after {
+    content: "+";
+    margin-right: 1rem;
+    position: absolute; 
+    right:0;
+  }
+}
+
+
 
 /* Subnav Tabs to accordion */
 section.tab-to-accordion {
     li.tabs-title a {
-        padding: 0 0 1rem 0;
+        padding: 1rem 0 1rem 1rem;
         margin-top: 0.5rem;
     }
+    .vertical{
+        width:20%;
+        float:left;
+    }
+    .tabs-content{
+        width:70%;
+        float:left;
+    }
+    
 }
 
 /* Breadcrumbs */
@@ -466,6 +543,9 @@ section#list.tabs-panel.is-active {
     float: left;
     &.filters {
         width: 80%;
+    }
+    &.full{
+        width:100%;
     }
     &::before {
         color: $white;
@@ -1074,6 +1154,12 @@ footer {
             .column {
                 margin: 1rem 0 0 0;
             }
+        }
+        .vertical{
+            width:100%;
+        }
+        .tabs-content{
+            width:100%;
         }
     }
 }

@@ -1,33 +1,50 @@
-<div data-equalizer>
-    <div class="row small-up-2 medium-up-3 large-up-5" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium">
+<table class="stack unstriped">
+    <thead>
+        <tr>
+            <th>Publication image</th>
+            <th>Publication title</th>
+            <th>Year range</th>
+            <th>Stats</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for publication in publications %}
-        <div class="column column-block">
-            <div class="card" data-equalizer-watch="cards">
+        <tr>
+        
+            <td class="title">
                 <a href="{{ publication.url }}">
-                    <div class="card-divider">
-                        <h2>{{ publication }}</h2>
-                    </div>
-                    <div class="card-section">
-                        {% with year_span=publication.get_year_span %}
-                        <h3>{{ year_span.0 }} to {{ year_span.1 }}</h3>
+                    <!-- BM - Please add img tag  -->
+                    <img src="http://www.ncse.ac.uk/headnotes/Assets/p/23/i/ns_on.png">
+                </a>
+            </td>
+            <td class="title">
+                <a href="{{ publication.url }}">
+                    {{ publication }}
+                </a>
+            </td>                             
+            <td class="title">
+                <a href="{{ publication.url }}">
+                {% with year_span=publication.get_year_span %}
+                        {{ year_span.0 }} to {{ year_span.1 }}
                         {% endwith %}
                         {% with number_of_years=publication.get_number_of_years %}
-                        <p><strong>{{ number_of_years }}</strong> Year{{ number_of_years|pluralize }}</p>
-                        {% endwith %}
-                        <div class="card-footer">
-                            {% with issue_count=publication.issues.count %}
-                            {{ issue_count }} Issue{{ issue_count|pluralize }} spanning {{ publication.get_total_number_of_pages }} pages
-                            {% endwith %}
-                        </div>
-                    </div>
                 </a>
-                {% if request.user.is_staff %}
-                <div class="card-divider">
+            </td>
+            <td class="title">
+                <a href="{{ publication.url }}">
+               
+                <span style="color:#777; font-size:0.85rem;">( {{ number_of_years }} Year{{ number_of_years|pluralize }}
+                        {% endwith %}, {% with issue_count=publication.issues.count %}
+                            {{ issue_count }} Issue{{ issue_count|pluralize }}
+                            {% endwith %})</span>
+                </a>
+            </td>
+        </tr>
+        {% if request.user.is_staff %}
+                        <div class="card-divider">
                     <a href="/admin/periodicals/publication/{{ publication.id }}/change/" class="card-footer-item">Edit</a>
                 </div>
-                {% endif %}
-            </div>
-        </div>
+        {% endif %}
         {% endfor %}
-    </div>
-</div>
+    </tbody>
+</table>
