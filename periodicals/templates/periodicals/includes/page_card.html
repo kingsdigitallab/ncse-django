@@ -6,10 +6,8 @@
     </div>
     <div class="card-section overlay">
         <h3>Page {{ page.number }}</h3>
-        <div class="card-footer">
-            {% with article_count=page.number_of_articles %}
-            {{ article_count }} Item{{ article_count|pluralize }}
-            {% endwith %}
+        <div class="card-footer">            
+            {{ page.article_count }} Item{{ page.article_count|pluralize }}
         </div>
     </div>
 </div>

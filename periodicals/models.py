@@ -88,7 +88,7 @@ class Issue(models.Model):
     article_count = models.PositiveIntegerField(default=0)
 
     class Meta:
-        ordering = ['publication', 'issue_date', 'edition']
+        ordering = ['issue_date', 'edition']
 
     def __str__(self):
         issue = '{}: {}'.format(self.publication, self.issue_date)
@@ -103,32 +103,28 @@ class Issue(models.Model):
 
     @property
     def departments(self):
-        return self.articles_in_issue.exclude(
-            title_image__isnull=True).exclude(title_image__exact='').order_by(
-                'page', 'position_in_page')
+        return self.get_base_query().filter(
+            title_image__isnull=False).exclude(title_image__exact='').order_by(
+            'page__number', 'position_in_page')
 
     @property
     def articles(self):
         article = ArticleType.objects.get_or_create(title='Article')[0]
-        return self.articles_in_issue.filter(continuation_from=None,
-                                             article_type=article)
+        return self.get_base_query().filter(article_type=article)
 
     @property
     def ads(self):
         ad = ArticleType.objects.get_or_create(title='Ad')[0]
-        return self.articles_in_issue.filter(continuation_from=None,
-                                             article_type=ad)
+        return self.get_base_query().filter(article_type=ad)
 
     @property
     def items(self):
-        return self.articles_in_issue.filter(
-            continuation_from=None).order_by('page', 'position_in_page')
+        return self.get_base_query()
 
     @property
     def pictures(self):
         picture = ArticleType.objects.get_or_create(title='Picture')[0]
-        return self.articles_in_issue.filter(continuation_from=None,
-                                             article_type=picture)
+        return self.get_base_query().filter(article_type=picture)
 
     @property
     def url(self):
@@ -148,6 +144,12 @@ class Issue(models.Model):
             issue_date=self.issue_date).exclude(
             edition=self.edition).order_by('edition')
 
+    def get_base_query(self):
+        return self.articles_in_issue.select_related(
+            'page').defer(
+            'content', 'content_html', 'bounding_box', 'page__words').filter(
+            continuation_from=None)
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.uid)
         self.article_count = self.articles_in_issue.filter(
@@ -166,9 +168,10 @@ class Page(models.Model):
     image = models.ImageField(upload_to='periodicals/')
     width = models.PositiveIntegerField(null=True)
     words = JSONField(default='{}', null="true")
+    article_count = models.PositiveIntegerField(default=0)
 
     class Meta:
-        ordering = ['issue', 'number']
+        ordering = ['number']
 
     def __str__(self):
         return '{}: {}'.format(self.issue, self.number)
@@ -179,7 +182,7 @@ class Page(models.Model):
 
     @property
     def number_of_articles(self):
-        return self.articles.count()
+        return self.article_count
 
     @property
     def url(self):
@@ -208,6 +211,11 @@ class Page(models.Model):
             return self.issue.pages.all()[self.number]
         else:
             return None
+
+    def save(self, *args, **kwargs):
+        self.article_count = self.articles.count()
+        self.issue.save()
+        super(Page, self).save(*args, **kwargs)
 
 
 class ArticleType(models.Model):
@@ -246,7 +254,7 @@ class Article(models.Model):
     bounding_box = JSONField(default='{}')
 
     class Meta:
-        ordering = ['page__number', 'position_in_page', 'aid']
+        ordering = ['position_in_page', 'aid']
 
     def __str__(self):
         return self.title if self.title else self.aid
