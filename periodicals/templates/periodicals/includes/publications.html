@@ -1,3 +1,5 @@
+{% load staticfiles %}
+
 <table class="stack unstriped">
     <thead>
         <tr>
@@ -10,49 +12,40 @@
     <tbody>
         {% for publication in publications %}
         <tr>
-        
-        {% with p_url=publication.url %}
+            {% with p_url=publication.url %}
             <td class="title">
-                <a href="{{ publication.url }}">
-                    <!-- BM - Please add img tag  -->
-                    <img src="http://www.ncse.ac.uk/headnotes/Assets/p/23/i/ns_on.png">
+                <a href="{{ p_url }}">
+                    <img src="{% static 'media' %}/{{ publication.title_image }}" alt="{{ publication.title }}" />
                 </a>
             </td>
             <td class="title">
                 <a href="{{ p_url }}">
                     {{ publication.title }}
                 </a>
-            </td>                             
+            </td>
             <td class="title">
                 <a href="{{ p_url }}">
-                {{ publication.year_from }} to {{ publication.year_from }}
+                    {{ publication.year_from }} to {{ publication.year_from }}
                 </a>
             </td>
             <td class="title">
                 <a href="{{ p_url }}">
-               
-
-                <span style="color:#777; font-size:0.85rem;">
-                {% with number_of_years=publication.get_number_of_years %}
-
-                ({{ number_of_years }} Year{{ number_of_years|pluralize }}
-                {% endwith %}, 
-
+                    <span style="color:#777; font-size:0.85rem;">(
+                        {% with number_of_years=publication.get_number_of_years %}
+                        {{ number_of_years }} Year{{ number_of_years|pluralize }}
+                        {% endwith %},
 
                         {{ publication.issue_count }} Issue{{ publication.issue_count|pluralize }}
                     )</span>
                 </a>
             </td>
-
             {% endwith %}
         </tr>
 
-
-
         {% if request.user.is_staff %}
-                        <div class="card-divider">
-                    <a href="/admin/periodicals/publication/{{ publication.id }}/change/" class="card-footer-item">Edit</a>
-                </div>
+        <div class="card-divider">
+            <a href="/admin/periodicals/publication/{{ publication.id }}/change/" class="card-footer-item">Edit</a>
+        </div>
         {% endif %}
         {% endfor %}
     </tbody>
