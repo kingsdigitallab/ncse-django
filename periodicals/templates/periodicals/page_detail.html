@@ -36,10 +36,10 @@
                     <a href="/periodicals/ewj/issues/ewj_01031861/page/5/print/" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print image</a>
                 </li>
             </ul>
-            <span class="canvas-controls"><a href="#" data-zoom="in" data-for="canvas-page-5">Zoom In</a> <a href="#" data-zoom="out" data-for="canvas-page-5">Zoom Out</a></span>
-            <canvas class="pageCanvas border" data-image-id="page67" id="canvas-page-67" width="799" height="1256">
+            <span class="canvas-controls"><a href="#" data-zoom="in" data-for="canvas-page-{{ page.number}}">Zoom In</a> <a href="#" data-zoom="out" {{ page.number}}>Zoom Out</a></span>
+            <canvas class="pageCanvas border" data-image-id="page{{ page.number}}" id="canvas-page-{{ page.number}}" width="799" height="1256">
         
-                <img id="page67" src="/static/media/periodicals/041-EWJ-1861-03-01-001-SINGLE/Pg067.png" alt="Page 67">
+                <img id="page{{ page.number}}" src="{{ page.image.url}}" alt="Page {{page.number}}">
             </canvas>
         </div>
     </div>
