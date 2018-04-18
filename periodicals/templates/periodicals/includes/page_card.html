@@ -1,6 +1,7 @@
 {% load periodicals_tags %}
 
 <div class="card" data-equalizer-watch="cards">
+    <a href="{{ page.url }}">
     <div class="card-image">
         <img src="{% thumbnail page.image.url %}" alt="Page {{ page.number }}">
     </div>
@@ -9,5 +10,5 @@
         <div class="card-footer">            
             {{ page.article_count }} Item{{ page.article_count|pluralize }}
         </div>
-    </div>
+    </div></a>
 </div>

@@ -20,15 +20,21 @@
                     <li>
                         <a href="#a1">Departments <span>({{departments.count}})</span></a>
                     </li>
+                    {% if ads %}
                     <li>
                         <a href="#a2">Adverts <span>({{ ads.count }})</i></span></a>
                     </li>
+                    {% endif %}
+                    {% if pictures %}
                     <li>
                         <a href="#">Pictures <span>({{pictures.count}})</i></span></a>
                     </li>
+                    {% endif %}
+                    {% if articles %}
                     <li>
                         <a href="#">Text <span>({{ articles.count}})</i></span></a>
                     </li>
+                    {% endif %}
                     <li>
                         <a href="#a3">Pages <span>({{ issue.number_of_pages }})</span></a>
                     </li>
@@ -38,25 +44,28 @@
     </div>
     
 
-    <div class="medium-9 columns">    
+    <div class="medium-9 columns">
+        {% if ads %}    
         <div class="row">   
         {% include "periodicals/includes/issue_toc.html" with items=ads %}
         </div>
-  
-        <hr>
+        {% endif %}
 
+        {% if pictures %}
          <div class="row">   
         {% include "periodicals/includes/issue_toc.html" with items=pictures %}
         </div>
+        {% endif %}
   
-        <hr>
 
-         <div class="row">   
+        {% if articles %}
+        <div class="row">   
         {% include "periodicals/includes/issue_toc.html" with items=articles %}
         </div>
+        {% endif %}
   
-        <hr>
-
+        
+        {% if departments %}
         <div class="row">
             <h2>Departments</h2>
             {% regroup departments by page as page_list %}
@@ -76,9 +85,8 @@
                 {% endfor %}
             {% endfor %}
         </div>
+        {% endif %}
 
-
-        <hr>
 
         <div class="row">
       

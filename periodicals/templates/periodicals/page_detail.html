@@ -49,48 +49,63 @@
         <div class="sticky" data-sticky data-anchor="main">
             <div class="menu vertical" data-magellan>
                 <ul class="multilevel-accordion-menu vertical menu" data-accordion-menu>
+                    {% with departments=page.departments %}
+                    {% if departments %}
                     <li>
-                        <a href="#">Departments <span>(2)</span></a>
+                        <a href="#">Departments <span>({{departments.count}})</span></a>
                         <ul class="menu vertical">
-                            <li><img src="/static/media/periodicals/041-EWJ-1861-03-01-001-SINGLE/Ar00100S.png" alt="THE"></li>
-                            <li><img src="/static/media/periodicals/041-EWJ-1861-03-01-001-SINGLE/Ar00101S.png" alt="Vol. VII. March 1, 1861. No. 37."></li>
+                            {% for department in departments %}
+                            <li><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=department.slug%}"><img style="border:1px solid #ccc" src="{% thumbnail department.title_image.url %}" alt="{{ department }}"></a></li>
+                            {% endfor %}
                         </ul>
                     </li>
+                    {% endif %}
+                    {% endwith %}
+
+
+                    {% with ads=page.ads %}
+                    {% if ads %}
                     <li>
-                        <a href="#">Adverts <span>(4)</span></a>
+                        <a href="#">Adverts <span>({{ads.count}})</span></a>
                         <ul class="menu vertical">
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/1/articles/ar00101/">Vol. VII. March 1, 1861. No. 37.</a></li>
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/67/articles/ar06703/">JDanisTi Fairy Legends Bohn, York and S ...</a></li>
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/1/articles/ar00101/">Vol. VII. March 1, 1861. No. 37.</a></li>
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/67/articles/ar06703/">JDanisTi Fairy Legends Bohn, York and S ...</a></li>
+                            {% for ad in ads %}
+                            <li><a class="subitem" href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=ad.slug%}">{% if ad.title %}{{ ad.title }}{% else %}Untitled{% endif %}</a></li>
+                            {% endfor %}
                         </ul>
                     </li>
+                    {% endif %}
+                    {% endwith %}
+
+                    {% with pictures=page.pictures %}
+                    {% if pictures %}
                     <li>
-                        <a href="#a2">Images <span>(4)</i></span></a>
+                        <a href="#a2">Pictures <span>({{pictures.count}})</i></span></a>
                         <ul class="menu vertical">
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/1/articles/ar00101/">Vol. VII. March 1, 1861. No. 37.</a></li>
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/67/articles/ar06703/">JDanisTi Fairy Legends Bohn, York and S ...</a></li>
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/1/articles/ar00101/">Vol. VII. March 1, 1861. No. 37.</a></li>
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/67/articles/ar06703/">JDanisTi Fairy Legends Bohn, York and S ...</a></li>
+                            {% for picture in pictures %}
+                            <li><a class="subitem" href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=picture.slug%}">{% if picture.title %}{{ picture.title }}{% else %}Untitled{% endif %}</a></li>
+                            {% endfor %}
                         </ul>
                     </li>
+                    {% endif %}
+                    {% endwith %}
+
+                    {% with articles=page.articles %}
+                    {% if articles %}
                     <li>
-                        <a href="#">Text <span>(12)</i></span></a>
+                        <a href="#">Text <span>({{articles.count}})</i></span></a>
                         <ul class="menu vertical">
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/1/articles/ar00101/">Vol. VII. March 1, 1861. No. 37.</a></li>
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/67/articles/ar06703/">JDanisTi Fairy Legends Bohn, York and S ...</a></li>
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/1/articles/ar00101/">Vol. VII. March 1, 1861. No. 37.</a></li>
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/67/articles/ar06703/">JDanisTi Fairy Legends Bohn, York and S ...</a></li>
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/1/articles/ar00101/">Vol. VII. March 1, 1861. No. 37.</a></li>
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/67/articles/ar06703/">JDanisTi Fairy Legends Bohn, York and S ...</a></li>
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/1/articles/ar00101/">Vol. VII. March 1, 1861. No. 37.</a></li>
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/67/articles/ar06703/">JDanisTi Fairy Legends Bohn, York and S ...</a></li>
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/1/articles/ar00101/">Vol. VII. March 1, 1861. No. 37.</a></li>
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/67/articles/ar06703/">JDanisTi Fairy Legends Bohn, York and S ...</a></li>
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/1/articles/ar00101/">Vol. VII. March 1, 1861. No. 37.</a></li>
-                            <li><a class="subitem" href="/periodicals/ewj/issues/ewj_01031861/page/67/articles/ar06703/">JDanisTi Fairy Legends Bohn, York and S ...</a></li>
+
+                        {% for article in articles %}
+
+                            <li><a class="subitem" href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=article.slug%}">{% if article.title %}{{ article.title }}{% else %}Untitled{% endif %}</a></li>
+                        {% endfor %}
+      
                         </ul>
                     </li>
+                    {% endif %}
+                    {% endwith %}
+
+
                     <li>
                         <a href="#">Transcript</a>
                         <ul class="menu vertical">
@@ -130,113 +145,6 @@
 
 
 
-
-
-<!-- Old code
-<div class="row">
-    <div class="small-12 columns">
-        <div class="tab_container subnav">
-            <input id="tab1" type="radio" name="tabs" checked>
-            <label for="tab1">Image</label>
-            <input id="tab2" type="radio" name="tabs">
-            <label for="tab2">Transcript</label>
-            <input id="tab4" type="radio" name="tabs">
-            <label for="tab4">Split view</label>
-            <input id="tab3" type="radio" name="tabs">
-            <label for="tab3">Issue Contents</label>
-            <input id="tab5" type="radio" name="tabs">
-            <label for="tab5">Citation</label>
-
-            <section id="content1" class="tab-content">
-                <ul class="menu float-right">
-                    <li>
-                        <a href="{{ page.print_url }}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print image</a>
-                    </li>
-                </ul>
-                <ul class="accordion " data-accordion data-multi-expand="true" data-allow-all-closed="true">
-                    <li class="accordion-item {% if article %}is-active{% endif %}" data-accordion-item>
-                        <a href="#" class="accordion-title">Items</a>
-                        <div class="accordion-content" data-tab-content>
-                            {% include "periodicals/includes/page_toc.html" %}
-                        </div>
-                    </li>
-                </ul>
-                {% include "periodicals/includes/page_image.html" %}
-            </section>
-
-            <section id="content2" class="tab-content">
-                {% include "periodicals/includes/ocr_warning.html" %}
-
-                {% include "periodicals/includes/page_ocr.html" %}
-            </section>
-
-            <section id="content5" class="tab-content">
-                “{{ page.issue }}, Page {{ page.number }}” <i>{{ PROJECT_TITLE }}</i>, #TODO: CITATION_INFO,  {% now "j N Y" %}, {{ request.META.HTTP_HOST }}{{ page.url }}.
-            </section>
-
-            <section id="content3" class="tab-content">
-                <div class="tabs" data-tabs id="issue-tabs">
-                    <ul class="menu float-right">
-                        <li class="tabs-title is-active">
-                            <a href="#list" role="option" aria-selected="true"><i class="fa fa-list-ul" aria-hidden="true"></i> List</a>
-                        </li>
-                        <li class="tabs-title">
-                            <a href="#grid" role="option" data-tabs-target="grid"><i class="fa fa-th" aria-hidden="true"></i> Grid</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="tabs-content" data-tabs-content="issue-tabs">
-                    <section class="tabs-panel is-active" id="list">
-                        <div class="row">
-                            <div class="small-12 columns">
-                                {% include "periodicals/includes/issue_toc.html" with issue=page.issue %}
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="tabs-panel" id="grid">
-                        <div class="row medium-up-2 large-up-3 container equalize-me-again" data-equalizer="cards" data-equalize-by-row="true" data-equalize-on="medium">
-                            {% for page in page.issue.pages.all %}
-                            <div class="column column-block">
-                                <a href="{{ page.url }}">
-                                    {% include "periodicals/includes/page_card.html" %}
-                                </a>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </section>
-                </div>
-            </section>
-
-            <section id="content4" class="tab-content">
-                <div class="row large-up-2">
-                    <div class="column column-block" >
-                        <div class="row">
-                            <div class="small-12 columns">
-                                {% include "periodicals/includes/page_image.html" %}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="column column-block">
-                        {% include "periodicals/includes/ocr_warning.html" %}
-
-                        {% include "periodicals/includes/page_ocr.html" %}
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="small-12 columns">
-        {% with publication=page.issue.publication issue=page.issue page=page %}
-        {% include 'periodicals/includes/pagination.html' %}
-        {% endwith %}
-    </div>
-</div>-->
 {% endblock %}
 
 {% block footer_scripts %}

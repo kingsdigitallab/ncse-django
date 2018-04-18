@@ -177,8 +177,29 @@ class Page(models.Model):
         return '{}: {}'.format(self.issue, self.number)
 
     @property
+    def departments(self):
+        return self.get_base_query().filter(
+            title_image__isnull=False).exclude(title_image__exact='').order_by(
+            'position_in_page')
+
+    @property
     def articles(self):
-        return self.articles_in_page.all()
+        article = ArticleType.objects.get_or_create(title='Article')[0]
+        return self.get_base_query().filter(article_type=article)
+
+    @property
+    def ads(self):
+        ad = ArticleType.objects.get_or_create(title='Ad')[0]
+        return self.get_base_query().filter(article_type=ad)
+
+    @property
+    def items(self):
+        return self.get_base_query()
+
+    @property
+    def pictures(self):
+        picture = ArticleType.objects.get_or_create(title='Picture')[0]
+        return self.get_base_query().filter(article_type=picture)
 
     @property
     def number_of_articles(self):
@@ -211,6 +232,12 @@ class Page(models.Model):
             return self.issue.pages.all()[self.number]
         else:
             return None
+
+    def get_base_query(self):
+        return Article.objects.filter(page=self).select_related(
+            'page').defer(
+            'content', 'content_html', 'bounding_box', 'page__words').filter(
+            continuation_from=None)
 
     def save(self, *args, **kwargs):
         self.article_count = self.articles.count()
