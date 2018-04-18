@@ -11,6 +11,7 @@
         {% for publication in publications %}
         <tr>
         
+        {% with p_url=publication.url %}
             <td class="title">
                 <a href="{{ publication.url }}">
                     <!-- BM - Please add img tag  -->
@@ -18,28 +19,36 @@
                 </a>
             </td>
             <td class="title">
-                <a href="{{ publication.url }}">
-                    {{ publication }}
+                <a href="{{ p_url }}">
+                    {{ publication.title }}
                 </a>
             </td>                             
             <td class="title">
-                <a href="{{ publication.url }}">
-                {% with year_span=publication.get_year_span %}
-                        {{ year_span.0 }} to {{ year_span.1 }}
-                        {% endwith %}
-                        {% with number_of_years=publication.get_number_of_years %}
+                <a href="{{ p_url }}">
+                {{ publication.year_from }} to {{ publication.year_from }}
                 </a>
             </td>
             <td class="title">
-                <a href="{{ publication.url }}">
+                <a href="{{ p_url }}">
                
-                <span style="color:#777; font-size:0.85rem;">( {{ number_of_years }} Year{{ number_of_years|pluralize }}
-                        {% endwith %}, {% with issue_count=publication.issues.count %}
-                            {{ issue_count }} Issue{{ issue_count|pluralize }}
-                            {% endwith %})</span>
+
+                <span style="color:#777; font-size:0.85rem;">
+                {% with number_of_years=publication.get_number_of_years %}
+
+                ({{ number_of_years }} Year{{ number_of_years|pluralize }}
+                {% endwith %}, 
+
+
+                        {{ publication.issue_count }} Issue{{ publication.issue_count|pluralize }}
+                    )</span>
                 </a>
             </td>
+
+            {% endwith %}
         </tr>
+
+
+
         {% if request.user.is_staff %}
                         <div class="card-divider">
                     <a href="/admin/periodicals/publication/{{ publication.id }}/change/" class="card-footer-item">Edit</a>

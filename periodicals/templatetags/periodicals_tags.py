@@ -91,10 +91,6 @@ def get_issues_published_today():
 @register.inclusion_tag('periodicals/includes/issue_gallery.html')
 def get_issues_published_this_month():
     """  Get all issues published on same day as current month """
-    issues = get_issues_published_today()
-    if issues['issues'].count() == 3:
-        return issues
-
     now = datetime.datetime.now()
     issues = Issue.objects.filter(
         issue_date__month=now.month).order_by('?')[:3]

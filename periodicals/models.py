@@ -13,6 +13,10 @@ class Publication(models.Model):
     description = models.TextField(blank=True, null=True)
     ordering = models.PositiveIntegerField(blank=True, null=True)
     title_image = models.ImageField(null=True, blank=True)
+    year_from = models.PositiveIntegerField(blank=True, null=True)
+    year_to = models.PositiveIntegerField(blank=True, null=True)
+    page_count = models.PositiveIntegerField(default=0)
+    issue_count = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ['ordering']
@@ -29,32 +33,33 @@ class Publication(models.Model):
             })
 
     def get_year_span(self):
-        if self.issues.all().count() > 0:
-            return [self.issues.first().issue_date.year,
-                    self.issues.last().issue_date.year]
-
-        return None
+        return [self.year_from, self.year_to]
 
     def get_number_of_years(self):
-        year_span = self.get_year_span()
-
-        if year_span:
-            return year_span[1] - year_span[0] + 1
-
-        return None
-
-    def get_total_number_of_pages(self):
-        aggregation = self.issues.aggregate(total_pages=Sum('number_of_pages'))
-
-        if aggregation:
-            return aggregation['total_pages']
-
-        return 0
+        if self.year_to and self.year_from:
+            return (self.year_to - self.year_from) + 1
+        else:
+            return 0
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.abbreviation)
         if self.issues.all().count():
+
+            # Save issue count
+            self.issue_count = self.issues.all().count()
+            # Save ordering
             self.ordering = self.issues.first().issue_date.year
+
+            # Save year span
+            self.year_from = self.issues.first().issue_date.year
+            self.year_to = self.issues.last().issue_date.year
+
+            # Save page counts
+            aggregation = self.issues.aggregate(
+                total_pages=Sum('number_of_pages'))
+            if aggregation:
+                self.page_count = aggregation['total_pages']
+
         super(Publication, self).save(*args, **kwargs)
 
 
@@ -80,6 +85,7 @@ class Issue(models.Model):
     edition = models.CharField(max_length=128, blank=True, null=True,)
     number_of_pages = models.PositiveIntegerField(blank=True, null=True)
     pdf = models.FileField(upload_to='periodicals/', null=True)
+    article_count = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ['publication', 'issue_date', 'edition']
@@ -144,6 +150,11 @@ class Issue(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.uid)
+        self.article_count = self.articles_in_issue.filter(
+            continuation_from=None).count()
+
+        # Resave publication!
+        self.publication.save()
         super(Issue, self).save(*args, **kwargs)
 
 

@@ -8,6 +8,7 @@ __pycache__/
 
 # Application Specific
 _document/
+.vagrant_provisioning/data.sql
 
 # Distribution / packaging
 .Python

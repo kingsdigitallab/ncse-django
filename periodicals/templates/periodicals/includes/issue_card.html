@@ -6,7 +6,7 @@
             <img src="{% thumbnail issue.pages.all.0.image.url %}" alt="{{ publication }}">
         </div>
         <div class="card-section overlay">
-            <h3 class="small-caps">{{ publication }}</h3>
+            <h3 class="small-caps">{{ issue.publication }}</h3>
             <h3 class="small-caps">{{ issue.issue_date }}</h3>
             {% if issue.edition and issue.edition != '1' %}
             <h3 class="small-caps">{{ issue.edition | ordinal }} edition</h3>
@@ -14,17 +14,15 @@
             {% if issue.component %}
             <h3 class="small-caps">{{ issue.component }}</h3>
             {% endif %}
-            <div class="card-footer">
-                {% with article_count=issue.articles.count %}
-                {{ article_count }} Item{{ article_count|pluralize }}, {{ issue.pages.count }} Pages
-                {% endwith %}
+           
+
+
+
+             <div class="card-footer">
+                {{ issue.article_count }} Item{{ issue.article_count|pluralize }}, {{ issue.number_of_pages }} Pages
             </div>
+
+
         </div>
     </a>
-
-    {% if request.user.is_staff %}
-    <div class="card-divider">
-        <a href="/admin/periodicals/issue/{{ issue.id }}/change/" class="card-footer-item">Edit</a>
-    </div>
-    {% endif %}
 </div>

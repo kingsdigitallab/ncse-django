@@ -1,4 +1,5 @@
 {% extends "periodicals/base.html" %}
+{% load periodicals_tags %}
 
 {% block title %}Explore{% endblock %}
 
@@ -10,5 +11,13 @@
 {% endblock %}
 
 {% block main %}
-{% include 'periodicals/includes/publications.html' %}
+
+<section>
+    <div class="row">
+        <div class="large-12 columns">
+            {% get_publications %}
+        </div>
+    </div>
+
+</section>
 {% endblock %}
