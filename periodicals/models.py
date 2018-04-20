@@ -252,7 +252,10 @@ class ArticleType(models.Model):
         ordering = ['title']
 
     def __str__(self):
-        return self.title
+        if self.title == 'Article':
+            return 'Text'
+        else:
+            return self.title
 
 
 class Article(models.Model):
