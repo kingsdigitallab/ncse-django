@@ -1,4 +1,22 @@
-<table class="stack unstriped">
+
+ 
+ {% for item in items %}     
+ {% with item_url=item.url %}
+    <div class="medium-2 columns">
+        <a href="{{ item_url }}">Page {{ item.page.number }}</a>
+    </div>
+    <div class="medium-10 columns">
+        <a href="{{ item_url }}">{% if item.title %}{{ item.title }}{% else %}Untitled{% endif %}</a>
+    </div>
+    {% endwith %}
+{% endfor %}
+
+
+
+
+
+
+<!--<table class="stack unstriped">
     <thead>
         <tr>
             <th>Item</th>
@@ -24,4 +42,4 @@
         </tr>
         {% endfor %}
     </tbody>
-</table>
+</table>-->
