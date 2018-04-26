@@ -11,7 +11,7 @@
 
 {% block main %}
 
-{% with ads=issue.ads departments=issue.departments articles=issue.articles pictures=issue.pictures %}
+{% with ads=issue.ads departments=issue.departments articles=issue.articles pictures=issue.pictures editions=issue.get_editions %}
 <div class="row" id="main">
     <div class="small-12 medium-3 columns" data-sticky-container>
         <div class="sticky" data-sticky data-anchor="main">
@@ -33,6 +33,11 @@
                     {% if articles %}
                     <li>
                         <a href="#text">Text <span>({{ articles.count}})</i></span></a>
+                    </li>
+                    {% endif %}
+                    {% if editions %}
+                    <li>
+                        <a href="#editions">Other Editions <span>({{ editions.count}})</i></span></a>
                     </li>
                     {% endif %}
                     <li>
@@ -95,6 +100,15 @@
         <h2 class="underline" id="text">Text</h2>  
         </div>
         {% include "periodicals/includes/issue_toc.html" with items=articles %}
+        </div>
+        {% endif %}
+
+        {% if editions %}
+        <div class="row margin-bottom"> 
+        <div class="column">
+        <h2 class="underline" id="editions">Other Editions</h2>  
+        </div>
+        {% include "periodicals/includes/issue_gallery.html" with issues=editions %}
         </div>
         {% endif %}
 
