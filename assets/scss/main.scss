@@ -42,7 +42,8 @@ a {
 body,
 h1,
 h2,
-h3 {
+h3,
+h4 {
     font-family: 'Petrona', serif;
 }
 
@@ -76,6 +77,10 @@ h3 {
     }
 }
 
+h4{
+
+}
+
 main {
     padding: rem-calc(20 0);
     background: #fff;
@@ -94,9 +99,10 @@ main {
 .underline {
     border-bottom: 1px solid $black;
 
-    &.margin-bottom {
-        margin-bottom: rem-calc(32);
-    }
+}
+
+.margin-bottom {
+    margin-bottom: rem-calc(32);
 }
 
 // Hiding mobile menu on loading

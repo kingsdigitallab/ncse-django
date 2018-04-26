@@ -16,27 +16,27 @@
     <div class="small-12 medium-3 columns" data-sticky-container>
         <div class="sticky" data-sticky data-anchor="main">
             <div class="menu vertical">
-                <ul class="multilevel-accordion-menu vertical menu">
+                <ul class="multilevel-accordion-menu vertical menu" data-magellan>
                     <li>
-                        <a href="#a1">Departments <span>({{departments.count}})</span></a>
+                        <a href="#departments">Departments <span>({{departments.count}})</span></a>
                     </li>
                     {% if ads %}
                     <li>
-                        <a href="#a2">Adverts <span>({{ ads.count }})</i></span></a>
+                        <a href="#ads">Adverts <span>({{ ads.count }})</i></span></a>
                     </li>
                     {% endif %}
                     {% if pictures %}
                     <li>
-                        <a href="#">Pictures <span>({{pictures.count}})</i></span></a>
+                        <a href="#images">Pictures <span>({{pictures.count}})</i></span></a>
                     </li>
                     {% endif %}
                     {% if articles %}
                     <li>
-                        <a href="#">Text <span>({{ articles.count}})</i></span></a>
+                        <a href="#text">Text <span>({{ articles.count}})</i></span></a>
                     </li>
                     {% endif %}
                     <li>
-                        <a href="#a3">Pages <span>({{ issue.number_of_pages }})</span></a>
+                        <a href="#pages">Pages <span>({{ issue.number_of_pages }})</span></a>
                     </li>
                 </ul>
             </div>
@@ -45,52 +45,66 @@
     
 
     <div class="medium-9 columns">
-        {% if ads %}    
-        <div class="row">   
-        {% include "periodicals/includes/issue_toc.html" with items=ads %}
-        </div>
-        {% endif %}
-
-        {% if pictures %}
-         <div class="row">   
-        {% include "periodicals/includes/issue_toc.html" with items=pictures %}
-        </div>
-        {% endif %}
-  
-
-        {% if articles %}
-        <div class="row">   
-        {% include "periodicals/includes/issue_toc.html" with items=articles %}
-        </div>
-        {% endif %}
-  
-        
         {% if departments %}
-        <div class="row">
-            <h2>Departments</h2>
+        <div class="row margin-bottom">
+            <div class="column">
+            <h2 class="underline" id="departments">Departments</h2>
+            </div>
             {% regroup departments by page as page_list %}
             {% for page in page_list %}
                 {% for department in page.list %}
                    
                     <div class="medium-2 columns">
+
                         {% if forloop.first %}
                         Page {{ page.grouper.number }}
                         {% endif %}
                     </div>
-                    <div class="medium-10 columns">
-                        <!-- Will remove span style border -->
+                    <div class="medium-10 columns margin-bottom">
+                        <!-- TO - Remove span style border -->
                         <img style="border:1px solid #ccc" src="{% thumbnail department.title_image.url %}" alt="{{ department }}">
                     </div>
-
                 {% endfor %}
             {% endfor %}
         </div>
         {% endif %}
 
 
-        <div class="row">
-      
+        {% if ads %}    
+        
+        <div class="row margin-bottom">   
+        <div class="column">
+        <h2 class="underline" id="ads">Adverts</h2>
+        </div>
+        {% include "periodicals/includes/issue_toc.html" with items=ads %}
+        </div>
+        {% endif %}
+
+        {% if pictures %}
+        <div class="row margin-bottom">   
+        <div class="column">
+        <h2 class="underline" id="images">Images</h2>
+        </div>
+        {% include "periodicals/includes/issue_toc.html" with items=pictures %}
+        </div>
+        {% endif %}
+  
+        {% if articles %}
+        <div class="row margin-bottom"> 
+        <div class="column">
+        <h2 class="underline" id="text">Text</h2>  
+        </div>
+        {% include "periodicals/includes/issue_toc.html" with items=articles %}
+        </div>
+        {% endif %}
+
+        <div class="row margin-bottom">
+        <div class="column">
+        <h2 class="underline margin-bottom" id="pages" >Pages</h2>
+        </div>
+        <div class="column">
         {% include "periodicals/includes/page_gallery.html" with pages=issue.pages.all %}
+        </div>
         </div>
 
     </div>
