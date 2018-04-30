@@ -40,6 +40,7 @@
 {% endif %}
 
 
+
 <!-- New template but no tags -->
 <div class="row" id="main">
     <div class="small-12 medium-3 columns" data-sticky-container>
@@ -47,67 +48,25 @@
         <div class="sticky" data-sticky data-anchor="main">
             <div class="menu vertical" data-magellan>
                 <ul class="multilevel-accordion-menu vertical menu" data-accordion-menu>
+                    {% for year in publication.get_year_range %}
                     <li>
-                        <a href="#">1861 <span>(12 issues)</span></a>
-                        <ul class="menu vertical sublevel-1">
-                            <li>
-                                <a href="#">April 1st</a>
-                                <ul class="menu vertical sublevel-2">
-                                    <li><a class="subitem" href="">Main Edition</a></li>
-                                    <li><a class="subitem" href="">Scottish Edition</a></li>
-                                    <li><a class="subitem" href="">Component</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                            <a href="">May 1st</a>
-                                <ul class="menu vertical sublevel-2">
-                                    <li><a class="subitem" href="">Main Edition</a></li>
-                                    <li><a class="subitem" href="">Scottish Edition</a></li>
-                                    <li><a class="subitem" href="">Component</a></li>
-                                </ul>
-                            </li>
-                            <li><a class="subitem" href="#a7">June 1st</a></li>
-                            <li><a class="subitem" href="#a8">July 1st</a></li>
-                        </ul>
+                        <a href="?year={{year}}">{{year}}</a>
+                        
                     </li>
-                    <li>
-                        <a href="#a9">1862 <span>(12 issues)</span></a>
-                        <ul class="menu vertical sublevel-1">
-                            <li><a class="subitem" href="#a9">January 1</a></li>
-                            <li><a class="subitem" href="#a10">February 1</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">1863 <span>(8 issues)</span></a>
-                        <ul class="menu vertical sublevel-1">
-                            <li><a class="subitem" href="#">January 1</a></li>
-                            <li><a class="subitem" href="#">February 1</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">1864 <span>(10 issues)</span></a>
-                        <ul class="menu vertical sublevel-1">
-                            <li>
-                                <a href="#">January 1</a>
-                                <ul class="menu vertical sublevel-2">
-                                    <li><a class="subitem" href="#">Edition 1</a></li>
-                                    <li><a class="subitem" href="#">Edition 2</a></li>
-                                </ul>
-                            </li>
-                            <li><a class="subitem" href="#">February 1</a></li>
-                            <li><a class="subitem" href="#">March 1</a></li>
-                        </ul>
-                    </li>
+                   {% endfor %}
                 </ul>
             </div>
         </div>
     </div>
-
+{% endwith$}
 
     <!-- Cards -->
     <div class="medium-9 columns">
-        
-        {% include "periodicals/includes/issue_gallery.html" with issues=publication.get_issues %}
+        {% if 'year' in request.GET %}
+            {% include "periodicals/includes/issue_gallery.html" with issues=publication|get_issues_by_year:request.GET.year %}
+        {% else %}
+            {% include "periodicals/includes/issue_gallery.html" with issues=publication|get_issues_by_year:publication.year_from %}
+        {% endif %}
     </div>
 </div>
 

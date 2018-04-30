@@ -35,6 +35,9 @@ class Publication(models.Model):
     def get_year_span(self):
         return [self.year_from, self.year_to]
 
+    def get_year_range(self):
+        return range(self.year_from, self.year_to + 1)
+
     def get_number_of_years(self):
         if self.year_to and self.year_from:
             return (self.year_to - self.year_from) + 1
