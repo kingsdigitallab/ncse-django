@@ -41,6 +41,10 @@ class Publication(models.Model):
         else:
             return 0
 
+    @property
+    def get_issues(self):
+        return Issue.objects.filter(publication=self)[:10]
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.abbreviation)
         if self.issues.all().count():

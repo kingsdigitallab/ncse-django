@@ -107,7 +107,7 @@
     <!-- Cards -->
     <div class="medium-9 columns">
         
-        {% include "periodicals/includes/issue_gallery.html" with issues=publication.issues.all %}
+        {% include "periodicals/includes/issue_gallery.html" with issues=publication.get_issues %}
     </div>
 </div>
 
