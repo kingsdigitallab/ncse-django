@@ -29,25 +29,24 @@
 
 
 <div class="row" id="main">
-    <div class="medium-9 columns">
+    <div class="medium-9 columns" id="viewer-left">
         <div class="small-12 columns sticky" data-sticky data-anchor="main">
             <ul class="menu float-right">
                 <li>
                     <a href="/periodicals/ewj/issues/ewj_01031861/page/5/print/" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print image</a>
                 </li>
             </ul>
-            <span class="canvas-controls"><a href="#" data-zoom="in" data-for="canvas-page-{{ page.number}}">Zoom In</a> <a href="#" data-zoom="out" {{ page.number}}>Zoom Out</a></span>
-            <canvas class="pageCanvas border" data-image-id="page{{ page.number}}" id="canvas-page-{{ page.number}}" width="799" height="1256">
+            <canvas class="pageCanvas border" data-image-id="page{{ page.number}}" id="canvas-page-{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
         
                 <img id="page{{ page.number}}" src="{{ page.image.url}}" alt="Page {{page.number}}">
             </canvas>
         </div>
     </div>
 
-    <div class="medium-3 columns" data-sticky-container>
+    <div class="medium-3 columns" data-sticky-container id="viewer-right">
         <h2>Items on this page</h2>
         <div class="sticky" data-sticky data-anchor="main">
-            <div class="menu vertical" data-magellan>
+            <div class="menu vertical">
                 <ul class="multilevel-accordion-menu vertical menu" data-accordion-menu>
                     {% with departments=page.departments %}
                     {% if departments %}
