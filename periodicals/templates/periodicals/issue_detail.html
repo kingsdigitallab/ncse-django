@@ -11,41 +11,42 @@
 
 {% block main %}
 
+
 {% with ads=issue.ads departments=issue.departments articles=issue.articles pictures=issue.pictures editions=issue.get_editions components=issue.get_components %}
 <div class="row" id="main">
     <div class="small-12 medium-3 columns" data-sticky-container>
         <div class="sticky" data-sticky data-anchor="main">
             <div class="menu vertical">
-                <ul class="multilevel-accordion-menu vertical menu" data-magellan>
-                    <li>
+                <ul class="vertical tabs" data-tabs id="issue-nav">
+                    <li class="tabs-title is-active">
                         <a href="#departments">Departments <span>({{departments.count}})</span></a>
                     </li>
                     {% if ads %}
-                    <li>
+                    <li class="tabs-title">
                         <a href="#ads">Adverts <span>({{ ads.count }})</i></span></a>
                     </li>
                     {% endif %}
                     {% if pictures %}
-                    <li>
+                    <li class="tabs-title">
                         <a href="#images">Pictures <span>({{pictures.count}})</i></span></a>
                     </li>
                     {% endif %}
                     {% if articles %}
-                    <li>
+                    <li class="tabs-title">
                         <a href="#text">Text <span>({{ articles.count}})</i></span></a>
                     </li>
                     {% endif %}
                     {% if editions %}
-                    <li>
+                    <li class="tabs-title">
                         <a href="#editions">Other Editions <span>({{ editions.count}})</i></span></a>
                     </li>
                     {% endif %}
                     {% if components %}
-                    <li>
-                        <a href="#editions">Other Components <span>({{ components.count}})</i></span></a>
+                    <li class="tabs-title">
+                        <a href="#components">Other Components <span>({{ components.count}})</i></span></a>
                     </li>
                     {% endif %}
-                    <li>
+                    <li class="tabs-title">
                         <a href="#pages">Pages <span>({{ issue.number_of_pages }})</span></a>
                     </li>
                 </ul>
@@ -54,11 +55,11 @@
     </div>
     
 
-    <div class="medium-9 columns">
+    <div class="medium-9 columns tabs-content" data-tabs-content="issue-nav">
         {% if departments %}
-        <div class="row margin-bottom">
+        <div class="row margin-bottom tabs-panel is-active" id="departments">
             <div class="column">
-            <h2 class="underline" id="departments">Departments</h2>
+            <h2 class="underline">Departments</h2>
             </div>
             {% regroup departments by page as page_list %}
             {% for page in page_list %}
@@ -82,27 +83,27 @@
 
         {% if ads %}    
         
-        <div class="row margin-bottom">   
+        <div class="row margin-bottom tabs-panel" id="ads">   
         <div class="column">
-        <h2 class="underline" id="ads">Adverts</h2>
+        <h2 class="underline">Adverts</h2>
         </div>
         {% include "periodicals/includes/issue_toc.html" with items=ads %}
         </div>
         {% endif %}
 
         {% if pictures %}
-        <div class="row margin-bottom">   
+        <div class="row margin-bottom tabs-panel" id="images">   
         <div class="column">
-        <h2 class="underline" id="images">Images</h2>
+        <h2 class="underline">Images</h2>
         </div>
         {% include "periodicals/includes/issue_toc.html" with items=pictures %}
         </div>
         {% endif %}
   
         {% if articles %}
-        <div class="row margin-bottom"> 
+        <div class="row margin-bottom tabs-panel" id="text"> 
         <div class="column">
-        <h2 class="underline" id="text">Text</h2>  
+        <h2 class="underline">Text</h2>  
         </div>
         {% include "periodicals/includes/issue_toc.html" with items=articles %}
         </div>
@@ -110,26 +111,26 @@
 
 
         {% if components %}
-        <div class="row margin-bottom"> 
+        <div class="row margin-bottom tabs-panel" id="components"> 
         <div class="column">
-        <h2 class="underline" id="editions">Other Components</h2>  
+        <h2 class="underline">Other Components</h2>  
         </div>
         {% include "periodicals/includes/issue_gallery.html" with issues=components %}
         </div>
         {% endif %}
 
         {% if editions %}
-        <div class="row margin-bottom"> 
+        <div class="row margin-bottom tabs-panel" id="editions"> 
         <div class="column">
-        <h2 class="underline" id="editions">Other Editions</h2>  
+        <h2 class="underline">Other Editions</h2>  
         </div>
         {% include "periodicals/includes/issue_gallery.html" with issues=editions %}
         </div>
         {% endif %}
 
-        <div class="row margin-bottom">
+        <div class="row margin-bottom tabs-panel" id="pages">
         <div class="column">
-        <h2 class="underline margin-bottom" id="pages" >Pages</h2>
+        <h2 class="underline margin-bottom">Pages</h2>
         </div>
         <div class="column">
         {% include "periodicals/includes/page_gallery.html" with pages=issue.pages.all %}
