@@ -83,12 +83,14 @@ function enableCanvas()
         var mouseDown = false;
      
         // add button event listeners
-        document.getElementById("plus").addEventListener("click", function(){
+        document.getElementById("plus").addEventListener("click", function(evt){
+            evt.preventDefault();
             scale /= scaleMultiplier;
             draw(scale, translatePos);
         }, false);
      
-        document.getElementById("minus").addEventListener("click", function(){
+        document.getElementById("minus").addEventListener("click", function(evt){
+            evt.preventDefault();
             scale *= scaleMultiplier;
             draw(scale, translatePos);
         }, false);
