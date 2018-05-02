@@ -39,6 +39,8 @@ a {
     }
 }
 
+
+ 
 body,
 h1,
 h2,
@@ -51,9 +53,39 @@ body {
     background: $primary-color;
 }
 
+/** Canvas */
+
 canvas {
     width: 100%;
     height: auto;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.canvas-controls
+{
+    background: rgba(0,0,0,0.8);
+    color: #888888;
+    padding: 10px 20px;
+
+    a
+    {
+        color: #ffffff;
+
+        &:hover
+        {
+            color: #aaaaaa;
+            text-decoration: none;
+        }
+    }
 }
 
 h1 {

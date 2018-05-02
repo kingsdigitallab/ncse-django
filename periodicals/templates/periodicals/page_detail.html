@@ -31,14 +31,17 @@
 <div class="row" id="main">
     <div class="medium-9 columns" id="viewer-left">
         <div class="small-12 columns sticky" data-sticky data-anchor="main">
-            <ul class="menu float-right">
-                <li>
-                    <a href="/periodicals/ewj/issues/ewj_01031861/page/5/print/" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print image</a>
-                </li>
-            </ul>
-            <canvas class="pageCanvas border" data-image-id="page{{ page.number}}" id="canvas-page-{{ page.number}}" width="{{ page.width }}" height="{{ page.height }}">
+
+            <div class="canvas-controls">
+            
+                <a href="#" class="noselect" id="plus"><i class="fa fa-search-plus"></i></a> / <a href="#" class="noselect" id="minus"><i class="fa fa-search-minus"></i></a>
+
+                <a href="/periodicals/ewj/issues/ewj_01031861/page/5/print/" target="_blank" class="noselect float-right"><i class="fa fa-print"></i></a>
+                   
+            </div>
+            <canvas class="pageCanvas border noselect" data-image-id="page{{ page.number}}" id="pageCanvas" width="{{ page.width }}" height="{{ page.height }}">
         
-                <img id="page{{ page.number}}" src="{{ page.image.url}}" alt="Page {{page.number}}">
+                <img id="canvasImage" src="{{ page.image.url}}" alt="Page {{page.number}}">
             </canvas>
         </div>
     </div>

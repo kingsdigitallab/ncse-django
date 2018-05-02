@@ -3,69 +3,126 @@ var word_highlight_colour = 'rgba(225,225,0,0.2)'
 // Word highlight colour
 var article_bounding_box_colour = 'rgba(104,152,204,1)'
 
+function enableCanvas()
+{
+    // Reworked code from https://jsfiddle.net/ndYdk/7/
 
+    function draw(scale, translatePos){
+        var canvas = document.getElementById("pageCanvas");
+        var context = canvas.getContext("2d");
+     
+        // clear canvas
+        context.clearRect(0, 0, canvas.width, canvas.height);
+     
+        context.save();
+        context.translate(translatePos.x, translatePos.y);
+        context.scale(scale, scale);
+        
+        // Magic starts here
+        var img=document.getElementById("canvasImage");
+        context.drawImage(img, 0, 0);
 
-// Article bounding box colour
-// Enables drawing to a canvas
-function enableCanvas() {
-    // Only run if we have a page canvas!
-    if ($(".pageCanvas").length) {
-        $(".pageCanvas").each(function() {
-            var canvas = $(this)[0];
-            var ctx = canvas.getContext("2d");
-            var img = new Image();
-            img.onload = function() {
-                ctx.drawImage(this, 0, 0);
-                if (typeof highlight_words !== "undefined") {
-                    ctx.lineWidth = "1";
-                    ctx.fillStyle = word_highlight_colour;
-                    ctx.strokeStyle = "rgba(0,0,0,0)";
+        if (typeof highlight_words !== "undefined") {
+            context.lineWidth = "1";
+            context.fillStyle = word_highlight_colour;
+            context.strokeStyle = "rgba(0,0,0,0)";
 
-                    jQuery.each(highlight_words, function(k1, v1) {
-                        jQuery.each(v1, function(k2, v2) {
-                            var x0 = parseInt(this["x0"]);
-                            var x1 = parseInt(this["x1"]);
+            jQuery.each(highlight_words, function(k1, v1) {
+                jQuery.each(v1, function(k2, v2) {
+                    var x0 = parseInt(this["x0"]);
+                    var x1 = parseInt(this["x1"]);
 
-                            var y0 = parseInt(this["y0"]);
-                            var y1 = parseInt(this["y1"]);
-                            ctx.beginPath();
-                            ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
-                            ctx.stroke();
-                        });
-                    });
-                }
+                    var y0 = parseInt(this["y0"]);
+                    var y1 = parseInt(this["y1"]);
+                    context.beginPath();
+                    context.fillRect(x0, y0, x1 - x0, y1 - y0);
+                    context.stroke();
+                });
+            });
+        }
 
-// IE Issues Start Here
-                if (typeof article_bounding_box !== "undefined") {
-                    ctx.lineWidth = "4";
-                    ctx.fillStyle = "rgba(0,0,0,0)";
-                    ctx.strokeStyle = article_bounding_box_colour;
+        if (typeof article_bounding_box !== "undefined") {
+            context.lineWidth = "4";
+            context.fillStyle = "rgba(0,0,0,0)";
+            context.strokeStyle = article_bounding_box_colour;
 
-                    ctx.beginPath();
-                    ctx.moveTo(
-                        parseInt(article_bounding_box[0]["x"]),
-                        parseInt(article_bounding_box[0]["y"])
-                    );
+            context.beginPath();
+            context.moveTo(
+                parseInt(article_bounding_box[0]["x"]),
+                parseInt(article_bounding_box[0]["y"])
+            );
 
-                    count = article_bounding_box.length;
+            count = article_bounding_box.length;
 
-                    for (var i = 1; i <= count; i++) {
-                        ctx.lineTo(
-                            parseInt(article_bounding_box[i % count]["x"]),
-                            parseInt(article_bounding_box[i % count]["y"])
-                        );
-                    }
+            for (var i = 1; i <= count; i++) {
+                context.lineTo(
+                    parseInt(article_bounding_box[i % count]["x"]),
+                    parseInt(article_bounding_box[i % count]["y"])
+                );
+            }
 
-                    ctx.stroke();
-                }
-            };
-            img.src = $("#" + $(this).attr("data-image-id")).attr("src");
-        });
+            context.stroke();
+        }
 
-// IE Issues End Here
+        // End magic
+
+        context.restore();
     }
+ 
+    var initialize = (function(){
+        var canvas = document.getElementById("pageCanvas");
+     
+        var translatePos = {
+            x: 0,
+            y: 0
+        };
+     
+        var scale = 1.0;
+        var scaleMultiplier = 0.8;
+        var startDragOffset = {};
+        var mouseDown = false;
+     
+        // add button event listeners
+        document.getElementById("plus").addEventListener("click", function(){
+            scale /= scaleMultiplier;
+            draw(scale, translatePos);
+        }, false);
+     
+        document.getElementById("minus").addEventListener("click", function(){
+            scale *= scaleMultiplier;
+            draw(scale, translatePos);
+        }, false);
+     
+        // add event listeners to handle screen drag
+        canvas.addEventListener("mousedown", function(evt){
+            mouseDown = true;
+            startDragOffset.x = evt.clientX - translatePos.x;
+            startDragOffset.y = evt.clientY - translatePos.y;
+        });
+     
+        canvas.addEventListener("mouseup", function(evt){
+            mouseDown = false;
+        });
+     
+        canvas.addEventListener("mouseover", function(evt){
+            mouseDown = false;
+        });
+     
+        canvas.addEventListener("mouseout", function(evt){
+            mouseDown = false;
+        });
+     
+        canvas.addEventListener("mousemove", function(evt){
+            if (mouseDown) {
+                translatePos.x = evt.clientX - startDragOffset.x;
+                translatePos.y = evt.clientY - startDragOffset.y;
+                draw(scale, translatePos);
+            }
+        });
+     
+        draw(scale, translatePos);
+    }());
 }
-
 
 function enableReadMore() {
     $('body').on('click', '.read-more', function(event) {
