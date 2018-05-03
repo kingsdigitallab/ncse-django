@@ -48,6 +48,10 @@ class Publication(models.Model):
     def get_issues(self):
         return Issue.objects.filter(publication=self)
 
+    @property
+    def get_first_issues(self):
+        return Issue.objects.filter(publication=self).filter(edition=1)
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.abbreviation)
         if self.issues.all().count():

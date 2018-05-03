@@ -62,7 +62,7 @@
                                 <a href="#">{{ date.grouper }}</a>
                                 <ul class="menu vertical">
                                     {% for issue in date.list %}
-                                    <li><a href="{{issue.url}}">{{ issue.name }}</a></li>
+                                    <li {% if issue.edition != '1' %}class="lighten" {% endif %}><a href="{{issue.url}}">{{ issue.name }}</a></li>
                                     {% endfor %}
                                 </ul>
                             </li>
@@ -79,9 +79,9 @@
     <!-- Cards -->
     <div class="medium-9 columns">
         {% if 'year' in request.GET %}
-            {% include "periodicals/includes/issue_gallery.html" with issues=publication|get_issues_by_year:request.GET.year %}
+            {% include "periodicals/includes/issue_gallery.html" with issues=publication|get_first_issues_by_year:request.GET.year %}
         {% else %}
-            {% include "periodicals/includes/issue_gallery.html" with issues=publication|get_issues_by_year:publication.year_from %}
+            {% include "periodicals/includes/issue_gallery.html" with issues=publication|get_first_issues_by_year:publication.year_from %}
         {% endif %}
     </div>
 </div>
