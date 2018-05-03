@@ -109,6 +109,21 @@ class Issue(models.Model):
         return issue
 
     @property
+    def name(self):
+        issue = ''
+
+        if self.edition != 1:
+            issue = '{} edition'.format(ordinal(self.edition))
+
+        if self.component:
+            issue = '{}, {}'.format(issue, self.component)
+
+        if issue == '':
+            return "Unknown Issue"
+        else:
+            return issue
+
+    @property
     def departments(self):
         return self.get_base_query().filter(
             title_image__isnull=False).exclude(title_image__exact='').order_by(

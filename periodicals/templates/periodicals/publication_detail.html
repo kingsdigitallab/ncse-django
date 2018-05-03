@@ -59,9 +59,9 @@
                         {% for date in dates %}
                         <li>
                             <a href="#">{{ date.grouper }}</a>
-                            <ul>
+                            <ul class="menu vertical">
                                 {% for issue in date.list %}
-                                <li><a href="{{issue.url}}">{{ issue.edition }}</a></li>
+                                <li><a href="{{issue.url}}">{{ issue.name }}</a></li>
                                 {% endfor %}
                             </ul>
                         </li>
