@@ -46,7 +46,7 @@ class Publication(models.Model):
 
     @property
     def get_issues(self):
-        return Issue.objects.filter(publication=self)[:10]
+        return Issue.objects.filter(publication=self)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.abbreviation)

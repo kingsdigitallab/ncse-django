@@ -40,7 +40,7 @@ def initial_search_parameters():
 # Borrowed from wagtailbase
 @register.filter
 def get_issues_by_year(publication, year):
-    return publication.issues.filter(issue_date__year=year)
+    return publication.get_issues.filter(issue_date__year=year)
 
 
 @register.simple_tag

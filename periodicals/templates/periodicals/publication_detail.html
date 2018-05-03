@@ -41,20 +41,36 @@
 
 
 
+
+
 <!-- New template but no tags -->
 <div class="row" id="main">
     <div class="small-12 medium-3 columns" data-sticky-container>
     <h2>Years</h2>
-        <div class="sticky" data-sticky data-anchor="main">
-            <div class="menu vertical" data-magellan>
-                <ul class="multilevel-accordion-menu vertical menu" data-accordion-menu>
-                    {% for year in publication.get_year_range %}
-                    <li>
-                        <a href="?year={{year}}">{{year}}</a>
-                    </li>
-                   {% endfor %}
-                </ul>
-            </div>
+        <div class="menu vertical" data-magellan>
+            <ul class="multilevel-accordion-menu vertical menu" data-accordion-menu>
+                {% for year in publication.get_year_range %}
+                <li>
+                    <a href="?year={{year}}">{{year}}</a>
+
+                    <ul class="menu vertical">
+                        {% with issues=publication|get_issues_by_year:year %}
+                        {% regroup issues by issue_date as dates %}
+                        {% for date in dates %}
+                        <li>
+                            <a href="#">{{ date.grouper }}</a>
+                            <ul>
+                                {% for issue in date.list %}
+                                <li><a href="{{issue.url}}">{{ issue.edition }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        {% endfor %}
+                        {% endwith %}
+                    </ul>
+                </li>
+               {% endfor %}
+            </ul>
         </div>
     </div>
 
