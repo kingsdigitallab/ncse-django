@@ -50,26 +50,28 @@
         <div class="menu vertical" data-magellan>
             <ul class="multilevel-accordion-menu vertical menu" data-accordion-menu>
                 {% for year in publication.get_year_range %}
-                <li>
-                    <a href="?year={{year}}">{{year}}</a>
+                    {% with issues=publication|get_issues_by_year:year %}
+                    {% if issues %}
+                    <li>
+                        <a href="?year={{year}}">{{year}}</a>
 
-                    <ul class="menu vertical">
-                        {% with issues=publication|get_issues_by_year:year %}
-                        {% regroup issues by issue_date as dates %}
-                        {% for date in dates %}
-                        <li>
-                            <a href="#">{{ date.grouper }}</a>
-                            <ul class="menu vertical">
-                                {% for issue in date.list %}
-                                <li><a href="{{issue.url}}">{{ issue.name }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                        {% endfor %}
-                        {% endwith %}
-                    </ul>
-                </li>
-               {% endfor %}
+                        <ul class="menu vertical">
+                            {% regroup issues by issue_date as dates %}
+                            {% for date in dates %}
+                            <li>
+                                <a href="#">{{ date.grouper }}</a>
+                                <ul class="menu vertical">
+                                    {% for issue in date.list %}
+                                    <li><a href="{{issue.url}}">{{ issue.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endif %}
+                    {% endwith %}
+                {% endfor %}
             </ul>
         </div>
     </div>
