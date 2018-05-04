@@ -3,6 +3,8 @@ var word_highlight_colour = 'rgba(225,225,0,0.2)'
 // Word highlight colour
 var article_bounding_box_colour = 'rgba(104,152,204,1)'
 
+
+// This enables canvas functionality
 function enableCanvas()
 {
     // Reworked code from https://jsfiddle.net/ndYdk/7/
@@ -126,6 +128,30 @@ function enableCanvas()
     }());
 }
 
+// Enables ajax functionality in the publication detail view
+function enablePublicationDetailAjax()
+{
+    $('body').on('click', '.ajax-trigger-year-switcher', function(event)
+    {
+
+        // Do some sanity checking to make sure we aren't re-loading what's
+        // already there:
+
+        if(!$(this).hasClass('ajax-active'))
+        {
+
+            $('.ajax-trigger-year-switcher.ajax-active').removeClass('ajax-active');
+            $(this).addClass('ajax-active');
+            
+            var url = $(this).attr('href');
+            $.get(url, function(data)
+            {
+                $('#ajax-target-gallery').html(data);
+            });
+        }
+    });
+}
+
 function enableReadMore() {
     $('body').on('click', '.read-more', function(event) {
         event.preventDefault()
@@ -138,28 +164,6 @@ function enableReadMore() {
     })
 }
 
-function enablePublicationSwitcher() {
-    if ($('#publication-year-switcher').length) {
-        $('body').on('click', '#publication-year-switcher a', function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-
-            $.get($(this).attr('href'), function(data) {
-                $('#issues-ajax').html(data)
-
-                window.setTimeout(function() {
-                    // Re-initialise Equalizer
-                    new Foundation.Equalizer($('.equalize-me-again'))
-                }, 0)
-
-                // Re-initialise Equalizer
-                new Foundation.Equalizer($('.equalize-me-again'))
-            })
-            $('#publication-year-switcher a').removeClass('is-active')
-            $(this).addClass('is-active')
-        })
-    }
-}
 
 function resizeViewer()
 {
@@ -176,12 +180,14 @@ function resizeViewer()
         }
     });
 }
+
 $(function() {
     if ($('canvas').length) {
         enableCanvas()
     }
 
-    enablePublicationSwitcher();
+    enablePublicationDetailAjax();
+
     resizeViewer();
 
     if ($('#jump-to-results-section').size > 0) {

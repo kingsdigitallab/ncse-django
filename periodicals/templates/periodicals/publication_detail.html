@@ -15,7 +15,7 @@
     <div class="small-12 columns minus-margin-top">
         <ul class="menu float-left">
             <li>
-                <a href="{% url 'publication-list' %}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to Explore</a>
+                <a href="{% url 'publication-list' %}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to Browse</a>
             </li>
         </ul>
     </div>
@@ -45,21 +45,21 @@
 
 <!-- New template but no tags -->
 <div class="row" id="main">
-    <div class="small-12 medium-3 columns" data-sticky-container>
+    <div class="small-12 medium-3 columns">
     <h2>Years</h2>
-        <div class="menu vertical" data-magellan>
-            <ul class="multilevel-accordion-menu vertical menu" data-accordion-menu>
+        <div class="menu vertical">
+            <ul class="multilevel-accordion-menu vertical menu" data-accordion  data-accordion-menu data-multi-expand="false">
                 {% for year in publication.get_year_range %}
                     {% with issues=publication|get_issues_by_year:year %}
                     {% if issues %}
                     <li>
-                        <a href="?year={{year}}">{{year}}</a>
+                        <a href="{% url 'ajax-gallery-first-ed' slug=publication.slug year=year %}" class="ajax-trigger-year-switcher {% if forloop.first %} ajax-active {% endif %}" data-year="{{ year }}" >{{year}} </a>
 
                         <ul class="menu vertical">
                             {% regroup issues by issue_date as dates %}
                             {% for date in dates %}
                             <li>
-                                <a href="#">{{ date.grouper }}</a>
+                                <a href="#">{{ date.grouper }} ({{date.list|length}})</a>
                                 <ul class="menu vertical">
                                     {% for issue in date.list %}
                                     <li {% if issue.edition != '1' %}class="lighten" {% endif %}><a href="{{issue.url}}">{{ issue.name }}</a></li>
@@ -77,12 +77,10 @@
     </div>
 
     <!-- Cards -->
-    <div class="medium-9 columns">
-        {% if 'year' in request.GET %}
-            {% include "periodicals/includes/issue_gallery.html" with issues=publication|get_first_issues_by_year:request.GET.year %}
-        {% else %}
-            {% include "periodicals/includes/issue_gallery.html" with issues=publication|get_first_issues_by_year:publication.year_from %}
-        {% endif %}
+    <div class="medium-9 columns" id="ajax-target-gallery">
+
+    {% include "periodicals/includes/issue_gallery.html" with issues=publication|get_first_issues_by_year:publication.year_from %}
+
     </div>
 </div>
 

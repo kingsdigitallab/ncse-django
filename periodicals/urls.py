@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import (ArticleDetailView, ArticlePrintView, IssueDetailView,
                     PageDetailView, PagePrintView, PeriodicalsSearchView,
-                    PublicationDetailView, PublicationIssueAjax,
+                    PublicationDetailView, AjaxGalleryFirstEditionsByYear,
                     PublicationListView)
 
 urlpatterns = [
@@ -29,7 +29,8 @@ urlpatterns = [
          IssueDetailView.as_view(), name='issue-detail'),
     path('<slug:slug>/',
          PublicationDetailView.as_view(), name='publication-detail'),
-    path('<slug:slug>/<int:year>/',
-         PublicationIssueAjax.as_view(), name='publication-issue-ajax'),
+    path('ajax/first_editions/<slug:slug>/<int:year>/',
+         AjaxGalleryFirstEditionsByYear.as_view(),
+         name='ajax-gallery-first-ed'),
     path('', PublicationListView.as_view(), name='publication-list')
 ]

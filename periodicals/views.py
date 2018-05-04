@@ -132,16 +132,19 @@ class PublicationDetailView(DetailView):
         return context
 
 
-class PublicationIssueAjax(TemplateView):
-    template_name = 'periodicals/ajax/issues_by_year.html'
+class AjaxGalleryFirstEditionsByYear(TemplateView):
+    template_name = ('periodicals/ajax/'
+                     'issue_gallery_first_editions_by_year.html')
 
     def get_context_data(self, **kwargs):
-        context = super(PublicationIssueAjax, self).get_context_data(**kwargs)
+        context = super(AjaxGalleryFirstEditionsByYear,
+                        self).get_context_data(**kwargs)
+
         issues = Issue.objects.filter(
             publication__slug=self.kwargs['slug']).filter(
-            issue_date__year=self.kwargs['year'])
-        context['selected_issues'] = issues
-        context['selected_year'] = self.kwargs['year']
+            issue_date__year=self.kwargs['year']).filter(
+            edition=1)
+        context['issues'] = issues
         return context
 
 
