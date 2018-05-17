@@ -47,34 +47,37 @@
 <div class="row" id="main">
     <div class="small-12 medium-3 columns">
     <h2>Years</h2>
-        <div class="menu vertical">
-            <ul class="multilevel-accordion-menu vertical menu" data-accordion  data-accordion-menu data-multi-expand="false">
-                {% for year in publication.get_year_range %}
-                    {% with issues=publication|get_issues_by_year:year %}
-                    {% if issues %}
-                    <li>
-                        <a href="{% url 'ajax-gallery-first-ed' slug=publication.slug year=year %}" class="ajax-trigger-year-switcher {% if forloop.first %} ajax-active {% endif %}" data-year="{{ year }}" >{{year}} </a>
-
-                        <ul class="menu vertical">
-                            {% regroup issues by issue_date as dates %}
-                            {% for date in dates %}
-                            <li>
-                                <a href="#">{{ date.grouper }} ({{date.list|length}})</a>
-                                <ul class="menu vertical">
-                                    {% for issue in date.list %}
-                                    <li {% if issue.edition != '1' %}class="lighten" {% endif %}><a href="{{issue.url}}">{{ issue.name }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                    {% endif %}
-                    {% endwith %}
-                {% endfor %}
-            </ul>
-        </div>
+        <ul class="vertical menu" data-accordion  data-accordion-menu data-multi-open="false">
+            {% for year in publication.get_year_range %}
+                {% with issues=publication|get_issues_by_year:year %}
+                {% if issues %}
+                <li>
+                    <a href="{% url 'ajax-gallery-first-ed' slug=publication.slug year=year %}" class="ajax-trigger-year-switcher {% if forloop.first %} ajax-active {% endif %}" data-year="{{ year }}" >{{year}} </a>
+                    <ul class="menu vertical">
+                        {% regroup issues by issue_date as dates %}
+                        {% for date in dates %}
+                        <li>
+                            <a href="#">{{ date.grouper }} <span>({{date.list|length}})</span></a>
+                            <ul class="menu vertical">
+                                {% for issue in date.list %}
+                                <li {% if issue.edition != '1' %}class="lighten" {% endif %}><a href="{{issue.url}}">{{ issue.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endif %}
+                {% endwith %}
+            {% endfor %}
+        </ul>
     </div>
+
+
+
+
+
+
 
     <!-- Cards -->
     <div class="medium-9 columns" id="ajax-target-gallery">

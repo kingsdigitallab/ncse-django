@@ -24,11 +24,13 @@
  */
 
 /* Fonts */
-
+@import url('https://fonts.googleapis.com/css?family=Arapey|Cormorant|Cormorant+SC|Goudy+Bookletter+1911|Linden+Hill|Nanum+Myeongjo|Oranienbaum');
 @font-face {
     font-family: 'Petrona';
     src: url('/static/fonts/Petrona/Petrona-Regular.ttf');
 }
+
+
 
 /* Globals */
 
@@ -47,10 +49,24 @@ h2,
 h3,
 h4 {
     font-family: 'Petrona', serif;
+    font-family: 'Nanum Myeongjo', serif;
+//font-family: 'Arapey', serif;
+//font-family: 'Oranienbaum', serif;
+//font-family: 'Cormorant', serif;
+
+
+
 }
 
 body {
-    background: $primary-color;
+background-image: url("/static/images/pixabay-3288639_960_720.jpg");
+//background-image: url("/static/images/blackground3.jpg");
+//background-image: url("/static/images/pixabay-1568716_960_720.jpg");
+//background-repeat: no-repeat;
+background-attachment: fixed;
+//background-position: center; 
+background-size: 100% auto;
+font-size:1.2rem;
 }
 
 /** Menu helper */
@@ -87,7 +103,7 @@ canvas {
 
         &:hover
         {
-            color: #aaaaaa;
+            opacity:0.8;
             text-decoration: none;
         }
     }
@@ -102,6 +118,10 @@ h1 {
 
 h2 {
     font-size: rem-calc(20);
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.2rem 0.5rem;
 }
 
 h3 {
@@ -120,7 +140,6 @@ h4{
 
 main {
     padding: rem-calc(20 0);
-    background: #fff;
 }
 
 .border {
@@ -134,12 +153,13 @@ main {
 }
 
 .underline {
-    border-bottom: 1px solid $black;
+    //border-bottom: 1px solid $black;
 
 }
 
 .margin-bottom {
-    margin-bottom: rem-calc(32);
+  //  margin-bottom: rem-calc(32);
+  //margin-bottom: rem-calc(16);
 }
 
 // Hiding mobile menu on loading
@@ -160,9 +180,8 @@ main {
 /* Navigation */
 
 nav {
-    background-color: $primary-color;
     min-width: 100%;
-
+    color: $black;
     .label-toggle {
         display: none;
     }
@@ -176,19 +195,20 @@ nav {
         margin: 0 auto;
 
         .logo {
-            color: $white;
+            
             display: inline-block;
             margin: rem-calc(16 0);
-            width: 60%;
+            width: 40%;
 
             h1 {
-                font-size: rem-calc(16);
+                font-size: rem-calc(35);
                 text-transform: uppercase;
                 font-weight: bold;
                 float: left;
                 margin-top: rem-calc(8);
+                line-height: 2rem;
                 a {
-                    color: $white;
+                    color: $red;
                     &:hover {
                         opacity: 0.8;
                     }
@@ -213,12 +233,11 @@ nav {
             li {
                 display: inline-block;
                 margin: rem-calc(16 0);
-
                 a {
-                    color: $white;
                     padding: rem-calc(0 32);
                     text-decoration: none;
                     transition: all 0.5s ease;
+                    color: black;
 
                     &:hover {
                         opacity: 0.8;
@@ -281,6 +300,25 @@ nav {
 }
 /* Side Nav */
 
+.menu{
+    background: rgba($white,0.8);
+    ul{
+         background: rgba($black,0.05);
+        li{
+            ul{
+
+                li{
+
+                }
+            }
+        }
+    }
+}
+
+
+
+
+/** plus minue for accordion
 .multilevel-accordion-menu {
     background: #eee;
     .menu li{
@@ -325,7 +363,7 @@ nav {
   }
 }
 
-
+**/
 
 /* Subnav Tabs to accordion */
 section.tab-to-accordion {
@@ -345,9 +383,7 @@ section.tab-to-accordion {
 }
 
 /* Breadcrumbs */
-.breadcrumb-container {
-    background: #fff;
-}
+
 
 .breadcrumbs {
     li {
@@ -791,8 +827,8 @@ table {
                 }
 
                 &:hover {
+                    //background: darken($red,5%);
                     background: $primary-color;
-
                     a {
                         color: $white;
                         cursor: pointer;
@@ -836,18 +872,33 @@ body table.stack {
 /* Footer */
 
 footer {
-    background: $primary-color;
-    color: $white;
-    font-size: rem-calc(14);
-
+background: rgba(0,0,0,0.7);
+color: $white;
+font-size: rem-calc(14);
+    ul{
+        display: block;
+        width:100%;
+        &.logo{
+            >li{
+                width: 12rem;
+                display: inline-block;
+            }
+        }
+    }
     a {
-        color: $white;
+        color: $red;
         font-weight: 700;
+        &:hover{
+            color: lighten($red, 10%);
+        }
     }
 
     img {
         margin: rem-calc(16 16 32);
-        max-width: rem-calc(60);
+        max-height: rem-calc(60);
+        &:hover{
+            opacity: 0.8;
+        }
     }
 
     ul {
@@ -874,7 +925,7 @@ footer {
 
     button,
     .button {
-        background: $primary-color;
+        background: $red;
         border: 0;
         color: $black;
         max-width: rem-calc(200px);
@@ -1020,7 +1071,7 @@ footer {
         &.title {
             width: 100%;
             a {
-                color: #427ebf;
+                color: $primary-color;
             }
         }
         &.publication {

@@ -1,14 +1,6 @@
 {% load staticfiles %}
 
 <table class="stack unstriped">
-    <thead>
-        <tr>
-            <th>Publication image</th>
-            <th>Publication title</th>
-            <th>Year range</th>
-            <th>Stats</th>
-        </tr>
-    </thead>
     <tbody>
         {% for publication in publications %}
         <tr>
@@ -27,17 +19,13 @@
                 <a href="{{ p_url }}">
                     {{ publication.year_from }} to {{ publication.year_from }}
                 </a>
-            </td>
-            <td class="title">
-                <a href="{{ p_url }}">
-                    <span style="color:#777; font-size:0.85rem;">(
+                <p style="color:#777; font-size:0.85rem;">(
                         {% with number_of_years=publication.get_number_of_years %}
                         {{ number_of_years }} Year{{ number_of_years|pluralize }}
                         {% endwith %},
 
                         {{ publication.issue_count }} Issue{{ publication.issue_count|pluralize }}
-                    )</span>
-                </a>
+                    )</p>
             </td>
             {% endwith %}
         </tr>

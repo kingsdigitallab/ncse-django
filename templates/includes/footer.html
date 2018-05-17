@@ -1,16 +1,23 @@
 {% load staticfiles %}
-<ul>
-    <li>
-        <div class="logo">
-            #TODO LOGOS
-        </div>
+<ul class="logo">
+     <li>
+        <a href="//www.kcl.ac.uk/" title="King's College London">
+            <img src="{% static 'images/bbk-logo-black-digi.jpg' %}" alt="Birkbeck College">
+        </a>
     </li>
+    <li>
+        <a href="//www.kcl.ac.uk/" title="King's College London">
+            <img src="{% static 'images/KCL-logo-blackbg.svg' %}" alt="King's College London">
+        </a>
+     </li>
+</ul>
+<ul>
     <li>
         <p>© {% now "Y" %}</p>
     </li>
     <li>
         <p>
-            Designed, developed and maintained by <a href="//www.kdl.kcl.ac.uk/" title="King's Digital Lab"><strong>King's Digital Lab</strong></a>
+            Designed, developed and maintained by <a href="//www.kdl.kcl.ac.uk/" title="King's Digital Lab">King's Digital Lab</a>
         </p>
     </li>
 </ul>
