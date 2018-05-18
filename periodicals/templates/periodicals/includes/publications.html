@@ -19,13 +19,13 @@
                 <a href="{{ p_url }}">
                     {{ publication.year_from }} to {{ publication.year_from }}
                 </a>
-                <p style="color:#777; font-size:0.85rem;">(
+                <span>(
                         {% with number_of_years=publication.get_number_of_years %}
                         {{ number_of_years }} Year{{ number_of_years|pluralize }}
                         {% endwith %},
 
                         {{ publication.issue_count }} Issue{{ publication.issue_count|pluralize }}
-                    )</p>
+                    )</span>
             </td>
             {% endwith %}
         </tr>

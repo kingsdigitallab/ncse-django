@@ -13,11 +13,16 @@
 
 
 {% with ads=issue.ads departments=issue.departments articles=issue.articles pictures=issue.pictures editions=issue.get_editions components=issue.get_components %}
+
+
+
 <div class="row" id="main">
     <div class="small-12 medium-3 columns" data-sticky-container>
         <div class="sticky" data-sticky data-anchor="main">
             <div class="menu vertical">
+
                 <ul class="vertical tabs" data-tabs id="issue-nav">
+                <h2>Years</h2>
                     <li class="tabs-title is-active">
                         <a href="#departments">Departments <span>({{departments.count}})</span></a>
                     </li>
@@ -72,8 +77,7 @@
                         {% endif %}
                     </div>
                     <div class="medium-10 columns margin-bottom">
-                        <!-- TO - Remove span style border -->
-                        <img style="border:1px solid #ccc" src="{% thumbnail department.title_image.url %}" alt="{{ department }}">
+                        <img class="border" src="{% thumbnail department.title_image.url %}" alt="{{ department }}">
                     </div>
                 {% endfor %}
             {% endfor %}

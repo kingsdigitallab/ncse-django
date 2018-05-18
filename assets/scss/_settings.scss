@@ -69,19 +69,18 @@ $global-font-size: 100%;
 $global-width: rem-calc(1200);
 $global-lineheight: 1.5;
 $foundation-palette: (
-  primary: #000,
+  primary: #0584ba, 
   secondary: #9cafb7,
   success: #eac17e,
   warning: #e5925e,
   alert: #ff776d
 );
-$light-gray: #f0f0f0;
-$medium-gray: #7e7e7e;
-$dark-gray: #8a8a8a;
+$light-gray: #ddd;
+$medium-gray: #666;
+$dark-gray: #555;
 $black: #0a0a0a;
 $white: #fefefe;
-$red: #b2432f;
-$blue:#000;
+$blue: #44a2cb;
 
 
 $body-background: $white;
@@ -289,7 +288,7 @@ $button-font-family: inherit;
 $button-padding: 0.85em 1em;
 $button-margin: 0 0 $global-margin 0;
 $button-fill: solid;
-$button-background: #b2432f;
+$button-background: $primary-color;
 $button-background-hover: scale-color($button-background, $lightness: -15%);
 $button-color: $white;
 $button-color-alt: $black;
@@ -480,7 +479,7 @@ $menu-nested-margin: $global-menu-nested-margin;
 $menu-items-padding: $global-menu-padding;
 $menu-simple-margin: 1rem;
 $menu-item-color-active: $white;
-$menu-item-background-active: get-color(primary);
+$menu-item-background-active: $black;
 $menu-icon-spacing: 0.25rem;
 $menu-item-background-hover: $light-gray;
 $menu-state-back-compat: true;
@@ -773,7 +772,7 @@ $switch-paddle-transition: all 0.25s ease-out;
 // 50. Table
 // ---------
 
-$table-background: rgba(255,255,255,0.5);
+$table-background: rgba($white,0.5);
 $table-color-scale: 5%;
 $table-border: 1px solid smart-scale($table-background, $table-color-scale);
 $table-padding: rem-calc(8 10 10);
@@ -796,18 +795,18 @@ $table-stack-breakpoint: medium;
 // --------
 
 $tab-margin: 0;
-$tab-background: $white;
+$tab-background: rgba($white,0.5);
 $tab-color: $primary-color;
-$tab-background-active: $white;
+$tab-background-active: rgba($white,0.5);
 $tab-active-color: $primary-color;
 $tab-item-font-size: rem-calc(12);
 $tab-item-background-hover: $white;
 $tab-item-padding: 1.25rem 1.5rem;
 $tab-expand-max: 6;
-$tab-content-background: $white;
-$tab-content-border: $white;
+$tab-content-background: rgba($white,0.7);
+$tab-content-border: none;
 $tab-content-color: $body-font-color;
-$tab-content-padding: 1rem;
+$tab-content-padding: 0;
 
 // 52. Thumbnail
 // -------------
