@@ -66,7 +66,7 @@
 // ---------
 
 $global-font-size: 100%;
-$global-width: rem-calc(1200);
+$global-width: rem-calc(2000);
 $global-lineheight: 1.5;
 $foundation-palette: (
   primary: #0584ba, 
@@ -318,11 +318,11 @@ $buttongroup-radius-on-each: true;
 // 13. Callout
 // -----------
 
-$callout-background: $light-gray;
+$callout-background: $white;
 $callout-background-fade: 0;
 $callout-border: 1px solid $light-gray;
-$callout-margin: 0 0 1rem 0;
-$callout-padding: 1rem;
+$callout-margin: 0.5rem 0 1rem 0;
+$callout-padding: 1rem 1rem 0 1rem;
 $callout-font-color: $body-font-color;
 $callout-font-color-alt: $body-background;
 $callout-radius: $global-radius;
@@ -350,14 +350,14 @@ $closebutton-offset-horizontal: (
 );
 $closebutton-offset-vertical: (
   small: 0.33em,
-  medium: 0.5rem
+  medium: 0
 );
 $closebutton-size: (
   small: 1.5em,
   medium: 2em
 );
 $closebutton-lineheight: 1;
-$closebutton-color: $dark-gray;
+$closebutton-color: $blue;
 $closebutton-color-hover: $black;
 
 // 16. Drilldown

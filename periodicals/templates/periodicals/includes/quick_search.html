@@ -1,16 +1,47 @@
 {% load wagtailcore_tags periodicals_tags cms_tags %}
 
-<section class="callout">
-    <form method="get" action="{% url 'search' %}" class="simple">
-        <div class="row">
-            <div class="small-12 columns">
-                <label>Keyword:</label>
-                {{ form.q }} {{ form.order_by.as_hidden }}
-
-                {{ form.mode }}
-
+ <section class="callout">
+    <form method="get" action="#jumptoresults" class="advanced">
+        <div class="row medium-up-3 large-up-1">
+            <div class="column column-block">
+                {% with field=form.q %} {{ field.errors }} {{ field.label_tag }} {{ field }}
+                {% if field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %}
+                {% endwith %}
+                {% with field=form.mode %} {{ field.errors }} {{ field.label_tag }}
+                {{ field }} {% if field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %}
+                {% endwith %}
+            </div>
+            <div class="column column-block">
+                <div class="row large-up-2">
+                    <div class="column column-block">
+                        {% with field=form.start_year %} {{ field.errors }} {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.help_text %}
+                        <p class="help">{{ field.help_text|safe }}</p>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="column column-block">
+                        {% with field=form.end_year %} {{ field.errors }} {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.help_text %}
+                        <p class="help">{{ field.help_text|safe }}</p>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+            <div class="column column-block">
+                {% with field=form.order_by %} {{ field.errors }} {{ field.label_tag }} {{ field }}
+                {% if field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %}
+                {% endwith %}
                 <input class="button" type="submit" value="Search">
-                <a href="{% url 'search' %}?{% initial_search_parameters %}" class="text-center">Advanced search</a>
             </div>
         </div>
     </form>

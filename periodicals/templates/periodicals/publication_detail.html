@@ -11,16 +11,6 @@
 
 {% block main %}
 
-<div class="row">
-    <div class="small-12 columns minus-margin-top">
-        <ul class="menu float-left">
-            <li>
-                <a href="{% url 'publication-list' %}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to Browse</a>
-            </li>
-        </ul>
-    </div>
-</div>
-
 {% if publication.description %}
 <section>
     <div class="row">
@@ -46,8 +36,9 @@
 <!-- New template but no tags -->
 <div class="row" id="main">
     <div class="medium-3 columns">
-    <h2>Years</h2>
+    
         <ul class="vertical menu" data-accordion  data-accordion-menu data-multi-open="false">
+        <h2>Years</h2>
             {% for year in publication.get_year_range %}
                 {% with issues=publication|get_issues_by_year:year %}
                 {% if issues %}

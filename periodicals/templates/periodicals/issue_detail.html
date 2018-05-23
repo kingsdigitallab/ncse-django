@@ -5,7 +5,10 @@
 {{ issue }}
 {% endblock %}
 
+
+
 {% block meta_title %}
+
 {{ issue }}
 {% endblock %}
 
@@ -14,15 +17,13 @@
 
 {% with ads=issue.ads departments=issue.departments articles=issue.articles pictures=issue.pictures editions=issue.get_editions components=issue.get_components %}
 
-
-
 <div class="row" id="main">
     <div class="small-12 medium-3 columns" data-sticky-container>
         <div class="sticky" data-sticky data-anchor="main">
             <div class="menu vertical">
-
+                
                 <ul class="vertical tabs" data-tabs id="issue-nav">
-                <h2>Years</h2>
+                    <h2>Items</h2>
                     <li class="tabs-title is-active">
                         <a href="#departments">Departments <span>({{departments.count}})</span></a>
                     </li>
@@ -69,15 +70,14 @@
             {% regroup departments by page as page_list %}
             {% for page in page_list %}
                 {% for department in page.list %}
-                   
                     <div class="medium-2 columns">
-
                         {% if forloop.first %}
                         Page {{ page.grouper.number }}
                         {% endif %}
                     </div>
                     <div class="medium-10 columns margin-bottom">
                         <img class="border" src="{% thumbnail department.title_image.url %}" alt="{{ department }}">
+                        <p>OCR text</p>
                     </div>
                 {% endfor %}
             {% endfor %}
@@ -117,26 +117,24 @@
         {% if components %}
         <div class="row margin-bottom tabs-panel" id="components"> 
         <div class="column">
-        <h2 class="underline">Other Components</h2>  
-        </div>
+        <h2 class="underline margin-bottom">Other Components</h2>  
         {% include "periodicals/includes/issue_gallery.html" with issues=components %}
+        </div> 
         </div>
         {% endif %}
 
         {% if editions %}
         <div class="row margin-bottom tabs-panel" id="editions"> 
         <div class="column">
-        <h2 class="underline">Other Editions</h2>  
-        </div>
+        <h2 class="underline margin-bottom">Other Editions</h2>  
         {% include "periodicals/includes/issue_gallery.html" with issues=editions %}
+        </div>
         </div>
         {% endif %}
 
         <div class="row margin-bottom tabs-panel" id="pages">
         <div class="column">
         <h2 class="underline margin-bottom">Pages</h2>
-        </div>
-        <div class="column">
         {% include "periodicals/includes/page_gallery.html" with pages=issue.pages.all %}
         </div>
         </div>

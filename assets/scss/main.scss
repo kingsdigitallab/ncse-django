@@ -42,7 +42,7 @@ a {
 }
 
 
- 
+
 body,
 h1,
 h2,
@@ -56,7 +56,7 @@ h4 {
 }
 
 body {
-font-size:1.2rem;
+    font-size:1.2rem;
 }
 
 
@@ -88,24 +88,54 @@ canvas {
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
-}
+  }
 
-.canvas-controls
-{
+.canvas-controls{
     background: rgba(0,0,0,0.8);
     color: #888888;
     padding: 10px 20px;
-
-    a
-    {
+    width:100%;
+    display:block;
+    text-align: center;
+    a {
         color: #ffffff;
 
-        &:hover
-        {
+        &:hover {
             opacity:0.8;
             text-decoration: none;
         }
     }
+    i.fa{
+        margin:0 1rem;
+    }
+    i.circle{
+    background: $white;
+    padding:0.25rem 0.4rem;
+    color:$black;
+    border-radius:50%; 
+    font-size: 0.9rem;
+    margin:0 0.5rem;
+    }
+    span{
+        color: $white;
+        input.input{
+            width: 3rem;
+            padding: 0;
+            margin: 0;
+            display: inline-block;
+            background: none;
+            color: $white;
+            border: none;
+            text-decoration: underline;
+              &:focus {
+                outline: none; 
+                color:$blue;
+                border: none;
+              }
+
+        }
+    }
+
 }
 
 h1 {
@@ -152,13 +182,19 @@ main {
 }
 
 .underline {
-    //border-bottom: 1px solid $black;
+    border-bottom: 2px solid $black;
+    border-top: 2px solid $black;
+    background: $black;
+    color:$white;
+    padding:0.5rem;
+    font-weight: bold;
+
 
 }
 
 .margin-bottom {
   //  margin-bottom: rem-calc(32);
-  //margin-bottom: rem-calc(16);
+  margin-bottom: rem-calc(16);
 }
 
 // Hiding mobile menu on loading
@@ -194,7 +230,7 @@ nav {
         margin: 0 auto;
 
         .logo {
-            
+
             display: inline-block;
             margin: rem-calc(16 0);
             width: 30rem;
@@ -251,54 +287,73 @@ nav {
 ul.vertical.menu{
     background: $white;
     border: 1px solid $light-gray; 
-    padding: 0.5rem 0; 
+    padding: 0; 
     >li{
         >ul{
-        margin: 0 0 0 1rem;
-        padding: 0;
-        background: rgba($black,0.05);
-        border: none; 
-
-        >li
+        margin: 0 0.5rem 0.5rem 0.5rem;
+            padding: 0;
+            background: rgba($black,0.05);
+            border: none; 
+            >li
             >ul{
-               
             }
-        } 
-        a{
-            color: $black;
-            &:hover{
-        background: $black;
-        color: $white;
         }
 
+        a{
+            color: $black;
+            padding: 0.7rem 0.5rem;
+            &:hover{
+                color:$blue;
+            }
 
+        }
+        &.nohover{
+            a{
+                &:hover{
+                    color:$black;
+                }
+            }
 
+        }
+        .subitem{
+            padding:0.5rem;
+        }
 
     }
+    .is-accordion-submenu-parent[aria-expanded="true"]{ 
+        >a {
+            background: $black;
+            color:$white;
+        }
     }
-
+    .ajax-trigger-year-switcher.ajax-active{
+        background: $black;
+        color: $white;
+    }
 }
 
 
 
 .menu {
     ul{   
-    background: $white;
-    border: 1px solid $medium-gray;
+        background: $white;
+        border: 1px solid $light-gray;
+        border-top:none;
         li {
-        margin:0;
-        float: left;
+            margin:0;
+            float: left;
             &.is-active > a,
             a.is-active {
                 background: $black;
                 color: $white;
+                border:1px solid $black;
                 span {
-                color: $medium-gray;
+                    color: $medium-gray;
                 }
             }
             span {
-            font-size: 0.75rem;
-            color: $medium-gray;
+                font-size: 1rem;
+                color: $medium-gray;
             }
         }
     }    
@@ -311,12 +366,12 @@ ul.vertical.menu{
             float: left;
             &.is-active > a,
             a.is-active {
-                    background: $primary-color;
-                    color: $white;
-                    border: 1px solid $primary-color;
-                    span {
-                        color: lighten($light-gray, 3%);
-                    }
+                background: $primary-color;
+                color: $white;
+                border: 1px solid $primary-color;
+                span {
+                    color: lighten($light-gray, 3%);
+                }
             }
             span {
                 font-size: 0.75rem;
@@ -333,17 +388,6 @@ ul.vertical.menu{
 
 
 
-li.nohover{
-    background: $white;
-
-    &:hover{
-        background: red; 
-
-
-
-
-     }
-}
 
 
 
@@ -629,9 +673,9 @@ section#list.tabs-panel.is-active {
 li.tabs-title {
     a {
         color: $black;
-        font-size: 1.25rem;
+        font-size: 1.125rem;
         outline: 0;
-        padding: 1rem;
+        padding: 1rem 0.5rem;
     }
 }
 .tabs-panel{
@@ -654,7 +698,7 @@ section#list.tabs-panel.is-active {
     margin-bottom: rem-calc(8);
     float: left;
     &.filters {
-        width: 80%;
+        width: 100%;
     }
     &.full{
         width:100%;
@@ -671,14 +715,20 @@ section#list.tabs-panel.is-active {
 ul.filters {
     li.accordion-item {
         float: left;
-        width: 33.3%;
+        width: 31%;
+        margin-right: 3.3%;
         &:last-child > .accordion-content:last-child {
             border-bottom: 0;
+            margin-right: 0;
         }
+        &:last-child {
+            margin-right: 0;
+        }
+
     }
 
     .accordion-content {
-        width: 80%;
+        width: 100%;
         float: left;
     }
 }
@@ -762,49 +812,50 @@ li.accordion-item {
     }
 }
 
-section {
-    .callout {
-        padding-bottom: 0;
-        p {
-            font-size: rem-calc(14);
-            padding: 0 2.5rem 0 1rem;
-            text-align: justify;
+section.callout{
+    background: rgba($black, 0.05);
+}
+.callout {
+    p {
+        font-size: rem-calc(14);
+        padding: 0 2.5rem 0 1rem;
+        text-align: justify;
+    }
+    i {
+        font-size: rem-calc(18);
+    }
+}
+
+form {
+    &.advanced {
+        ul {
+            list-style: none;
+
+            li {
+                float: left;
+                margin-left: rem-calc(-18);
+                width: 35%;
+            }
         }
-        i {
-            font-size: rem-calc(18);
+
+        .column-block {
+            margin-bottom: 1rem;
         }
     }
 
-    form {
-        &.advanced {
-            ul {
-                list-style: none;
+    &.simple {
+        ul {
+            list-style: none;
 
-                li {
-                    float: left;
-                    margin-left: rem-calc(-18);
-                    width: 35%;
-                }
-            }
-
-            .column-block {
-                margin-bottom: 1rem;
-            }
-        }
-
-        &.simple {
-            ul {
-                list-style: none;
-
-                li {
-                    float: left;
-                    margin-left: rem-calc(-18);
-                    width: 100%;
-                }
+            li {
+                float: left;
+                margin-left: rem-calc(-18);
+                width: 100%;
             }
         }
     }
 }
+
 
 /* Table of contents */
 
@@ -852,30 +903,30 @@ table {
         tbody {
             tr {
                 &.is-active {
-                border: 3px solid $primary-color;
+                    border: 3px solid $primary-color;
                     a {
-                    color: darken($primary-color, 10%);
+                        color: darken($primary-color, 10%);
                     }
                 }
                 span{
-                font-size:0.8rem;
-                color: $medium-gray;
+                    font-size:1rem;
+                    color: $medium-gray;
 
-                    }
+                }
                 &:hover {
-                background: $black;
+                    background: $black;
                     a {
-                    color: $white;
-                    cursor: pointer;
+                        color: $white;
+                        cursor: pointer;
                         &:hover {
                             color: darken($white, 10%);
                         }
 
                     }
                     span{
-                    font-size:0.8rem;
-                    color: $light-gray;
-                        }
+                        font-size:0.8rem;
+                        color: $light-gray;
+                    }
                 }
             }
         }
@@ -912,9 +963,9 @@ body table.stack {
 /* Footer */
 
 footer {
-background: rgba($primary-color,0.1);
-color: $black;
-font-size: rem-calc(14);
+    background: rgba($primary-color,0.1);
+    color: $black;
+    font-size: rem-calc(14);
     ul{
         display: block;
         width:100%;
@@ -1069,10 +1120,10 @@ font-size: rem-calc(14);
                 margin:0;
                 width:20rem;
                 h1 {
-                padding-top: 0;
-                margin-top: 0;
-                font-size: 1.3rem;
-                line-height: 1.5rem;
+                    padding-top: 0;
+                    margin-top: 0;
+                    font-size: 1.3rem;
+                    line-height: 1.5rem;
                 }
             }
         }

@@ -11,21 +11,6 @@
 
 {% block main %}
 
-<div class="row">
-    <div class="small-12 columns minus-margin-top">
-        <ul class="menu float-left">
-            {% if request.GET.from == 'search'%}
-            <li>
-                <a href="{{ search_path }}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to search results</a>
-            </li>
-            {% else %}
-            <li>
-                <a href="{{ page.issue.url }}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to {{ page.issue.publication }}, {{ page.issue.issue_date }}</a>
-            </li>
-            {% endif %}
-        </ul>
-    </div>
-</div>
 
 
 <div class="row" id="main">
@@ -33,10 +18,27 @@
         <div class="small-12 columns sticky" data-sticky data-anchor="main">
 
             <div class="canvas-controls">
-            
-                <a href="#" class="noselect" id="plus"><i class="fa fa-search-plus"></i></a> / <a href="#" class="noselect" id="minus"><i class="fa fa-search-minus"></i></a>
+                <div class="float-left">
+                <a href="#" class="noselect" id="plus"><i class="circle fa fa-plus"></i></a> 
+               
+                <a href="#" class="noselect" id="minus"><i class="circle fa fa-minus"></i></a>
+                </div>
 
-                <a href="/periodicals/ewj/issues/ewj_01031861/page/5/print/" target="_blank" class="noselect float-right"><i class="fa fa-print"></i></a>
+                <!-- TO - Page paginataion to be implemented by dev -->
+                <span><i class="fa fa-angle-left"></i></a>
+                2/134<a href="#"><i class="fa fa-angle-right"></i></a>
+                </span>
+
+
+                <div class="float-right">
+                <a href="/periodicals/ewj/issues/ewj_01031861/page/5/print/" target="_blank" class="noselect"> <i class="fa fa-print"> </i></a>
+                <a href="" target="" class="noselect"><i class="fa fa-download"></i></a>
+                <a href="" target="" class="noselect"><i class="fa fa-expand"></i></a>
+
+                
+
+                 
+                </div>
                    
             </div>
             <canvas class="pageCanvas border noselect" data-image-id="page{{ page.number}}" id="pageCanvas" width="{{ page.width }}" height="{{ page.height }}">
@@ -111,11 +113,11 @@
                     <li>
                         <a href="#">Transcript</a>
                         <ul class="menu vertical">
-                            <li class="nohover">
-                                <a class="subitem" href="">
+                            <li>
+                                <div class="subitem" href="">
                                     {% include "periodicals/includes/ocr_warning.html" %}
                                     {% include "periodicals/includes/page_ocr.html" %}
-                                </a>
+                                </div>
                             </li>
                         </ul>
                     </li>
@@ -123,9 +125,9 @@
                         <a href="#">Citation</a>
                         <ul class="menu vertical">
                             <li>
-                                <a class="subitem" href="">
+                                <div class="subitem" href="">
                                     {{ page.issue.publication }}, {{ page.issue.issue_date }}, page {{ page.number }}, in the Nineteenth-Century Serials Edition (2008; 2018) {{ request.META.HTTP_HOST }}{{ page.url }}
-                                </a>
+                                </div>
                             </li>
                         </ul>
                     </li>
