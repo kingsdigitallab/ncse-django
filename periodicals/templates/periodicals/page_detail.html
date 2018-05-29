@@ -2,11 +2,11 @@
 {% load periodicals_tags %}
 
 {% block title %}
-{{ page.issue.publication}}, {{ page.issue.issue_date }}: Page {{ page.number }}
+{{ page.issue.publication}}, {{ page.issue.issue_date }}, Page {{ page.number }}{% if article %}, {{ article.title }}{% endif %}
 {% endblock %}
 
 {% block meta_title %}
-{{ page.issue.publication}}, {{ page.issue.issue_date }}: Page {{ page.number }}
+{{ page.issue.publication}}, {{ page.issue.issue_date }}, Page {{ page.number }}{% if article %}, {{ article.title }}{% endif %}
 {% endblock %}
 
 {% block main %}
