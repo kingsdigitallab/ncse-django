@@ -18,12 +18,12 @@
                 <form method="get" action="#jumptoresults" class="advanced">
                     <div class="row medium-up-3 large-up-3">
                         <div class="column column-block">
-                            {% with field=form.q %} {{ field.errors }} {{ field.label_tag }} {{ field }}
+                            {% with field=form.q %} {{ field.errors }} <label>Keywords</label> {{ field }}
                             {% if field.help_text %}
                             <p class="help">{{ field.help_text|safe }}</p>
                             {% endif %}
                             {% endwith %}
-                            {% with field=form.mode %} {{ field.errors }} {{ field.label_tag }}
+                            {% with field=form.mode %} {{ field.errors }} <label>Mode</label>
                             {{ field }} {% if field.help_text %}
                             <p class="help">{{ field.help_text|safe }}</p>
                             {% endif %}
@@ -32,7 +32,7 @@
                         <div class="column column-block">
                             <div class="row large-up-2">
                                 <div class="column column-block">
-                                    {% with field=form.start_year %} {{ field.errors }} {{ field.label_tag }}
+                                    {% with field=form.start_year %} {{ field.errors }} <label>Start year</label>
                                     {{ field }}
                                     {% if field.help_text %}
                                     <p class="help">{{ field.help_text|safe }}</p>
@@ -40,7 +40,7 @@
                                     {% endwith %}
                                 </div>
                                 <div class="column column-block">
-                                    {% with field=form.end_year %} {{ field.errors }} {{ field.label_tag }}
+                                    {% with field=form.end_year %} {{ field.errors }} <label>End year</label>
                                     {{ field }}
                                     {% if field.help_text %}
                                     <p class="help">{{ field.help_text|safe }}</p>
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <div class="column column-block">
-                            {% with field=form.order_by %} {{ field.errors }} {{ field.label_tag }} {{ field }}
+                            {% with field=form.order_by %} {{ field.errors }} <label>Order by</label> {{ field }}
                             {% if field.help_text %}
                             <p class="help">{{ field.help_text|safe }}</p>
                             {% endif %}
