@@ -50,6 +50,9 @@ CACHES = {
 
 CSRF_COOKIE_SECURE = True
 
+# Set to d m. yyyy
+DATETIME_FORMAT = 'j N Y'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 

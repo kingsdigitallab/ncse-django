@@ -2,14 +2,11 @@
 {% load humanize periodicals_tags %}
 
 {% block title %}
-{{ issue }}
+{{ issue.publication}}, {{ issue.issue_date|date:"j N Y" }}, {{ issue.edition_or_component }}
 {% endblock %}
 
-
-
 {% block meta_title %}
-
-{{ issue }}
+{{ issue.publication}}, {{ issue.issue_date|date:"j N Y" }}, {{ issue.edition_or_component }}
 {% endblock %}
 
 {% block main %}

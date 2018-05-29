@@ -113,6 +113,18 @@ class Issue(models.Model):
         return issue
 
     @property
+    def edition_or_component(self):
+        issue = ''
+
+        if self.edition != 1:
+            issue = '{} edition'.format(ordinal(self.edition))
+
+        if self.component:
+            issue = '{}, {}'.format(issue, self.component)
+
+        return issue
+
+    @property
     def name(self):
         issue = ''
 
