@@ -64,6 +64,25 @@ function enableCanvas()
     });
 
 
+    // This enables the canvas expansion option
+    $('body').on('click', '#canvas_expand', function(event)
+    {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if($(this).children('i').hasClass('fa-expand'))
+        {
+            $("#viewer-right").hide();
+            $("#viewer-left").addClass('maximize');
+            $(this).children('i').removeClass('fa-expand').addClass('fa-angle-double-left');
+        } else
+        {
+            $("#viewer-right").show();
+            $("#viewer-left").removeClass('maximize');
+            $(this).children('i').addClass('fa-expand').removeClass('fa-angle-double-left');
+        }
+    });
+
     // Reworked code from https://jsfiddle.net/ndYdk/7/
 
     function draw(scale, translatePos){
