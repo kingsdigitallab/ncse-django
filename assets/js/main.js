@@ -19,7 +19,7 @@ function enableCanvas()
         imin = parseInt(min);
         imax = parseInt(max);
 
-        return (isNormalInteger(val) && val >= min && val <= max)
+        return (isNormalInteger(val) && ival >= imin && ival <= imax)
     }
 
     // This enables the page switcher
