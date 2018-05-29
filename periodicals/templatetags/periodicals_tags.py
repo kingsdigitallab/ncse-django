@@ -103,7 +103,7 @@ def get_issues_published_this_month():
     """  Get all issues published on same day as current month """
     now = datetime.datetime.now()
     issues = Issue.objects.filter(
-        issue_date__month=now.month).order_by('?')[:3]
+        issue_date__month=now.month).order_by('?')[:4]
     return {'issues': issues}
 
 
