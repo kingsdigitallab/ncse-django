@@ -7,6 +7,63 @@ var article_bounding_box_colour = 'rgba(104,152,204,1)'
 // This enables canvas functionality
 function enableCanvas()
 {
+    // From https://stackoverflow.com/questions/10834796/validate-that-a-string-is-a-positive-integer
+    function isNormalInteger(str) {
+       return /^\+?(0|[1-9]\d*)$/.test(str);
+    }
+
+    // Validate our entry
+    function validate(val, min, max)
+    {
+        ival = parseInt(val);
+        imin = parseInt(min);
+        imax = parseInt(max);
+
+        return (isNormalInteger(val) && val >= min && val <= max)
+    }
+
+    // This enables the page switcher
+    window.page_switcher_open = false;
+
+    $('body').on('click', '#page_switcher', function(event)
+    {
+        if(!window.page_switcher_open)
+        {
+            event.preventDefault();
+            event.stopPropagation();
+            window.page_switcher_open = true;
+
+            $(this).html('<input type="number" id="page_switcher_input" value="' + $(this).attr('data-initial') + '" min="1" max="' + $(this).attr('data-count') + '" data-issue-url="' + $(this).attr('data-issue-url') + '">');
+            $('#page_switcher_input').focus();
+        }
+    });
+
+    $('body').on('keyup', '#page_switcher_input', function(event)
+    {
+        if(event.keyCode == 27) // ESC
+        {
+            $('#page_switcher').html($('#page_switcher').attr('data-initial'));
+            window.page_switcher_open = false;
+        } else if(event.keyCode == 13) // RETURN
+        {
+            // Validation
+            if(validate($(this).val(), $(this).attr('min'), $(this).attr('max')))
+            {
+                window.location.href = $(this).attr('data-issue-url') + 'page/' + $(this).val();
+            }
+        }
+
+        // Validation
+        if(!validate($(this).val(), $(this).attr('min'), $(this).attr('max')))
+        {
+            $(this).addClass('error');
+        } else
+        {
+            $(this).removeClass('error');
+        }
+    });
+
+
     // Reworked code from https://jsfiddle.net/ndYdk/7/
 
     function draw(scale, translatePos){

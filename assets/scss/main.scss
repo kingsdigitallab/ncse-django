@@ -1042,6 +1042,30 @@ footer {
     margin-top: rem-calc(-40);
 }
 
+
+/* Canvas page switcher */
+#page_switcher_input
+{
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: #ffffff;
+    display: inline;
+    height: auto;
+    margin: 0 10px 0 0;
+    padding: 0;
+    width: 50px;
+
+    &.error
+    {
+        background: rgba(255,0,0,0.4);
+    }
+
+    &::selection {
+        background: #ffffff;
+        color: #000000;
+        text-shadow: none;
+    }
+}
 /* Media queries */
 
 @media screen and (max-width: 1024px) {

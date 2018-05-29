@@ -24,11 +24,16 @@
                 <a href="#" class="noselect" id="minus"><i class="circle fa fa-minus"></i></a>
                 </div>
 
-                <!-- TO - Page paginataion to be implemented by dev -->
-                <span><i class="fa fa-angle-left"></i></a>
-                2/134<a href="#"><i class="fa fa-angle-right"></i></a>
-                </span>
+                {% with prev=page.previous_page next=page.next_page %}
+                <span>
 
+                {% if prev %}<a href="{{ prev.url }}"><i class="fa fa-angle-left"></i></a>{% endif %}
+
+                <span id="page_switcher" data-initial="{{ page.number }}" data-issue-url="{{ page.issue.url }}" data-count="{{ page.issue.number_of_pages}}">{{ page.number }}</span>/<span id="page_count">{{ page.issue.number_of_pages }}
+
+                {% if next %}<a href="{{ next.url }}"><i class="fa fa-angle-right"></i></a>{% endif %}
+                </span>
+                {% endwith %}
 
                 <div class="float-right">
                 <a href="/periodicals/ewj/issues/ewj_01031861/page/5/print/" target="_blank" class="noselect"> <i class="fa fa-print"> </i></a>
