@@ -64,7 +64,7 @@ img{
     &.border{
         border:1px solid $light-gray;
         &:hover{
-            border:1px solid $black;
+            border:1px solid $primary-color;
         }
     }
 }
@@ -217,14 +217,16 @@ main {
 }
 
 .underline {
-    border-bottom: 2px solid $black;
-    border-top: 2px solid $black;
-    background: $black;
+    background: $primary-color;
     color:$white;
     padding:0.5rem;
     font-weight: bold;
-
-
+    a{
+        color: $white;
+        &:hover{
+            opacity: 0.8;
+        }
+    }
 }
 
 .margin-bottom {
@@ -340,21 +342,28 @@ ul.vertical.menu{
             &:hover{
                 color:$blue;
             }
-
+            
         }
+
         &.nohover{
             a{
                 &:hover{
-                    color:$black;
+                    color:$black;   
                 }
             }
-
         }
         .subitem{
             padding:0.5rem;
         }
 
     }
+  img{
+        border:1px solid $light-gray; 
+            &:hover{
+                border:1px solid $primary-color; 
+                opacity: 0.6;
+            }
+        }
     .is-accordion-submenu-parent[aria-expanded="true"]{ 
         >a {
             background: $black;
@@ -473,22 +482,6 @@ ul.vertical.menu{
 
 **/
 
-/* Subnav Tabs to accordion */
-section.tab-to-accordion {
-    li.tabs-title a {
-        padding: 1rem 0 1rem 1rem;
-        margin-top: 0.5rem;
-    }
-    .vertical{
-        width:20%;
-        float:left;
-    }
-    .tabs-content{
-        width:70%;
-        float:left;
-    }
-    
-}
 
 /* Breadcrumbs */
 
@@ -544,10 +537,10 @@ section.tab-to-accordion {
     text-align: center;
 
     &:hover {
-        border: 1px solid $black;
+        border: 1px solid $primary-color;
         .card-section {
             &.overlay {
-                background: rgba($black,0.8);
+                background: rgba($primary-color,0.9);
             }
         }
     }
@@ -598,7 +591,7 @@ section.tab-to-accordion {
 
         &.overlay {
             color: $white;
-            background: rgba(darken($primary-color,5%), 0.8);
+            background: rgba(darken($black,5%), 0.8);
             bottom: 0;
             position: absolute;
             text-align: center;
@@ -715,6 +708,12 @@ li.tabs-title {
 }
 .tabs-panel{
     padding:0;
+      a {
+        color: $black;
+        &:hover{
+            color:$primary-color;
+        }
+    }
 }
 
 section#list.tabs-panel.is-active {
@@ -959,7 +958,6 @@ table {
 
                     }
                     span{
-                        font-size:0.8rem;
                         color: $light-gray;
                     }
                 }
@@ -998,7 +996,7 @@ body table.stack {
 /* Footer */
 
 footer {
-    background: rgba($primary-color,0.1);
+    background: rgba($primary-color,0.2);
     color: $black;
     font-size: rem-calc(14);
     ul{

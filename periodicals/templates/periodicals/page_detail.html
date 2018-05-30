@@ -64,7 +64,7 @@
                         <a href="#">Departments <span>({{departments.count}})</span></a>
                         <ul class="menu vertical">
                             {% for department in departments %}
-                            <li><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=department.slug%}"><img style="border:1px solid #ccc" src="{% thumbnail department.title_image.url %}" alt="{{ department }}"></a></li>
+                            <li><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=department.slug%}"><img src="{% thumbnail department.title_image.url %}" alt="{{ department }}"></a></li>
                             {% endfor %}
                         </ul>
                     </li>

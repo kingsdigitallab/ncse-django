@@ -29,22 +29,22 @@
 
   {% block header %}
   {% comment %} This is here because of overriding the title {% endcomment %}
+
   <section class="breadcrumb-container">
     <div class="row">
       <div class="small-12 columns">
         <div aria-label="You are here:" role="navigation">
-
           <ul class="breadcrumbs">
             {% block breadcrumbs %}
             {% endblock %}
           </ul>
 
           <span class="show-for-sr">Current: </span>
+          <!-- TO - Download PDF should only be on Issue but could not get the placement correct thus adding here-->
           <h1 class="underline">
-            {% block title %}{% endblock %}<br>
+            {% block title %}{% endblock %}<a class="float-right href="{{ page.image.url}}" target="" class="noselect" download><i class="fa fa-download"></i> PDF</a><br>
           </h1>
         </div>
-
       </div>
     </div>
   </section>
