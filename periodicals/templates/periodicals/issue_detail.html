@@ -2,7 +2,7 @@
 {% load humanize periodicals_tags %}
 
 {% block title %}
-{{ issue }}
+{{ issue }} <a class="float-right" href="{{ issue.pdf.url}}" target="" class="noselect" download><i class="fa fa-download"></i> PDF</a>
 {% endblock %}
 
 
