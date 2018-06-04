@@ -58,61 +58,67 @@
         <div class="sticky" data-sticky data-anchor="main">
         <h2>Items on this page</h2>
                 <ul class="vertical menu" data-accordion  data-accordion-menu data-multi-open="false">
-                    {% with departments=page.departments %}
-                    {% if departments %}
+
                     <li>
-                        <a href="#">Departments <span>({{departments.count}})</span></a>
+                        <a href="#">Items</a>
                         <ul class="menu vertical">
-                            {% for department in departments %}
-                            <li><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=department.slug%}"><img src="{% thumbnail department.title_image.url %}" alt="{{ department }}"></a></li>
-                            {% endfor %}
+                            {% with departments=page.departments %}
+                            {% if departments %}
+                            <li>
+                                <a href="#">Departments <span>({{departments.count}})</span></a>
+                                <ul class="menu vertical">
+                                    {% for department in departments %}
+                                    <li><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=department.slug%}"><img src="{% thumbnail department.title_image.url %}" alt="{{ department }}"></a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            {% endif %}
+                            {% endwith %}
+
+
+                            {% with ads=page.ads %}
+                            {% if ads %}
+                            <li>
+                                <a href="#">Adverts <span>({{ads.count}})</span></a>
+                                <ul class="menu vertical">
+                                    {% for ad in ads %}
+                                    <li><a class="subitem" href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=ad.slug%}">{% if ad.title %}{{ ad.title }}{% else %}Untitled{% endif %}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            {% endif %}
+                            {% endwith %}
+
+                            {% with pictures=page.pictures %}
+                            {% if pictures %}
+                            <li>
+                                <a href="#a2">Pictures <span>({{pictures.count}})</i></span></a>
+                                <ul class="menu vertical">
+                                    {% for picture in pictures %}
+                                    <li><a class="subitem" href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=picture.slug%}">{% if picture.title %}{{ picture.title }}{% else %}Untitled{% endif %}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            {% endif %}
+                            {% endwith %}
+
+                            {% with articles=page.articles %}
+                            {% if articles %}
+                            <li>
+                                <a href="#">Text <span>({{articles.count}})</i></span></a>
+                                <ul class="menu vertical">
+
+                                {% for article in articles %}
+
+                                    <li><a class="subitem" href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=article.slug%}">{% if article.title %}{{ article.title }}{% else %}Untitled{% endif %}</a></li>
+                                {% endfor %}
+              
+                                </ul>
+                            </li>
+                            {% endif %}
+                            {% endwith %}
                         </ul>
                     </li>
-                    {% endif %}
-                    {% endwith %}
-
-
-                    {% with ads=page.ads %}
-                    {% if ads %}
-                    <li>
-                        <a href="#">Adverts <span>({{ads.count}})</span></a>
-                        <ul class="menu vertical">
-                            {% for ad in ads %}
-                            <li><a class="subitem" href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=ad.slug%}">{% if ad.title %}{{ ad.title }}{% else %}Untitled{% endif %}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                    {% endif %}
-                    {% endwith %}
-
-                    {% with pictures=page.pictures %}
-                    {% if pictures %}
-                    <li>
-                        <a href="#a2">Pictures <span>({{pictures.count}})</i></span></a>
-                        <ul class="menu vertical">
-                            {% for picture in pictures %}
-                            <li><a class="subitem" href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=picture.slug%}">{% if picture.title %}{{ picture.title }}{% else %}Untitled{% endif %}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                    {% endif %}
-                    {% endwith %}
-
-                    {% with articles=page.articles %}
-                    {% if articles %}
-                    <li>
-                        <a href="#">Text <span>({{articles.count}})</i></span></a>
-                        <ul class="menu vertical">
-
-                        {% for article in articles %}
-
-                            <li><a class="subitem" href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=article.slug%}">{% if article.title %}{{ article.title }}{% else %}Untitled{% endif %}</a></li>
-                        {% endfor %}
-      
-                        </ul>
-                    </li>
-                    {% endif %}
-                    {% endwith %}
 
 
                     <li>
