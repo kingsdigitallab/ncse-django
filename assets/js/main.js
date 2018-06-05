@@ -223,6 +223,8 @@ function enablePublicationDetailAjax()
             $.get(url, function(data)
             {
                 $('#ajax-target-gallery').html(data);
+            }, function()
+            {
                 $(document).foundation();
             });
         }
