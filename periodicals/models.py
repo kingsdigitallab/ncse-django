@@ -17,6 +17,7 @@ class Publication(models.Model):
     year_to = models.PositiveIntegerField(blank=True, null=True)
     page_count = models.PositiveIntegerField(default=0)
     issue_count = models.PositiveIntegerField(default=0)
+    article_count = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ['ordering']
@@ -70,6 +71,12 @@ class Publication(models.Model):
                 total_pages=Sum('number_of_pages'))
             if aggregation:
                 self.page_count = aggregation['total_pages']
+
+            # Save article counts
+            aggregation_ar = self.issues.aggregate(
+                total_articles=Sum('article_count'))
+            if aggregation_ar:
+                self.article_count = aggregation_ar['total_articles']
 
         super(Publication, self).save(*args, **kwargs)
 
