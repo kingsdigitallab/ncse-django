@@ -13,7 +13,7 @@ class IssueInline(admin.TabularInline):
 
 @admin.register(Publication)
 class PublicationAdmin(admin.ModelAdmin):
-    inlines = [IssueInline]
+    # inlines = [IssueInline]
 
     list_display = ['abbreviation', 'title']
     list_filter = ['abbreviation']
