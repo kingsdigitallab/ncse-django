@@ -223,9 +223,12 @@ function enablePublicationDetailAjax()
             $.get(url, function(data)
             {
                 $('#ajax-target-gallery').html(data);
-            }, function()
-            {
-                $(document).foundation();
+            }).done(function()
+            {   
+                $("img").ready(function(event)
+                {
+                    $(document).foundation();
+                });
             });
         }
     });
