@@ -77,12 +77,10 @@
                         {% endif %}
                     </div>
                     <div class="medium-10 columns margin-bottom">
-                        <a href="">
+                        <a href="{% url 'article-detail' publication_slug=department.page.issue.publication.slug issue_slug=department.page.issue.slug number=department.page.number article_slug=department.slug%}">
                             <img class="border" src="{% thumbnail department.title_image.url %}" alt="{{ department }}">
                         </a>
-                        <a href="">
-                            <p>OCR text</p>
-                        </a>
+                        <p>{{ department.content_html|safe }}</p>
                     </div>
                 {% endfor %}
             {% endfor %}
