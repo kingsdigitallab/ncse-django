@@ -1,3 +1,4 @@
+{% load humanize periodicals_tags %}
 
  
  {% for item in items %}     
@@ -6,7 +7,17 @@
         <a href="{{ item_url }}">Page {{ item.page.number }}</a>
     </div>
     <div class="medium-10 columns">
-        <a href="{{ item_url }}">{% if item.title %}{{ item.title }}{% else %}Untitled{% endif %}</a>
+        {% if item.title_image %}
+        <a href="{{ item_url }}">
+                <img class="border" src="{% thumbnail item.title_image.url %}" alt="{{ item.title }}">
+        </a>
+        {% endif %}
+        <p>
+            <a href="{{ item_url }}">
+                {% if item.title %}{{ item.title }}{% else %}Untitled{% endif %}
+            </a>
+        </p>
+        </a>
     </div>
     {% endwith %}
 {% endfor %}
