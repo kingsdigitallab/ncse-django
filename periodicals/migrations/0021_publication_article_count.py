@@ -6,11 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     def resave(apps, schema_editor):
+
+        print("Youll need to re-save all publications")
+
+        '''
         Publication = apps.get_model('periodicals', 'Publication')
 
         for p in Publication.objects.all():
             p.save()
-
+        '''
+        
     dependencies = [
         ('periodicals', '0020_re_save_all'),
     ]

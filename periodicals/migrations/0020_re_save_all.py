@@ -8,9 +8,9 @@ class Migration(migrations.Migration):
 
     def resave(apps, schema_editor):
 
-        print("WARNING: Re-saving all objects to generate\
-              statistics and cached titles. This may take\
-              a while.")
+        print("WARNING: You need to re-save articles, issues\
+            and publications")
+        '''
         Article = apps.get_model('periodicals', 'Article')
         Issue = apps.get_model('periodicals', 'Issue')
         Publication = apps.get_model('periodicals', 'Publication')
@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
 
         for p in Publication.objects.all():
             p.save()
-
+        '''
 
     dependencies = [
         ('periodicals', '0019_change_meta_options_on_article_issue_page'),
