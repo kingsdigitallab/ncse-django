@@ -28,7 +28,7 @@ class PageInline(admin.TabularInline):
 
 @admin.register(Issue)
 class IssueAdmin(admin.ModelAdmin):
-    inlines = [PageInline]
+    # inlines = [PageInline]
 
     list_display = ['uid', 'publication', 'component', 'edition', 'issue_date']
     list_filter = ['publication__abbreviation', 'component', 'edition',
