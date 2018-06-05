@@ -66,8 +66,12 @@
         {% if departments %}
         <div class="row margin-bottom tabs-panel is-active" id="departments">
             <div class="column">
+
+
             <h2 class="underline">Departments</h2>
+            {% include "periodicals/includes/ocr_warning.html" %}
             </div>
+
             {% regroup departments by page as page_list %}
             {% for page in page_list %}
                 {% for department in page.list %}
@@ -93,6 +97,7 @@
         <div class="row margin-bottom tabs-panel" id="ads">   
         <div class="column">
         <h2 class="underline">Adverts</h2>
+        {% include "periodicals/includes/ocr_warning.html" %}
         </div>
         {% include "periodicals/includes/issue_toc.html" with items=ads %}
         </div>
@@ -102,6 +107,7 @@
         <div class="row margin-bottom tabs-panel" id="images">   
         <div class="column">
         <h2 class="underline">Images</h2>
+        {% include "periodicals/includes/ocr_warning.html" %}
         </div>
         {% include "periodicals/includes/issue_toc.html" with items=pictures %}
         </div>
@@ -111,6 +117,7 @@
         <div class="row margin-bottom tabs-panel" id="text"> 
         <div class="column">
         <h2 class="underline">Text</h2>  
+        {% include "periodicals/includes/ocr_warning.html" %}
         </div>
         {% include "periodicals/includes/issue_toc.html" with items=articles %}
         </div>
