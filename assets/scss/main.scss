@@ -906,8 +906,11 @@ table {
             }
         }
 
-        &.fixed {
-            width: rem-calc(16);
+        &.title{
+            width: 33.3%;
+            img{
+                width:80%;
+            }
         }
 
         &.float-left {
@@ -1196,10 +1199,16 @@ footer {
             }
         }
         &.title {
-            width: 100%;
+            width: 100% !important;
+            text-align: center;
+            padding: 0.3rem 0;
             a {
                 color: $primary-color;
             }
+            img{
+                width:50% !important;
+            }
+
         }
         &.publication {
             width: initial !important;
@@ -1269,6 +1278,14 @@ footer {
             }
         }
     }*/
+    td {
+        &.title {
+            img{
+                width:100% !important;
+            }
+
+        }
+    }
 }
 
 @media screen and (max-width: 400px) {
