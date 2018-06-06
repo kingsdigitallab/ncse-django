@@ -57,6 +57,7 @@ h4 {
 
 body {
     font-size:1.2rem;
+    margin:0 5%;
 }
 
 
@@ -1250,6 +1251,9 @@ footer {
 }
 
 @media screen and (max-width: 450px) {
+    body{
+        margin:0;
+    }
     .tab_container.subnav [type='radio'] + label {
         padding: 0 1rem;
     }
