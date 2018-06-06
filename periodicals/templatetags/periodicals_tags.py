@@ -95,7 +95,9 @@ def get_issues_published_today():
     issues = Issue.objects.filter(
         issue_date__day=now.day,
         issue_date__month=now.month).order_by('?')[:3]
-    return {'issues': issues}
+
+    config = 'medium-up-2 large-up-2 xlarge-up-2'
+    return {'issues': issues, 'config': config}
 
 
 @register.inclusion_tag('periodicals/includes/issue_gallery.html')
@@ -104,7 +106,8 @@ def get_issues_published_this_month():
     now = datetime.datetime.now()
     issues = Issue.objects.filter(
         issue_date__month=now.month).order_by('?')[:4]
-    return {'issues': issues}
+    config = 'medium-up-2 large-up-2 xlarge-up-2'
+    return {'issues': issues, 'config': config}
 
 
 @register.inclusion_tag('periodicals/includes/quick_search.html')
