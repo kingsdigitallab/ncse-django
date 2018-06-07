@@ -22,7 +22,6 @@
     <div class="small-12 medium-3 columns" data-sticky-container>
         <div class="sticky" data-sticky data-anchor="main">
             <div class="menu vertical ">
-                
                 <ul class="vertical tabs menu" data-tabs id="issue-nav">
                     <h2>Items</h2>
                     <li class="tabs-title is-active">
@@ -44,18 +43,18 @@
                     </li>
                     {% endif %}
                     {% if editions %}
-                    <li class="tabs-title">
+                     <h2 class="tabs-title">
                         <a href="#editions">Other Editions <span>({{ editions.count}})</i></span></a>
-                    </li>
+                    </h2>
                     {% endif %}
                     {% if components %}
-                    <li class="tabs-title">
+                    <h2 class="tabs-title">
                         <a href="#components">Other Components <span>({{ components.count}})</i></span></a>
-                    </li>
+                    </h2>
                     {% endif %}
-                    <li class="tabs-title">
+                     <h2 class="tabs-title">
                         <a href="#pages">Pages <span>({{ issue.number_of_pages }})</span></a>
-                    </li>
+                    </h2>
                 </ul>
             </div>
         </div>

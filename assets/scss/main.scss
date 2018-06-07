@@ -326,6 +326,41 @@ ul.vertical.menu{
     background: $white;
     border: 1px solid $light-gray; 
     padding: 0; 
+    margin-bottom:0.5rem;
+    h2.tabs-title{
+        margin:0.5rem 0 0 0;
+        padding:0;
+        a{
+            padding: 0.5rem 0.5rem;
+            font-size: 1.25rem;
+            color:$white;
+            &:hover{
+            background: $white;
+            color: $primary-color;
+            opacity: 1;
+            }
+            &:focus{
+            background: $black;
+            color: $white;
+            outline:0;
+                &:hover{
+                color: $primary-color;
+                opacity: 1;
+                }
+            }
+            :visited, :checked{
+            background: $primary-color!important;
+            color: $white;
+            }
+            span{
+                color:$light-gray;
+                font-size: 1rem;
+                font-weight: normal;
+            }
+        }
+        
+    }
+
     >li{
         >ul{
         margin: 0 0.5rem 0.5rem 0.5rem;
