@@ -297,7 +297,7 @@ $button-hollow-border-width: 1px;
 $button-sizes: (
   tiny: 0.6rem,
   small: 0.75rem,
-  default: 0.9rem,
+  default: 1rem,
   large: 1.25rem
 );
 $button-palette: $foundation-palette;
@@ -834,10 +834,10 @@ $titlebar-icon-spacing: 0.25rem;
 
 $has-tip-cursor: help;
 $has-tip-font-weight: $global-weight-bold;
-$has-tip-border-bottom: dotted 1px $dark-gray;
+$has-tip-border-bottom: none;
 $tooltip-background-color: $black;
 $tooltip-color: $white;
-$tooltip-padding: 0.75rem;
+$tooltip-padding: 0.5rem;
 $tooltip-max-width: 10rem;
 $tooltip-font-size: $small-font-size;
 $tooltip-pip-width: 0.75rem;

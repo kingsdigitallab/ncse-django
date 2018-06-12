@@ -41,8 +41,6 @@ a {
     }
 }
 
-
-
 body,
 h1,
 h2,
@@ -55,9 +53,13 @@ h4 {
 //font-family: 'Cormorant', serif;
 }
 
+
+h4{
+    font-size:1rem;
+    font-weight: bold;
+}
 body {
     font-size:1.2rem;
-    margin:0 5%;
 }
 
 
@@ -205,6 +207,7 @@ h4{
 
 main {
     padding: rem-calc(20 0);
+    margin: 0 5%;
 }
 
 .border {
@@ -215,6 +218,7 @@ main {
     margin: rem-calc(8 0) !important;
     padding: rem-calc(12 16);
     width: 100%;
+    font-weight: bold;
 }
 
 .underline {
@@ -250,10 +254,19 @@ main {
     }
 }
 
+.has-tip{
+    outline:0; 
+        &:visited,&:active,&:focus{
+        outline:0; 
+    }
+}
+
+
 /* Navigation */
 
 nav {
-    min-width: 100%;
+    width: 100%;
+    margin: 0 5%;
     color: $black;
     .label-toggle {
         display: none;
@@ -267,11 +280,67 @@ nav {
         display: block;
         margin: 0 auto;
 
-        .logo {
+/*.splatter {
+  position: absolute;
+  top: -60px;
+  left: 500px;
+  z-index: -2;
+  -webkit-animation-name: zoomIn;
+  animation-name: zoomIn;
+  -webkit-animation-duration: .05s;
+  animation-duration: .05s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both; 
+  -webkit-animation-delay: 2s;
+  animation-delay: 2s; 
+}
+img.splatter{
+  width:300px;
+  height:300px;
+}
 
+
+@-webkit-keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+@-webkit-keyframes zoomIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(.3, .3, .3);
+            transform: scale3d(.3, .3, .3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(.3, .3, .3);
+            transform: scale3d(.3, .3, .3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.zoomIn {
+  -webkit-animation-name: zoomIn;
+          animation-name: zoomIn;
+}*/
+        .logo {
             display: inline-block;
             margin: rem-calc(16 0);
-            width: 30rem;
+            width: 35rem;
 
             h1 {
                 font-size: rem-calc(35);
@@ -280,11 +349,27 @@ nav {
                 float: left;
                 margin-top: rem-calc(8);
                 line-height: 2rem;
+                padding-left:8%;
                 a {
                     color: $primary-color;
                     &:hover {
                         opacity: 0.8;
                     }
+                }
+                &:after{
+                content: "";
+                display: block;
+                float: left;
+                position: absolute;
+                width:925px;
+                height:1408px;
+                left:5%;
+                top:2%;
+                opacity: 0.6;
+                z-index: -1;
+                background-image: url(/static/images/newsboy-hflip.png);
+                background-repeat: no-repeat;
+                background-size: 8% 8%;
                 }
             }
             img {
@@ -377,6 +462,11 @@ ul.vertical.menu{
             padding: 0.7rem 0.5rem;
             &:hover{
                 color:$blue;
+            }
+            span{
+                color:$medium-gray;
+                font-size: 1rem;
+                font-weight: normal;
             }
             
         }
@@ -887,12 +977,48 @@ section.callout{
 }
 .callout {
     p {
-        font-size: rem-calc(14);
-        padding: 0 2.5rem 0 1rem;
+        font-size: rem-calc(18);
         text-align: justify;
     }
     i {
         font-size: rem-calc(18);
+    }
+    &.ocr-warning{
+        margin: 2rem 1rem 1rem 1rem;
+        p {
+        padding: 0 3rem 0 2rem;
+        font-size:0.8rem;
+        }
+       &:before{
+        content: "";
+        display: block;
+        float: left;
+        position: absolute;
+        width: 50px;
+        height: 136px;
+        left: -2%;
+        top: -40%;
+        opacity: 0.6;
+        z-index: 1;
+        background-image: url(/static/images/moustacheman.png);
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        }
+        /*&:before{
+        content: "";
+        display: block;
+        float: left;
+        position: absolute;
+        width: 1000px;
+        height: 595px;
+        left: -3%;
+        top: -11%;
+        opacity: 0.6;
+        z-index: 1;
+        background-image: url(/static/images/tomahawkman.png);
+        background-repeat: no-repeat;
+        background-size: 10% 10%;
+        }*/
     }
 }
 
@@ -1279,15 +1405,13 @@ footer {
     }
     section .callout {
         padding-bottom: 0;
-        p {
-            padding: 0 3rem 0 0rem;
-        }
     }
 }
 
 @media screen and (max-width: 450px) {
-    body{
+    nav, main{
         margin:0;
+
     }
     .tab_container.subnav [type='radio'] + label {
         padding: 0 1rem;

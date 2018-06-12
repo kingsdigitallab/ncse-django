@@ -19,26 +19,26 @@
 
             <div class="canvas-controls">
                 <div class="float-left">
-                <a href="#" class="noselect" id="plus"><i class="circle fa fa-plus"></i></a> 
+                <span data-tooltip tabindex="1" title="Zoom in"><a href="#" class="noselect" id="plus"><i class="circle fa fa-plus"></i></a></span>
                
-                <a href="#" class="noselect" id="minus"><i class="circle fa fa-minus"></i></a>
+                <span data-tooltip tabindex="1" title="Zoom out"><a href="#" class="noselect" id="minus"><i class="circle fa fa-minus"></i></a></span>
                 </div>
 
                 {% with prev=page.previous_page next=page.next_page %}
                 <span>
 
-                {% if prev %}<a href="{{ prev.url }}"><i class="fa fa-angle-left"></i></a>{% endif %}
+                {% if prev %}<span data-tooltip tabindex="1" title="Previous page"><a href="{{ prev.url }}"><i class="fa fa-angle-left"></i></a></span>{% endif %}
 
                 <span id="page_switcher" data-initial="{{ page.number }}" data-issue-url="{{ page.issue.url }}" data-count="{{ page.issue.number_of_pages}}">{{ page.number }}</span>/<span id="page_count">{{ page.issue.number_of_pages }}
 
-                {% if next %}<a href="{{ next.url }}"><i class="fa fa-angle-right"></i></a>{% endif %}
+                {% if next %}<a href="{{ next.url }}"><span data-tooltip tabindex="1" title="Next page"><i class="fa fa-angle-right"></i></a></span>{% endif %}
                 </span>
                 {% endwith %}
 
                 <div class="float-right">
-                <a href="/periodicals/ewj/issues/ewj_01031861/page/5/print/" target="_blank" class="noselect"> <i class="fa fa-print"> </i></a>
-                <a href="{{ page.image.url}}" target="" class="noselect" download><i class="fa fa-download"></i></a>
-                <a href="#" target="" class="noselect" id="canvas_expand"><i class="fa fa-expand"></i></a>
+                <span data-tooltip tabindex="1" title="Print page"><a href="/periodicals/ewj/issues/ewj_01031861/page/5/print/" target="_blank" class="noselect"> <i class="fa fa-print"> </i></a></span>
+                <span data-tooltip tabindex="1" title="Download page"><a href="{{ page.image.url}}" target="" class="noselect" download><i class="fa fa-download"></i></a></span>
+                <span data-tooltip tabindex="1" title="Expand full screen"><a href="#" target="" class="noselect" id="canvas_expand"><i class="fa fa-expand"></i></a></span>
 
                 
 
@@ -56,122 +56,109 @@
     <div class="medium-3 columns" data-sticky-container id="viewer-right">
         
         <div class="sticky" data-sticky data-anchor="main">
-        <h2>Items on this page</h2>
-                <ul class="vertical menu" data-accordion  data-accordion-menu data-multi-open="false">
+            <h2>On this page</h2>
 
-                    <li>
-                        <a href="#">Items</a>
-                        <ul class="menu vertical">
-                            {% with departments=page.departments %}
-                            {% if departments %}
-                            <li>
-                                <a href="#">Departments <span>({{departments.count}})</span></a>
-                                <ul class="menu vertical">
-                                    {% for department in departments %}
-                                    <li><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=department.slug%}"><img src="{% thumbnail department.title_image.url %}" alt="{{ department }}"></a></li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
+            <ul class="vertical menu" data-accordion  data-accordion-menu data-multi-open="false">
+
+                {% with departments=page.departments %}
+                {% if departments %}
+                <li>
+                    <a href="#">Departments <span>({{departments.count}})</span></a>
+                    <ul class="menu">
+                        {% for department in departments %}
+                        <li><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=department.slug%}"><img src="{% thumbnail department.title_image.url %}" alt="{{ department }}"></a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endif %}
+                {% endwith %}
+
+                {% with ads=page.ads %}
+                {% if ads %}
+                <li>
+                    <a href="#">Adverts <span>({{ads.count}})</span></a>
+                    <ul class="menu">
+                        {% for ad in ads %}
+                        <li><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=ad.slug%}">
+                            {% if ad.title_image %}
+                            <img class="border" src="{% thumbnail ad.title_image.url %}" alt="{{ ad.title }}">
+                            {% else %}
+                                {% if ad.title %}{{ ad.title }}{% else %}Untitled{% endif %}
                             {% endif %}
-                            {% endwith %}
+                        </a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endif %}
+                {% endwith %}
 
+                {% with pictures=page.pictures %}
+                {% if pictures %}
+                <li>
+                    <a href="#a2">Pictures <span>({{pictures.count}})</i></span></a>
+                    <ul class="menu">
+                        {% for picture in pictures %}
+                        <li><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=picture.slug%}">
 
-                            {% with ads=page.ads %}
-                            {% if ads %}
-                            <li>
-                                <a href="#">Adverts <span>({{ads.count}})</span></a>
-                                <ul class="menu vertical">
-                                    {% for ad in ads %}
-                                    <li><a class="subitem" href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=ad.slug%}">
-                                        {% if ad.title_image %}
-                                        <img class="border" src="{% thumbnail ad.title_image.url %}" alt="{{ ad.title }}">
-                                        {% else %}
-                                            {% if ad.title %}{{ ad.title }}{% else %}Untitled{% endif %}
-                                        {% endif %}
-                                    </a></li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
+                            {% if picture.title_image %}
+                            <img class="border" src="{% thumbnail picture.title_image.url %}" alt="{{ picture.title }}">
+                            {% else %}
+                                {% if picture.title %}{{ picture.title }}{% else %}Untitled{% endif %}
                             {% endif %}
-                            {% endwith %}
+                        </a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endif %}
+                {% endwith %}
 
-                            {% with pictures=page.pictures %}
-                            {% if pictures %}
-                            <li>
-                                <a href="#a2">Pictures <span>({{pictures.count}})</i></span></a>
-                                <ul class="menu vertical">
-                                    {% for picture in pictures %}
-                                    <li><a class="subitem" href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=picture.slug%}">
+                {% with articles=page.articles %}
+                {% if articles %}
+                <li >
+                    <a href="#">Text <span>({{articles.count}})</i></span></a>
+                    
+                    <ul class="menu">
+                        {% include "periodicals/includes/ocr_warning.html" %}
+                    {% for article in articles %}
 
-                                        {% if picture.title_image %}
-                                        <img class="border" src="{% thumbnail picture.title_image.url %}" alt="{{ picture.title }}">
-                                        {% else %}
-                                            {% if picture.title %}{{ picture.title }}{% else %}Untitled{% endif %}
-                                        {% endif %}
-                                    </a></li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                            {% endif %}
-                            {% endwith %}
+                        <li><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=article.slug %}">
+                        {% if article.title_image %}
+                            <img class="border" src="{% thumbnail article.title_image.url %}" alt="{{ article.title }}">
+                        {% endif %}
+                        {% if article.title %}<p>{{ article.title }}</p>{% else %}Untitled{% endif %}</a></li>
+                    {% endfor %}
+  
+                    </ul>
+                </li>
+                {% endif %}
+                {% endwith %}
 
-                            {% with articles=page.articles %}
-                            {% if articles %}
-                            <li>
-                                <a href="#">Text <span>({{articles.count}})</i></span></a>
-                                
-                                <ul class="menu vertical">
-                                    {% include "periodicals/includes/ocr_warning.html" %}
-                                {% for article in articles %}
-
-                                    <li><a class="subitem" href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=article.slug %}">
-                                    {% if article.title_image %}
-                                        <img class="border" src="{% thumbnail article.title_image.url %}" alt="{{ article.title }}">
-                                    {% endif %}
-                                    {% if article.title %}<p>{{ article.title }}</p>{% else %}Untitled{% endif %}</a></li>
-                                {% endfor %}
-              
-                                </ul>
-                            </li>
-                            {% endif %}
-                            {% endwith %}
-                        </ul>
-                    </li>
-
-
-                    <li>
-                        <a href="#">Transcript</a>
-                        <ul class="menu vertical">
-                            <li>
-                                <div class="subitem" href="">
-                                    {% include "periodicals/includes/ocr_warning.html" with alignment=True %}
-                                    {% include "periodicals/includes/page_ocr.html" %}
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">Citation</a>
-                        <ul class="menu vertical">
-                            <li>
-                                <div class="subitem" href="">
-                                    {{ page.issue.publication }}, {{ page.issue.issue_date }}, page {{ page.number }}, in the Nineteenth-Century Serials Edition (2008; 2018) {{ request.META.HTTP_HOST }}{{ page.url }}
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                <li>
+                    <a href="#">Transcript</a>
+                    <ul class="menu">
+                        <li class="callout">
+                            <div href="">
+                                {% include "periodicals/includes/ocr_warning.html" with alignment=True %}
+                                {% include "periodicals/includes/page_ocr.html" %}
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Citation</a>
+                    <ul class="menu">
+                        <li class="callout">
+                            <div href="">
+                                {{ page.issue.publication }}, {{ page.issue.issue_date }}, page {{ page.number }}, in the Nineteenth-Century Serials Edition (2008; 2018) {{ request.META.HTTP_HOST }}{{ page.url }}
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
 
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
 
 
 

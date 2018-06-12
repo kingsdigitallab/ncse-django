@@ -17,15 +17,13 @@
             </td>
             <td class="title">
                 <a href="{{ p_url }}">
-                    {{ publication.year_from }} to {{ publication.year_from }}
+                {{ publication.article_count }} Item{{ publication.article_count|pluralize }} over
+                {% with number_of_years=publication.get_number_of_years %}
+                {{ number_of_years }} Year{{ number_of_years|pluralize }}
+                {% endwith %}
                 </a>
-                <span>(
-                        {% with number_of_years=publication.get_number_of_years %}
-                        {{ number_of_years }} Year{{ number_of_years|pluralize }}
-                        {% endwith %},
-
-                        {{ publication.article_count }} Item{{ publication.article_count|pluralize }}
-                    )</span>
+                        
+                 
             </td>
             {% endwith %}
         </tr>

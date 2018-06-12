@@ -21,36 +21,3 @@
     </div>
     {% endwith %}
 {% endfor %}
-
-
-
-
-
-
-<!--<table class="stack unstriped">
-    <thead>
-        <tr>
-            <th>Item</th>
-            <th>Page</th>
-        </tr>
-    </thead>
-    <tbody>
-
-        {% for item in items %}
-        <tr>
-
-            {% with item_url=item.url %}
-
-            <td class="title">
-                <a href="{{ item_url }}">{% if item.title %}{{ item.title }}{% else %}Untitled{% endif %}</a>
-            </td>
-            <td class="fixed add-page">
-                <a href="{{ item_url }}">{{ item.page.number }}</a>
-            </td>
-
-            {% endwith %}
-
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>-->

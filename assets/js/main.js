@@ -74,12 +74,12 @@ function enableCanvas()
         {
             $("#viewer-right").hide();
             $("#viewer-left").addClass('maximize');
-            $(this).children('i').removeClass('fa-expand').addClass('fa-angle-double-left');
+            $(this).children('i').removeClass('fa-expand').addClass('fa-compress');
         } else
         {
             $("#viewer-right").show();
             $("#viewer-left").removeClass('maximize');
-            $(this).children('i').addClass('fa-expand').removeClass('fa-angle-double-left');
+            $(this).children('i').addClass('fa-expand').removeClass('fa-compress');
         }
     });
 
