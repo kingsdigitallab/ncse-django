@@ -14,10 +14,10 @@
 
 
 <div class="row" id="main">
-    <div class="medium-9 columns sticky" id="viewer-left">
-        <div class="small-12 columns sticky" data-sticky data-anchor="main">
+    <div class="medium-9 columns" id="viewer-left" data-sticky-container>
+        <div class="small-12 columns" >
 
-            <div class="canvas-controls">
+            <div class="canvas-controls sticky" data-sticky data-anchor="main">
                 <div class="float-left">
                 <span data-tooltip tabindex="1" title="Zoom in"><a href="#" class="noselect" id="plus"><i class="circle fa fa-plus"></i></a></span>
                
@@ -29,7 +29,7 @@
 
                 {% if prev %}<span data-tooltip tabindex="1" title="Previous page"><a href="{{ prev.url }}"><i class="fa fa-angle-left"></i></a></span>{% endif %}
 
-                <span id="page_switcher" data-initial="{{ page.number }}" data-issue-url="{{ page.issue.url }}" data-count="{{ page.issue.number_of_pages}}">{{ page.number }}</span>/<span id="page_count">{{ page.issue.number_of_pages }}
+                <span id="page_switcher" data-initial="{{ page.number }}" data-issue-url="{{ page.issue.url }}" data-count="{{ page.issue.number_of_pages}}">Page {{ page.number }}</span> of <span id="page_count">{{ page.issue.number_of_pages }}
 
                 {% if next %}<a href="{{ next.url }}"><span data-tooltip tabindex="1" title="Next page"><i class="fa fa-angle-right"></i></a></span>{% endif %}
                 </span>
