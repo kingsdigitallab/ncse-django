@@ -189,6 +189,10 @@ class Issue(models.Model):
             issue_date=self.issue_date).exclude(
             edition=self.edition).order_by('edition')
 
+    def get_edition_count(self):
+        return self.publication.issues.filter(
+            issue_date=self.issue_date).values('edition').distinct().count()
+
     def get_base_query(self):
         return self.articles_in_issue.select_related(
             'page').defer(
