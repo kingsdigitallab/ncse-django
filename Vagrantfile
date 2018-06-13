@@ -17,6 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider "virtualbox" do |provider|
     provider.customize ["modifyvm", :id, "--memory", "2048"]
+    provider.customize ["modifyvm", :id, "--cpus", "2"] 
     provider.name = "ncse"
   end
 
