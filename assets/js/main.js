@@ -92,7 +92,7 @@ function enableCanvas()
     $('body').on('click', '#canvas_save', function(event)
     {
         $(this).attr('href', document.getElementById("pageCanvas").toDataURL());
-        $(this).attr('download', "Snippet.png");
+        $(this).attr('download', $('h1.underline').text().trim() + ".png");
     });
 
     // Reworked code from https://jsfiddle.net/ndYdk/7/
