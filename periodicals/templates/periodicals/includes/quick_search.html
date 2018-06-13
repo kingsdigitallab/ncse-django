@@ -1,7 +1,7 @@
 {% load wagtailcore_tags periodicals_tags cms_tags %}
 
  <section class="callout">
-    <form method="get" action="#jumptoresults" class="advanced">
+    <form method="get" action="/periodicals/search/" class="advanced">
         <div class="row medium-up-3 large-up-1">
             <div class="column column-block">
                 {% with field=form.q %} {{ field.errors }} <label><h4>Keywords</h4></label> {{ field }}

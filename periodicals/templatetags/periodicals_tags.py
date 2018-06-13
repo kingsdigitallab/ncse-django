@@ -113,9 +113,12 @@ def get_issues_published_this_month():
 @register.inclusion_tag('periodicals/includes/quick_search.html')
 def quick_periodical_search_form():
     """ Add quick search with keyword only to periodical form"""
-    form = PeriodicalsSearchForm(data={'order_by': "issue_date",
-                                       'mode': 'or'
-                                       })
+    # form = PeriodicalsSearchForm(data={'order_by': "issue_date",
+    #                                   'mode': 'or'
+    #                                   })
+
+    # the above form was bound, we don't want that (BM)
+    form = PeriodicalsSearchForm()
     return {'form': form}
 
 

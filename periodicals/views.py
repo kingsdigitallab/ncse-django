@@ -202,7 +202,6 @@ class PeriodicalsSearchView(FacetedSearchView):
 
     def get_queryset(self):
         queryset = super(PeriodicalsSearchView, self).get_queryset()
-
         for field in self.facet_fields:
             queryset = queryset.facet(
                 field, sort='index', limit=-1, mincount=1)
