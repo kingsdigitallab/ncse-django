@@ -74,11 +74,17 @@ function enableCanvas()
         {
             $("#viewer-right").hide();
             $("#viewer-left").addClass('maximize');
+            $(this).parent().attr('title', $(this).parent().attr('data-title-collapse'));
+            $(this).parent().data().zfPlugin.template.text($(this).parent().attr('title'));
+            $('.tooltip').hide();
             $(this).children('i').removeClass('fa-expand').addClass('fa-compress');
         } else
         {
             $("#viewer-right").show();
             $("#viewer-left").removeClass('maximize');
+            $(this).parent().attr('title', $(this).parent().attr('data-title-expand'));
+            $(this).parent().data().zfPlugin.template.text($(this).parent().attr('title'));
+            $('.tooltip').hide();
             $(this).children('i').addClass('fa-expand').removeClass('fa-compress');
         }
     });
