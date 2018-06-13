@@ -182,7 +182,7 @@ def deploy(version=None):
     # update_index()
 
     clear_cache()
-    touch_wsgi()
+    restart_uwsgi()
 
 
 @task
@@ -333,3 +333,8 @@ def touch_wsgi():
     with cd(os.path.join(env.path, PROJECT_NAME)), \
             prefix(env.within_virtualenv):
         run('touch wsgi.py')
+
+
+@task
+def restart_uwsgi():
+    sudo('/etc/init.d/uwsgi restart')
