@@ -824,7 +824,6 @@ ul.filters {
         width: 31%;
         margin-right: 3.3%;
         &:last-child > .accordion-content:last-child {
-            border-bottom: 0;
             margin-right: 0;
         }
         &:last-child {
@@ -836,59 +835,21 @@ ul.filters {
     .accordion-content {
         width: 100%;
         float: left;
-    }
-}
-
-li.accordion-item {
-    &:last-child > .accordion-content:last-child {
-        border-bottom: 0;
-    }
-}
-
-/*.accordion-content {
-    border: none;
-    padding: 0 0 1rem 0;
-    width: 100%;
-    ul {
-        float: left;
-        list-style-type: none;
-        margin-left: 0;
-        li {
-            float: left;
-            margin: rem-calc(0 8 8 0);
-            text-align: left;
-            border: 1px solid $light-gray;
-            background: $light-gray;
-            &.is-active {
-                background-color: blue;
-                a {
-                    color: $white;
-
-                    span {
-                        color: $white;
-                    }
-                }
-                &:hover {
-                    background: darken($primary-color, 10%);
-                }
+        span{
+            color: gray;
+            font-size:1rem;
+        }
+        ul{
+            margin-left:0;
+            li{
+                list-style-type:none;
             }
 
-            a {
-                display: block;
-                padding: rem-calc(3 16);
-
-                span {
-                    color: $medium-gray;
-                    font-size: rem-calc(12);
-                }
-            }
-            &:hover {
-                border: 1px solid $primary-color;
-                background: lighten($light-gray, 5%);
-            }
         }
     }
 }
+
+
 
 /* Search form */
 
