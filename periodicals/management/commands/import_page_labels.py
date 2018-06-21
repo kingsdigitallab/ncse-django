@@ -57,7 +57,6 @@ class Command(BaseCommand):
 
                     data = data[0]
 
-                    print(self.pub_abbr)
                     publication = Publication.objects.get(
                         abbreviation=self.pub_abbr)
 
@@ -78,6 +77,7 @@ class Command(BaseCommand):
             base_href = meta.get('BASE_HREF').split('/')
             uid = "{}_{}".format(base_href[0], '/'.join(base_href[1:4][::-1]))
 
+        print('- importing issue: {}'.format(uid))
         self.logger.info('- importing issue: {}'.format(uid))
 
         if '_' not in dir:
