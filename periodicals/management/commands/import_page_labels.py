@@ -62,12 +62,24 @@ class Command(BaseCommand):
                     abbreviation = None
                     title = None
 
-                    abbreviation = xmlroot.get('PUBLICATION')
-                    publication_list = Publication.objects.filter(
-                        abbreviation=abbreviation)
+                    ai_item = data.xpath(
+                        ('Application_Info[@AI_TYPE = "kc:periodicalTitle"]/'
+                         'Ai_Item')
+                    )
 
-                    if publication_list.exists():
-                        publication = publication_list[0]
+                    try:
+                        if ai_item:
+                            title = ai_item[0].get('NAME').strip()
+                            abbreviation = self._generate_abbreviation_from_title( # noqa
+                                title)
+
+                        if title:
+                            publication = Publication.objects.get(
+                                abbreviation=abbreviation, title=title)
+                        else:
+                            abbreviation = xmlroot.get('PUBLICATION')
+                            publication = Publication.objects.get(
+                                abbreviation=abbreviation)
 
                         self.logger.info('Importing {}: {}'.format(
                             abbreviation, title))
@@ -77,6 +89,8 @@ class Command(BaseCommand):
                         publication.save()
 
                         self._import_issue(publication, xmlroot, root)
+                    except: # noqa
+                        pass
 
     def _generate_abbreviation_from_title(self, title):
         return re.sub('[^A-Z]', '', title)

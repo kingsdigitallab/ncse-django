@@ -222,6 +222,7 @@ class Command(BaseCommand):
 
         height = meta.get('PAGE_HEIGHT')
         number = meta.get('PAGE_NO')
+        label = meta.get('PAGE_LABEL')
         width = meta.get('PAGE_WIDTH')
 
         try:
@@ -232,6 +233,9 @@ class Command(BaseCommand):
         page.height = height
         page.number = number
         page.width = width
+
+        if label:
+            page.label = label
 
         basename = os.path.splitext(filename)[0]
         image_filename = basename + '.png'
