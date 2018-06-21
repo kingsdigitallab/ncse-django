@@ -12,15 +12,12 @@ class Command(BaseCommand):
     logger = logging.getLogger(__name__)
     extract_to = '_document'
 
-    # Types to import
-    import_ar = False
-    import_ad = False
-    import_pc = False
-
     def add_arguments(self, parser):
         parser.add_argument('publication_path', nargs='+', type=str)
+        parser.add_argument('pub_abbr', nargs='+', type=str)
 
     def handle(self, *args, **options):
+        self.pub_abbr = options['pub_abbr'][0]
 
         for publication_path in options['publication_path']:
             self._import_publication(publication_path)
@@ -59,38 +56,14 @@ class Command(BaseCommand):
                         continue
 
                     data = data[0]
-                    abbreviation = None
-                    title = None
 
-                    ai_item = data.xpath(
-                        ('Application_Info[@AI_TYPE = "kc:periodicalTitle"]/'
-                         'Ai_Item')
-                    )
+                    print(self.pub_abbr)
+                    publication = Publication.objects.get(
+                        abbreviation=self.pub_abbr)
 
-                    try:
-                        if ai_item:
-                            title = ai_item[0].get('NAME').strip()
-                            abbreviation = self._generate_abbreviation_from_title( # noqa
-                                title)
+                    self.logger.info('Importing {}'.format(publication))
 
-                        if title:
-                            publication = Publication.objects.get(
-                                abbreviation=abbreviation, title=title)
-                        else:
-                            abbreviation = xmlroot.get('PUBLICATION')
-                            publication = Publication.objects.get(
-                                abbreviation=abbreviation)
-
-                        self.logger.info('Importing {}: {}'.format(
-                            abbreviation, title))
-
-                        publication.description = xmlroot.get(
-                            'PUBLICATION_DESCRIPTION')
-                        publication.save()
-
-                        self._import_issue(publication, xmlroot, root)
-                    except: # noqa
-                        pass
+                    self._import_issue(publication, xmlroot, root)
 
     def _generate_abbreviation_from_title(self, title):
         return re.sub('[^A-Z]', '', title)
