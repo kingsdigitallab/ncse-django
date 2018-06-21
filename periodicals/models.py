@@ -214,6 +214,7 @@ class Page(models.Model):
     issue = models.ForeignKey(Issue, related_name='pages',
                               on_delete=models.CASCADE)
     number = models.PositiveIntegerField()
+    label = models.CharField(max_length=64, blank=True, null=True)
     image = models.ImageField(upload_to='periodicals/')
     width = models.PositiveIntegerField(null=True)
     words = JSONField(default='{}', null="true")

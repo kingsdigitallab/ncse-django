@@ -2,11 +2,11 @@
 {% load periodicals_tags %}
 
 {% block title %}
-{{ page.issue.publication}}, {{ page.issue.issue_date|date:"j N Y" }}, Edition {{page.issue.edition}} of {{ page.issue.get_edition_count }}{% if page.issue.component %}, {{page.issue.component}}{% endif %}, Page {{ page.number }}{% if article.title %}, {{ article.title }}{% endif %}
+{{ page.issue.publication}}, {{ page.issue.issue_date|date:"j N Y" }}, Edition {{page.issue.edition}} of {{ page.issue.get_edition_count }}{% if page.issue.component %}, {{page.issue.component}}{% endif %}, Page {{ page.label }}{% if article.title %}, {{ article.title }}{% endif %}
 {% endblock %}
 
 {% block meta_title %}
-{{ page.issue.publication}}, {{ page.issue.issue_date|date:"j N Y" }}, Edition {{page.issue.edition}} of {{ page.issue.get_edition_count }}{% if page.issue.component %}, {{page.issue.component}}{% endif %}, Page {{ page.number }}{% if article.title %}, {{ article.title }}{% endif %}
+{{ page.issue.publication}}, {{ page.issue.issue_date|date:"j N Y" }}, Edition {{page.issue.edition}} of {{ page.issue.get_edition_count }}{% if page.issue.component %}, {{page.issue.component}}{% endif %}, Page {{ page.label }}{% if article.title %}, {{ article.title }}{% endif %}
 {% endblock %}
 
 {% block main %}
@@ -26,14 +26,16 @@
 
                 {% with prev=page.previous_page next=page.next_page %}
                 <span>
+                Page {{page.label}}
 
                 {% if prev %}<span data-tooltip tabindex="1" title="Previous page"><a href="{{ prev.url }}"><i class="fa fa-angle-left"></i></a></span>{% endif %}
 
-                <span id="page_switcher" data-initial="{{ page.number }}" data-issue-url="{{ page.issue.url }}" data-count="{{ page.issue.number_of_pages}}">Page {{ page.number }}</span> of <span id="page_count">{{ page.issue.number_of_pages }}
+                (<span id="page_switcher" data-initial="{{ page.number }}" data-issue-url="{{ page.issue.url }}" data-count="{{ page.issue.number_of_pages}}">{{ page.number }}</span> of <span id="page_count">{{ page.issue.number_of_pages }})
 
                 {% if next %}<a href="{{ next.url }}"><span data-tooltip tabindex="1" title="Next page"><i class="fa fa-angle-right"></i></a></span>{% endif %}
                 </span>
                 {% endwith %}
+                
 
                 <div class="float-right">
                 <span data-tooltip tabindex="1" title="Save image"><a href="#" id="canvas_save" class="noselect"> <i class="fa fa-save"> </i></a></span>
@@ -150,7 +152,7 @@
                     <ul class="menu">
                         <li class="callout">
                             <div href="">
-                                {{ page.issue.publication }}, {{ page.issue.issue_date }}, page {{ page.number }}, in the Nineteenth-Century Serials Edition (2008; 2018) {{ request.META.HTTP_HOST }}{{ page.url }}
+                                {{ page.issue.publication }}, {{ page.issue.issue_date }}, page {{ page.labelim }}, in the Nineteenth-Century Serials Edition (2008; 2018) {{ request.META.HTTP_HOST }}{{ page.url }}
                             </div>
                         </li>
                     </ul>
