@@ -149,8 +149,7 @@ class Issue(models.Model):
     @property
     def departments(self):
         return self.get_base_query().filter(
-            title_image__isnull=False).exclude(title_image__exact='').order_by(
-            'page__number', 'position_in_page')
+            is_department=True)
 
     @property
     def articles(self):
@@ -332,6 +331,7 @@ class Article(models.Model):
         'self', blank=True, null=True, related_name='continues_in',
         on_delete=models.CASCADE)
     bounding_box = JSONField(default='{}')
+    is_department = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['position_in_page', 'aid']
