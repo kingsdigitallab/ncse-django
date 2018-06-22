@@ -259,21 +259,6 @@ function enableReadMore() {
 }
 
 
-function resizeViewer()
-{
-     $("body").on("click", "#viewer-right a", function()
-    {
-        if(!$('[aria-expanded="true"]').length)
-        {
-            $('#viewer-left').addClass('medium-9').removeClass('medium-6');
-            $('#viewer-right').addClass('medium-3').removeClass('medium-6');
-        } else
-        {
-            $('#viewer-left').removeClass('medium-9').addClass('medium-6');
-            $('#viewer-right').removeClass('medium-3').addClass('medium-6');
-        }
-    });
-}
 
 $(function() {
     if ($('canvas').length) {
@@ -281,8 +266,6 @@ $(function() {
     }
 
     enablePublicationDetailAjax();
-
-    resizeViewer();
 
     if ($('#jump-to-results-section').size > 0) {
         // Jump to results if search has been run
