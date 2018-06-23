@@ -34,12 +34,11 @@
 
 /* Globals */
 
-a {
-    &.text-center {
+.text-center {
         display: block;
         text-align: center;
     }
-}
+
 
 body,
 h1,
@@ -100,20 +99,25 @@ canvas {
   }
 
 .canvas-controls{
-    background: rgba(0,0,0,0.8);
-    color: #888888;
+    
     padding: 10px 20px;
     width:100%;
     display:block;
     text-align: center;
-    a {
-        color: #ffffff;
-
-        &:hover {
-            opacity:0.8;
-            text-decoration: none;
+    &.dark{
+        background: $black;
+        a {
+        color: $white;
+            &:hover {
+                opacity:0.8;
+                text-decoration: none;
+            }
+        }
+        span{
+            color: $white;
         }
     }
+
     i.fa{
         margin:0 1rem;
     }
@@ -126,15 +130,15 @@ canvas {
     margin:0 0.5rem;
     }
     span{
-        color: $white;
+    color: $black;
         input.input{
             width: 3rem;
             padding: 0;
             margin: 0;
             display: inline-block;
             background: none;
-            color: $white;
-            border: none;
+            color: $primary-color;
+           
             text-decoration: underline;
               &:focus {
                 outline: none; 
@@ -144,22 +148,24 @@ canvas {
 
         }
     }
-
 }
 
 
 /* Canvas page switcher */
-#page_switcher_input
-{
-    border: none;
+span#page_switcher{
+        border-bottom: 1px solid $primary-color;
+        cursor:pointer;
+    }
+
+#page_switcher_input{
+    color: $primary-color;
     background: rgba(255,255,255,0.1);
-    color: #ffffff;
     display: inline;
     height: auto;
-    margin: 0 10px 0 0;
+    margin: 0;
     padding: 0;
     width: 50px;
-
+    border:none;
     &.error
     {
         background: rgba(255,0,0,0.4);
@@ -240,7 +246,6 @@ main {
 }
 
 .margin-bottom {
-  //  margin-bottom: rem-calc(32);
   margin-bottom: rem-calc(16);
 }
 
@@ -500,59 +505,6 @@ ul.vertical.menu{
 .sticky nav {
     background: $white;
 }
-/* Side Nav */
-
-
-
-
-
-
-/** plus minue for accordion
-.multilevel-accordion-menu {
-    background: #eee;
-    .menu li{
-        margin: 0; 
-    }
-
-    // padding for each list item
-    .menu > li:not(.menu-text) > a {
-        padding: 1.2rem 1rem;
-    }
-
-    li.is-submenu-item.is-accordion-submenu-item ul li{
-        padding-left: 1rem;  
-    }
-}
-
-// style for folder icon on subitem anchors without a submenu
-.multilevel-accordion-menu .is-accordion-submenu-parent[aria-expanded="true"] a.subitem::after {
-  content: "";
-  margin-right: 1rem;  
-   position: absolute; 
-  right:0;
-}
-
-// changes folder icon to open then accordion is open
-.multilevel-accordion-menu .is-accordion-submenu-parent[aria-expanded="true"] a {
-  &::after {
-    content: "-";
-    margin-right: 1rem;
-    position: absolute; 
-    right:0;
-  }
-}
-
-// changes folder icon to closed then accordion is closed
-.multilevel-accordion-menu .is-accordion-submenu-parent[aria-expanded="false"] a {
-  &::after {
-    content: "+";
-    margin-right: 1rem;
-    position: absolute; 
-    right:0;
-  }
-}
-
-**/
 
 
 /* Breadcrumbs */
@@ -848,7 +800,6 @@ ul.filters {
         }
     }
 }
-
 
 
 /* Search form */
@@ -1375,6 +1326,16 @@ footer {
             width:100%;
         }
     }
+        .canvas-controls{
+        .float-left{
+            float:none !important;
+        }
+        .float-right{
+            float:none !important;
+        }    
+    
+
+    }
 }
 
 @media screen and (max-width: 450px) {
@@ -1434,18 +1395,6 @@ footer {
     padding:0;
     line-height: 1.2;
     }
-    .canvas-controls{
-        .float-left{
-            float:none !important;
-        }
-        .float-right{
-            float:none !important;
-        }    
-    
-
-    }
-
-
 }
 
 @media screen and (max-width: 350px) {
