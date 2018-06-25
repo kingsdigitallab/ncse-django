@@ -5,8 +5,9 @@
 {{ issue.publication}}, {{ issue.issue_date|date:"j N Y" }}, Edition {{issue.edition}} of {{ issue.get_edition_count }}{% if issue.component %}, {{issue.component}}{% endif %}
 
 
-
+{% if issue.pdf %} 
  <a class="float-right" href="{{ issue.pdf.url}}" target="" class="noselect" download><i class="fa fa-download"></i> PDF</a>
+{% endif %}
 {% endblock %}
 
 
