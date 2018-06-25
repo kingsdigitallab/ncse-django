@@ -228,8 +228,7 @@ class Page(models.Model):
     @property
     def departments(self):
         return self.get_base_query().filter(
-            title_image__isnull=False).exclude(title_image__exact='').order_by(
-            'position_in_page')
+            is_department=True)
 
     @property
     def articles(self):
