@@ -4,7 +4,7 @@
  {% for item in items %}     
  {% with item_url=item.url %}
     <div class="medium-2 columns">
-        <a href="{{ item_url }}">Page {{ item.page.number }}</a>
+        <a href="{{ item_url }}">Page {{ item.page.label }}</a>
     </div>
     <div class="medium-10 columns">
         {% if item.title_image %}
