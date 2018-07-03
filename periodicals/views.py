@@ -1,9 +1,12 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic.base import View
 from haystack.generic_views import FacetedSearchView
 from django.db.models import Max, Min
 from .forms import PeriodicalsSearchForm
 from .models import Article, Issue, Page, Publication
+from django.http import HttpResponse, HttpResponseRedirect
+import re
 
 
 def _get_highlighted_words(request, page):
@@ -212,3 +215,94 @@ class PeriodicalsSearchView(FacetedSearchView):
                                          'position_in_page')
 
         return queryset
+
+
+class XmodRedirectView(View):
+
+    publication_map = {
+        'MRUC': 'MRUC',
+        'NS': 'NS',
+        'NSS': 'NS',
+        'LDR': 'L',
+        'EWJ': 'EWJ',
+        'TTW': 'T',
+        'TEC': 'PC',
+    }
+
+    def get(self, request, *args, **kwargs):
+        if 'href' in request.GET and 'view' in request.GET:
+
+            # Get URL params and rationalise them
+            href = request.GET['href'].split('/')
+            view = request.GET['view']
+
+            publication = href[0]
+            edition = None
+            year = href[1]
+            month = href[2]
+            day = href[3]
+            article_id = None
+            page = None
+
+            if 'entityid' in request.GET:
+                article_id = request.GET['entityid']
+
+            if 'page' in request.GET:
+                page = request.GET['page']
+
+            # Check for issue in publication label (e.g. NS2)
+            if self._has_number(publication):
+                splitter = re.match(r"(?P<pub>[a-zA-Z]+)(?P<ed>.+)$",
+                                    publication)
+
+                publication = splitter.group('pub')
+                edition = splitter.group('ed')
+
+            publication = self.publication_map[publication]
+
+            # Let's get our bits
+            issues = Issue.objects.filter(
+                publication__slug__iexact=publication,
+                issue_date__year=year,
+                issue_date__month=month,
+                issue_date__day=day
+            )
+
+            if edition:
+                issues = issues.filter(edition=edition)
+
+            if issues.exists():
+                # Yay
+                issue = issues[0]
+
+                if view == 'entity' and article_id:
+                    # Need to get a specific article:
+                    articles = issue.articles_in_issue.filter(
+                        aid__iexact=article_id)
+                    if articles.exists():
+                        return HttpResponseRedirect(articles[0].url)
+                    else:
+                        return HttpResponse(status=404)
+
+                else:
+                    if page:
+                        # Specific page
+                        pages = issue.pages.filter(number=page)
+                        if pages.exists():
+                            return HttpResponseRedirect(pages[0].url)
+                        else:
+                            return HttpResponse(status=404)
+                    else:
+                        # No page, go straight to issue
+                        return HttpResponseRedirect(issue.url)
+
+            else:
+                return HttpResponse(status=404)
+
+        else:
+            # If we get to here, we've 404d as we don't have
+            # enough URL params
+            return HttpResponse(status=404)
+
+    def _has_number(self, string):
+        return re.search('\d', string)

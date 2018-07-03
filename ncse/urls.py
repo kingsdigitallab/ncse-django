@@ -4,6 +4,8 @@ from django.urls import include, path
 from kdl_ldap.signal_handlers import \
     register_signal_handlers as kdl_ldap_register_signal_hadlers
 
+from periodicals.views import XmodRedirectView
+
 kdl_ldap_register_signal_hadlers()
 
 admin.autodiscover()
@@ -27,6 +29,9 @@ urlpatterns += [
     path('wagtail/', include('wagtail.admin.urls')),
     path('documents/', include('wagtail.documents.urls')),
     path('', include('wagtail.core.urls')),
+
+    path('Default.htm', XmodRedirectView.as_view(), name='xmod_redir'),
+
 ]
 
 # -----------------------------------------------------------------------------
