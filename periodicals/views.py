@@ -224,6 +224,7 @@ class XmodRedirectView(View):
         'NS': 'NS',
         'NSS': 'NS',
         'LDR': 'L',
+        'CLD': 'L',
         'EWJ': 'EWJ',
         'TTW': 'T',
         'TEC': 'PC',
