@@ -194,6 +194,13 @@ h1 {
     text-transform: uppercase;
 }
 
+.subtitle
+{
+    color: $medium-gray;
+    display: block;
+    font-size: 1.2rem;
+}
+
 h2 {
     font-size: rem-calc(20);
     font-weight: bold;
@@ -343,10 +350,20 @@ nav {
                 display: inline-block;
                 margin: rem-calc(16 0);
                 a {
-                    padding: rem-calc(0 32);
+                    padding: rem-calc(0 16);
                     text-decoration: none;
                     transition: all 0.5s ease;
                     color: black;
+
+                    i.fa
+                    {
+                        color: $primary-color;
+
+                        &:hover
+                        {
+                            color: $medium-gray;
+                        }
+                    }
 
                     &:hover {
                         opacity: 0.8;
@@ -1144,6 +1161,11 @@ footer {
                     transition: all 0.5s ease;
                     a{
                         color: $white;
+
+                        i.fa
+                        {
+                            color: $white;
+                        }
                     }
                 }
             }
