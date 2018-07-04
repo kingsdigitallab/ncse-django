@@ -6,8 +6,14 @@
   {% endfor %}
 
   <li>
-    <a href="/periodicals"><i class="fa fa-list-ul"></i></a>
-    <a href="{% url 'search' %}?{% initial_search_parameters %}"><i class="fa fa-search"></i></a>
+    <span data-tooltip tabindex="1" title="Browse" data-position="bottom" data-alignment="center">
+      <a href="/periodicals"><i class="fa fa-list-ul"></i></a>
+    </span>
+    <span data-tooltip tabindex="1" title="Search" data-position="bottom" data-alignment="center">
+      <a href="{% url 'search' %}?{% initial_search_parameters %}"><i class="fa fa-search"></i></a>
+    </span>
+
+
   </li>
 
   {% if request.user.is_authenticated %}

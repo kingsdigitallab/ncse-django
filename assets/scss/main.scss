@@ -24,10 +24,10 @@
  */
 
 /* Fonts */
-@import url('https://fonts.googleapis.com/css?family=Arapey|Cormorant|Cormorant+SC|Goudy+Bookletter+1911|Linden+Hill|Nanum+Myeongjo|Oranienbaum');
+
 @font-face {
-    font-family: 'Petrona';
-    src: url('/static/fonts/Petrona/Petrona-Regular.ttf');
+    font-family: 'Lora';
+    src: url('/static/fonts/lora/Lora-Regular.ttf');
 }
 
 
@@ -45,11 +45,7 @@ h1,
 h2,
 h3,
 h4 {
-    font-family: 'Petrona', serif;
-    font-family: 'Nanum Myeongjo', serif;
-//font-family: 'Arapey', serif;
-//font-family: 'Oranienbaum', serif;
-//font-family: 'Cormorant', serif;
+    font-family: 'Lora', serif;
 }
 
 
@@ -296,6 +292,25 @@ nav {
     .navwrapper {
         display: block;
         margin: 0 auto;
+        .home a{
+            background: $primary-color;
+            color: $white;
+            display: inline-block;
+            position: absolute;
+            top:4.5rem;
+            left:-1.4rem;
+            font-size: 1rem;
+            padding: 0.1rem 0.5rem;
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            -o-transform: rotate(90deg);
+            filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=-3);
+            font-weight: 700;
+            &:hover{
+                background: $black;
+            }
+        }
         .logo {
             display: inline-block;
             margin: rem-calc(16 0);
@@ -610,6 +625,8 @@ ul.vertical.menu{
             font-size: rem-calc(18);
             font-weight: normal;
             background: none;
+
+
         }
 
         p {
@@ -1023,8 +1040,10 @@ body table.stack {
 /* Footer */
 
 footer {
-    background: $primary-color;
-    color: $white;
+    background: $black;
+    
+    font-weight: 700;
+    color: lighten($primary-color, 35%);
     font-size: rem-calc(14);
     ul{
         display: block;
@@ -1037,10 +1056,10 @@ footer {
         }
     }
     a {
-        color: lighten($primary-color, 35%);
-        font-weight: 700;
+        
+        color: $white;
         &:hover{
-            color: lighten($primary-color, 15%);
+            color: darken($white, 35%);
         }
     }
 
@@ -1169,8 +1188,13 @@ footer {
                     }
                 }
             }
+            .home a{
+                top:2.5rem;
+                font-size: 0.85rem;
+
+            }
             .logo {
-                margin:0;
+                margin:0 0 0 1rem;
                 width:25rem;
                 h1 {
                     padding-top: 0;
@@ -1395,7 +1419,7 @@ footer {
     nav {
         .navwrapper {
             .logo {
-                margin:0;
+                 margin:0 0 0 1.5rem;
                 width:14rem;
                 h1 {
                     padding-top: 0;
