@@ -228,6 +228,7 @@ class XmodRedirectView(View):
         'EWJ': 'EWJ',
         'TTW': 'T',
         'TEC': 'PC',
+        'MRP': 'MRUC',
     }
 
     def get(self, request, *args, **kwargs):
