@@ -334,11 +334,11 @@ nav {
                 display: block;
                 float: left;
                 position: relative;
-                width:70px;
-                height:107px;
-                top:-1rem;
-                left:1rem;
-                opacity: 0.7;
+                width: 80px;
+                height: 122px;
+                top: -1.5rem;
+                left: 0.7rem;
+                opacity: 0.6;
                 z-index: 1;
                 background-image: url(/static/images/newsboy.png);
                 background-repeat: no-repeat;
@@ -1202,9 +1202,9 @@ footer {
                     font-size: 1.5rem;
                     line-height: 1.5rem;
                     &:before{
-                    width:50px;
-                    height:76px;
-                    top:-0.5rem;
+                    width:60px;
+                    height:92px;
+                    top:-1rem;
                     left:0.8rem;
                     }
                 }
@@ -1237,7 +1237,7 @@ footer {
                     display: block;
                     width: rem-calc(25);
                     height: rem-calc(7);
-                    border-top: 2px solid;
+                    border-top: 2px solid $primary-color;
                 }
             }
         }
@@ -1427,10 +1427,10 @@ footer {
                     font-size: 1.2rem;
                     line-height: 1.2rem;
                     &:before{
-                    width:50px;
-                    height:76px;
-                    top:-0.5rem;
-                    left:0.8rem;
+                    width:60px;
+                    height:92px;
+                    top:-0.9rem;
+                    left:0.3rem;
                     }
                 }
             }
