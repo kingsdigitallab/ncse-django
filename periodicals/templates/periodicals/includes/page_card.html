@@ -6,8 +6,8 @@
         <img src="{% thumbnail page.image.url %}" alt="Page {{ page.number }}">
     </div>
     <div class="card-section overlay">
-        <h3>Page {{ page.label }}</h3>
-        <div class="card-footer">            
+        <h3>Page {{ page.get_label }}</h3>
+        <div class="card-footer">
             {{ page.article_count }} Item{{ page.article_count|pluralize }}
         </div>
     </div></a>

@@ -2,11 +2,11 @@
 {% load periodicals_tags %}
 
 {% block title %}
-{{ page.issue.publication}}, {{ page.issue.issue_date|date:"j N Y" }}, Edition {{page.issue.edition}} of {{ page.issue.get_edition_count }}{% if page.issue.component %}, {{page.issue.component}}{% endif %}, Page {{ page.label }}{% if article.title %}, {{ article.title }}{% endif %}
+{{ page.issue.publication}}, {{ page.issue.issue_date|date:"j N Y" }}, Edition {{page.issue.edition}} of {{ page.issue.get_edition_count }}{% if page.issue.component %}, {{page.issue.component}}{% endif %}, Page {{ page.get_label }}{% if article.title %}, {{ article.title }}{% endif %}
 {% endblock %}
 
 {% block meta_title %}
-{{ page.issue.publication}}, {{ page.issue.issue_date|date:"j N Y" }}, Edition {{page.issue.edition}} of {{ page.issue.get_edition_count }}{% if page.issue.component %}, {{page.issue.component}}{% endif %}, Page {{ page.label }}{% if article.title %}, {{ article.title }}{% endif %}
+{{ page.issue.publication}}, {{ page.issue.issue_date|date:"j N Y" }}, Edition {{page.issue.edition}} of {{ page.issue.get_edition_count }}{% if page.issue.component %}, {{page.issue.component}}{% endif %}, Page {{ page.get_label }}{% if article.title %}, {{ article.title }}{% endif %}
 {% endblock %}
 
 {% block main %}
@@ -20,14 +20,14 @@
             <div class="canvas-controls dark">
                 <div class="float-left">
                     <span data-tooltip tabindex="1" title="Zoom in"><a href="#" class="noselect" id="plus"><i class="circle fa fa-plus"></i></a></span>
-                   
+
                     <span data-tooltip tabindex="1" title="Zoom out"><a href="#" class="noselect" id="minus"><i class="circle fa fa-minus"></i></a></span>
                     <span data-tooltip tabindex="1" title="Expand full screen" data-title-expand="Expand full screen" data-title-collapse="Collapse full screen"><a href="#" target="" class="noselect" id="canvas_expand"><i class="fa fa-expand"></i></a></span>
                 </div>
-                
+
                 {% with prev=page.previous_page next=page.next_page %}
                 <span>
-                Page {{page.label}}
+                Page {{page.get_label}}
                 </span>
                 {% endwith %}
 
@@ -59,7 +59,7 @@
     </div>
 
     <div class="medium-6 columns" data-sticky-container id="viewer-right">
-        
+
         <div class="sticky" data-sticky data-anchor="main">
             <h2>On this page</h2>
 
@@ -121,7 +121,7 @@
                 {% if articles %}
                 <li >
                     <a href="#">Text <span>({{articles.count}})</i></span></a>
-                    
+
                     <ul class="menu">
                         {% include "periodicals/includes/ocr_warning.html" %}
                     {% for article in articles %}
@@ -132,7 +132,7 @@
                         {% endif %}
                         {% if article.title %}<p>{{ article.title }}</p>{% else %}Untitled{% endif %}</a></li>
                     {% endfor %}
-  
+
                     </ul>
                 </li>
                 {% endif %}
@@ -154,7 +154,7 @@
                     <ul class="menu">
                         <li class="callout">
                             <div href="">
-                                {{ page.issue.publication }}, {{ page.issue.issue_date }}, page {{ page.label }}, in the Nineteenth-Century Serials Edition (2008; 2018) {{ request.META.HTTP_HOST }}{{ page.url }}
+                                {{ page.issue.publication }}, {{ page.issue.issue_date }}, page {{ page.get_label }}, in the Nineteenth-Century Serials Edition (2008; 2018) {{ request.META.HTTP_HOST }}{{ page.url }}
                             </div>
                         </li>
                     </ul>

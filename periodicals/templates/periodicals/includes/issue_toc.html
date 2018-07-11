@@ -1,10 +1,10 @@
 {% load humanize periodicals_tags %}
 
- 
- {% for item in items %}     
+
+ {% for item in items %}
  {% with item_url=item.url %}
     <div class="medium-2 columns">
-        <a href="{{ item_url }}">Page {{ item.page.label }}</a>
+        <a href="{{ item_url }}">Page {{ item.page.get_label }}</a>
     </div>
     <div class="medium-10 columns">
         {% if item.title_image %}

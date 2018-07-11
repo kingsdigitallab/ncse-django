@@ -269,6 +269,12 @@ class Page(models.Model):
                 'issue_slug': self.issue.slug, 'number': self.number
             })
 
+    def get_label(self):
+        if self.label:
+            return self.label
+
+        return self.number
+
     def previous_page(self):
         if self.number > 1:
             return self.issue.pages.all()[self.number - 2]

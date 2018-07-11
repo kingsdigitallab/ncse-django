@@ -5,7 +5,7 @@
 {{ issue.publication}}, {{ issue.issue_date|date:"j N Y" }}, Edition {{issue.edition}} of {{ issue.get_edition_count }}{% if issue.component %}, {{issue.component}}{% endif %}
 
 
-{% if issue.pdf %} 
+{% if issue.pdf %}
  <a class="float-right" href="{{ issue.pdf.url}}" target="" class="noselect" download><i class="fa fa-download"></i> PDF</a>
 {% endif %}
 {% endblock %}
@@ -66,7 +66,7 @@
             </div>
         </div>
     </div>
-    
+
 
     <div class="medium-9 columns tabs-content" data-tabs-content="issue-nav">
         {% if departments %}
@@ -83,7 +83,7 @@
                 {% for department in page.list %}
                     <div class="medium-2 columns">
                         {% if forloop.first %}
-                        Page {{ page.grouper.label }}
+                        Page {{ page.grouper.get_label }}
                         {% endif %}
                     </div>
                     <div class="medium-10 columns margin-bottom">
@@ -97,9 +97,9 @@
         {% endif %}
 
 
-        {% if ads %}    
-        
-        <div class="row margin-bottom tabs-panel{% if not departments %} is-active{% endif %}" id="ads">   
+        {% if ads %}
+
+        <div class="row margin-bottom tabs-panel{% if not departments %} is-active{% endif %}" id="ads">
         <div class="column">
         <h2 class="underline">Adverts</h2>
         {% include "periodicals/includes/ocr_warning.html" %}
@@ -109,7 +109,7 @@
         {% endif %}
 
         {% if pictures %}
-        <div class="row margin-bottom tabs-panel{% if not departments and not ads %} is-active{% endif %}" id="images">   
+        <div class="row margin-bottom tabs-panel{% if not departments and not ads %} is-active{% endif %}" id="images">
         <div class="column">
         <h2 class="underline">Images</h2>
         {% include "periodicals/includes/ocr_warning.html" %}
@@ -117,11 +117,11 @@
         {% include "periodicals/includes/issue_toc.html" with items=pictures %}
         </div>
         {% endif %}
-  
+
         {% if articles %}
-        <div class="row margin-bottom tabs-panel{% if not departments and not ads and not pictures %} is-active{% endif %}" id="text"> 
+        <div class="row margin-bottom tabs-panel{% if not departments and not ads and not pictures %} is-active{% endif %}" id="text">
         <div class="column">
-        <h2 class="underline">Text</h2>  
+        <h2 class="underline">Text</h2>
         {% include "periodicals/includes/ocr_warning.html" %}
         </div>
         {% include "periodicals/includes/issue_toc.html" with items=articles %}
@@ -130,18 +130,18 @@
 
 
         {% if components %}
-        <div class="row margin-bottom tabs-panel" id="components"> 
+        <div class="row margin-bottom tabs-panel" id="components">
         <div class="column">
-        <h2 class="underline margin-bottom">Other Components</h2>  
+        <h2 class="underline margin-bottom">Other Components</h2>
         {% include "periodicals/includes/issue_gallery.html" with issues=components %}
-        </div> 
+        </div>
         </div>
         {% endif %}
 
         {% if editions %}
-        <div class="row margin-bottom tabs-panel" id="editions"> 
+        <div class="row margin-bottom tabs-panel" id="editions">
         <div class="column">
-        <h2 class="underline margin-bottom">Other Editions</h2>  
+        <h2 class="underline margin-bottom">Other Editions</h2>
         {% include "periodicals/includes/issue_gallery.html" with issues=editions %}
         </div>
         </div>

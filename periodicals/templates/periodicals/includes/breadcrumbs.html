@@ -18,7 +18,7 @@
 {% with page=article.page publication=article.page.issue.publication issue=article.page.issue %}
 <li><a href="{% url 'publication-list' %}">Browse Facsimiles</a></li>
 <li><a href="{{ publication.url }}">{{ publication }}</a></li>
-<li><a href="{{ issue.url }}">{{ issue.issue_date|date:"j N Y" }} , {{ issue.edition_or_component }}</a></li><li><a href="{{ page.url }}">Page {{ page.label }}</a></li>
+<li><a href="{{ issue.url }}">{{ issue.issue_date|date:"j N Y" }} , {{ issue.edition_or_component }}</a></li><li><a href="{{ page.url }}">Page {{ page.get_label }}</a></li>
 <li>{{ article }}</li>
 {% endwith %}
 
@@ -27,7 +27,7 @@
 <li><a href="{% url 'publication-list' %}">Browse Facsimiles</a></li>
 <li><a href="{{ publication.url }}">{{ publication }}</a></li>
 <li><a href="{{ issue.url }}">{{ issue.issue_date|date:"j N Y" }} , {{ issue.edition_or_component }}</a></li>
-<li>Page {{ page.label }}</li>
+<li>Page {{ page.get_label }}</li>
 {% endwith %}
 {% endif %}
 
