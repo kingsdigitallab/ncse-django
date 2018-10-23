@@ -3,7 +3,7 @@ from django.urls import path
 from .views import (ArticleDetailView, ArticlePrintView, IssueDetailView,
                     PageDetailView, PagePrintView, PeriodicalsSearchView,
                     PublicationDetailView, AjaxGalleryFirstEditionsByYear,
-                    PublicationListView)
+                    PublicationListView, AjaxPublicationChartData)
 
 urlpatterns = [
     path('search/', PeriodicalsSearchView.as_view(), name='search'),
@@ -32,5 +32,8 @@ urlpatterns = [
     path('ajax/first_editions/<slug:slug>/<int:year>/',
          AjaxGalleryFirstEditionsByYear.as_view(),
          name='ajax-gallery-first-ed'),
-    path('', PublicationListView.as_view(), name='publication-list')
+    path('ajax/chart_data/<slug:slug>/',
+         AjaxPublicationChartData.as_view(),
+         name='ajax-publication-chart-data'),
+    path('', PublicationListView.as_view(), name='publication-list'),
 ]

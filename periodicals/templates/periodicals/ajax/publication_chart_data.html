@@ -1,0 +1,10 @@
+{% load periodicals_tags %}
+{% for year in data.items %}
+{
+    "date": {{ year.0 }},
+    {% for item in year.1 %}
+    "{{ item.atype }}": {{ item.count }}{% if not forloop.last %},{% endif %}
+    {% endfor %}
+
+}{% if not forloop.last %},{% endif %}
+{% endfor %}

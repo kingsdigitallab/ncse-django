@@ -2,11 +2,13 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.base import View
 from haystack.generic_views import FacetedSearchView
-from django.db.models import Max, Min
+from django.db.models import Max, Min, Count, F
 from .forms import PeriodicalsSearchForm
 from .models import Article, Issue, Page, Publication
 from django.http import HttpResponse, HttpResponseRedirect
+from django.db.models.functions import ExtractYear
 import re
+import itertools
 
 
 def _get_highlighted_words(request, page):
@@ -148,6 +150,41 @@ class AjaxGalleryFirstEditionsByYear(TemplateView):
             issue_date__year=self.kwargs['year']).filter(
             edition=1)
         context['issues'] = issues
+        return context
+
+
+class AjaxPublicationChartData(TemplateView):
+    template_name = ('periodicals/ajax/'
+                     'publication_chart_data.html')
+
+    def get_context_data(self, **kwargs):
+        context = super(AjaxPublicationChartData,
+                        self).get_context_data(**kwargs)
+
+        publication = get_object_or_404(Publication, slug=self.kwargs['slug'])
+
+        articles = Article.objects.filter(
+            issue__publication=publication).exclude(
+            article_type=None)
+
+        articles = articles.annotate(
+            year=ExtractYear('issue__issue_date')).annotate(
+            atype=F('article_type__title')).values(
+            'year', 'atype').order_by().annotate(count=Count('atype'))
+
+        articles_sorted = sorted(
+            articles, key=lambda x: (x['year'], x['atype']))
+
+        data = {}
+
+        for key, group in itertools.groupby(
+                articles_sorted, key=lambda x: x['year']):
+            data[key] = list(group)
+
+        # Add to the context
+        context['publication'] = publication
+        context['data'] = data
+
         return context
 
 
