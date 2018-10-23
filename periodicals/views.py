@@ -9,6 +9,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models.functions import ExtractYear
 import re
 import itertools
+from collections import OrderedDict
 
 
 def _get_highlighted_words(request, page):
@@ -175,7 +176,7 @@ class AjaxPublicationChartData(TemplateView):
         articles_sorted = sorted(
             articles, key=lambda x: (x['year'], x['atype']))
 
-        data = {}
+        data = OrderedDict()
 
         for key, group in itertools.groupby(
                 articles_sorted, key=lambda x: x['year']):

@@ -1,4 +1,4 @@
-django
+django<2.1
 django-activecollab-digger
 django-compressor
 django-extensions
@@ -14,4 +14,4 @@ psycopg2-binary
 python-ldap<=3.0.0 # 3.1.0 is broken
 pysolr
 redis
-wagtail
+wagtail==2.1

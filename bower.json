@@ -6,7 +6,8 @@
         "foundation-sites": null,
         "font-awesome": null,
         "js-cookie": null,
-        "motion-ui": null
+        "motion-ui": null,
+        "d3": "^3.5"
     },
     "main": "assets/js/main.js",
     "ignore": ["**/.*", "node_modules", "bower_components", "test", "tests"]

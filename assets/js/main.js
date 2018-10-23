@@ -258,9 +258,195 @@ function enableReadMore() {
     })
 }
 
+function enableVis()
+{
+    $('.vis').each(function()
+    {
+
+        var slug = $(this).attr('data-slug');
+        var url = "/periodicals/ajax/chart_data/" + slug + "/";
+        var vis = $(this);
+
+        $.ajax({ 
+            type: 'GET', 
+            url: url, 
+            data: {  },
+            success: function (data) { 
+
+                var statuses_to_use = ["Article", "Ad", "Picture"];
+                var status = [];
+
+                $(statuses_to_use).each(function(key, val)
+                {
+                    if(~data.indexOf(val))
+                    {
+                        status.push(val);
+                    }
+                });
+
+                data = JSON.parse(data);
+
+                function drawBarGraph(data) {
+
+                  var colors = [ ["Successful", "#001038"],
+                                ["Unsuccessful", "#02247a"] ];
+
+                  var margin = {top: 30, right: 30, bottom: 40, left: 60},
+                      width  = 860 - margin.left - margin.right,
+                      height = 290 - margin.top - margin.bottom;
+
+                  var z = d3.scale.ordinal()
+                  .range(["#001038", "#02247a", "#0584ba", "#63d3e8", "#a5f7ec"]);
+                  var start = data[0]["date"];
+                  var end = data[data.length - 1]["date"];
+                  
+                  var x = d3.scale.linear()
+                  .domain([start, end])
+                  .rangeRound([0, width], .1);
+
+                  var y = d3.scale.linear()
+                  .rangeRound([height, 0]);
+
+                  var xAxis = d3.svg.axis()
+                  .scale(x)
+                  .orient("bottom")
+                  .tickFormat(d3.format("d"))
+                  .ticks(30);
+
+                  var yAxis = d3.svg.axis()
+                  .scale(y)
+                  .orient("left")
+                  .ticks(5)
+                  .tickFormat(d3.format("d"));
+
+                  var svg = d3.select($(vis)[0]).select("#chart-bar")
+                  .append("svg")
+                  .attr("width", width + margin.left + margin.right)
+                  .attr("height", height + margin.top + margin.bottom)
+                  .append("g")
+                  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                  var layers = d3.layout.stack()
+                  (status.map(function (c) {
+                    return data.map(function (d) {
+                      return {x: d.date, y: d[c]};
+                    });
+                  }));
 
 
-$(function() {
+                  y.domain([
+                    0, d3.max(layers[layers.length - 1], function (d) {
+                      return d.y0 + d.y;
+                    })
+                  ]);
+
+
+                  // gridlines in y axis function
+                  function make_y_gridlines() {
+                    return d3.svg.axis().scale(y)
+                      .orient("left").ticks(5);
+                  }
+
+                  // add the Y gridlines
+                  svg.append("g")
+                    .attr("class", "gridline")
+                    .call(make_y_gridlines()
+                          .tickSize(-width)
+                          .tickFormat("")
+                         );
+
+                  svg.append("g")
+                    .attr("class", "axis axis--x")
+                    .attr("transform", "translate(6," + height + ")")
+                    .call(xAxis)
+                    .append("text")
+                    .attr("transform", "translate(364,0)")
+                    .attr("y", "3em")
+                    .style("text-anchor", "middle")
+                    .text("Year");
+
+                  svg.append("g")
+                    .attr("class", "axis axis--y")
+                    .call(yAxis)
+
+                  function type(d) {
+                    // d.date = parseDate(d.date);
+                    d.date;
+                    status.forEach(function (c) {
+                        d[c] = +d[c];
+                    });
+                    return d;
+                  }  
+                  
+                   var tooltip = d3.select($(vis)[0]).select("#chart-bar").append("div")
+                  .attr("class", "tooltip")
+                  .style("opacity", 0);
+
+                  var layer = svg.selectAll(".layer")
+                  .data(layers)
+                  .enter().append("g")
+                  .attr("class", "layer")
+                  .style("fill", function (d, i) {
+                    return z(i);
+                  });
+
+                  layer.selectAll("rect")
+                    .data(function (d) {
+                    return d;
+                  })
+                    .enter().append("rect")
+                    .on("mouseover", function (d) {
+                    tooltip.transition()
+                      .duration(200)
+                      .style("opacity", 1);
+                    tooltip.html("<span>" + d.y + " items" + "</span>")
+                      .style("left", (d3.event.pageX - 25) + "px")
+                      .style("top", (d3.event.pageY - 28) + "px");
+                  })
+                    .on("mouseout", function (d) {
+                    tooltip.transition()
+                      .duration(500)
+                      .style("opacity", 0);
+                  })
+                      .attr("x", function (d) {
+                    return x(d.x);
+                  })
+                    .attr("y",  function(d) {
+                    return height;
+                  })
+                    .attr("width", 15)
+                    .attr("height", 0)
+                    .transition().duration(1500)
+                    .attr("y", function (d) {
+                    return y(d.y + d.y0);
+                  })
+                    .attr("height", function (d) {
+                    return y(d.y0) - y(d.y + d.y0);
+                  });
+
+                }
+
+                drawBarGraph(data);
+            }
+        });
+    });
+    
+    $(".vis .wrapper").delay(10).fadeIn(500);
+    $('.vis .count').each(function () {
+      $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+      }, {
+        duration: 1500,
+        easing: 'swing',
+        step: function (now) {
+          $(this).text(Math.ceil(now));
+        }
+      });
+    });
+}
+
+
+$('document').ready(function() {
     if ($('canvas').length) {
         enableCanvas()
     }
@@ -296,6 +482,8 @@ $(function() {
         Foundation.reInit($('#equal-again'))
     })
 
+    enableVis();
+
     // Initialize Foundation
-    $(document).foundation()
+    $(document).foundation();
 })
