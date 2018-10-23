@@ -1,0 +1,33 @@
+<div class="vis{% if class %} {{class }}{% endif %}" data-slug="{{publication.slug}}">
+  <div class="wrapper">
+    <div class="cards">
+      {% if show_info %}
+      <div class="listen-wrap">
+        <ul>
+          <li>
+            <span class="count">{{ publication.get_number_of_years }}</span>
+            <span>Years</span>
+          </li>
+          <li>
+            <span class="count">{{ publication.issue_count }}</span>
+            <span>Editions</span>
+          </li>
+          <li>
+            <span class="count">{{ publication.article_count }}</span>
+            <span>Items</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="chart-wrapper" id="chart-bar">
+      <h1>{{ publication }}</h1>
+      <ul class="vbroadcast-legend">
+        <li class="article">Text</li>
+        <li class="ad">Ad</li>
+        <li class="picture">Picture</li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -10,19 +10,13 @@
                     <img src="{% static 'media' %}/{{ publication.title_image }}" alt="{{ publication.title }}" />
                 </a>
             </td>
+           
             <td class="title">
-                <a href="{{ p_url }}">
-                    {{ publication.title }}
-                </a>
-            </td>
-            <td class="title">
-                <a href="{{ p_url }}">
-                {{ publication.article_count }} Item{{ publication.article_count|pluralize }} over
-                {% with number_of_years=publication.get_number_of_years %}
-                {{ number_of_years }} Year{{ number_of_years|pluralize }}
-                {% endwith %}
-                </a>
+                
                         
+
+            {% include "periodicals/includes/vis.html" with show_info=1 class="browse" %}
+
                  
             </td>
             {% endwith %}
