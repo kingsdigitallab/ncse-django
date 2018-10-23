@@ -267,6 +267,21 @@ function enableVis()
         var url = "/periodicals/ajax/chart_data/" + slug + "/";
         var vis = $(this);
 
+        if ($(this).attr('data-width'))
+        {
+            var width = parseInt($(this).attr('data-width'));
+        } else
+        {
+            var width = 860;
+        }
+
+        if ($(this).attr('data-height'))
+        {
+            var height = parseInt($(this).attr('data-height'));
+        } else
+        {
+            var height = 290;
+        }
         $.ajax({ 
             type: 'GET', 
             url: url, 
@@ -291,9 +306,10 @@ function enableVis()
                   var colors = [ ["Successful", "#001038"],
                                 ["Unsuccessful", "#02247a"] ];
 
-                  var margin = {top: 30, right: 30, bottom: 40, left: 60},
-                      width  = 860 - margin.left - margin.right,
-                      height = 290 - margin.top - margin.bottom;
+                  var margin = {top: 30, right: 30, bottom: 40, left: 60};
+
+                  width  = width - margin.left - margin.right;
+                  height = height - margin.top - margin.bottom;
 
                   var z = d3.scale.ordinal()
                   .range(["#001038", "#02247a", "#0584ba", "#63d3e8", "#a5f7ec"]);
