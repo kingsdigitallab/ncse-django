@@ -55,7 +55,7 @@ IndexPage.promote_panels = Page.promote_panels
 
 
 class RichTextPage(Page, WithStreamField):
-    subpage_types = []
+    subpage_types = ['RichTextPage']
 
 
 RichTextPage.content_panels = [
