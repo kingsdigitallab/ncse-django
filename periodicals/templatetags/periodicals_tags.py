@@ -19,6 +19,11 @@ def split(value, arg):
     return value.split(arg)
 
 
+@register.filter
+def get_list(dictionary, key):
+    return dictionary.getlist(key)
+
+
 @register.simple_tag
 def initial_search_parameters():
     form = PeriodicalsSearchForm()
