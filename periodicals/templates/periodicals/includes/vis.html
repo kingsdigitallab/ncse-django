@@ -1,4 +1,4 @@
-<div class="vis{% if class %} {{class }}{% endif %}" data-slug="{{publication.slug}}" {% if width %} data-width="{{ width }}"{% endif %} {% if height %} data-height="{{ height }}"{% endif %}>
+<div class="vis{% if class %} {{class }}{% endif %}" data-slug="{{publication.slug}}" {% if width %} data-width="{{ width }}"{% endif %} {% if height %} data-height="{{ height }}"{% endif %} {% if start %}data-start="{{start}}"{% endif %} {% if end %} data-end="{{ end }}" {% endif %}>
   <div class="wrapper">
     <div class="cards">
       {% if show_info %}

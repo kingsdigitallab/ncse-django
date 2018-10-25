@@ -282,6 +282,23 @@ function enableVis()
         {
             var height = 290;
         }
+
+        if ($(this).attr('data-start'))
+        {
+            var start = parseInt($(this).attr('data-start'));
+        } else
+        {
+            var start = false;
+        }
+
+        if ($(this).attr('data-end'))
+        {
+            var end = parseInt($(this).attr('data-end'));
+        } else
+        {
+            var end = false;
+        }
+
         $.ajax({ 
             type: 'GET', 
             url: url, 
@@ -313,8 +330,17 @@ function enableVis()
 
                   var z = d3.scale.ordinal()
                   .range(["#001038", "#02247a", "#0584ba", "#63d3e8", "#a5f7ec"]);
-                  var start = data[0]["date"];
-                  var end = data[data.length - 1]["date"];
+
+                  if(!start)
+                  {
+                    start = data[0]["date"];
+                  }
+
+                  if(!end)
+                  {
+                    end = data[data.length - 1]["date"];
+                  }
+
                   
                   var x = d3.scale.linear()
                   .domain([start, end])
@@ -327,7 +353,7 @@ function enableVis()
                   .scale(x)
                   .orient("bottom")
                   .tickFormat(d3.format("d"))
-                  .ticks(30);
+                  .ticks(5);
 
                   var yAxis = d3.svg.axis()
                   .scale(y)
