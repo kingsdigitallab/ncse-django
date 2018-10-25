@@ -316,6 +316,7 @@ function enableVis()
                     }
                 });
 
+
                 data = JSON.parse(data);
 
                 function drawBarGraph(data) {
@@ -372,13 +373,17 @@ function enableVis()
                   (status.map(function (c) {
                     return data.map(function (d) {
                       return {x: d.date, y: d[c]};
+
                     });
                   }));
 
-
+console.log(layers);    
                   y.domain([
-                    0, d3.max(layers[layers.length - 1], function (d) {
-                      return d.y0 + d.y;
+                    0, d3.max(layers, function (d) {
+                      return d3.max(d, function(e)
+                      {
+                        return e.y0 + e.y;
+                      });
                     })
                   ]);
 
