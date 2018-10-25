@@ -456,7 +456,7 @@ function enableVis()
                     .attr("y",  function(d) {
                     return height;
                   })
-                    .attr("width", 15)
+                    .attr("width", 4)
                     .attr("height", 0)
                     .transition().duration(1500)
                     .attr("y", function (d) {
