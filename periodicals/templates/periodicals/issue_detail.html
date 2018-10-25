@@ -2,7 +2,7 @@
 {% load humanize periodicals_tags %}
 
 {% block title %}
-{{ issue.publication}}, {{ issue.issue_date|date:"j N Y" }}, Edition {{issue.edition}} of {{ issue.get_edition_count }}{% if issue.component %}, {{issue.component}}{% endif %}
+{{ issue.publication}}, {{ issue.issue_date|date:"N Y" }}, Edition {{issue.edition}} of {{ issue.get_edition_count }}{% if issue.component %}, {{issue.component}}{% endif %}
 
 
 {% if issue.pdf %}

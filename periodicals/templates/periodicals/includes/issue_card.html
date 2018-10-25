@@ -6,7 +6,7 @@
             <img src="{% thumbnail issue.pages.all.0.image.url %}" alt="{{ publication }}">
         </div>
         <div class="card-section overlay">
-            <h3 class="small-caps">{{ issue.issue_date|date:"j N Y" }}</h3>
+            <h3 class="small-caps">{{ issue.issue_date|date:"N Y" }}</h3>
             {% if issue.edition and issue.edition != '1' %}
             <h3 class="small-caps">{{ issue.edition | ordinal }} edition</h3>
             {% endif %}
