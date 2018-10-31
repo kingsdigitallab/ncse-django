@@ -948,7 +948,7 @@ table {
         }
 
         &.title{
-            width: 33.3%;
+            width: 10%;
             img{
                 width:80%;
             }
@@ -1094,15 +1094,21 @@ footer {
 }
 
 /* Browse Vis */
+.publication-wrapper{
+    padding:2rem 0;
+   &:hover{
+        background: $black
+   }
+    
 
-.vis {
-  align-items: center;
+}
+.vis.browse {
+  /*align-items: center;
   display: flex;
-  justify-content: center;
-
+  justify-content: center;*/
 
     h1 {
-      color: #fff;
+      color: $black;
       font-size: 18px;
       float: left;
       padding: 0 40px;
@@ -1111,15 +1117,161 @@ footer {
 
 
     .wrapper {
-      box-shadow: 0 0 40px rgba(51,59,102,0.5);
+      display: none;      
+    }
+    .publication{
+        width: 20%;
+        display: inline-block;
+        vertical-align: top;
+        margin-right:3%;
+        img{
+            width:100%;
+        }
+    }
+    .cards {
+        display: inline-block;
+        width: 15%;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    .listen-wrap {
+      overflow: hidden;
+      width:100%;
+      ul {
+        margin: 0;
+        padding: 0;
+        text-align: left;
+        li {
+          color: darken($grey, 12%);
+          list-style: none;
+          text-align: left;
+          text-transform: uppercase;
+          padding-bottom: 2rem;
+          span {
+            display: inline-block;
+            line-height: 18px;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+
+    .count {
+      color: $light-black;
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: -4px;
+      line-height: 46px !important;
+      margin-right: 10px;
+    }
+
+    .chart-wrapper {
+      clear: both;
+      display: inline-block;
+      width:60%;
+      text-align: right;
+    }
+
+    text {
+      font-size: 12px;
+      fill: #ccc;
+    }
+
+
+    .axis path,
+    .axis line,
+    .gridline line {
+      fill: none;
+      stroke: $black;
+      opacity: 0.8;
+      shape-rendering: crispEdges;
+    }
+
+    .line {
+      stroke: #17EAD9;
+      stroke-width: 3px;
+      fill: none;
+    }
+
+    path.domain {
+      fill: none;
+      opacity: 0.1;
+    }
+
+    div.tooltip {
+      color: #4a4a4a;
+      position: absolute;
+      text-align: center;
+      padding: 3px 6px;
+      font-size: 12px;
+      background: #fff;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    .tick text {
+      font-size: 10px;
+    } 
+
+    .vbroadcast-legend {
+        display: none;
+      float: right;
+      margin-right: 40px;
+      margin-top: 16px;
+      li {
+        color: $black;
+        font-size: 13px;
+        float: left;
+        list-style: none;
+        margin-left: 20px;
+        padding-left: 18px;
+        position: relative;
+        &:before {
+          content: "";
+          height: 12px;
+          left: 0;
+          position: absolute;
+          top: 3px;
+          width: 12px;
+        }
+        &.article:before {
+          background: #001038;
+        }
+        &.ad:before {
+          background: #02247a;
+        }
+        &.picture:before {
+          background: #0584ba;
+        }
+      }
+    }
+}
+/* Publication Vis */
+.vis.publication {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+    h1 {
+      color: $black;
+      font-size: 18px;
+      float: left;
+      padding: 0 40px;
+      text-transform: uppercase;
+    }
+
+    .publication{
+        text-align: center;
+        h1{
+            display: none;
+        }
+    }
+    .wrapper {
       display: none;
       
     }
-
     .cards {
-      background: $white;
-      border-top-left-radius: 4px;
-      border-top-right-radius: 4px;
       padding: 30px 40px;
     }
 
@@ -1168,16 +1320,16 @@ footer {
     }
 
     .chart-wrapper {
-      background: #666;
-      border-bottom-left-radius: 4px;
-      border-bottom-right-radius: 4px;
       clear: both;
       padding: 20px 0 10px;
+      img{
+        vertical-align: top;
+      }
     }
 
     text {
       font-size: 12px;
-      fill: #ccc;
+      fill: $black;
     }
 
 
@@ -1185,8 +1337,8 @@ footer {
     .axis line,
     .gridline line {
       fill: none;
-      stroke: #fff;
-      opacity: 0.1;
+      stroke: $black;
+      opacity: 0.8;
       shape-rendering: crispEdges;
     }
 
@@ -1208,8 +1360,8 @@ footer {
       padding: 3px 6px;
       font-size: 12px;
       background: #fff;
-      border-radius: 4px;
       pointer-events: none;
+      border:1px solid #ccc;
     }
 
     .tick text {
@@ -1217,13 +1369,12 @@ footer {
     } 
 
     .vbroadcast-legend {
-      float: right;
       margin-right: 40px;
       margin-top: 16px;
       li {
-        color: #fff;
+        color: $black;
         font-size: 13px;
-        float: left;
+        float: right;
         list-style: none;
         margin-left: 20px;
         padding-left: 18px;
@@ -1248,6 +1399,8 @@ footer {
       }
     }
 }
+
+
 
 
 /* Cookie disclaimer */

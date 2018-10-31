@@ -1,33 +1,28 @@
 {% load staticfiles %}
 
-<table class="stack unstriped">
-    <tbody>
+
+        
         {% for publication in publications %}
-        <tr>
+       <div class="publication-wrapper">
             {% with p_url=publication.url %}
+
+            <a href="{{ p_url }}">
+            <!--
             <td class="title">
                 <a href="{{ p_url }}">
                     <img src="{% static 'media' %}/{{ publication.title_image }}" alt="{{ publication.title }}" />
                 </a>
             </td>
-           
-
-            <td class="title">
-                
-                        
-
-            {% include "periodicals/includes/vis.html" with show_info=1 class="browse" width="400" start="1806" end="1890" %}
-
-                 
-            </td>
+            -->
+            {% include "periodicals/includes/vis.html" with show_info=1 class="browse"  start="1806" end="1890" %}
+             </a>
+              </div> 
             {% endwith %}
-        </tr>
-
+        
         {% if request.user.is_staff %}
         <div class="card-divider">
             <a href="/admin/periodicals/publication/{{ publication.id }}/change/" class="card-footer-item">Edit</a>
         </div>
         {% endif %}
         {% endfor %}
-    </tbody>
-</table>
+ 
