@@ -28,7 +28,7 @@ urlpatterns += [
 
     path('wagtail/', include('wagtail.admin.urls')),
     path('documents/', include('wagtail.documents.urls')),
-    path('', include('wagtail.core.urls')),
+    path('cms/', include('wagtail.core.urls')),
 
     path('Default.htm', XmodRedirectView.as_view(), name='xmod_redir'),
 
