@@ -1,5 +1,13 @@
+{% load staticfiles %}
+
 <div class="vis{% if class %} {{class }}{% endif %}" data-slug="{{publication.slug}}" {% if width %} data-width="{{ width }}"{% endif %} {% if height %} data-height="{{ height }}"{% endif %} {% if start %}data-start="{{start}}"{% endif %} {% if end %} data-end="{{ end }}" {% endif %}>
   <div class="wrapper">
+    <div class="publication">
+    
+      <img src="{% static 'media' %}/{{ publication.title_image }}" alt="{{ publication.title }}" />
+      <h1>{{ publication }}</h1>
+    </div>
+
     <div class="cards">
       {% if show_info %}
       <div class="listen-wrap">
@@ -22,7 +30,6 @@
     {% endif %}
 
     <div class="chart-wrapper" id="chart-bar">
-      <h1>{{ publication }}</h1>
       <ul class="vbroadcast-legend">
         <li class="article">Text</li>
         <li class="ad">Ad</li>

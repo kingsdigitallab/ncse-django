@@ -1,5 +1,7 @@
 {% extends 'periodicals/base.html' %}
 {% load periodicals_tags %}
+{% load staticfiles %}
+
 
 {% block meta_title %}
 {{ publication }}
@@ -34,6 +36,7 @@
 <section>
     <div class="row">
         <div class="small-12 columns">
+            
             {% include "periodicals/includes/vis.html" with show_info=1 class="publication" %}
         </div>
     </div>

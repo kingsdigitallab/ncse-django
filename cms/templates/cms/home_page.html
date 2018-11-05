@@ -1,8 +1,6 @@
 {% extends "cms/base.html" %}
 {% load periodicals_tags %}
-
 {% block header %}{% endblock %}
-
 {% block main %}
 
 <section>
@@ -20,7 +18,7 @@
             {% get_publications %}
         </div>
     </div>
-     <div class="row">
+    <div class="row">
         <div class="large-6 columns">
             <h2 class="underline margin-bottom">Search</h2>
             {% quick_periodical_search_form %}
