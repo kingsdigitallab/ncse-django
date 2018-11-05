@@ -46,8 +46,12 @@
 <!-- New template but no tags -->
 <div class="row" id="main">
     <div class="medium-3 columns">
-    
+
         <ul class="vertical menu" data-accordion  data-accordion-menu data-multi-open="false">
+        {% if publication.headnotes_url %}
+        <li><a class="menu Link" href="{{ publication.headnotes_url }}">About this publication</a></li>
+        {% endif %}
+
         <h2>Years</h2>
             {% for year in publication.get_year_range %}
                 {% with issues=publication|get_issues_by_year:year %}

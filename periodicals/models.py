@@ -18,6 +18,8 @@ class Publication(models.Model):
     page_count = models.PositiveIntegerField(default=0)
     issue_count = models.PositiveIntegerField(default=0)
     article_count = models.PositiveIntegerField(default=0)
+    headnotes_url = models.CharField(max_length=128, blank=True,
+                                     null=True)
 
     class Meta:
         ordering = ['ordering']

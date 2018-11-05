@@ -14,4 +14,4 @@ psycopg2-binary
 python-ldap<=3.0.0 # 3.1.0 is broken
 pysolr
 redis
-wagtail==2.1
+wagtail
