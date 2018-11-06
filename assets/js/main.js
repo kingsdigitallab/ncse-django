@@ -364,8 +364,8 @@ function enableVis()
 
                   var svg = d3.select($(vis)[0]).select("#chart-bar")
                   .append("svg")
-                  .attr("width", width + margin.left + margin.right)
-                  .attr("height", height + margin.top + margin.bottom)
+                  .attr("viewBox", "0 0 " + (width + margin.left + margin.right) + " " + (height + margin.top + margin.bottom))
+                  .attr("preserveAspectRatio", "xMinYMin meet")
                   .append("g")
                   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -377,7 +377,6 @@ function enableVis()
                     });
                   }));
 
-console.log(layers);    
                   y.domain([
                     0, d3.max(layers, function (d) {
                       return d3.max(d, function(e)
@@ -409,8 +408,7 @@ console.log(layers);
                     .append("text")
                     .attr("transform", "translate(364,0)")
                     .attr("y", "3em")
-                    .style("text-anchor", "middle")
-                    .text("Year");
+                    .style("text-anchor", "middle");
 
                   svg.append("g")
                     .attr("class", "axis axis--y")

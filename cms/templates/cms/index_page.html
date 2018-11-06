@@ -1,11 +1,14 @@
 {% extends "cms/base.html" %}
+{% block title %}{{self.title}}{% endblock %}
 
 {% block main %}
+<div class="row" id="main">
+   <div class="medium-12 columns">
+    {{ block.super }}
 
-{{ block.super }}
-
-{% block index_page_children %}
-{% include "cms/includes/index_page_children.html" with pages=self.get_children.live %}
-{% endblock %}
-
+    {% block index_page_children %}
+    {% include "cms/includes/index_page_children.html" with pages=self.get_children.live %}
+    {% endblock %}
+    </div>
+</div>
 {% endblock %}

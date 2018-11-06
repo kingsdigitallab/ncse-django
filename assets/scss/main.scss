@@ -1114,6 +1114,11 @@ footer {
   display: flex;
   justify-content: center;*/
 
+    svg {
+        max-width: 100%;
+        height: auto;
+    }
+
     h1 {
       color: $black;
       font-size: 18px;
@@ -1218,7 +1223,7 @@ footer {
     }
 
     .tick text {
-      font-size: 10px;
+      font-size: 1em;
     } 
 
     .vbroadcast-legend {
@@ -1260,6 +1265,7 @@ footer {
   display: flex;
   justify-content: center;
 
+    
     h1 {
       color: $black;
       font-size: 18px;
@@ -1276,6 +1282,7 @@ footer {
     }
     .wrapper {
       display: none;
+      width: 100%
       
     }
     .cards {
@@ -1335,7 +1342,7 @@ footer {
     }
 
     text {
-      font-size: 12px;
+        font-size: 1em;
       fill: $black;
     }
 
