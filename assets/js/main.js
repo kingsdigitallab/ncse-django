@@ -444,7 +444,8 @@ function enableVis()
                     tooltip.transition()
                       .duration(200)
                       .style("opacity", 1);
-                    tooltip.html("<span>" + d.y + " items" + "</span>")
+                      console.log(d3.event);
+                    tooltip.html("<span>" + d.y  + "</span>")
                       .style("left", (d3.event.pageX - 25) + "px")
                       .style("top", (d3.event.pageY - 28) + "px");
                   })
