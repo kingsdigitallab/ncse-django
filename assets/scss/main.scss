@@ -1417,13 +1417,13 @@ footer {
           width: 12px;
         }
         &.article:before {
-          background: #001038;
+          background: $primary-color;
         }
         &.ad:before {
-          background: #02247a;
+          background: #ddd;
         }
         &.picture:before {
-          background: #0584ba;
+          background: #000;
         }
       }
     }

@@ -330,7 +330,7 @@ function enableVis()
                   height = height - margin.top - margin.bottom;
 
                   var z = d3.scale.ordinal()
-                  .range(["#001038", "#02247a", "#0584ba", "#63d3e8", "#a5f7ec"]);
+                  .range(["#0584ba", "#ddd", "#000", "#0584ba", "#a5f7ec"]);
 
                   if(!start)
                   {
