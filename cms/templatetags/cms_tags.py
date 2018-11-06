@@ -76,3 +76,8 @@ def sub_menu(context, root):
 
     return {'request': context['request'], 'root': root,
             'menu_pages': menu_pages}
+
+
+@register.filter
+def get_breadcrumb_pages(page):
+    return page.get_ancestors(True)[1:]

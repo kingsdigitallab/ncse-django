@@ -2,6 +2,10 @@
 
 {% block meta_title %}{{ self.title }}{% endblock %}
 
+{% block breadcrumbs %}
+    {% include 'cms/includes/breadcrumbs.html' %}
+{% endblock %}
+
 {% block main %}
 {% include "cms/includes/streamfield.html" with blocks=self.body %}
 {% endblock %}

@@ -215,6 +215,17 @@ h3 {
     }
 }
 
+.page-content
+{
+    h3
+    {
+        &:first-child
+        {
+            padding-top: 0;
+        }
+    }
+}
+
 h4{
 
 }
