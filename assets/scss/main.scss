@@ -1117,6 +1117,13 @@ footer {
    &:hover{
         background: lighten($light-gray, 10%);
    }
+
+   &:first-child {
+       .vbroadcast-legend
+       {
+           display: block!important;
+       }
+   }
     
 
 }
