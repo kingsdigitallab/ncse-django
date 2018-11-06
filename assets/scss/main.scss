@@ -206,7 +206,7 @@ h2 {
 }
 
 h3 {
-    font-size: 1.75rem;
+    font-size: 1.4rem;
     font-weight: bold;
     padding: 1.5em 0 .8em 0;
     span {
@@ -695,6 +695,19 @@ ul.vertical.menu{
         }
     }
 }
+
+.rich-text-image {
+    &.right{
+        float:right;
+        padding: 1rem 4rem;
+    }
+    &.left{
+        float:left;
+        padding: 1rem 4rem;
+    }
+}
+
+
 /* Tabs */
 
 .tab_container {
@@ -1267,13 +1280,13 @@ footer {
           width: 12px;
         }
         &.article:before {
-          background: #001038;
+          background: $primary-color;
         }
         &.ad:before {
-          background: #02247a;
+          background: #ddd;
         }
         &.picture:before {
-          background: #0584ba;
+          background: #000;
         }
       }
     }
@@ -1407,6 +1420,7 @@ footer {
     .vbroadcast-legend {
       margin-right: 40px;
       margin-top: 16px;
+      float:right;
       li {
         color: $black;
         font-size: 13px;
@@ -1802,6 +1816,17 @@ footer {
     padding:0;
     line-height: 1.2;
     }
+    .rich-text-image {
+        &.right{
+            float:right;
+            padding: 1rem 0;
+        }
+        &.left{
+            float:left;
+            padding: 1rem 0;
+        }
+    }
+
 }
 
 @media screen and (max-width: 350px) {
