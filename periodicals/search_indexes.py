@@ -4,7 +4,7 @@ from .models import Article
 
 
 class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
-    # url = indexes.CharField(model_attr='url', indexed=False)
+    url = indexes.CharField(model_attr='url', indexed=False)
     aid = indexes.CharField(model_attr='aid', indexed=False)
     title = indexes.CharField(model_attr='title', null=True)
     description = indexes.CharField(model_attr='description', null=True)
