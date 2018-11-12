@@ -706,6 +706,12 @@ img.richtext-image{
         padding: 1rem 4rem;
     }
 }
+div.img-wrapper.float-mid{
+    max-width: 650px;
+    text-align: center;
+    margin: 0 auto;
+}
+
 
 
 /* Tabs */
@@ -1847,3 +1853,21 @@ footer {
         display: none;
     }
 }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+     /* IE10+ CSS styles go here */
+    .vis.browse {
+        svg {
+            min-width: 100%;
+            height: auto;
+        }
+    }
+
+}
+
+@supports (-ms-accelerator:true) {
+  /* IE Edge 12+ CSS styles go here */ 
+
+}
+
+
