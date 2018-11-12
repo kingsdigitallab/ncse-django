@@ -1,7 +1,7 @@
 from django.contrib.humanize.templatetags.humanize import ordinal
 from django.contrib.postgres.fields import JSONField
 from django.db import models
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from django.urls import reverse
 from django.utils.text import slugify
 
@@ -54,6 +54,14 @@ class Publication(models.Model):
     @property
     def get_first_issues(self):
         return Issue.objects.filter(publication=self).filter(edition=1)
+
+    @property
+    def primary_issue_count(self):
+        return self.get_issues.filter(
+            component=None
+        ).filter(
+            Q(edition='1') | Q(edition='Town') | Q(edition='Country')
+        ).count()
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.abbreviation)
