@@ -706,6 +706,12 @@ img.richtext-image{
         padding: 1rem 4rem;
     }
 }
+div.img-wrapper.float-mid{
+    max-width: 650px;
+    text-align: center;
+    margin: 0 auto;
+}
+
 
 
 /* Tabs */
@@ -1126,7 +1132,7 @@ footer {
 
 /* Browse Vis */
 .publication-wrapper{
-    padding:2rem 0 2rem  3%;
+    padding:2rem 0 0 3%;
    &:hover{
         background: lighten($light-gray, 10%);
    }
@@ -1218,6 +1224,7 @@ footer {
       width:60%;
       padding: 0 0 0 20px;
       text-align: right;
+      margin-top:-2vw;
     }
 
     text {
@@ -1255,14 +1262,13 @@ footer {
       border:1px solid #ccc;
     }
     .tick text {
-        font-size: calc(40px - 1.5vw);
+        font-size: calc(40px - 1.1vw);
     } 
 
     .vbroadcast-legend {
         display: none;
       float: right;
-      margin-right: 40px;
-      margin-top: 16px;
+      margin:0 0 -2rem 0;
       li {
         color: $black;
         font-size: 13px;
@@ -1414,7 +1420,7 @@ footer {
     }
 
     .tick text {
-        font-size: calc(35px - 1.5vw);
+        font-size: calc(35px - 1.1vw);
     } 
 
     .vbroadcast-legend {
@@ -1499,6 +1505,20 @@ footer {
 
 
 /* Media queries */
+
+@media screen and (max-width: 2000px) {
+    .vis.publication {
+        .tick text {
+            font-size: calc(35px - 1.5vw);
+        } 
+    }
+    .vis.browse {
+        .tick text {
+            font-size: calc(40px - 1.5vw);
+        } 
+    }
+}
+
 
 @media screen and (max-width: 1024px) {
     section {
@@ -1847,3 +1867,21 @@ footer {
         display: none;
     }
 }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+     /* IE10+ CSS styles go here */
+    .vis.browse {
+        svg {
+            min-width: 100%;
+            height: auto;
+        }
+    }
+
+}
+
+@supports (-ms-accelerator:true) {
+  /* IE Edge 12+ CSS styles go here */ 
+
+}
+
+
