@@ -1224,6 +1224,7 @@ footer {
       width:60%;
       padding: 0 0 0 20px;
       text-align: right;
+      margin-top:-3vw;
     }
 
     text {
@@ -1267,8 +1268,7 @@ footer {
     .vbroadcast-legend {
         display: none;
       float: right;
-      margin-right: 40px;
-      margin-top: 16px;
+      margin:0 0 -2rem 0;
       li {
         color: $black;
         font-size: 13px;
