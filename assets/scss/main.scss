@@ -1262,7 +1262,7 @@ footer {
       border:1px solid #ccc;
     }
     .tick text {
-        font-size: calc(40px - 1.5vw);
+        font-size: calc(40px - 1.1vw);
     } 
 
     .vbroadcast-legend {
@@ -1420,7 +1420,7 @@ footer {
     }
 
     .tick text {
-        font-size: calc(35px - 1.5vw);
+        font-size: calc(35px - 1.1vw);
     } 
 
     .vbroadcast-legend {
@@ -1505,6 +1505,20 @@ footer {
 
 
 /* Media queries */
+
+@media screen and (max-width: 2000px) {
+    .vis.publication {
+        .tick text {
+            font-size: calc(35px - 1.5vw);
+        } 
+    }
+    .vis.browse {
+        .tick text {
+            font-size: calc(40px - 1.5vw);
+        } 
+    }
+}
+
 
 @media screen and (max-width: 1024px) {
     section {
