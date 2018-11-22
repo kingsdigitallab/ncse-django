@@ -109,54 +109,56 @@ function enableCanvas()
         context.scale(scale, scale);
         
         // Magic starts here
-        var img=document.getElementById("canvasImage");
-        context.drawImage(img, 0, 0);
+        $("#canvasImg").ready(function(){ 
+            var img=document.getElementById("canvasImage");
+            context.drawImage(img, 0, 0);
 
-        if (typeof highlight_words !== "undefined") {
-            context.lineWidth = "1";
-            context.fillStyle = word_highlight_colour;
-            context.strokeStyle = "rgba(0,0,0,0)";
+            if (typeof highlight_words !== "undefined") {
+                context.lineWidth = "1";
+                context.fillStyle = word_highlight_colour;
+                context.strokeStyle = "rgba(0,0,0,0)";
 
-            jQuery.each(highlight_words, function(k1, v1) {
-                jQuery.each(v1, function(k2, v2) {
-                    var x0 = parseInt(this["x0"]);
-                    var x1 = parseInt(this["x1"]);
+                jQuery.each(highlight_words, function(k1, v1) {
+                    jQuery.each(v1, function(k2, v2) {
+                        var x0 = parseInt(this["x0"]);
+                        var x1 = parseInt(this["x1"]);
 
-                    var y0 = parseInt(this["y0"]);
-                    var y1 = parseInt(this["y1"]);
-                    context.beginPath();
-                    context.fillRect(x0, y0, x1 - x0, y1 - y0);
-                    context.stroke();
+                        var y0 = parseInt(this["y0"]);
+                        var y1 = parseInt(this["y1"]);
+                        context.beginPath();
+                        context.fillRect(x0, y0, x1 - x0, y1 - y0);
+                        context.stroke();
+                    });
                 });
-            });
-        }
-
-        if (typeof article_bounding_box !== "undefined") {
-            context.lineWidth = "4";
-            context.fillStyle = "rgba(0,0,0,0)";
-            context.strokeStyle = article_bounding_box_colour;
-
-            context.beginPath();
-            context.moveTo(
-                parseInt(article_bounding_box[0]["x"]),
-                parseInt(article_bounding_box[0]["y"])
-            );
-
-            count = article_bounding_box.length;
-
-            for (var i = 1; i <= count; i++) {
-                context.lineTo(
-                    parseInt(article_bounding_box[i % count]["x"]),
-                    parseInt(article_bounding_box[i % count]["y"])
-                );
             }
 
-            context.stroke();
-        }
+            if (typeof article_bounding_box !== "undefined") {
+                context.lineWidth = "4";
+                context.fillStyle = "rgba(0,0,0,0)";
+                context.strokeStyle = article_bounding_box_colour;
 
-        // End magic
+                context.beginPath();
+                context.moveTo(
+                    parseInt(article_bounding_box[0]["x"]),
+                    parseInt(article_bounding_box[0]["y"])
+                );
 
-        context.restore();
+                count = article_bounding_box.length;
+
+                for (var i = 1; i <= count; i++) {
+                    context.lineTo(
+                        parseInt(article_bounding_box[i % count]["x"]),
+                        parseInt(article_bounding_box[i % count]["y"])
+                    );
+                }
+
+                context.stroke();
+            }
+
+            // End magic
+
+            context.restore();
+        });
     }
  
     var initialize = (function(){
