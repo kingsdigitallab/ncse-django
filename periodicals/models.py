@@ -20,6 +20,7 @@ class Publication(models.Model):
     article_count = models.PositiveIntegerField(default=0)
     headnotes_url = models.CharField(max_length=128, blank=True,
                                      null=True)
+    weekly = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['ordering']
@@ -27,6 +28,13 @@ class Publication(models.Model):
 
     def __str__(self):
         return '{}'.format(self.title if self.title else self.abbreviation)
+
+    @property
+    def date_format(self):
+        if self.weekly:
+            return "jS F Y"
+        else:
+            return "F Y"
 
     @property
     def url(self):
@@ -119,7 +127,8 @@ class Issue(models.Model):
         ordering = ['issue_date', 'edition']
 
     def __str__(self):
-        issue = '{}: {}'.format(self.publication, self.issue_date)
+        issue = '{}: {}'.format(self.publication, self.issue_date.strftime(
+            self.publication.date_format))
 
         if self.edition != 1:
             issue = '{}, {} edition'.format(issue, ordinal(self.edition))

@@ -62,7 +62,7 @@
                         {% regroup issues by issue_date as dates %}
                         {% for date in dates %}
                         <li>
-                            <a href="#">{{ date.grouper }} <span>({{date.list|length}})</span></a>
+                            <a href="#">{{ date.grouper|date:publication.date_format }} <span>({{date.list|length}})</span></a>
                             <ul class="menu vertical">
                                 {% for issue in date.list %}
                                 <li {% if issue.edition != '1' %}class="lighten" {% endif %}><a href="{{issue.url}}">{{ issue.name }}</a></li>

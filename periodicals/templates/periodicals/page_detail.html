@@ -2,11 +2,11 @@
 {% load periodicals_tags %}
 
 {% block title %}
-{{ page.issue.publication}}, {{ page.issue.issue_date|date:"N Y" }}, Edition {{page.issue.edition}} of {{ page.issue.get_edition_count }}{% if page.issue.component %}, {{page.issue.component}}{% endif %}, Page {{ page.get_label }}{% if article.title %}, {{ article.title }}{% endif %}
+{{ page.issue.publication}}, {{ page.issue.issue_date|date:page.issue.publication.date_format }}, Edition {{page.issue.edition}} of {{ page.issue.get_edition_count }}{% if page.issue.component %}, {{page.issue.component}}{% endif %}, Page {{ page.get_label }}{% if article.title %}, {{ article.title }}{% endif %}
 {% endblock %}
 
 {% block meta_title %}
-{{ page.issue.publication}}, {{ page.issue.issue_date|date:"N Y" }}, Edition {{page.issue.edition}} of {{ page.issue.get_edition_count }}{% if page.issue.component %}, {{page.issue.component}}{% endif %}, Page {{ page.get_label }}{% if article.title %}, {{ article.title }}{% endif %}
+{{ page.issue.publication}}, {{ page.issue.issue_date|date:page.issue.publication.date_format }}, Edition {{page.issue.edition}} of {{ page.issue.get_edition_count }}{% if page.issue.component %}, {{page.issue.component}}{% endif %}, Page {{ page.get_label }}{% if article.title %}, {{ article.title }}{% endif %}
 {% endblock %}
 
 {% block main %}
