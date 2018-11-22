@@ -239,7 +239,7 @@ function enablePublicationDetailAjax()
             {   
                 $("img").ready(function(event)
                 {
-                    $(document).foundation();
+                    Foundation.reInit($("img"));
                 });
             });
         }
@@ -306,19 +306,29 @@ function enableVis()
             success: function (data) { 
 
                 var statuses_to_use = ["Article", "Ad", "Picture"];
-                var status = [];
+                var status = ["Article", "Ad", "Picture"];
 
-                $(statuses_to_use).each(function(key, val)
-                {
-                    if(~data.indexOf(val))
-                    {
-                        status.push(val);
-                    }
-                });
+               
 
 
                 data = JSON.parse(data);
+                for(i = 0; i < data.length; i++)
+                {
+                    if (data[i]["Article"] == undefined)
+                    {
+                        data[i]["Article"] = 0;
+                    }
 
+                    if (data[i]["Ad"] == undefined)
+                    {
+                        data[i]["Ad"] = 0;
+                    }
+
+                    if (data[i]["Picture"] == undefined)
+                    {
+                        data[i]["Picture"] = 0;
+                    }
+                }
                 function drawBarGraph(data) {
 
                   var colors = [ ["Successful", "#001038"],
@@ -444,7 +454,6 @@ function enableVis()
                     tooltip.transition()
                       .duration(200)
                       .style("opacity", 1);
-                      console.log(d3.event);
                     tooltip.html("<span>" + d.y  + "</span>")
                       .style("left", (d3.event.pageX - 25) + "px")
                       .style("top", (d3.event.pageY - 28) + "px");

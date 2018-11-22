@@ -177,12 +177,10 @@ class AjaxPublicationChartData(TemplateView):
             articles, key=lambda x: (x['year'], x['atype']))
 
         data = OrderedDict()
-
         for key, group in itertools.groupby(
                 articles_sorted, key=lambda x: x['year']):
             data[key] = list(group)
 
-        # Add to the context
         context['publication'] = publication
         context['data'] = data
 
