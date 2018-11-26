@@ -382,13 +382,13 @@ nav {
                 display: inline-block;
                 margin: rem-calc(16 0);
 
-                &.is-active > a,
-                    a.is-active {
-                        color: $primary-color;
-                        &:hover{
-                            color:darken($primary-color, 10%);
-                        }
+                &.is-active  a,
+                a.is-active {
+                    color: $primary-color;
+                    &:hover{
+                        color:darken($primary-color, 10%);
                     }
+                }
                 &:hover{
                     &.is-active > a,
                     a.is-active {
@@ -403,7 +403,7 @@ nav {
 
                     i.fa
                     {
-                        color: $black;
+                       // color: $black;
 
                         &:hover
                         {

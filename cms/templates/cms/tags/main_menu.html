@@ -5,13 +5,13 @@
   <li {% if page.active %} class="is-active" {% endif %}><a href="{% pageurl page %}">{{ page.title }}</a></li>
   {% endfor %}
 
-  <li>
+  <li {% if '/periodicals' in request.path and '/search' not in request.path %}class="is-active"{% endif %}>
     <a href="/periodicals">Facsimiles</a>
+  </li>
+  <li {% if '/search' in request.path %}class="is-active"{% endif %}>
     <span data-tooltip tabindex="1" title="Search" data-position="bottom" data-alignment="center">
       <a href="{% url 'search' %}?{% initial_search_parameters %}"><i class="fa fa-search"></i></a>
     </span>
-
-
   </li>
 
   {% if request.user.is_authenticated %}
