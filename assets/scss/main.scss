@@ -233,6 +233,12 @@ h4{
 main {
     padding: rem-calc(20 0);
     margin: 0 auto;
+    a{
+        color: $primary-color;
+        &:hover{
+            color:darken($primary-color, 10%);
+        }
+    }
 }
 
 .border {
@@ -375,6 +381,20 @@ nav {
             li {
                 display: inline-block;
                 margin: rem-calc(16 0);
+
+                &.is-active > a,
+                    a.is-active {
+                        color: $primary-color;
+                        &:hover{
+                            color:darken($primary-color, 10%);
+                        }
+                    }
+                &:hover{
+                    &.is-active > a,
+                    a.is-active {
+                        color:$medium-gray;
+                    }
+                }
                 a {
                     padding: rem-calc(0 16);
                     text-decoration: none;
@@ -383,11 +403,14 @@ nav {
 
                     i.fa
                     {
-                        color: $primary-color;
+                        color: $black;
 
                         &:hover
                         {
                             color: $medium-gray;
+                        }
+                        &.is-active{
+                            color: $primary-color;
                         }
                     }
 
@@ -1160,7 +1183,8 @@ footer {
       color: $black;
       font-size: 18px;
       float: left;
-      padding: 0 40px;
+      padding: 0;
+      text-align: center;
       text-transform: uppercase;
     }
 
@@ -1211,7 +1235,7 @@ footer {
     .count {
       color: $light-black;
      /* font-size: 48px;*/
-      font-size: 3vw;
+      font-size: 2.7vw;
       font-weight: 700;
       letter-spacing: -4px;
       line-height: 46px !important;
