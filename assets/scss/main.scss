@@ -881,6 +881,8 @@ ul.filters {
     .accordion-content {
         width: 100%;
         float: left;
+        height:50vh;
+        overflow: scroll;
         span{
             color: gray;
             font-size:1rem;
