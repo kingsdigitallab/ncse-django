@@ -19,17 +19,16 @@
   - name: apt | install https transport for apt
     apt:
       pkg: apt-transport-https
-      state: installed
+      state: present
       update_cache: yes
     tags:
       -system
 
   - name: apt | install required system packages
     apt:
-      pkg: '{{ item }}'
-      state: installed
+      pkg: '{{ system_packages }}'
+      state: present
       update_cache: yes
-    with_items: '{{ system_packages }}'
     tags:
       - system
 
@@ -66,7 +65,7 @@
   - name: git-lfs | install
     apt:
       pkg: git-lfs
-      state: installed
+      state: present
       update_cache: yes
     tags:
       - system
