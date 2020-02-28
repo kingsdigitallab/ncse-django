@@ -8,7 +8,7 @@
                 {% get_request_parameters exclude="selected_facets" as facet_params %}
                 {% get_selected_facets exclude=selected_key as facets_excluded %}
                 <a href="{% url 'search' %}?{{ facet_params }}{% if facets_excluded %}{% for facet in facets_excluded %}&selected_facets={{ facet }}{% endfor %}{% endif %}">{{ item.0 }} <span>({{ item.1 }} Result{{ item.1|pluralize }}) &nbsp; </span> 
-                    <i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                    <span class="buttonicon"></span></a></span>
             {% else %}
                 <a href="?{{ form.data.urlencode }}&amp;selected_facets={{ key }}:{{ item.0|urlencode }}">{{ item.0 }} 
                     <span>({{ item.1 }}  Result{{ item.1|pluralize }}) </span></a>

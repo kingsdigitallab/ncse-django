@@ -15,6 +15,7 @@
   {% endcompress %}
 </head>
 <body>
+  <div role="complementary" class="skip-main"><a href="#maincontent">Skip to main content</a></div>
   <nav>
     <div class="grid-container">
       <div class="row">
@@ -26,7 +27,8 @@
       </div>
     </div>
   </nav>
-
+  <div id="maincontent" tabindex="0"></div>
+  
   {% block header %}
   {% comment %} This is here because of overriding the title {% endcomment %}
 

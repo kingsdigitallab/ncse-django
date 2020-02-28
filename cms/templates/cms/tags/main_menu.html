@@ -10,7 +10,7 @@
   </li>
   <li {% if '/search' in request.path %}class="is-active"{% endif %}>
     <span data-tooltip tabindex="1" title="Search" data-position="bottom" data-alignment="center">
-      <a href="{% url 'search' %}?{% initial_search_parameters %}"><i class="fa fa-search"></i></a>
+      <a href="{% url 'search' %}?{% initial_search_parameters %}"><button aria-label="button for search" class="buttonicon"></button></a> 
     </span>
   </li>
 

@@ -30,7 +30,9 @@
     src: url('/static/fonts/lora/Lora-Regular.ttf');
 }
 
-
+.buttonicon {
+    font-family: 'FontAwesome'
+}
 
 /* Globals */
 
@@ -83,6 +85,11 @@ canvas {
     height: auto;
 }
 
+.skip-main {
+    font-size: 1px;
+    position: absolute;
+    top:-20px
+}
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
@@ -104,13 +111,16 @@ canvas {
         background: $black;
         a {
         color: $white;
-            &:hover {
+            &:hover{
                 opacity:0.8;
                 text-decoration: none;
             }
         }
         span{
             color: $white;
+            &:focus {
+                opacity:0.8;
+            }
         }
     }
 
@@ -235,11 +245,13 @@ main {
     margin: 0 auto;
     a{
         color: $primary-color;
+        text-decoration: underline;
         &:hover{
             color:darken($primary-color, 10%);
         }
     }
 }
+
 
 .border {
     border: 1px solid $dark-gray;
@@ -259,6 +271,7 @@ main {
     font-weight: bold;
     a{
         color: $white;
+        text-decoration: underline;
         &:hover{
             opacity: 0.8;
         }
@@ -455,7 +468,7 @@ ul.vertical.menu{
             color: $white;
             }
             span{
-                color:$light-gray;
+                color:white;
                 font-size: 1rem;
                 font-weight: normal;
             }
@@ -481,7 +494,7 @@ ul.vertical.menu{
                 color:$blue;
             }
             span{
-                color:$medium-gray;
+                color:black;
                 font-size: 1rem;
                 font-weight: normal;
             }
@@ -531,11 +544,12 @@ ul.vertical.menu{
             float: left;
             &.is-active > a,
             a.is-active {
-                background: $black;
-                color: $white;
-                border:1px solid $black;
+                &:focus{
+
+                }
+                
                 span {
-                    color: $medium-gray;
+                    color: white;
                 }
             }
             span {
@@ -1118,8 +1132,8 @@ footer {
         }
     }
     a {
-        
-        color: $light-gray;
+        color: $light-grey;
+        text-decoration: underline;
         &:hover{
             color: $primary-color;
         }
@@ -1226,6 +1240,7 @@ footer {
           line-height: 3vw;
           padding-bottom: 2rem;
           span {
+            color:$black-gray;
             display: inline-block;
 
             vertical-align: middle;
@@ -1286,6 +1301,9 @@ footer {
       background: #fff;
       pointer-events: none;
       border:1px solid #ccc;
+        &:focus{
+        text-decoration: bold;
+        }
     }
     .tick text {
         font-size: calc(40px - 1.1vw);
@@ -1370,7 +1388,7 @@ footer {
         text-align: center;
         li {
           border-right: 1px solid $light-grey;
-          color: darken($grey, 12%);
+          color: $black-gray;
           display: inline-block;
           list-style: none;
           padding: 0 30px;

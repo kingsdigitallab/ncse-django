@@ -19,10 +19,10 @@
             <!-- Top canvas controls -->
             <div class="canvas-controls dark">
                 <div class="float-left">
-                    <span data-tooltip tabindex="1" title="Zoom in"><a href="#" class="noselect" id="plus"><i class="circle fa fa-plus"></i></a></span>
+                    <span data-tooltip tabindex="1" title="Zoom in"><a href="#" class="noselect" id="plus"><span class="buttonicon"></span></a></span>
 
-                    <span data-tooltip tabindex="1" title="Zoom out"><a href="#" class="noselect" id="minus"><i class="circle fa fa-minus"></i></a></span>
-                    <span data-tooltip tabindex="1" title="Expand full screen" data-title-expand="Expand full screen" data-title-collapse="Collapse full screen"><a href="#" target="" class="noselect" id="canvas_expand"><i class="fa fa-expand"></i></a></span>
+                    <span data-tooltip tabindex="1" title="Zoom out"><a href="#" class="noselect" id="minus"><span class="buttonicon"></span></a></span>
+                    <span data-tooltip tabindex="1" title="Expand full screen" data-title-expand="Expand full screen" data-title-collapse="Collapse full screen"><a href="#" target="" class="noselect" id="canvas_expand"><span class="buttonicon"></span></a></span>
                 </div>
 
                 {% with prev=page.previous_page next=page.next_page %}
@@ -32,9 +32,9 @@
                 {% endwith %}
 
                 <div class="float-right">
-                    <span data-tooltip tabindex="1" title="Save image"><a href="#" id="canvas_save" class="noselect"> <i class="fa fa-save"> </i></a></span>
-                    <span data-tooltip tabindex="1" title="Download page"><a href="{{ page.image.url}}" target="" class="noselect" download><i class="fa fa-download"></i></a></span>
-                    <span data-tooltip tabindex="1" title="Print page"><a href="print/" target="_blank" class="noselect"> <i class="fa fa-print"> </i></a></span>
+                    <span data-tooltip tabindex="1" title="Save image"><a href="#" id="canvas_save"><span class="buttonicon"></span></a></span>
+                    <span data-tooltip tabindex="1" title="Download page"><a href="{{ page.image.url}}"><span class="buttonicon"></span></a></span>
+                    <span data-tooltip tabindex="1" title="Print page"><a href="print/"><span class="buttonicon"></span></a></span>
 
                 </div>
             </div>
@@ -47,11 +47,11 @@
             <div class="canvas-controls text-center">
                 {% with prev=page.previous_page next=page.next_page %}
                 <span>
-                {% if prev %}<span data-tooltip tabindex="1" title="Previous page"><a href="{{ prev.url }}"><i class="fa fa-angle-left"></i></a></span>{% endif %}
+                {% if prev %}<span data-tooltip tabindex="1" title="Previous page"><a href="{{ prev.url }}"><span class="buttonicon"></span></a></span>{{% endif %}
 
                 <span id="page_switcher" data-initial="{{ page.number }}" data-issue-url="{{ page.issue.url }}" data-count="{{ page.issue.number_of_pages}}">{{ page.number }}</span> of <span id="page_count">{{ page.issue.number_of_pages }}
 
-                {% if next %}<a href="{{ next.url }}"><span data-tooltip tabindex="1" title="Next page"><i class="fa fa-angle-right"></i></a></span>{% endif %}
+                {% if next %}<a href="{{ next.url }}"><span class="buttonicon"></span></a></span>{% endif %}
                 </span>
                 {% endwith %}
             </div>
