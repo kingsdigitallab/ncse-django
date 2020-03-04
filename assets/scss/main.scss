@@ -111,15 +111,16 @@ canvas {
         background: $black;
         a {
         color: $white;
-            &:hover{
+        text-decoration: none;
+            &:hover, &:focus{
                 opacity:0.8;
-                text-decoration: none;
             }
         }
         span{
             color: $white;
             &:focus {
                 opacity:0.8;
+                color: darken(white, 15%);
             }
         }
     }
@@ -490,6 +491,9 @@ ul.vertical.menu{
         a{
             color: $black;
             padding: 0.7rem 0.5rem;
+            &:focus{
+               color: black;;
+            }
             &:hover{
                 color:$blue;
             }
@@ -549,7 +553,7 @@ ul.vertical.menu{
                 }
                 
                 span {
-                    color: white;
+                    color: $black-gray;
                 }
             }
             span {
