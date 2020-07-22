@@ -69,7 +69,7 @@ $global-font-size: 100%;
 $global-width: rem-calc(2000);
 $global-lineheight: 1.5;
 $foundation-palette: (
-  primary:#015375, 
+  primary:#0584ba, 
   secondary: #9cafb7,
   success: #eac17e,
   warning: #e5925e,
@@ -272,7 +272,7 @@ $badge-font-size: 0.6rem;
 
 $breadcrumbs-margin: 0 0 $global-margin 0;
 $breadcrumbs-item-font-size: rem-calc(11);
-$breadcrumbs-item-color: darken($primary-color, 10%);
+$breadcrumbs-item-color: darken($primary-color, 5%);
 $breadcrumbs-item-color-current: $black;
 $breadcrumbs-item-color-disabled: $medium-gray;
 $breadcrumbs-item-margin: 0.75rem;
@@ -358,7 +358,7 @@ $closebutton-size: (
   medium: 2em
 );
 $closebutton-lineheight: 1;
-$closebutton-color: $blue;
+$closebutton-color: $primary-color;
 $closebutton-color-hover: $black;
 
 // 16. Drilldown

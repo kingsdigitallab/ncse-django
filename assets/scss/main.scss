@@ -137,7 +137,10 @@ canvas {
     margin:0 0.5rem;
     }
     span{
-    color: $black;
+        color: $black;
+        a{
+            text-decoration:none;
+        }
         input.input{
             width: 3rem;
             padding: 0;
@@ -195,7 +198,7 @@ span#page_switcher{
 }
 
 h1 {
-    font-size: rem-calc(18);
+    font-size: rem-calc(20);
     line-height: rem-calc(24);
     margin-top: rem-calc(16);
     text-transform: uppercase;
@@ -217,6 +220,14 @@ h2 {
 }
 
 h3 {
+    font-size: rem-calc(18);
+    font-weight: bold;
+    background: $black;
+    color: white;
+    padding: 0.2rem 0.5rem;
+}
+
+h4 {
     font-size: 1.4rem;
     font-weight: bold;
     padding: 1.5em 0 .8em 0;
@@ -245,7 +256,7 @@ main {
     padding: rem-calc(20 0);
     margin: 0 auto;
     a{
-        color: $primary-color;
+        color: darken($primary-color,5%);
         text-decoration: underline;
         &:hover{
             color:darken($primary-color, 10%);
@@ -330,7 +341,7 @@ nav {
             position: absolute;
             top:4.5rem;
             left:-1.4rem;
-            font-size: 1rem;
+            font-size: 1.2rem;
             padding: 0.1rem 0.5rem;
             -webkit-transform: rotate(90deg);
             -moz-transform: rotate(90deg);
@@ -476,7 +487,37 @@ ul.vertical.menu{
         }
         
     }
-
+     h3.tabs-title{
+            margin:0.5rem 0 0 0;
+            padding:0;
+            a{
+                padding: 0.5rem 0.5rem;
+                font-size: 1.1rem;
+                color:$white;
+                &:hover{
+                background: lighten($black, 20%);
+                opacity: 1;
+                }
+                &:focus{
+                background: $black;
+                color: $white;
+                outline:0;
+                    &:hover{
+                    opacity: 0.8;
+                    }
+                }
+                :visited, :checked{
+                background: $primary-color!important;
+                color: $white;
+                }
+                span{
+                    color:white;
+                    font-size: 1rem;
+                    font-weight: normal;
+                }
+            }
+            
+        }
     >li{
         >ul{
         margin: 0 0.5rem 0.5rem 0.5rem;
@@ -495,7 +536,7 @@ ul.vertical.menu{
                color: black;;
             }
             &:hover{
-                color:$blue;
+                opacity:0.8;
             }
             span{
                 color:black;
@@ -602,6 +643,9 @@ ul.vertical.menu{
         &:not(:last-child)::after {
             content: '>';
         }
+        a{
+            font-weight: bold;
+        }
     }
 }
 
@@ -648,7 +692,7 @@ ul.vertical.menu{
         border: 1px solid $primary-color;
         .card-section {
             &.overlay {
-                background: rgba($primary-color,0.9);
+                background: rgba(darken($primary-color,5%),0.95);
             }
         }
     }
@@ -701,7 +745,7 @@ ul.vertical.menu{
 
         &.overlay {
             color: $white;
-            background: rgba(darken($black,5%), 0.8);
+            background: rgba(darken($black,5%), 0.9);
             bottom: 0;
             position: absolute;
             text-align: center;
@@ -1120,7 +1164,7 @@ body table.stack {
 /* Footer */
 
 footer {
-    background: $black;
+    background: #000;
     
     font-weight: 700;
     color: $white;
@@ -1139,7 +1183,7 @@ footer {
         color: $light-grey;
         text-decoration: underline;
         &:hover{
-            color: $primary-color;
+            color: darken($light-grey,10%);
         }
     }
 
@@ -1244,7 +1288,7 @@ footer {
           line-height: 3vw;
           padding-bottom: 2rem;
           span {
-            color:$black-gray;
+            color:darken($medium-gray,10%);
             display: inline-block;
 
             vertical-align: middle;
@@ -1337,7 +1381,7 @@ footer {
           background: $primary-color;
         }
         &.ad:before {
-          background: #ddd;
+          background: lighten($medium-gray,10%);
         }
         &.picture:before {
           background: #000;
@@ -1495,7 +1539,7 @@ footer {
           background: $primary-color;
         }
         &.ad:before {
-          background: #ddd;
+          background: lighten($medium-gray,10%);
         }
         &.picture:before {
           background: #000;
@@ -1510,7 +1554,7 @@ footer {
 /* Cookie disclaimer */
 
 .cookies-box {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
     bottom: 0;
     color: $white;
     position: fixed;
@@ -1525,9 +1569,9 @@ footer {
 
     button,
     .button {
-        background: $primary-color;
+        background: darken($primary-color,5%);
         border: 0;
-        color: $black;
+        color: $white;
         max-width: rem-calc(200px);
 
         &:hover {

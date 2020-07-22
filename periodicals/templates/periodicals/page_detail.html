@@ -47,7 +47,7 @@
             <div class="canvas-controls text-center">
                 {% with prev=page.previous_page next=page.next_page %}
                 <span>
-                {% if prev %}<span data-tooltip tabindex="1" title="Previous page"><a href="{{ prev.url }}"><span class="buttonicon"></span></a></span>{{% endif %}
+                {% if prev %}<span data-tooltip tabindex="1" title="Previous page"><a href="{{ prev.url }}"><span class="buttonicon"></span></a></span>{% endif %}
 
                 <span id="page_switcher" data-initial="{{ page.number }}" data-issue-url="{{ page.issue.url }}" data-count="{{ page.issue.number_of_pages}}">{{ page.number }}</span> of <span id="page_count">{{ page.issue.number_of_pages }}
 
