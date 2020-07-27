@@ -967,23 +967,27 @@ ul.filters {
 
     .tag {
         background: #f0f0f0;
-        color: $primary-color;
+        color: $black;
         display: inline-block;
         padding: 2px 10px;
         margin: 0 5px;
 
         .delete {
-            background: $primary-color;
-            border-radius: 10px;
+            background: $medium-gray;
+            border-radius: 50%;
             color: #f0f0f0;
             display: inline-block;
             font-family: sans-serif;
             font-size: 1em;
-            height: 18px;
+            height: 22px;
+            text-decoration: none;
             line-height: 18px;
             margin: 0 0 0 5px;
             text-align: center;
-            width: 18px;
+            width: 23px;
+            &:hover{
+               background: $primary-color; 
+            }
         }
     }
 }

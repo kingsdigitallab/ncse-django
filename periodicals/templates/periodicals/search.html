@@ -24,11 +24,13 @@
                             <p class="help">{{ field.help_text|safe }}</p>
                             {% endif %}
                             {% endwith %}
-                            {% with field=form.mode %} {{ field.errors }} <label><strong>Mode</strong></label>
+                            <div role="group" aria-labelledby="mode">
+                            {% with field=form.mode %} {{ field.errors }} <label id="mode"><strong>Mode</strong></label>
                             {{ field }} {% if field.help_text %}
                             <p class="help">{{ field.help_text|safe }}</p>
                             {% endif %}
                             {% endwith %}
+                            </div>
                         </div>
                         <div class="column column-block">
                             <div class="row large-up-2">
@@ -50,13 +52,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="column column-block">
-                            {% with field=form.order_by %} {{ field.errors }}<label><strong>Order by</strong></label> {{ field }}
+                        <div class="column column-block" role="group" aria-labelledby="order-by">
+                            {% with field=form.order_by %} {{ field.errors }}<label id="order-by"><strong>Order by</strong></label> {{ field }}
                             {% if field.help_text %}
                             <p class="help">{{ field.help_text|safe }}</p>
                             {% endif %}
                             {% endwith %}
-                            <input class="button" type="submit" value="Search">
+                            <input class="button" type="submit" value="Search" aria-label="Submit search">
                         </div>
                     </div>
                 </form>
