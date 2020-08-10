@@ -342,7 +342,7 @@ function enableVis()
                   height = height - margin.top - margin.bottom;
 
                   var z = d3.scale.ordinal()
-                  .range(["#0584ba", "#ddd", "#000", "#0584ba", "#a5f7ec"]);
+                  .range(["#0584ba", "#999", "#000", "#0584ba", "#a5f7ec"]);
 
                   if(!start)
                   {
@@ -374,7 +374,7 @@ function enableVis()
                   .ticks(5)
                   .tickFormat(d3.format("d"));
 
-                  var svg = d3.select($(vis)[0]).select("#chart-bar")
+                  var svg = d3.select($(vis)[0]).select(".chart-bar")
                   .append("svg")
                   .attr("viewBox", "0 0 " + (width + margin.left + margin.right) + " " + (height + margin.top + margin.bottom))
                   .attr("preserveAspectRatio", "xMinYMin meet")
@@ -435,7 +435,7 @@ function enableVis()
                     return d;
                   }  
                   
-                   var tooltip = d3.select($(vis)[0]).select("#chart-bar").append("div")
+                   var tooltip = d3.select($(vis)[0]).select(".chart-bar").append("div")
                   .attr("class", "tooltip")
                   .style("opacity", 0);
 
