@@ -71,7 +71,9 @@
                     <a href="#">Departments <span>({{departments.count}})</span></a>
                     <ul class="menu">
                         {% for department in departments %}
-                        <li><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=department.slug%}"><img src="{% thumbnail department.title_image.url %}" alt="{{ department }}"></a></li>
+                        <li><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=department.slug%}"><img src="{% thumbnail department.title_image.url %}" alt="Snippet of {{ issue.publication}}">
+                        <p>{% if department %}{{ department}}{% else %}Untitled{% endif %}</p>
+                        </a></li>
                         {% endfor %}
                     </ul>
                 </li>
@@ -86,7 +88,7 @@
                         {% for ad in ads %}
                         <li><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=ad.slug%}">
                             {% if ad.title_image %}
-                            <img class="border" src="{% thumbnail ad.title_image.url %}" alt="{{ ad.title }}">
+                            <img class="border" src="{% thumbnail ad.title_image.url %}" alt="Snippet of {{ page.issue.publication}}">
                             {% else %}
                                 {% if ad.title %}{{ ad.title }}{% else %}Untitled{% endif %}
                             {% endif %}
@@ -100,13 +102,13 @@
                 {% with pictures=page.pictures %}
                 {% if pictures %}
                 <li>
-                    <a href="#a2">Pictures <span>({{pictures.count}})</i></span></a>
+                    <a href="#a2">Pictures <span>({{pictures.count}})</span></a>
                     <ul class="menu">
                         {% for picture in pictures %}
                         <li><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=picture.slug%}">
 
                             {% if picture.title_image %}
-                            <img class="border" src="{% thumbnail picture.title_image.url %}" alt="{{ picture.title }}">
+                            <img class="border" src="{% thumbnail picture.title_image.url %}" alt="Snippet of {{ page.issue.publication}}">
                             {% else %}
                                 {% if picture.title %}{{ picture.title }}{% else %}Untitled{% endif %}
                             {% endif %}
@@ -120,7 +122,7 @@
                 {% with articles=page.articles %}
                 {% if articles %}
                 <li >
-                    <a href="#">Text <span>({{articles.count}})</i></span></a>
+                    <a href="#">Text <span>({{articles.count}})</span></a>
 
                     <ul class="menu">
                         {% include "periodicals/includes/ocr_warning.html" %}
@@ -128,7 +130,7 @@
 
                         <li><a href="{% url 'article-detail' publication_slug=page.issue.publication.slug issue_slug=page.issue.slug number=page.number article_slug=article.slug %}">
                         {% if article.title_image %}
-                            <img class="border" src="{% thumbnail article.title_image.url %}" alt="{{ article.title }}">
+                            <img class="border" src="{% thumbnail article.title_image.url %}" alt="Snippet of {{ page.issue.publication}}">
                         {% endif %}
                         {% if article.title %}<p>{{ article.title }}</p>{% else %}Untitled{% endif %}</a></li>
                     {% endfor %}

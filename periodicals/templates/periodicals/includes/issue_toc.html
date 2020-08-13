@@ -9,7 +9,7 @@
     <div class="medium-10 columns">
         {% if item.title_image %}
         <a href="{{ item_url }}">
-                <img class="border" src="{% thumbnail item.title_image.url %}" alt="{{ item.title }}">
+                <img class="border" src="{% thumbnail item.title_image.url %}" alt="Snippet of {{ issue.publication}}">
         </a>
         {% endif %}
         <p>
